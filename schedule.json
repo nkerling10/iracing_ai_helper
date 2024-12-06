@@ -1,0 +1,833 @@
+{
+    "daytona_1": {
+        "full_time": {
+            "14": "Mason Massey",
+            "20": "Ryan Truex",
+            "26": "Jeffrey Earnhardt",
+            "35": "Frankie Muniz",
+            "53": "Joey Gase"
+        },
+        "part_time": {
+            "8": "",
+            "13":"",
+            "17":"Rajah Caruth",
+            "24":"",
+            "30":"",
+            "32":"Jordan Anderson",
+            "36":"",
+            "45":"Caesar Bacarella",
+            "50":"",
+            "66": "David Starr",
+            "74":"",
+            "78": "BJ McLeod",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "atlanta_1": {
+        "full_time": {
+            "14": "JJ Yeley",
+            "20": "John Hunter Nemechek",
+            "26": "Jeffrey Earnhardt",
+            "35": "Joey Gase",
+            "53": "Garrett Smithley",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"Jordan Anderson",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "cota": {
+        "full_time": {
+            "14": "RC Enerson",
+            "20": "John Hunter Nemechek",
+            "26": "Sage Karam",
+            "35": "Alex Labbe",
+            "53": "Mason Maggio",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"Kyle Larson",
+            "24": "Ed Jones",
+            "30":"",
+            "32": "Austin Green",
+            "36":"",
+            "45":"Brad Perez",
+            "50":"Preston Pardus",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "phoenix_1": {
+        "full_time": {
+            "14": "JJ Yeley",
+            "20": "John Hunter Nemechek",
+            "26": "Corey Heim",
+            "35": "Frankie Muniz",
+            "53": "Mason Maggio",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"William Byron",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Kyle Weatherman"
+        }
+    },
+    "las_vegas_1": {
+        "full_time": {
+            "14": "JJ Yeley",
+            "20": "John Hunter Nemechek",
+            "26": "Corey Heim",
+            "35": "Joey Gase",
+            "53": "Mason Maggio",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Nick Leitz"
+        }
+    },
+    "homestead": {
+        "full_time": {
+            "14": "Austin Green",
+            "20": "Aric Almirola",
+            "26": "Corey Heim",
+            "35": "Armani Williams",
+            "53": "Mason Maggio",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"Alex Bowman",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Dawson Cram"
+        }
+    },
+    "martinsville_1": {
+        "exclude_cup_drivers": "True",
+        "full_time": {
+            "14": "Greg Van Alst",
+            "20": "Aric Almirola",
+            "26": "Corey Heim",
+            "35": "Carson Ware",
+            "53": "Joey Gase",
+            "81": "Justin Bonsignore"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Kyle Weatherman"
+        }
+    },
+    "darlington": {
+        "full_time": {
+            "14": "Chad Finchum",
+            "20": "Ryan Truex",
+            "26": "Corey Heim",
+            "35": "Chad Finchum",
+            "53": "Mason Maggio",
+            "81": "Joe Graf Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"William Byron",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Garrett Smithley",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Nick Leitz"
+        }
+    },
+    "bristol_1": {
+        "full_time": {
+            "14": "Chad Finchum",
+            "20": "Ryan Truex",
+            "26": "Jeffrey Earnhardt",
+            "35": "Carson Ware",
+            "53": "Mason Maggio",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Caesar Bacarella",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Dawson Cram"
+        }
+    },
+    "rockingham": {
+        "full_time": {
+            "14": "JJ Yeley",
+            "20": "Ryan Truex",
+            "26": "Corey Heim",
+            "35": "Joey Gase",
+            "53": "Mason Maggio",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Kyle Weatherman"
+        }
+    },
+    "talladega_1": {
+        "exclude_cup_drivers": "True",
+        "full_time": {
+            "14": "Mason Massey",
+            "20": "Aric Almirola",
+            "26": "Jeffrey Earnhardt",
+            "35": "Joey Gase",
+            "53": "Mason Maggio",
+            "81": "Joe Graf Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"Jordan Anderson",
+            "36":"",
+            "45":"Caesar Bacarella",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "texas": {
+        "full_time": {
+            "14": "David Starr",
+            "20": "Aric Almirola",
+            "26": "Corey Heim",
+            "35": "Joey Gase",
+            "53": "Mason Maggio",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Nick Leitz"
+        }
+    },
+    "charlotte": {
+        "full_time": {
+            "14": "JJ Yeley",
+            "20": "John Hunter Nemechek",
+            "26": "Tyler Reddick",
+            "35": "Akinori Ogata",
+            "53": "Mason Maggio",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"Chase Elliott",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Dawson Cram"
+        }
+    },
+    "nashville": {
+        "exclude_cup_drivers": "True",
+        "full_time": {
+            "14": "Chad Finchum",
+            "20": "Aric Almirola",
+            "26": "Corey Heim",
+            "35": "Logan Bearden",
+            "53": "Mason Maggio",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Kyle Weatherman"
+        }
+    },
+    "sebring": {
+        "full_time": {
+            "14": "Brad Perez",
+            "20": "John Hunter Nemechek",
+            "26": "Sage Karam",
+            "35": "Alex Labbe",
+            "53": "Garrett Smithley",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24": "Ed Jones",
+            "30":"",
+            "32": "Austin Green",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "pocono": {
+        "full_time": {
+            "14": "Mason Massey",
+            "20": "John Hunter Nemechek",
+            "26": "Corey Heim",
+            "35": "Stephen Mallozzi",
+            "53": "Mason Maggio",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"William Byron",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Nick Leitz"
+        }
+    },
+    "atlanta": {
+        "full_time": {
+            "14": "David Starr",
+            "20": "John Hunter Nemechek",
+            "26": "Jeffrey Earnhardt",
+            "35": "Mason Maggio",
+            "53": "Garrett Smithley",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32": "Jordan Anderson",
+            "36":"",
+            "45":"Garrett Smithley",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "chicago": {
+        "full_time": {
+            "14": "Andre Castro",
+            "20": "John Hunter Nemechek",
+            "26": "Sage Karam",
+            "35": "Alex Labbe",
+            "53": "Garrett Smithley",
+            "81": "Joe Graf Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"Kyle Larson",
+            "24":"",
+            "30":"",
+            "32": "Austin Green",
+            "36":"",
+            "45":"",
+            "50":"Preston Pardus",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "sonoma": {
+        "full_time": {
+            "14": "Brad Perez",
+            "20": "John Hunter Nemechek",
+            "26": "Sage Karam",
+            "35": "Thomas Annunziata",
+            "53": "Mason Maggio",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32": "Austin Green",
+            "36":"",
+            "45":"",
+            "50":"Preston Pardus",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "dover": {
+        "exclude_cup_drivers": "True",
+        "full_time": {
+            "14": "David Starr",
+            "20": "Ryan Truex",
+            "26": "Corey Heim",
+            "35": "JJ Yeley",
+            "53": "Garrett Smithley",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Dawson Cram"
+        }
+    },
+    "indianapolis": {
+        "full_time": {
+            "14": "David Starr",
+            "20": "Aric Almirola",
+            "26": "Conor Daly",
+            "35": "Joey Gase",
+            "53": "Mason Maggio",
+            "81": "Joe Graf Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"Alex Bowman",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Garrett Smithley",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Kyle Weatherman"
+        }
+    },
+    "iowa": {
+        "full_time": {
+            "14": "David Starr",
+            "20": "Ryan Truex",
+            "26": "Corey Heim",
+            "35": "Joey Gase",
+            "53": "Mason Maggio",
+            "81": "Brett Moffitt"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Caesar Bacarella",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Nick Leitz"
+        }
+    },
+    "watkins_glen": {
+        "full_time": {
+            "14": "RC Enerson",
+            "20": "Aric Almirola",
+            "26": "Ed Jones",
+            "35": "Thomas Annunziata",
+            "53": "Garrett Smithley",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"William Byron",
+            "24":"",
+            "30":"",
+            "32":"Austin Green",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "daytona_2": {
+        "full_time": {
+            "14": "Mason Massey",
+            "20": "Ryan Truex",
+            "26": "Jeffrey Earnhardt",
+            "35": "Akinori Ogata",
+            "53": "Joey Gase",
+            "81": "Joe Graf Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"Jordan Anderson",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "laguna seca": {
+        "full_time": {
+            "14": "Andre Castro",
+            "20": "Aric Almirola",
+            "26": "Sage Karam",
+            "35": "Frankie Muniz",
+            "53": "Mason Maggio",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32": "Austin Green",
+            "36":"",
+            "45":"",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "wwt raceway": {
+        "exclude_cup_drivers": "True",
+        "full_time": {
+            "14": "Mason Massey",
+            "20": "Ryan Truex",
+            "26": "Corey Heim",
+            "35": "Frankie Muniz",
+            "53": "Garrett Smithley",
+            "81": "Justin Bonsignore"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Garrett Smithley",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Dawson Cram"
+        }
+    },
+    "bristol_2": {
+        "full_time": {
+            "14": "Chad Finchum",
+            "20": "Aric Almirola",
+            "26": "Jeffrey Earnhardt",
+            "35": "Carson Ware",
+            "53": "Garrett Smithley",
+            "81": "Joe Graf Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Stefan Parsons",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Kyle Weatherman"
+        }
+    },
+    "kansas": {
+        "full_time": {
+            "14": "JJ Yeley",
+            "20": "Aric Almirola",
+            "26": "Corey Heim",
+            "35": "Joey Gase",
+            "53": "Mason Maggio",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"Chase Elliott",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Caesar Bacarella",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Nick Leitz"
+        }
+    },
+    "charlotte roval": {
+        "full_time": {
+            "14": "Nathan Byrd",
+            "20": "Aric Almirola",
+            "26": "Ed Jones",
+            "35": "Thomas Annunziata",
+            "53": "Mason Maggio",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32": "Austin Green",
+            "36":"",
+            "45":"Brad Perez",
+            "50": "Preston Pardus",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "las vegas_2": {
+        "full_time": {
+            "14": "JJ Yeley",
+            "20": "Aric Almirola",
+            "26": "Corey Heim",
+            "35": "Akinori Ogata",
+            "53": "Joey Gase",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"Rajah Caruth",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Garrett Smithley",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Dawson Cram"
+        }
+    },
+    "talladega_2": {
+        "full_time": {
+            "14": "David Starr",
+            "20": "Aric Almirola",
+            "26": "Jeffrey Earnhardt",
+            "35": "Joey Gase",
+            "53": "Mason Maggio",
+            "81": "Martin Truex Jr."
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32": "Jordan Anderson",
+            "36":"",
+            "45":"Caesar Bacarella",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Josh Bilicki"
+        }
+    },
+    "martinsville_2": {
+        "full_time": {
+            "14": "Greg Van Alst",
+            "20": "Aric Almirola",
+            "26": "Corey Heim",
+            "35": "Carson Ware",
+            "53": "Mason Maggio",
+            "81": "Brett Moffitt"
+        },
+        "part_time": {
+            "13":"",
+            "17":"",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Garrett Smithley",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Kyle Weatherman"
+        }
+    },
+    "phoenix_2": {
+        "exclude_cup_drivers": "True",
+        "full_time": {
+            "14": "Greg Van Alst",
+            "20": "Aric Almirola",
+            "26": "Corey Heim",
+            "35": "Joey Gase",
+            "53": "Garrett Smithley",
+            "81": "Ryan Truex"
+        },
+        "part_time": {
+            "13":"",
+            "17":"Rajah Caruth",
+            "24":"",
+            "30":"",
+            "32":"",
+            "36":"",
+            "45":"Stefan Parsons",
+            "50":"",
+            "66":"",
+            "74":"",
+            "78":"",
+            "87":"",
+            "92":"Nick Leitz"
+        }
+    }
+}

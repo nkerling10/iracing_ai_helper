@@ -1,0 +1,52 @@
+{
+    "full_time_one_driver" : {
+        "00": "Sheldon Creed",
+        "02": "Anthony Alfredo",
+        "1": "Carson Kvapil",
+        "2": "Jesse Love",
+        "5": "Kris Wright",
+        "7": "Justin Allgaier",
+        "07": "Patrick Emerling",
+        "8": "Sammy Smith",
+        "10": "Daniel Dye",
+        "11": "Josh Williams",
+        "15": "Harrison Burton",
+        "16": "Christian Eckes",
+        "18": "William Sawalich",
+        "19": "Brandon Jones",
+        "21": "Austin Hill",
+        "25": "Lawless Alan",
+        "27": "Jeb Burton",
+        "28": "Kyle Sieg",
+        "29": "Parker Retzlaff",
+        "31": "Blaine Perkins",
+        "39": "Ryan Sieg",
+        "41": "Sam Meyer",
+        "42": "Leland Honeyman Jr.",
+        "43": "",
+        "44": "Brennan Poole",
+        "48": "Nick Sanchez",
+        "51": "Jeremy Clements",
+        "54": "Taylor Gray",
+        "71": "Ryan Ellis",
+        "88": "Connor Zilisch",
+        "99": "Matt DiBenedetto"
+    },
+    "full_time_multiple_drivers": {
+        "14": {},
+        "20": {},
+        "26": {},
+        "35": {},
+        "53": {}
+    },
+    "part_time": {
+        "8": {},
+        "17": {},
+        "24": {},
+        "36": {},
+        "32": {},
+        "45": {},
+        "50": {},
+        "92": {}
+    }
+}
