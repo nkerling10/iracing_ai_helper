@@ -1,27 +1,18 @@
 {
     "daytona_1": {
         "full_time": {
+            "07": "Patrick Emerling",
             "14": "Mason Massey",
             "20": "Ryan Truex",
-            "26": "Jeffrey Earnhardt",
+            "26": "Martin Truex Jr.",
             "35": "Frankie Muniz",
-            "53": "Joey Gase"
+            "45": "Caesar Bacarella",
+            "92": "Josh Bilicki"
         },
         "part_time": {
-            "8": "",
-            "13":"",
-            "17":"Rajah Caruth",
-            "24":"",
-            "30":"",
-            "32":"Jordan Anderson",
-            "36":"",
-            "45":"Caesar Bacarella",
-            "50":"",
-            "66": "David Starr",
-            "74":"",
-            "78": "BJ McLeod",
-            "87":"",
-            "92":"Josh Bilicki"
+            "17": "",
+            "32": "Jordan Anderson",
+            "50": ""
         }
     },
     "atlanta_1": {

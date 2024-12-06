@@ -23,7 +23,6 @@
         "39": "Ryan Sieg",
         "41": "Sam Meyer",
         "42": "Leland Honeyman Jr.",
-        "43": "",
         "44": "Brennan Poole",
         "48": "Nick Sanchez",
         "51": "Jeremy Clements",
@@ -32,21 +31,22 @@
         "88": "Connor Zilisch",
         "99": "Matt DiBenedetto"
     },
-    "full_time_multiple_drivers": {
-        "14": {},
-        "20": {},
-        "26": {},
-        "35": {},
-        "53": {}
-    },
-    "part_time": {
-        "8": {},
-        "17": {},
-        "24": {},
-        "36": {},
-        "32": {},
-        "45": {},
-        "50": {},
-        "92": {}
-    }
+    "full_time_multiple_drivers": [
+        "07",
+        "14",
+        "20",
+        "26",
+        "35",
+        "43",
+        "91"
+    ],
+    "part_time": [
+        "17",
+        "24",
+        "32",
+        "36",
+        "45",
+        "50",
+        "53"
+    ]
 }
