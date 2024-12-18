@@ -1,0 +1,2694 @@
+{
+	"aiCarClassIds": [],
+	"avoidUser": false,
+	"carId": 115,
+	"carSettings": [
+		{
+			"car_id": 115,
+			"max_pct_fuel_fill": 50,
+			"max_dry_tire_sets": 7
+		},
+		{
+			"car_id": 114,
+			"max_pct_fuel_fill": 50,
+			"max_dry_tire_sets": 7
+		},
+		{
+			"car_id": 116,
+			"max_pct_fuel_fill": 50,
+			"max_dry_tire_sets": 7
+		}
+	],
+	"category_id": 1,
+	"damage_model": 0,
+	"do_not_count_caution_laps": false,
+	"full_course_cautions": true,
+	"gridPosition": 1,
+	"incident_limit": 0,
+	"incident_warn_mode": 0,
+	"incident_warn_param1": 0,
+	"incident_warn_param2": 0,
+	"lucky_dog": true,
+	"max_drivers": 40,
+	"maxSkill": 102,
+	"minSkill": 72,
+	"max_visor_tearoffs": -1,
+	"must_use_diff_tire_types_in_race": false,
+	"no_lapper_wave_arounds": false,
+	"num_fast_tows": 0,
+	"practice_length": 20,
+	"qualify_laps": 2,
+	"qualify_length": 10,
+	"race_laps": 3,
+	"race_length_type": 3,
+	"race_length": 15,
+	"restarts": 2,
+	"rolling_starts": true,
+	"rosterName": "2025 Xfinity Series - AI",
+	"short_parade_lap": false,
+	"start_on_qual_tire": false,
+	"startZone": true,
+	"subsessions": [
+		3,
+		4,
+		6
+	],
+	"time_of_day": 0,
+	"track_state": {
+		"leave_marbles": true,
+		"practice_rubber": -1,
+		"qualify_rubber": -1,
+		"race_rubber": -1,
+		"warmup_rubber": -1
+	},
+	"unsport_conduct_rule_mode": 0,
+	"userCarClassId": 0,
+	"weather": {
+		"type": 3,
+		"temp_units": 0,
+		"temp_value": 78,
+		"rel_humidity": 45,
+		"fog": 0,
+		"wind_dir": 0,
+		"wind_units": 0,
+		"wind_value": 2,
+		"skies": 1,
+		"simulated_start_time": "2024-05-15T14:35:26",
+		"simulated_time_multiplier": 1,
+		"simulated_time_offsets": [
+			30,
+			50
+		],
+		"version": 2,
+		"weather_var_initial": 0,
+		"weather_var_ongoing": 0,
+		"time_of_day": 0,
+		"track_water": 0,
+		"guided_parameters": {
+			"temperature": 0,
+			"wind_dir": 0,
+			"wind_speed": 0,
+			"skies": 0,
+			"precipitation": 1,
+			"stop_precip": 0,
+			"allow_fog": false
+		},
+		"allow_fog": false,
+		"precip_option": 0,
+		"weather_seed": -558693079237007600,
+		"loading": false
+	},
+	"events": [
+		{
+			"trackId": 191,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "ff9eabb5-69bb-ed6b-23ac-3909fb3b4909",
+			"race_laps": 60,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-02-15T13:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					240
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"weather_id": "297723_f793f354-4476-4968-9b76-43543945900a",
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -6296878287236421000,
+				"event_id": "ff9eabb5-69bb-ed6b-23ac-3909fb3b4909",
+				"loading": false
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 447,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "eb4af68b-c3cb-cbca-494d-6e434dbfdc67",
+			"race_laps": 82,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-02-22T13:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					240
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"weather_id": "297723_dbb03de8-6712-4dc2-9875-27f073538e11",
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 7806327772265975000,
+				"loading": false,
+				"event_id": "eb4af68b-c3cb-cbca-494d-6e434dbfdc67"
+			},
+			"time_of_day": 4,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			}
+		},
+		{
+			"trackId": 231,
+			"num_opt_laps": 0,
+			"paceCar": {
+				"category_id": 2,
+				"car_id": 136,
+				"is_oval": false,
+				"is_dirt": false,
+				"car_name": "Pace Car - Sedan",
+				"car_class_id": 11,
+				"order": 4
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "808206e3-79d6-ce76-d3e3-1ca797a4de17",
+			"race_laps": 24,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-03-01T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					150
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"weather_id": "297723_08a274b0-66fe-45aa-9806-2e566a8dc941",
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -558693079237007600,
+				"loading": false,
+				"event_id": "808206e3-79d6-ce76-d3e3-1ca797a4de17"
+			},
+			"time_of_day": 4,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			}
+		},
+		{
+			"trackId": 419,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "f8cc41b0-dba5-e600-cf6b-76d40b237ada",
+			"race_laps": 100,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-03-08T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					300
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"weather_id": "297723_32d9751f-0dc9-4bb8-bb31-bb90e3e4dee5",
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -2754868574144901000,
+				"loading": false,
+				"event_id": "f8cc41b0-dba5-e600-cf6b-76d40b237ada"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 103,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "36ae2574-8d08-20fe-b61e-eda582d3c0ee",
+			"race_laps": 100,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-03-15T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					270
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"weather_id": "297723_486c23be-97cb-4db4-b10b-1e81648bfd77",
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -6763485842797262000,
+				"loading": false,
+				"event_id": "36ae2574-8d08-20fe-b61e-eda582d3c0ee"
+			},
+			"time_of_day": 4,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			}
+		},
+		{
+			"trackId": 20,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "f25de610-5a0c-b304-a094-05793b6db70b",
+			"race_laps": 100,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-03-22T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					240
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"weather_id": "297723_86be54d8-1f9b-46a2-a780-d7bce3c4992e",
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 4570123222972946000,
+				"loading": false,
+				"event_id": "f25de610-5a0c-b304-a094-05793b6db70b"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 33,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "6eb46f72-ac65-a06c-51a2-053bf6533a76",
+			"race_laps": 125,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-03-29T12:00:00",
+				"simulated_time_multiplier": 1,
+				"simulated_time_offsets": [
+					30,
+					300
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"weather_id": "297723_e7cfeac8-7029-4fdd-89f5-dc92cc92ebdb",
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 4721862059070908000,
+				"loading": false,
+				"event_id": "6eb46f72-ac65-a06c-51a2-053bf6533a76"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 115,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "a76d759e-076c-258f-4a88-a2466043a946",
+			"race_laps": 74,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-04-05T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					210
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 5779637643214173000,
+				"loading": false,
+				"weather_id": "297723_677ecd9a-5868-48fe-9d2e-7d43256c96c9",
+				"event_id": "a76d759e-076c-258f-4a88-a2466043a946"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 101,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "5359b1e0-6a7d-9074-9563-dc518da6548f",
+			"race_laps": 125,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-04-12T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					300
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -1610919816799505400,
+				"loading": false,
+				"weather_id": "297723_2800c364-f7a9-4b7d-9509-6df1165fab66",
+				"event_id": "5359b1e0-6a7d-9074-9563-dc518da6548f"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 203,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "09c8fc77-434b-61e6-1e69-d3a281ad7451",
+			"race_laps": 150,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-04-19T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					240
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 4972535732747760000,
+				"loading": false,
+				"weather_id": "297723_59a164fa-b83b-4d70-9c7d-4011ade3eb58",
+				"event_id": "09c8fc77-434b-61e6-1e69-d3a281ad7451"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 116,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "476d044e-82c7-1284-02cd-923c2a2a584b",
+			"race_laps": 57,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-04-26T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					240
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -2557981676673718000,
+				"loading": false,
+				"weather_id": "297723_96b9010c-65d7-43fa-8462-03a67fe23c2f",
+				"event_id": "476d044e-82c7-1284-02cd-923c2a2a584b"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 357,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "ef5cf53d-6567-78a1-bf2b-3bc836f2a650",
+			"race_laps": 100,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-05-03T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					120
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 9112625431874625000,
+				"loading": false,
+				"weather_id": "297723_d1b19dd0-6021-4bbe-a334-1b472ec13cf5",
+				"event_id": "ef5cf53d-6567-78a1-bf2b-3bc836f2a650"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 339,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "732ff2cd-881f-2fab-6612-a47e8d2da2df",
+			"race_laps": 100,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-05-24T12:00:00",
+				"simulated_time_multiplier": 1,
+				"simulated_time_offsets": [
+					0,
+					270
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 1347266627018109200,
+				"loading": false,
+				"weather_id": "297723_e08689f9-fbea-4ff7-aabd-3e0bbd191922",
+				"event_id": "732ff2cd-881f-2fab-6612-a47e8d2da2df"
+			},
+			"time_of_day": 4,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			}
+		},
+		{
+			"trackId": 400,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "f28c7279-96aa-ad3b-a1fe-31a89ec77b7c",
+			"race_laps": 94,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-05-31T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					450
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -3144431377248750000,
+				"loading": false,
+				"weather_id": "297723_69dfe349-3fbc-42e4-ac8c-d4cc8435e260",
+				"event_id": "f28c7279-96aa-ad3b-a1fe-31a89ec77b7c"
+			},
+			"time_of_day": 4,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			}
+		},
+		{
+			"trackId": 95,
+			"num_opt_laps": 0,
+			"paceCar": {
+				"category_id": 2,
+				"car_id": 136,
+				"is_oval": false,
+				"is_dirt": false,
+				"car_name": "Pace Car - Sedan",
+				"car_class_id": 11,
+				"order": 4
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "6bcaed6a-ab94-6304-9f2e-5cfe9c948ba3",
+			"race_laps": 22,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-06-14T12:00:00",
+				"simulated_time_multiplier": 1,
+				"simulated_time_offsets": [
+					30,
+					270
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 2414141736812219000,
+				"loading": false,
+				"weather_id": "297723_16704095-aff7-425c-8122-d8e6d725a705",
+				"event_id": "6bcaed6a-ab94-6304-9f2e-5cfe9c948ba3"
+			},
+			"time_of_day": 4,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			}
+		},
+		{
+			"trackId": 277,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "df09aae3-9de8-3c10-4900-40df39cd6268",
+			"race_laps": 45,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-06-21T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					210
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -1911475901440981800,
+				"loading": false,
+				"weather_id": "297723_a5f640f4-155c-4d96-9e41-626de86841f2",
+				"event_id": "df09aae3-9de8-3c10-4900-40df39cd6268"
+			},
+			"time_of_day": 4,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			}
+		},
+		{
+			"trackId": 447,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "e53f34c5-590f-0b9c-2b1c-0520f55f07d2",
+			"race_laps": 82,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-06-27T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					450
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 652367051959056300,
+				"loading": false,
+				"weather_id": "297723_74b9c873-55de-43d1-90ac-aa844d4668c6",
+				"event_id": "e53f34c5-590f-0b9c-2b1c-0520f55f07d2"
+			},
+			"time_of_day": 4,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			}
+		},
+		{
+			"trackId": 483,
+			"num_opt_laps": 0,
+			"paceCar": {
+				"category_id": 2,
+				"car_id": 136,
+				"is_oval": false,
+				"is_dirt": false,
+				"car_name": "Pace Car - Sedan",
+				"car_class_id": 11,
+				"order": 4
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "f5da6367-8f61-3304-2cc5-e6f77a530af6",
+			"race_laps": 25,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-07-05T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					270
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -628203259571620700,
+				"loading": false,
+				"weather_id": "297723_8da04ab0-00e6-4c83-bf12-b694d0e55c20",
+				"event_id": "f5da6367-8f61-3304-2cc5-e6f77a530af6"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 48,
+			"num_opt_laps": 0,
+			"paceCar": {
+				"category_id": 2,
+				"car_id": 136,
+				"is_oval": false,
+				"is_dirt": false,
+				"car_name": "Pace Car - Sedan",
+				"car_class_id": 11,
+				"order": 4
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "b3fabac1-a1bd-b3d2-53f1-119ad6ebd7b3",
+			"race_laps": 40,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-07-12T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					270
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -6781506893719500000,
+				"loading": false,
+				"weather_id": "297723_00490b51-0fb7-4573-aa47-486906bd0ab3",
+				"event_id": "b3fabac1-a1bd-b3d2-53f1-119ad6ebd7b3"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 162,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "4d840367-94a5-5d39-311f-fa7f1813d316",
+			"race_laps": 100,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-07-19T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					270
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 2561678211411982000,
+				"loading": false,
+				"weather_id": "297723_3898fd28-44cb-4fcc-8613-571034712854",
+				"event_id": "4d840367-94a5-5d39-311f-fa7f1813d316"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 522,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "683f64cd-9bf9-40a9-6a2e-f7e7555da239",
+			"race_laps": 50,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-07-26T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					270
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 404021486954134660,
+				"loading": false,
+				"weather_id": "297723_a6f11cd8-16b8-4202-b6de-948cd1430593",
+				"event_id": "683f64cd-9bf9-40a9-6a2e-f7e7555da239"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 169,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "a38f0f99-83bf-1041-edab-6cb5994a87b0",
+			"race_laps": 125,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-08-02T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					270
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -5596483215771742000,
+				"loading": false,
+				"weather_id": "297723_f953f378-eb6a-4afa-84ee-eebf698fb9b2",
+				"event_id": "a38f0f99-83bf-1041-edab-6cb5994a87b0"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 433,
+			"num_opt_laps": 0,
+			"paceCar": {
+				"category_id": 2,
+				"car_id": 136,
+				"is_oval": false,
+				"is_dirt": false,
+				"car_name": "Pace Car - Sedan",
+				"car_class_id": 11,
+				"order": 4
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "479cad03-11b7-4184-90de-2b84dbf0c394",
+			"race_laps": 41,
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-08-09T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					180
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 7658827187670545000,
+				"loading": false,
+				"weather_id": "297723_4580a44c-f8bd-4444-b430-8393dcee8c4a",
+				"event_id": "479cad03-11b7-4184-90de-2b84dbf0c394"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 191,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "c5b56ecc-3c20-49cb-ddd0-8e7471612692",
+			"race_laps": 50,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-08-22T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					450
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 3810445110261733000,
+				"loading": false,
+				"weather_id": "297723_834d8972-0cb6-4c06-af62-4b8a31e9a899",
+				"event_id": "c5b56ecc-3c20-49cb-ddd0-8e7471612692"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 47,
+			"num_opt_laps": 0,
+			"paceCar": {
+				"category_id": 2,
+				"car_id": 136,
+				"is_oval": false,
+				"is_dirt": false,
+				"car_name": "Pace Car - Sedan",
+				"car_class_id": 11,
+				"order": 4
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "168179df-1020-b931-8331-31abe49da6c2",
+			"race_laps": 38,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-08-30T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					180
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -2801070529002050600,
+				"loading": false,
+				"weather_id": "297723_f5d46cac-4eeb-4e08-9f25-53b08151103d",
+				"event_id": "168179df-1020-b931-8331-31abe49da6c2"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 237,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "009c9735-70b9-afdd-d4f0-cfbcc6c68fab",
+			"race_laps": 100,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-09-06T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					450
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -2337929151198595000,
+				"loading": false,
+				"weather_id": "297723_b65cf306-7e2e-4f92-9fc7-b5779677e6a8",
+				"event_id": "009c9735-70b9-afdd-d4f0-cfbcc6c68fab"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 101,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "57fb559e-e59d-d182-cad0-a18f40ee238e",
+			"race_laps": 150,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-09-12T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					450
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 7606957909906076000,
+				"loading": false,
+				"weather_id": "297723_2a3d238c-0880-47b6-bbf3-d2fe2eda82fc",
+				"event_id": "57fb559e-e59d-d182-cad0-a18f40ee238e"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 214,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "4d816155-6ead-f296-fa15-b3cea5e413b2",
+			"race_laps": 100,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-09-27T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					240
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -5639502263561584000,
+				"loading": false,
+				"weather_id": "297723_b0a8667c-61b2-4f93-9e2f-f4ea4ac00bd9",
+				"event_id": "4d816155-6ead-f296-fa15-b3cea5e413b2"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 350,
+			"num_opt_laps": 0,
+			"paceCar": {
+				"category_id": 2,
+				"car_id": 136,
+				"is_oval": false,
+				"is_dirt": false,
+				"car_name": "Pace Car - Sedan",
+				"car_class_id": 11,
+				"order": 4
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "c8a8ea20-4b16-a213-bca5-c91dc3fc99d0",
+			"race_laps": 34,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-10-04T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					240
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 4101152956233826300,
+				"loading": false,
+				"weather_id": "297723_b6474366-b10d-42b2-80b0-f1e0988e265c",
+				"event_id": "c8a8ea20-4b16-a213-bca5-c91dc3fc99d0"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 103,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "f7ad6b26-f897-19e2-50e6-550ada0e2599",
+			"race_laps": 100,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-10-11T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					450
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": -1925855317282511000,
+				"loading": false,
+				"weather_id": "297723_bd6ad99a-45c5-4d65-b758-cd03fab10ef0",
+				"event_id": "f7ad6b26-f897-19e2-50e6-550ada0e2599"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 116,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "e840832c-1a22-890e-1ce6-0141f30126c1",
+			"race_laps": 47,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-10-18T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					240
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 1875572051062213400,
+				"loading": false,
+				"weather_id": "297723_66269f4e-1095-4c0b-b123-2018b4ce14bd",
+				"event_id": "e840832c-1a22-890e-1ce6-0141f30126c1"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 33,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "edb32418-27b1-b850-f7af-327b52ce2c28",
+			"race_laps": 125,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-10-18T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					450
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 5313155536500124000,
+				"loading": false,
+				"weather_id": "297723_b64e9ddb-d61e-4498-95bd-4d0b6bcf78fa",
+				"event_id": "edb32418-27b1-b850-f7af-327b52ce2c28"
+			},
+			"time_of_day": 4
+		},
+		{
+			"trackId": 419,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "6eb2ace2-80bc-6489-291c-fc4d4aa0afc7",
+			"race_laps": 100,
+			"track_state": {
+				"leave_marbles": true,
+				"practice_rubber": -1,
+				"qualify_rubber": -1,
+				"race_rubber": -1,
+				"warmup_rubber": -1,
+				"practice_grip_compound": null,
+				"qualify_grip_compound": null,
+				"warmup_grip_compound": null,
+				"race_grip_compound": null
+			},
+			"weather": {
+				"type": 3,
+				"temp_units": 0,
+				"temp_value": 78,
+				"rel_humidity": 45,
+				"fog": 0,
+				"wind_dir": 0,
+				"wind_units": 0,
+				"wind_value": 2,
+				"skies": 1,
+				"simulated_start_time": "2025-11-01T12:00:00",
+				"simulated_time_multiplier": 2,
+				"simulated_time_offsets": [
+					30,
+					450
+				],
+				"version": 1,
+				"weather_var_initial": 0,
+				"weather_var_ongoing": 0,
+				"time_of_day": 4,
+				"track_water": 0,
+				"guided_parameters": {
+					"temperature": 0,
+					"wind_dir": 0,
+					"wind_speed": 0,
+					"skies": 0,
+					"precipitation": 1,
+					"stop_precip": 0,
+					"allow_fog": false
+				},
+				"allow_fog": false,
+				"precip_option": 0,
+				"weather_seed": 6204386967279726000,
+				"loading": false,
+				"weather_id": "297723_9c4e800c-2b43-46d7-aa33-8d9550e51b23",
+				"event_id": "6eb2ace2-80bc-6489-291c-fc4d4aa0afc7"
+			},
+			"time_of_day": 4
+		}
+	],
+	"points_system_id": 2,
+	"name": "2025 NSK Xfinity Series",
+	"custom_points": [
+		{
+			"position": 1,
+			"points": 40
+		},
+		{
+			"position": 2,
+			"points": 35
+		},
+		{
+			"position": 3,
+			"points": 34
+		},
+		{
+			"position": 4,
+			"points": 33
+		},
+		{
+			"position": 5,
+			"points": 32
+		},
+		{
+			"position": 6,
+			"points": 31
+		},
+		{
+			"position": 7,
+			"points": 30
+		},
+		{
+			"position": 8,
+			"points": 26
+		},
+		{
+			"position": 9,
+			"points": 28
+		},
+		{
+			"position": 10,
+			"points": 27
+		},
+		{
+			"position": 11,
+			"points": 26
+		},
+		{
+			"position": 12,
+			"points": 25
+		},
+		{
+			"position": 13,
+			"points": 24
+		},
+		{
+			"position": 14,
+			"points": 23
+		},
+		{
+			"position": 15,
+			"points": 22
+		},
+		{
+			"position": 16,
+			"points": 21
+		},
+		{
+			"position": 17,
+			"points": 20
+		},
+		{
+			"position": 18,
+			"points": 19
+		},
+		{
+			"position": 19,
+			"points": 18
+		},
+		{
+			"position": 20,
+			"points": 17
+		},
+		{
+			"position": 21,
+			"points": 16
+		},
+		{
+			"position": 22,
+			"points": 15
+		},
+		{
+			"position": 23,
+			"points": 14
+		},
+		{
+			"position": 24,
+			"points": 13
+		},
+		{
+			"position": 25,
+			"points": 12
+		},
+		{
+			"position": 26,
+			"points": 11
+		},
+		{
+			"position": 27,
+			"points": 10
+		},
+		{
+			"position": 28,
+			"points": 9
+		},
+		{
+			"position": 29,
+			"points": 8
+		},
+		{
+			"position": 30,
+			"points": 7
+		},
+		{
+			"position": 31,
+			"points": 6
+		},
+		{
+			"position": 32,
+			"points": 5
+		},
+		{
+			"position": 33,
+			"points": 4
+		},
+		{
+			"position": 34,
+			"points": 3
+		},
+		{
+			"position": 35,
+			"points": 2
+		},
+		{
+			"position": 36,
+			"points": 1
+		},
+		{
+			"position": 37,
+			"points": 1
+		},
+		{
+			"position": 38,
+			"points": 1
+		},
+		{
+			"position": 39,
+			"points": 1
+		},
+		{
+			"position": 40,
+			"points": 1
+		},
+		{
+			"position": 41,
+			"points": 0
+		},
+		{
+			"position": 42,
+			"points": 0
+		},
+		{
+			"position": 43,
+			"points": 0
+		},
+		{
+			"position": 44,
+			"points": 0
+		},
+		{
+			"position": 45,
+			"points": 0
+		},
+		{
+			"position": 46,
+			"points": 0
+		},
+		{
+			"position": 47,
+			"points": 0
+		},
+		{
+			"position": 48,
+			"points": 0
+		},
+		{
+			"position": 49,
+			"points": 0
+		},
+		{
+			"position": 50,
+			"points": 0
+		},
+		{
+			"position": 51,
+			"points": 0
+		},
+		{
+			"position": 52,
+			"points": 0
+		},
+		{
+			"position": 53,
+			"points": 0
+		},
+		{
+			"position": 54,
+			"points": 0
+		},
+		{
+			"position": 55,
+			"points": 0
+		},
+		{
+			"position": 56,
+			"points": 0
+		},
+		{
+			"position": 57,
+			"points": 0
+		},
+		{
+			"position": 58,
+			"points": 0
+		},
+		{
+			"position": 59,
+			"points": 0
+		},
+		{
+			"position": 60,
+			"points": 0
+		}
+	]
+}
