@@ -4,63 +4,69 @@ import random
 from enum import Enum
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
 
-class IRacingMemoryFlagType(Enum):
-    # global flags
-    checkered = 0x0001
-    white = 0x0002
-    green = 0x0004
-    yellow = 0x0008
-    red = 0x0010
-    blue = 0x0020
-    debris = 0x0040
-    crossed = 0x0080
-    yellow_waving = 0x0100
-    one_lap_to_green = 0x0200
-    green_held = 0x0400
-    ten_to_go = 0x0800
-    five_to_go = 0x1000
-    random_waving = 0x2000
-    caution = 0x4000
-    caution_waving = 0x8000
-
-    # drivers black flags
-    black = 0x010000
-    disqualify = 0x020000
-    servicible = 0x040000  # car is allowed service (not a flag)
-    furled = 0x080000
-    repair = 0x100000
-
-    # start lights
-    start_hidden = 0x10000000
-    start_ready = 0x20000000
-    start_set = 0x40000000
-    start_go = 0x80000000
-
-class IRacingGUIFlagType(Enum):
-    IRACING_NO_FLAG = 0
-    IRACING_BLUE_FLAG = 1
-    IRACING_MEATBALL_FLAG = 2
-    IRACING_BLACK_FLAG = 3
-    IRACING_YELLOW_FLAG = 4
-    IRACING_GREEN_FLAG = 5
-    IRACING_WHITE_FLAG = 6
-    IRACING_CHEQUERED_FLAG = 7
-    IRACING_RED_FLAG = 8
-
 
 class iRacing:
     def __init__(self):
         self.field_size = 41
-        self.penalty_chance = 8
+        self.penalty_chance = 100
+        self.pre_race_penalty_chance = 100
+        self.penalties_player = ["Crew members over the wall too soon",
+                                 "Too many men over the wall",
+                                 "Tire violation"]
         self.penalties = ["Speeding - Too fast entering",
                           "Speeding - Too fast exiting",
                           "Crew members over the wall too soon",
                           "Too many men over the wall",
                           "Tire violation"]
-        self.penalty_log = {}
+        self.pre_race_penalties = ["Failed Inspection x2",
+                                   "Failed Inspection x3",
+                                   "Unapproved Adjustments"]
         self.ir = irsdk.IRSDK()
-        self.ir.startup(test_file='session_data/data_qualify.bin')
+        #self.ir.startup(test_file='session_data/data_practice.bin')
+        self.ir.startup()
         self.main()
+
+    @staticmethod
+    def _get_flag(flag):
+        if flag & irsdk.Flags.checkered:
+            flag_color = 'checkered'
+        else:
+            if flag & irsdk.Flags.blue:
+                flag_color = 'blue'
+            elif flag & irsdk.Flags.black:
+                flag_color = 'black'
+            elif flag & irsdk.Flags.furled:
+                flag_color = 'gray'
+            elif flag & irsdk.Flags.red:
+                flag_color = 'red'
+            elif flag & irsdk.Flags.white:
+                flag_color = 'white'
+            elif flag & irsdk.Flags.yellow or flag & irsdk.Flags.yellow_waving \
+                 or flag & irsdk.Flags.caution or flag & irsdk.Flags.caution_waving \
+                 or flag & irsdk.Flags.debris:
+                flag_color = 'yellow'
+            elif flag & irsdk.Flags.green or flag & irsdk.Flags.green_held:
+                flag_color = 'green'
+            else:
+                flag_color = 'green'
+
+        return flag_color, flag & irsdk.Flags.repair
+
+    def pit_penalty(self, car_num):
+        if car_num == self.ir["DriverInfo"]["Drivers"][0]["CarNumberRaw"]:
+            penalty = random.choice(self.penalties_player)
+        else:
+            penalty = random.choice(self.penalties)
+
+        flag_color, _meatball = self._get_flag(self.ir['SessionFlags'])
+
+        if flag_color == "green":
+            print(f"Passthrough for #{car_num}: {penalty}")
+            self.ir.chat_command(f"!bl {car_num} D")
+            self.ir.chat_command(f"PENALTY #{car_num}: {penalty}")
+        elif flag_color == "yellow":
+            print(f"EOL for #{car_num}: {penalty}")
+            self.ir.chat_command(f"!eol {car_num} PENALTY #{car_num}: {penalty}")
 
     # disqualify all cars who are named NO DRIVER
     def practice(self):
@@ -84,68 +90,72 @@ class iRacing:
                         match = [driver["CarNumberRaw"] for driver in
                                  self.ir["DriverInfo"]["Drivers"] if
                                  driver["CarIdx"] == position["CarIdx"]][0]
-                        self.ir.chat_command(f"!dq {match} - Missed the race")
+                        self.ir.chat_command(f"!dq {match} - #{match} Missed the race")
                 qual_done = True
+
+    def _issue_pre_race_penalty(self, car_num):
+        penalty = random.choice(self.pre_race_penalties)
+        if penalty == "Failed Inspection x2":
+            print(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
+            self.ir.chat_command(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
+        elif penalty == "Failed Inspection x3":
+            print(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
+            print(f"!bl {car_num} D")
+            self.ir.chat_command(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
+            self.ir.chat_command(f"!bl {car_num} D")
+        elif penalty == "Unapproved Adjustments":
+            print(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
+            self.ir.chat_command(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
+
+    def _pre_race_penalties(self):
+        for driver in self.ir["DriverInfo"]["Drivers"]:
+            if driver["CarIsPaceCar"] != 1:
+                if random.randint(1, 100) < self.pre_race_penalty_chance:
+                    self._issue_pre_race_penalty(driver["CarNumberRaw"])
 
     # identify when the session is RACE
     def race(self):
-        self.pit_penalty(10, 0, 0)
-        quit()
-
+        self.ir.freeze_var_buffer_latest()
+        self._pre_race_penalties()
+        pit_tracking = []
         while True:
-            self.ir.freeze_var_buffer_latest()
-            if self.ir["Lap"] > -2:
-                cars_on_pit_road = [[driver["CarNumberRaw"], driver["CarIdx"]]
-                                    for driver in self.ir["DriverInfo"]["Drivers"]
-                                    if self.ir["CarIdxOnPitRoad"][driver["CarIdx"]]
+            if self.ir["Lap"] > -1:
+                self.ir.freeze_var_buffer_latest()
+                # get all cars currently on pit road
+                cars_on_pit_road = [driver["CarNumberRaw"] for driver
+                                    in self.ir["DriverInfo"]["Drivers"]
+                                    if self.ir["CarIdxOnPitRoad"][driver["CarIdx"]
+                                    and driver["UserName"] != "Pace Car"]
                                     is True]
-                if len (cars_on_pit_road) > 0:
-                    for car_num, car_idx in cars_on_pit_road:
-                        car_is_on_lap = self.ir["CarIdxLap"][car_idx]
-                        if car_idx not in self.penalty_log:
-                            self.penalty_log[car_idx] = {}
-                        if car_is_on_lap in self.penalty_log[car_idx]:
+                # if there is at least 1 car on pit road
+                if len(cars_on_pit_road) > 0:
+                    # for each car in this pulled instance
+                    for car_num in cars_on_pit_road:
+                        # if the car has not been processed this cycle
+                        if car_num not in pit_tracking:
+                            # track the car number
+                            pit_tracking.append(car_num)
+                            # calculate penalty chance
+                            if random.randint(1, 100) < self.penalty_chance:
+                                self.pit_penalty(car_num)
+                        # if the car has already been processed, skip it
+                        else:
                             continue
-                        self.penalty_log[car_idx].update({car_is_on_lap: ""})
-                        if random.randint(1, 100) < self.penalty_chance:
-                            self.pit_penalty(car_num, car_idx, car_is_on_lap)
+                    # check if any cars need to be removed from tracking
+                    for car in pit_tracking:
+                        if car not in cars_on_pit_road:
+                            pit_tracking.remove(car)
+                else:
+                    pit_tracking = []
+                    time.sleep(1)
             else:
                 time.sleep(1)
-
-    def pit_penalty(self, car_num, car_idx, car_is_on_lap):
-        memory_flags = []
-        active_flags = []
-
-        penalty = random.choice(self.penalties)
-
-        session_flag = self.ir["SessionFlags"]
-        print(session_flag)
-        for flag in IRacingMemoryFlagType:
-            if IRacingMemoryFlagType(flag).value and session_flag == IRacingMemoryFlagType(flag).value:
-                print(flag)
-                memory_flags.append(flag)
-        print(memory_flags)
-        if IRacingMemoryFlagType.yellow in memory_flags or IRacingMemoryFlagType.yellow_waving in memory_flags:
-            active_flags.append(IRacingGUIFlagType.IRACING_YELLOW_FLAG)
-
-        print(active_flags)
-        quit()
-        if len(active_flags) == 0 or len(active_flags) > 1:
-            print(f"Passthrough for {car_num}: {penalty}")
-            #self.ir.chat_command(f"!bl {car_num} D")
-            #self.ir.chat_command(f"PENALTY #{car_num}: {penalty}")
-        elif active_flags[0] == "yellow":
-            print(f"EOL for {car_num}: {penalty}")
-            #self.ir.chat_command(f"!eol {car_num} PENALTY #{car_num}: {penalty}")
-
-        self.penalty_log[car_idx].update({car_is_on_lap: penalty})
-
 
     def main(self):
         practice = False
         qualifying = False
         race = False
-        """
+
         while practice is False:
             if self.ir["SessionNum"] == 0:
                 self.practice()
@@ -160,9 +170,8 @@ class iRacing:
                 qualifying = True
             else:
                 time.sleep(1)
-        """
         while race is False:
-            if self.ir["SessionNum"] == 0:
+            if self.ir["SessionNum"] == 2:
                 self.race()
                 race = True
             else:
