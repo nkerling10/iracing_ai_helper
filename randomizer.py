@@ -135,7 +135,7 @@ def main(track):
     if track in road_course_tracks:
         road_course = True
     driver_tiers, car_list, schedule_list = open_files()
-    with open(f"{os.path.dirname(os.path.abspath(__file__))}/2025_Xfinity_Series_NSK_AI/roster.json", "r") as roster_file:
+    with open(f"{os.path.dirname(os.path.abspath(__file__))}/rosters/2025_Xfinity_Series_NSK_AI/roster.json", "r") as roster_file:
         driver_list = json.loads(roster_file.read())
     for roster_driver in driver_list["drivers"]:
         if roster_driver["carNumber"] in car_list["full_time_one_driver"]:
@@ -169,11 +169,13 @@ def main(track):
         ##set drivers to different car make if necessary
         if roster_driver["driverName"] in ["Chad Finchum", "David Starr"] and roster_driver["carNumber"] == "14":
             roster_driver["carPath"] = "stockcars2\\mustang2019"
+            roster_driver["carId"] = 115
         elif roster_driver["driverName"] in ["JJ Yeley", "CJ McLaughlin"] and roster_driver["carNumber"] == "14":
             roster_driver["carPath"] = "stockcars2\\camaro2019"
+            roster_driver["carId"] = 114
 
 
-    with open(f"{os.path.dirname(os.path.abspath(__file__))}/2025_Xfinity_Series_NSK_AI/roster.json", "w", encoding="utf-8") as roster_file:
+    with open(f"{os.path.dirname(os.path.abspath(__file__))}/rosters/2025_Xfinity_Series_NSK_AI/roster.json", "w", encoding="utf-8") as roster_file:
         json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__":

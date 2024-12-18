@@ -161,6 +161,8 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
+.DS_Store
+
 rosters/*
 !rosters/2025_Xfinity_Series_NSK_AI
 rosters/2025_Xfinity_Series_NSK_AI/*
