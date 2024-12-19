@@ -1,6 +1,8 @@
 import irsdk
 import time
 import random
+import pyautogui
+import pygetwindow as gw
 from enum import Enum
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
 
@@ -24,6 +26,7 @@ class iRacing:
         self.ir = irsdk.IRSDK()
         #self.ir.startup(test_file='session_data/data_practice.bin')
         self.ir.startup()
+        
         self.main()
 
     @staticmethod
@@ -62,19 +65,35 @@ class iRacing:
 
         if flag_color == "green":
             print(f"Passthrough for #{car_num}: {penalty}")
-            self.ir.chat_command(f"!bl {car_num} D")
-            self.ir.chat_command(f"PENALTY #{car_num}: {penalty}")
+            self._activate_iracing_window()
+            self.ir.chat_command(1)
+            pyautogui.typewrite(f"!bl {car_num} D")
+            pyautogui.press("enter")
+            self.ir.chat_command(1)
+            pyautogui.typewrite(f"PENALTY #{car_num}: {penalty}")
+            pyautogui.press("enter")
         elif flag_color == "yellow":
             print(f"EOL for #{car_num}: {penalty}")
-            self.ir.chat_command(f"!eol {car_num} PENALTY #{car_num}: {penalty}")
+            self._activate_iracing_window()
+            self.ir.chat_command(1)
+            pyautogui.typewrite(f"!eol {car_num} PENALTY #{car_num}: {penalty}")
+            pyautogui.press("enter")
+
+    @staticmethod
+    def _activate_iracing_window():
+        window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
+        window.activate()
 
     # disqualify all cars who are named NO DRIVER
     def practice(self):
         dq_drivers = [driver["CarNumberRaw"] for driver in
                       self.ir["DriverInfo"]["Drivers"] if
-                      driver["UserName"] == "NO DRIVER"]
+                      "NO DRIVER" in driver["UserName"]]
         for number in dq_drivers:
-            self.ir.chat_command(f"!dq {number} - car unused this week")
+            self._activate_iracing_window()
+            self.ir.chat_command(1)
+            pyautogui.typewrite(f"!dq {number} Car unused this week")
+            pyautogui.press("enter")
 
     # identify when the session is QUALIFYING
     def qualifying(self):
@@ -82,7 +101,6 @@ class iRacing:
         while qual_done is False:
             self.ir.freeze_var_buffer_latest()
             if self.ir["SessionState"] != 6:
-                print("waiting..")
                 time.sleep(1)
             else:
                 for position in self.ir["QualifyResultsInfo"]["Results"]:
@@ -90,22 +108,35 @@ class iRacing:
                         match = [driver["CarNumberRaw"] for driver in
                                  self.ir["DriverInfo"]["Drivers"] if
                                  driver["CarIdx"] == position["CarIdx"]][0]
-                        self.ir.chat_command(f"!dq {match} - #{match} Missed the race")
+                        self._activate_iracing_window()
+                        self.ir.chat_command(1)
+                        pyautogui.typewrite(f"!dq {match} #{match} missed the race")
+                        pyautogui.press("enter")
                 qual_done = True
 
     def _issue_pre_race_penalty(self, car_num):
         penalty = random.choice(self.pre_race_penalties)
+        self._activate_iracing_window()
+        self.ir.chat_command(1)
         if penalty == "Failed Inspection x2":
-            print(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
-            self.ir.chat_command(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
+            print(f"#{car_num} to the rear: {penalty}")
+            pyautogui.typewrite(f"!eol {car_num} #{car_num} to the rear: {penalty}")
+            pyautogui.press("enter")
         elif penalty == "Failed Inspection x3":
-            print(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
-            print(f"!bl {car_num} D")
-            self.ir.chat_command(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
-            self.ir.chat_command(f"!bl {car_num} D")
+            print(f"#{car_num} to the rear: {penalty}")
+            print(f"#{car_num} drivethrough")
+            pyautogui.typewrite(f"!eol {car_num} #{car_num} to the rear: {penalty}")
+            pyautogui.press("enter")
+            self.ir.chat_command(1)
+            pyautogui.typewrite(f"!bl {car_num} D")
+            pyautogui.press("enter")
+            self.ir.chat_command(1)
+            pyautogui.typewrite(f"#{car_num} drivethrough")
+            pyautogui.press("enter")
         elif penalty == "Unapproved Adjustments":
-            print(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
-            self.ir.chat_command(f"!eol {car_num} - #{car_num} to the rear: {penalty}")
+            print(f"#{car_num} to the rear: {penalty}")
+            pyautogui.typewrite(f"!eol {car_num} #{car_num} to the rear: {penalty}")
+            pyautogui.press("enter")
 
     def _pre_race_penalties(self):
         for driver in self.ir["DriverInfo"]["Drivers"]:
@@ -152,28 +183,23 @@ class iRacing:
                 time.sleep(1)
 
     def main(self):
-        practice = False
-        qualifying = False
-        race = False
-
-        while practice is False:
-            if self.ir["SessionNum"] == 0:
+        practice_done = False
+        qualifying_done = False
+        race_done = False
+        
+        while True:
+            #wait until connected to the iracing session
+            self.ir.freeze_var_buffer_latest()
+            #recognize the session is practice
+            if self.ir["SessionNum"] == 0 and practice_done is False:
                 self.practice()
-                print("Practice is done")
-                practice = True
-            else:
-                time.sleep(1)
-        while qualifying is False:
-            if self.ir["SessionNum"] == 1:
+                practice_done = True
+            elif self.ir["SessionNum"] == 1 and qualifying_done is False:
                 self.qualifying()
-                print("Qualifying is done")
-                qualifying = True
-            else:
-                time.sleep(1)
-        while race is False:
-            if self.ir["SessionNum"] == 2:
+                qualifying_done = True
+            elif self.ir["SessionNum"] == 2 and race_done is False:
                 self.race()
-                race = True
+                race_done = True
             else:
                 time.sleep(1)
 
