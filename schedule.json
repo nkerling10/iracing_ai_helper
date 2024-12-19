@@ -1,7 +1,6 @@
 {
     "daytona_1": {
         "full_time": {
-            "14": "Chad Finchum",
             "20": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -17,7 +16,6 @@
     },
     "atlanta_1": {
         "full_time": {
-            "14": "JJ Yeley",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
@@ -27,13 +25,12 @@
             "30": "",
             "32": "Jordan Anderson",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "cota": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "John Hunter Nemechek",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -49,7 +46,6 @@
     },
     "phoenix_1": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
@@ -65,7 +61,6 @@
     },
     "las_vegas_1": {
         "full_time": {
-            "14": "JJ Yeley",
             "20": "Christopher Bell",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
@@ -75,13 +70,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "homestead": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -91,13 +85,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "martinsville_1": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -107,13 +100,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "darlington": {
         "full_time": {
-            "14": "CJ McLaughlin",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Ross Chastain"
@@ -123,13 +115,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "bristol_1": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -145,7 +136,6 @@
     },
     "rockingham": {
         "full_time": {
-            "14": "JJ Yeley",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -155,13 +145,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "talladega_1": {
         "full_time": {
-            "14": "Chad Finchum",
             "20": "Joe Graf Jr.",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -177,7 +166,6 @@
     },
     "texas": {
         "full_time": {
-            "14": "CJ McLaughlin",
             "20": "Christopher Bell",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -187,13 +175,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "charlotte": {
         "full_time": {
-            "14": "JJ Yeley",
             "20": "Ty Gibbs",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -203,13 +190,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "nashville": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Joe Graf Jr.",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -219,13 +205,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "sebring": {
         "full_time": {
-            "14": "Andre Castro",
             "20": "John Hunter Nemechek",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -241,7 +226,6 @@
     },
     "pocono": {
         "full_time": {
-            "14": "Chad Finchum",
             "20": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -251,13 +235,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "atlanta": {
         "full_time": {
-            "14": "CJ McLaughlin",
             "20": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
@@ -267,13 +250,12 @@
             "30": "",
             "32": "Jordan Anderson",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "chicago": {
         "full_time": {
-            "14": "Andre Castro",
             "20": "Ty Gibbs",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -289,7 +271,6 @@
     },
     "sonoma": {
         "full_time": {
-            "14": "Brad Perez",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -305,7 +286,6 @@
     },
     "dover": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -315,13 +295,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "indianapolis": {
         "full_time": {
-            "14": "CJ McLaughlin",
             "20": "Joe Graf Jr.",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -331,13 +310,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "iowa": {
         "full_time": {
-            "14": "CJ McLaughlin",
             "20": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Ross Chastain"
@@ -353,7 +331,6 @@
     },
     "watkins_glen": {
         "full_time": {
-            "14": "Andre Castro",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Ross Chastain"
@@ -369,7 +346,6 @@
     },
     "daytona_2": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -385,7 +361,6 @@
     },
     "laguna seca": {
         "full_time": {
-            "14": "Andre Castro",
             "20": "John Hunter Nemechek",
             "35": "Greg Van Alst",
             "92": "Nathan Byrd"
@@ -401,7 +376,6 @@
     },
     "wwt raceway": {
         "full_time": {
-            "14": "JJ Yeley",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
@@ -411,13 +385,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "bristol_2": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -433,7 +406,6 @@
     },
     "kansas": {
         "full_time": {
-            "14": "JJ Yeley",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
@@ -449,7 +421,6 @@
     },
     "charlotte roval": {
         "full_time": {
-            "14": "Andre Castro",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -465,7 +436,6 @@
     },
     "las vegas_2": {
         "full_time": {
-            "14": "JJ Yeley",
             "20": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -475,13 +445,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "talladega_2": {
         "full_time": {
-            "14": "CJ McLaughlin",
             "20": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
@@ -497,7 +466,6 @@
     },
     "martinsville_2": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
@@ -507,13 +475,12 @@
             "30": "",
             "32": "",
             "36": "",
-            "45": "Garrett Smithley",
+            "45": "",
             "50": ""
         }
     },
     "phoenix_2": {
         "full_time": {
-            "14": "Nathan Byrd",
             "20": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
