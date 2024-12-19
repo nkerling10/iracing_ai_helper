@@ -24,34 +24,38 @@ class iRacing:
                                    "Failed Inspection x3",
                                    "Unapproved Adjustments"]
         self.ir = irsdk.IRSDK()
-        #self.ir.startup(test_file='session_data/data_practice.bin')
+        #self.ir.startup(test_file="session_data/data_practice.bin")
         self.ir.startup()
         
         self.main()
 
     @staticmethod
     def _get_flag(flag):
+        '''
+            Big thanks to fruzyna for this function
+                source: https://github.com/fruzyna/iracing-apps
+        '''
         if flag & irsdk.Flags.checkered:
-            flag_color = 'checkered'
+            flag_color = "checkered"
         else:
             if flag & irsdk.Flags.blue:
-                flag_color = 'blue'
+                flag_color = "blue"
             elif flag & irsdk.Flags.black:
-                flag_color = 'black'
+                flag_color = "black"
             elif flag & irsdk.Flags.furled:
-                flag_color = 'gray'
+                flag_color = "gray"
             elif flag & irsdk.Flags.red:
-                flag_color = 'red'
+                flag_color = "red"
             elif flag & irsdk.Flags.white:
-                flag_color = 'white'
+                flag_color = "white"
             elif flag & irsdk.Flags.yellow or flag & irsdk.Flags.yellow_waving \
                  or flag & irsdk.Flags.caution or flag & irsdk.Flags.caution_waving \
                  or flag & irsdk.Flags.debris:
-                flag_color = 'yellow'
+                flag_color = "yellow"
             elif flag & irsdk.Flags.green or flag & irsdk.Flags.green_held:
-                flag_color = 'green'
+                flag_color = "green"
             else:
-                flag_color = 'green'
+                flag_color = "green"
 
         return flag_color, flag & irsdk.Flags.repair
 
@@ -61,7 +65,7 @@ class iRacing:
         else:
             penalty = random.choice(self.penalties)
 
-        flag_color, _meatball = self._get_flag(self.ir['SessionFlags'])
+        flag_color, _meatball = self._get_flag(self.ir["SessionFlags"])
 
         if flag_color == "green":
             print(f"Passthrough for #{car_num}: {penalty}")
@@ -150,7 +154,7 @@ class iRacing:
         self._pre_race_penalties()
         pit_tracking = []
         while True:
-            if self.ir["Lap"] > -1:
+            if self.ir["Lap"] > 0:
                 self.ir.freeze_var_buffer_latest()
                 # get all cars currently on pit road
                 cars_on_pit_road = [driver["CarNumberRaw"] for driver
