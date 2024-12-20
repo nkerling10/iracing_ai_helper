@@ -577,7 +577,7 @@
         },
         {
             "driverName": "Anthony Alfredo",
-            "carNumber": "43",
+            "carNumber": "02",
             "carDesign": "10,ffee47,111111,0300c2",
             "suitDesign": "1,ffee47,111111,0300c2",
             "helmetDesign": "20,ffee47,111111,0300c2",
@@ -737,9 +737,9 @@
             "disableCarDecals": true
         },
         {
-            "driverName": "Josh Bilicki",
+            "driverName": "Kyle Weatherman",
             "carDesign": "18,0300c2,111111,ffee47",
-            "carNumber": "92",
+            "carNumber": "91",
             "suitDesign": "13,0300c2,111111,ffee47",
             "helmetDesign": "32,0300c2,111111,ffee47",
             "carPath": "stockcars2\\camaro2019",
@@ -829,7 +829,7 @@
             "disableCarDecals": true
         },
         {
-            "driverName": "Jordan Anderson",
+            "driverName": "Austin Green",
             "carDesign": "18,111111,ffffff,0ada00",
             "carNumber": "32",
             "suitDesign": "15,111111,ffffff,0ada00",
