@@ -90,6 +90,7 @@
 			"carPath": "stockcars2\\camaro2019",
 			"carId": 114,
 			"carDesign": "10,ffee47,111111,0300c2",
+			"carTgaName": "car_02.tga",
 			"numberDesign": "0,0,FFFFFF,777777,000000",
 			"helmetDesign": "20,ffee47,111111,0300c2",
 			"suitDesign": "1,ffee47,111111,0300c2",

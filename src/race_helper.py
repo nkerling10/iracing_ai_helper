@@ -141,6 +141,8 @@ class iRacing:
 
     # identify when the session is RACE
     def race(self):
+        time.sleep(10)
+        self._send_iracing_command("!gridstart")
         #wait until all cars grid and pacing starts
         self.ir.freeze_var_buffer_latest()
         self._pre_race_penalties()
