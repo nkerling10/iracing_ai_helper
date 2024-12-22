@@ -163,7 +163,4 @@ cython_debug/
 
 .DS_Store
 
-rosters/*
-!rosters/2025_Xfinity_Series_NSK_AI
-rosters/2025_Xfinity_Series_NSK_AI/*
-!rosters/2025_Xfinity_Series_NSK_AI/roster.json
+paint_storage/

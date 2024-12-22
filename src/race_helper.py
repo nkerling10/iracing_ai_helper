@@ -7,6 +7,8 @@ import pygetwindow as gw
 from enum import Enum
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
 
+class State:
+    ir_connected = False
 
 class iRacing:
     def __init__(self):
@@ -85,7 +87,7 @@ class iRacing:
             self._send_iracing_command(f"!eol {car_num} PENALTY #{car_num}: {penalty}")
 
     # disqualify all cars who are named NO DRIVER
-    def practice(self):
+    def _practice(self):
         dq_drivers = [driver["CarNumber"] for driver in
                       self.ir["DriverInfo"]["Drivers"] if
                       "NO DRIVER" in driver["UserName"]]
@@ -93,7 +95,7 @@ class iRacing:
            self._send_iracing_command(f"!dq {number} Car unused this week.")
 
     # identify when the session is QUALIFYING
-    def qualifying(self):
+    def _qualifying(self):
         qual_done = False
         while qual_done is False:
             self.ir.freeze_var_buffer_latest()
@@ -126,9 +128,9 @@ class iRacing:
         elif penalty == "Failed Inspection x3":
             print(f"#{car_num} to the rear: {penalty}")
             print(f"#{car_num} drivethrough")
-            self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
+            self._send_iracing_command(f"!eol {car_num}")
             self._send_iracing_command(f"!bl {car_num} D")
-            self._send_iracing_command(f"#{car_num} drivethrough penalty")
+            self._send_iracing_command(f"#{car_num} to the rear plus drivethrough penalty: {penalty}")
         elif penalty == "Unapproved Adjustments":
             print(f"#{car_num} to the rear: {penalty}")
             self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
@@ -139,11 +141,12 @@ class iRacing:
                 if random.randint(1, 100) < self.pre_race_penalty_chance:
                     self._issue_pre_race_penalty(driver["CarNumber"])
 
-    # identify when the session is RACE
-    def race(self):
-        time.sleep(10)
+    def _race(self):
+        # wait 30 seconds for AI cars to grid
+        # start the grid or else it will wait 5 minutes for DQ'd cars
+        time.sleep(30)
+        #TODO: play system sound for start engine command
         self._send_iracing_command("!gridstart")
-        #wait until all cars grid and pacing starts
         self.ir.freeze_var_buffer_latest()
         self._pre_race_penalties()
         pit_tracking = []
@@ -180,26 +183,47 @@ class iRacing:
             else:
                 time.sleep(1)
 
-    def main(self):
+    def check_iracing(self, state):
+        if state.ir_connected and not (self.ir.is_initialized and self.ir.is_connected):
+            state.ir_connected = False
+            self.ir.shutdown()
+            print('irsdk disconnected')
+        elif not state.ir_connected and self.ir.startup() and self.ir.is_initialized and self.ir.is_connected:
+            state.ir_connected = True
+            print('irsdk connected')
+
+    def _process_race(self):
         practice_done = False
         qualifying_done = False
         race_done = False
 
         while True:
-            #wait until connected to the iracing session
             self.ir.freeze_var_buffer_latest()
-            #recognize the session is practice
-            if self.ir["SessionNum"] == 0 and practice_done is False:
-                self.practice()
+            current_session = self.ir["SessionNum"]
+
+            if current_session == 0 and practice_done is False:
+                self._practice()
                 practice_done = True
-            elif self.ir["SessionNum"] == 1 and qualifying_done is False:
-                self.qualifying()
+            elif current_session == 1 and qualifying_done is False:
+                self._qualifying()
                 qualifying_done = True
-            elif self.ir["SessionNum"] == 2 and race_done is False:
-                self.race()
+            elif current_session == 2 and race_done is False:
+                self._race()
                 race_done = True
             else:
                 time.sleep(1)
 
-if __name__ == "__main__":
+    def main(self):
+        state = State()
+        try:
+            while True:
+                self.check_iracing(state)
+                if state.ir_connected:
+                    self._process_race()
+                time.sleep(1)
+        except KeyboardInterrupt:
+            pass
+
+
+if __name__ == '__main__':
     iRacing()
