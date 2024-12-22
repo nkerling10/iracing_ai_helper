@@ -44,9 +44,9 @@
 	"race_length": 15,
 	"restarts": 2,
 	"rolling_starts": true,
-	"rosterName": "2025 Xfinity Series - AI",
+	"rosterName": "2025_Xfinity_Series_NSK_AI",
 	"short_parade_lap": false,
-	"start_on_qual_tire": false,
+	"start_on_qual_tire": true,
 	"startZone": true,
 	"subsessions": [
 		3,
