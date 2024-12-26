@@ -1,7 +1,7 @@
 {
     "daytona_1": {
         "full_time": {
-            "20": "Ryan Truex",
+            "19": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -16,7 +16,7 @@
     },
     "atlanta_1": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
         },
@@ -31,7 +31,7 @@
     },
     "cota": {
         "full_time": {
-            "20": "John Hunter Nemechek",
+            "19": "John Hunter Nemechek",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -46,7 +46,7 @@
     },
     "phoenix_1": {
         "full_time": {
-            "20": "Justin Bonsignore",
+            "19": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
         },
@@ -61,7 +61,7 @@
     },
     "las_vegas_1": {
         "full_time": {
-            "20": "Christopher Bell",
+            "19": "Christopher Bell",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
         },
@@ -76,7 +76,7 @@
     },
     "homestead": {
         "full_time": {
-            "20": "Ryan Truex",
+            "19": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -91,7 +91,7 @@
     },
     "martinsville_1": {
         "full_time": {
-            "20": "Justin Bonsignore",
+            "19": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -106,7 +106,7 @@
     },
     "darlington": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Ross Chastain"
         },
@@ -121,7 +121,7 @@
     },
     "bristol_1": {
         "full_time": {
-            "20": "Justin Bonsignore",
+            "19": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -136,7 +136,7 @@
     },
     "rockingham": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -151,7 +151,7 @@
     },
     "talladega_1": {
         "full_time": {
-            "20": "Joe Graf Jr.",
+            "19": "Joe Graf Jr.",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -166,7 +166,7 @@
     },
     "texas": {
         "full_time": {
-            "20": "Christopher Bell",
+            "19": "Christopher Bell",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -181,7 +181,7 @@
     },
     "charlotte": {
         "full_time": {
-            "20": "Ty Gibbs",
+            "19": "Ty Gibbs",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -196,7 +196,7 @@
     },
     "nashville": {
         "full_time": {
-            "20": "Joe Graf Jr.",
+            "19": "Joe Graf Jr.",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -211,7 +211,7 @@
     },
     "sebring": {
         "full_time": {
-            "20": "John Hunter Nemechek",
+            "19": "John Hunter Nemechek",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -226,7 +226,7 @@
     },
     "pocono": {
         "full_time": {
-            "20": "Ryan Truex",
+            "19": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -241,7 +241,7 @@
     },
     "atlanta": {
         "full_time": {
-            "20": "Justin Bonsignore",
+            "19": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
         },
@@ -256,7 +256,7 @@
     },
     "chicago": {
         "full_time": {
-            "20": "Ty Gibbs",
+            "19": "Ty Gibbs",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -271,7 +271,7 @@
     },
     "sonoma": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -286,7 +286,7 @@
     },
     "dover": {
         "full_time": {
-            "20": "Ryan Truex",
+            "19": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -301,7 +301,7 @@
     },
     "indianapolis": {
         "full_time": {
-            "20": "Joe Graf Jr.",
+            "19": "Joe Graf Jr.",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -316,7 +316,7 @@
     },
     "iowa": {
         "full_time": {
-            "20": "Justin Bonsignore",
+            "19": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Ross Chastain"
         },
@@ -331,7 +331,7 @@
     },
     "watkins_glen": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Ross Chastain"
         },
@@ -346,7 +346,7 @@
     },
     "daytona_2": {
         "full_time": {
-            "20": "Ryan Truex",
+            "19": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -361,7 +361,7 @@
     },
     "laguna seca": {
         "full_time": {
-            "20": "John Hunter Nemechek",
+            "19": "John Hunter Nemechek",
             "35": "Greg Van Alst",
             "92": "Nathan Byrd"
         },
@@ -376,7 +376,7 @@
     },
     "wwt raceway": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Josh Bilicki"
         },
@@ -391,7 +391,7 @@
     },
     "bristol_2": {
         "full_time": {
-            "20": "Justin Bonsignore",
+            "19": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -406,7 +406,7 @@
     },
     "kansas": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
         },
@@ -421,7 +421,7 @@
     },
     "charlotte roval": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -436,7 +436,7 @@
     },
     "las vegas_2": {
         "full_time": {
-            "20": "Aric Almirola",
+            "19": "Aric Almirola",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -451,7 +451,7 @@
     },
     "talladega_2": {
         "full_time": {
-            "20": "Ryan Truex",
+            "19": "Ryan Truex",
             "35": "Greg Van Alst",
             "92": "Nick Leitz"
         },
@@ -466,7 +466,7 @@
     },
     "martinsville_2": {
         "full_time": {
-            "20": "Justin Bonsignore",
+            "19": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },
@@ -481,7 +481,7 @@
     },
     "phoenix_2": {
         "full_time": {
-            "20": "Justin Bonsignore",
+            "19": "Justin Bonsignore",
             "35": "Greg Van Alst",
             "92": "Dawson Cram"
         },

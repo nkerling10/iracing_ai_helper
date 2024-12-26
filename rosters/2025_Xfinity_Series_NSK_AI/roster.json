@@ -347,7 +347,7 @@
 		},
 		{
 			"driverName": "Brandon Jones",
-			"carNumber": "19",
+			"carNumber": "20",
 			"carDesign": "4,ffffff,1a4b9b,dff000",
 			"suitDesign": "23,ffffff,1a4b9b,dff000",
 			"helmetDesign": "0,ffffff,1a4b9b,dff000",
@@ -371,7 +371,7 @@
 		{
 			"driverName": "Ryan Truex",
 			"carDesign": "23,ffffff,111111,f06e34",
-			"carNumber": "20",
+			"carNumber": "19",
 			"suitDesign": "1,ffffff,111111,f06e34",
 			"helmetDesign": "30,ffffff,111111,f06e34",
 			"carPath": "stockcars2\\supra2019",
