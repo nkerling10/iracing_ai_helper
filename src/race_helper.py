@@ -13,8 +13,8 @@ class State:
 
 class iRacing:
     def __init__(self):
-        self.field_size = 36
-        self.penalty_chance = 100
+        self.field_size = 50
+        self.penalty_chance = 8
         self.pre_race_penalty_chance = 5
         self.penalties_player = ["Crew members over the wall too soon",
                                  "Too many men over the wall",
@@ -92,12 +92,12 @@ class iRacing:
     def _disable_chat(self):
         for driver in self.ir["DriverInfo"]["Drivers"]:
             if driver["CarIsAI"] == 1:
-                self._send_iracing_command(f"!nchat {driver["UserName"].replace(' ', '.')}")
+                self._send_iracing_command(f"!nchat {driver['UserName'].replace(' ', '.')}")
 
     # disqualify all cars who are named NO DRIVER
     def _practice(self):
         #self._send_iracing_command("!nchat")
-        self._disable_chat()
+        #self._disable_chat()
         dq_drivers = [driver["CarNumber"] for driver in
                       self.ir["DriverInfo"]["Drivers"] if
                       "NO DRIVER" in driver["UserName"]]
@@ -166,9 +166,10 @@ class iRacing:
                 # get all cars currently on pit road
                 cars_on_pit_road = [driver["CarNumber"] for driver
                                     in self.ir["DriverInfo"]["Drivers"]
-                                    if self.ir["CarIdxOnPitRoad"][driver["CarIdx"]
+                                    if self.ir["CarIdxOnPitRoad"][driver["CarIdx"]]
                                     and driver["UserName"] != "Pace Car"]
-                                    is True]
+                print(cars_on_pit_road)
+                print(pit_tracking)
                 # if there is at least 1 car on pit road
                 if len(cars_on_pit_road) > 0:
                     # for each car in this pulled instance
@@ -191,6 +192,7 @@ class iRacing:
                     pit_tracking = []
                     time.sleep(1)
             else:
+                print("waiting")
                 time.sleep(1)
 
     def check_iracing(self, state):
