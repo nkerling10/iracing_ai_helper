@@ -5,6 +5,7 @@ import json
 import pyautogui
 import pygetwindow as gw
 from enum import Enum
+from playsound import playsound
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
 
 class State:
@@ -86,8 +87,17 @@ class iRacing:
             print(f"EOL for #{car_num}: {penalty}")
             self._send_iracing_command(f"!eol {car_num} PENALTY #{car_num}: {penalty}")
 
+    # disable chat for all drivers to stop them from posting
+    # when they are pitting
+    def _disable_chat(self):
+        for driver in self.ir["DriverInfo"]["Drivers"]:
+            if driver["CarIsAI"] == 1:
+                self._send_iracing_command(f"!nchat {driver["UserName"].replace(' ', '.')}")
+
     # disqualify all cars who are named NO DRIVER
     def _practice(self):
+        #self._send_iracing_command("!nchat")
+        self._disable_chat()
         dq_drivers = [driver["CarNumber"] for driver in
                       self.ir["DriverInfo"]["Drivers"] if
                       "NO DRIVER" in driver["UserName"]]
@@ -142,10 +152,10 @@ class iRacing:
                     self._issue_pre_race_penalty(driver["CarNumber"])
 
     def _race(self):
-        # wait 30 seconds for AI cars to grid
+        #playsound('/path/to/a/sound/file/you/want/to/play.mp3')
+        # wait 15 seconds for AI cars to grid
         # start the grid or else it will wait 5 minutes for DQ'd cars
-        time.sleep(30)
-        #TODO: play system sound for start engine command
+        time.sleep(15)
         self._send_iracing_command("!gridstart")
         self.ir.freeze_var_buffer_latest()
         self._pre_race_penalties()
@@ -200,13 +210,24 @@ class iRacing:
         while True:
             self.ir.freeze_var_buffer_latest()
             current_session = self.ir["SessionNum"]
+            session_name = [session["SessionName"] for session in
+                            self.ir["SessionInfo"]["Sessions"] if
+                            session["SessionNum"] == current_session][0]
 
-            if current_session == 0 and practice_done is False:
-                self._practice()
-                practice_done = True
-            elif current_session == 1 and qualifying_done is False:
-                self._qualifying()
-                qualifying_done = True
+            if current_session == 0:
+                if practice_done is False:
+                    self._practice()
+                    practice_done = True
+                if session_name == "QUALIFYING":
+                    self._qualifying()
+                    qualifying_done = True
+            elif current_session == 1:
+                if qualifying_done is False:
+                    self._qualifying()
+                    qualifying_done = True
+                if session_name == "RACE":
+                    self._race()
+                    race_done = True
             elif current_session == 2 and race_done is False:
                 self._race()
                 race_done = True
