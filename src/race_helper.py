@@ -2,8 +2,10 @@ import irsdk
 import time
 import random
 import json
+import os
 import pyautogui
 import pygetwindow as gw
+from pathlib import Path
 from enum import Enum
 from playsound import playsound
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
@@ -152,7 +154,9 @@ class iRacing:
                     self._issue_pre_race_penalty(driver["CarNumber"])
 
     def _race(self):
-        #playsound('/path/to/a/sound/file/you/want/to/play.mp3')
+        time.sleep(5)
+        #TODO : find full path to file
+        playsound(os.path.abspath("start-your-engines.mp3"))
         # wait 15 seconds for AI cars to grid
         # start the grid or else it will wait 5 minutes for DQ'd cars
         time.sleep(15)
@@ -236,6 +240,7 @@ class iRacing:
                 time.sleep(1)
 
     def main(self):
+        playsound(os.path.join(os.getcwd(), "src/start-your-engines.mp3"))
         state = State()
         try:
             while True:

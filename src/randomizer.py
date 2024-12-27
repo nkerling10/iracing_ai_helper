@@ -65,12 +65,16 @@ def set_attributes(driver_name, car, driver_tiers, car_list):
 
     if car_list[car]["car_tier"] == 1:
         car_smoothness = random.randint(-100, 0)
+        #random.randint(25, 75)
     elif car_list[car]["car_tier"] == 2:
         car_smoothness = random.randint(-200, -100)
+        #random.randint(0, 100)
     elif car_list[car]["car_tier"] == 3:
         car_smoothness = random.randint(-400, -300)
+        #random.randint(-100, 150)
     elif car_list[car]["car_tier"] == 4:
         car_smoothness = random.randint(-500, -400)
+        #random.randint(-150, 200)
     else:
         print(f"Fix car tier for {car}!")
         quit()
