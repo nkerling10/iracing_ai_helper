@@ -15,7 +15,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler("debug.log"),
+        logging.FileHandler(f"{os.getcwd()}/logs/debug.log"),
         logging.StreamHandler()
     ]
 )
@@ -83,7 +83,7 @@ class iRacing:
 
         return flag_color, flag & irsdk.Flags.repair
 
-    def pit_penalty(self, car_num):
+    def _pit_penalty(self, car_num):
         if car_num == self.ir["DriverInfo"]["Drivers"][0]["CarNumber"]:
             penalty = random.choice(self.penalties_player)
         else:
@@ -212,7 +212,7 @@ class iRacing:
                             pit_tracking.remove(car)
                             # calculate penalty chance once car leaves pit road
                             if random.randint(1, 100) < self.penalty_chance:
-                                self.pit_penalty(car_num)
+                                self._pit_penalty(car_num)
                 else:
                     logging.info("No cars on pit road")
                     pit_tracking = []
