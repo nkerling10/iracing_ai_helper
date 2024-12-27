@@ -5,10 +5,20 @@ import json
 import os
 import pyautogui
 import pygetwindow as gw
+import logging
 from pathlib import Path
 from enum import Enum
 from playsound import playsound
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler("debug.log"),
+        logging.StreamHandler()
+    ]
+)
 
 class State:
     ir_connected = False
@@ -82,11 +92,11 @@ class iRacing:
         flag_color, _meatball = self._get_flag(self.ir["SessionFlags"])
 
         if flag_color == "green":
-            print(f"PENALTY - Passthrough for #{car_num}: {penalty}")
+            logging.info(f"PENALTY - Passthrough for #{car_num}: {penalty}")
             self._send_iracing_command(f"!bl {car_num} D")
             self._send_iracing_command(f"PENALTY #{car_num}: {penalty}")
         elif flag_color == "yellow":
-            print(f"EOL for #{car_num}: {penalty}")
+            logging.info(f"EOL for #{car_num}: {penalty}")
             self._send_iracing_command(f"!eol {car_num} PENALTY #{car_num}: {penalty}")
 
     # disable chat for all drivers to stop them from posting
@@ -98,27 +108,34 @@ class iRacing:
 
     # disqualify all cars who are named NO DRIVER
     def _practice(self):
+        logging.info("Starting practice handler")
         #self._send_iracing_command("!nchat")
         #self._disable_chat()
         dq_drivers = [driver["CarNumber"] for driver in
                       self.ir["DriverInfo"]["Drivers"] if
                       "NO DRIVER" in driver["UserName"]]
         for number in dq_drivers:
+           logging.info(f"Disqualifying car {number} for NO DRIVER name")
            self._send_iracing_command(f"!dq {number} Car unused this week.")
 
     # identify when the session is QUALIFYING
     def _qualifying(self):
+        logging.info("Starting qualifying handler")
         qual_done = False
         while qual_done is False:
             self.ir.freeze_var_buffer_latest()
             if self.ir["SessionState"] != 6:
+                logging.info("Session state is not finalized..")
                 time.sleep(1)
             else:
                 while True:
+                    logging.info("Session state is finalized, waiting for official results..")
                     self.ir.freeze_var_buffer_latest()
                     if self.ir["SessionInfo"]["Sessions"][1]["ResultsOfficial"] != 1:
+                        logging.info("Waiting for results to become official..")
                         time.sleep(1)
                     else:
+                        logging.info("Qualifying results are now official.")
                         break
                 for position in self.ir["SessionInfo"]["Sessions"][1]["ResultsPositions"]:
                     if position["Position"] > self.field_size:
@@ -127,7 +144,7 @@ class iRacing:
                                 driver["CarIdx"] == position["CarIdx"]
                                 and "NO DRIVER" not in driver["UserName"]]
                         if match:
-                            print(f"{match[0]} missed the race")
+                            logging.info(f"{match[0]} car missed the race")
                             self._send_iracing_command(f"!dq {match[0]} #{match[0]} missed the race")
                     
                     qual_done = True
@@ -135,16 +152,16 @@ class iRacing:
     def _issue_pre_race_penalty(self, car_num):
         penalty = random.choice(self.pre_race_penalties)
         if penalty == "Failed Inspection x2":
-            print(f"#{car_num} to the rear: {penalty}")
+            logging.info(f"#{car_num} to the rear: {penalty}")
             self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
         elif penalty == "Failed Inspection x3":
-            print(f"#{car_num} to the rear: {penalty}")
-            print(f"#{car_num} drivethrough")
+            logging.info(f"#{car_num} to the rear: {penalty}")
+            logging.info(f"#{car_num} drivethrough")
             self._send_iracing_command(f"!eol {car_num}")
             self._send_iracing_command(f"!bl {car_num} D")
             self._send_iracing_command(f"#{car_num} to the rear plus drivethrough penalty: {penalty}")
         elif penalty == "Unapproved Adjustments":
-            print(f"#{car_num} to the rear: {penalty}")
+            logging.info(f"#{car_num} to the rear: {penalty}")
             self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
 
     def _pre_race_penalties(self):
@@ -154,13 +171,18 @@ class iRacing:
                     self._issue_pre_race_penalty(driver["CarNumber"])
 
     def _race(self):
+        logging.info("Starting race handler, sleeping for 5 seconds")
         time.sleep(5)
+        logging.info("Playing sound file")
         playsound(os.path.join(os.getcwd(), "src/start-your-engines.mp3"))
         # wait 20 seconds for AI cars to grid
         # start the grid or else it will wait 5 minutes for DQ'd cars
+        logging.info("Sleeping for 20 seconds")
         time.sleep(20)
+        logging.info("Issuing gridstart command")
         self._send_iracing_command("!gridstart")
         self.ir.freeze_var_buffer_latest()
+        logging.info("Issuing pre-race penalties")
         self._pre_race_penalties()
         pit_tracking = []
         while True:
@@ -171,7 +193,6 @@ class iRacing:
                                     in self.ir["DriverInfo"]["Drivers"]
                                     if self.ir["CarIdxOnPitRoad"][driver["CarIdx"]]
                                     and driver["UserName"] != "Pace Car"]
-                print(pit_tracking)
                 # if there is at least 1 car on pit road
                 if len(cars_on_pit_road) > 0:
                     # for each car in this pulled instance
@@ -179,37 +200,38 @@ class iRacing:
                         # if the car has not been processed this cycle
                         if car_num not in pit_tracking:
                             # track the car number
+                            logging.info(f"Tracking pitstop for {car_num}")
                             pit_tracking.append(car_num)
-                            # calculate penalty chance
-                            if random.randint(1, 100) < self.penalty_chance:
-                                self.pit_penalty(car_num)
                         # if the car has already been processed, skip it
                         else:
                             continue
                     # check if any cars need to be removed from tracking
                     for car in pit_tracking:
                         if car not in cars_on_pit_road:
+                            logging.info(f"{car} is no longer on pit road, checking for penalty")
                             pit_tracking.remove(car)
+                            # calculate penalty chance once car leaves pit road
+                            if random.randint(1, 100) < self.penalty_chance:
+                                self.pit_penalty(car_num)
                 else:
+                    logging.info("No cars on pit road")
                     pit_tracking = []
                     time.sleep(1)
             else:
-                print("waiting")
+                logging.info("Lap is not >0, sleeping")
                 time.sleep(1)
 
     def _check_iracing(self, state):
         if state.ir_connected and not (self.ir.is_initialized and self.ir.is_connected):
             state.ir_connected = False
             self.ir.shutdown()
-            print('irsdk disconnected')
+            logging.info("irsdk disconnected")
         elif not state.ir_connected and self.ir.startup() and self.ir.is_initialized and self.ir.is_connected:
             state.ir_connected = True
-            print('irsdk connected')
+            logging.info("irsdk connected")
 
     def _process_race(self):
-        practice_done = False
-        qualifying_done = False
-        race_done = False
+        logging.info("Starting race processor!")
 
         while True:
             self.ir.freeze_var_buffer_latest()
@@ -217,24 +239,21 @@ class iRacing:
             session_name = [session["SessionName"] for session in
                             self.ir["SessionInfo"]["Sessions"] if
                             session["SessionNum"] == current_session][0]
-
+            logging.info(f"Current session: {current_session} - {session_name}")
             if current_session == 0:
-                if practice_done is False:
+                if session_name == "PRACTICE":
                     self._practice()
-                    practice_done = True
                 if session_name == "QUALIFYING":
+                    self._practice()
                     self._qualifying()
-                    qualifying_done = True
             elif current_session == 1:
-                if qualifying_done is False:
+                if session_name == "QUALIFYING":
+                    self._practice()
                     self._qualifying()
-                    qualifying_done = True
                 if session_name == "RACE":
                     self._race()
-                    race_done = True
-            elif current_session == 2 and race_done is False:
+            elif current_session == 2:
                 self._race()
-                race_done = True
             else:
                 time.sleep(1)
 
@@ -245,10 +264,12 @@ class iRacing:
                 self._check_iracing(state)
                 if state.ir_connected:
                     self._process_race()
+                logging.info("Waiting for connection to iRacing..")
                 time.sleep(1)
         except KeyboardInterrupt:
             pass
 
 
 if __name__ == '__main__':
+    logging.info("App startup")
     iRacing()
