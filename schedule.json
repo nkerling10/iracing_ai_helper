@@ -27,13 +27,15 @@
             "32": "Jordan Anderson",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "cota": {
         "full_time": {
             "19": "John Hunter Nemechek",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -42,13 +44,15 @@
             "32": "Austin Green",
             "36": "",
             "45": "Brad Perez",
-            "50": "Preston Pardus"
+            "50": "Preston Pardus",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "phoenix_1": {
         "full_time": {
             "19": "Justin Bonsignore",
-            "35": "Greg Van Alst",
             "91": "Nick Leitz"
         },
         "part_time": {
@@ -57,13 +61,15 @@
             "32": "",
             "36": "",
             "45": "Stefan Parsons",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "las_vegas_1": {
         "full_time": {
             "19": "Christopher Bell",
-            "35": "Greg Van Alst",
             "91": "Nick Leitz"
         },
         "part_time": {
@@ -72,13 +78,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "homestead": {
         "full_time": {
             "19": "Ryan Truex",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -87,13 +95,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "martinsville_1": {
         "full_time": {
             "19": "Justin Bonsignore",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -102,13 +112,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "darlington": {
         "full_time": {
             "19": "Aric Almirola",
-            "35": "Greg Van Alst",
             "91": "Ross Chastain"
         },
         "part_time": {
@@ -117,13 +129,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "bristol_1": {
         "full_time": {
             "19": "Justin Bonsignore",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -132,13 +146,15 @@
             "32": "",
             "36": "",
             "45": "Stefan Parsons",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "rockingham": {
         "full_time": {
             "19": "Aric Almirola",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -147,13 +163,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "talladega_1": {
         "full_time": {
             "19": "Joe Graf Jr.",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -162,13 +180,15 @@
             "32": "Jordan Anderson",
             "36": "",
             "45": "Caesar Bacarella",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "texas": {
         "full_time": {
             "19": "Christopher Bell",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -177,13 +197,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "charlotte": {
         "full_time": {
             "19": "Ty Gibbs",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -192,13 +214,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "nashville": {
         "full_time": {
             "19": "Joe Graf Jr.",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -207,13 +231,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "sebring": {
         "full_time": {
             "19": "John Hunter Nemechek",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -222,13 +248,15 @@
             "32": "Austin Green",
             "36": "",
             "45": "Alon Day",
-            "50": "Preston Pardus"
+            "50": "Preston Pardus",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "pocono": {
         "full_time": {
             "19": "Ryan Truex",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -237,13 +265,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "atlanta": {
         "full_time": {
             "19": "Justin Bonsignore",
-            "35": "Greg Van Alst",
             "91": "Nick Leitz"
         },
         "part_time": {
@@ -252,13 +282,15 @@
             "32": "Jordan Anderson",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "chicago": {
         "full_time": {
             "19": "Ty Gibbs",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -267,13 +299,15 @@
             "32": "Austin Green",
             "36": "",
             "45": "Alon Day",
-            "50": "Preston Pardus"
+            "50": "Preston Pardus",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "sonoma": {
         "full_time": {
             "19": "Aric Almirola",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -282,13 +316,15 @@
             "32": "Austin Green",
             "36": "",
             "45": "Alon Day",
-            "50": "Preston Pardus"
+            "50": "Preston Pardus",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "dover": {
         "full_time": {
             "19": "Ryan Truex",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -297,13 +333,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "indianapolis": {
         "full_time": {
             "19": "Joe Graf Jr.",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -312,13 +350,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "iowa": {
         "full_time": {
             "19": "Justin Bonsignore",
-            "35": "Greg Van Alst",
             "91": "Ross Chastain"
         },
         "part_time": {
@@ -327,13 +367,15 @@
             "32": "",
             "36": "",
             "45": "Stefan Parsons",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "watkins_glen": {
         "full_time": {
             "19": "Aric Almirola",
-            "35": "Greg Van Alst",
             "91": "Ross Chastain"
         },
         "part_time": {
@@ -342,13 +384,15 @@
             "32": "Austin Green",
             "36": "",
             "45": "Alon Day",
-            "50": "Preston Pardus"
+            "50": "Preston Pardus",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "daytona_2": {
         "full_time": {
             "19": "Ryan Truex",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -357,13 +401,15 @@
             "32": "Jordan Anderson",
             "36": "",
             "45": "Caesar Bacarella",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "laguna seca": {
         "full_time": {
             "19": "John Hunter Nemechek",
-            "35": "Greg Van Alst",
             "91": "Nathan Byrd"
         },
         "part_time": {
@@ -372,13 +418,15 @@
             "32": "Austin Green",
             "36": "",
             "45": "Alon Day",
-            "50": "Preston Pardus"
+            "50": "Preston Pardus",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "wwt raceway": {
         "full_time": {
             "19": "Aric Almirola",
-            "35": "Greg Van Alst",
             "91": "Josh Bilicki"
         },
         "part_time": {
@@ -387,13 +435,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "bristol_2": {
         "full_time": {
             "19": "Justin Bonsignore",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -402,13 +452,15 @@
             "32": "",
             "36": "",
             "45": "Stefan Parsons",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "kansas": {
         "full_time": {
             "19": "Aric Almirola",
-            "35": "Greg Van Alst",
             "91": "Nick Leitz"
         },
         "part_time": {
@@ -417,13 +469,15 @@
             "32": "",
             "36": "",
             "45": "Brad Perez",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "charlotte roval": {
         "full_time": {
             "19": "Aric Almirola",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -432,13 +486,15 @@
             "32": "Austin Green",
             "36": "",
             "45": "Brad Perez",
-            "50": "Preston Pardus"
+            "50": "Preston Pardus",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "las vegas_2": {
         "full_time": {
             "19": "Aric Almirola",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -447,13 +503,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "talladega_2": {
         "full_time": {
             "19": "Ryan Truex",
-            "35": "Greg Van Alst",
             "91": "Nick Leitz"
         },
         "part_time": {
@@ -462,13 +520,15 @@
             "32": "Jordan Anderson",
             "36": "",
             "45": "Caesar Bacarella",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "martinsville_2": {
         "full_time": {
             "19": "Justin Bonsignore",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -477,13 +537,15 @@
             "32": "",
             "36": "",
             "45": "",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     },
     "phoenix_2": {
         "full_time": {
             "19": "Justin Bonsignore",
-            "35": "Greg Van Alst",
             "91": "Dawson Cram"
         },
         "part_time": {
@@ -492,7 +554,10 @@
             "32": "",
             "36": "",
             "45": "Stefan Parsons",
-            "50": ""
+            "50": "",
+            "70": "",
+            "74": "",
+            "78": ""
         }
     }
 }
