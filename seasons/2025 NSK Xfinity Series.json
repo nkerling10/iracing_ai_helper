@@ -6,17 +6,17 @@
 		{
 			"car_id": 115,
 			"max_pct_fuel_fill": 50,
-			"max_dry_tire_sets": 7
+			"max_dry_tire_sets": 5
 		},
 		{
 			"car_id": 114,
 			"max_pct_fuel_fill": 50,
-			"max_dry_tire_sets": 7
+			"max_dry_tire_sets": 5
 		},
 		{
 			"car_id": 116,
 			"max_pct_fuel_fill": 50,
-			"max_dry_tire_sets": 7
+			"max_dry_tire_sets": 5
 		}
 	],
 	"category_id": 1,
@@ -30,8 +30,8 @@
 	"incident_warn_param2": 0,
 	"lucky_dog": true,
 	"max_drivers": 40,
-	"maxSkill": 108,
-	"minSkill": 78,
+	"maxSkill": 105,
+	"minSkill": 85,
 	"max_visor_tearoffs": -1,
 	"must_use_diff_tire_types_in_race": false,
 	"no_lapper_wave_arounds": false,

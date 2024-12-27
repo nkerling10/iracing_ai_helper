@@ -168,7 +168,6 @@ class iRacing:
                                     in self.ir["DriverInfo"]["Drivers"]
                                     if self.ir["CarIdxOnPitRoad"][driver["CarIdx"]]
                                     and driver["UserName"] != "Pace Car"]
-                print(cars_on_pit_road)
                 print(pit_tracking)
                 # if there is at least 1 car on pit road
                 if len(cars_on_pit_road) > 0:
@@ -195,7 +194,7 @@ class iRacing:
                 print("waiting")
                 time.sleep(1)
 
-    def check_iracing(self, state):
+    def _check_iracing(self, state):
         if state.ir_connected and not (self.ir.is_initialized and self.ir.is_connected):
             state.ir_connected = False
             self.ir.shutdown()
@@ -240,7 +239,7 @@ class iRacing:
         state = State()
         try:
             while True:
-                self.check_iracing(state)
+                self._check_iracing(state)
                 if state.ir_connected:
                     self._process_race()
                 time.sleep(1)

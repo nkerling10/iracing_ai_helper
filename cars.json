@@ -1,52 +1,277 @@
 {
-    "full_time_one_driver" : {
-        "00": "Sheldon Creed",
-        "1": "Carson Kvapil",
-        "2": "Jesse Love",
-        "5": "Kris Wright",
-        "07": "Patrick Emerling",
-        "7": "Justin Allgaier",
-        "8": "Sammy Smith",
-        "10": "Daniel Dye",
-        "11": "Josh Williams",
-        "15": "Harrison Burton",
-        "16": "Christian Eckes",
-        "18": "William Sawalich",
-        "19": "Brandon Jones",
-        "21": "Austin Hill",
-        "25": "Lawless Alan",
-        "26": "Dean Thompson",
-        "27": "Jeb Burton",
-        "28": "Kyle Sieg",
-        "29": "Parker Retzlaff",
-        "31": "Blaine Perkins",
-        "39": "Ryan Sieg",
-        "41": "Sam Meyer",
-        "42": "Anthony Alfredo",
-        "43": "Leland Honeyman Jr.",
-        "44": "Brennan Poole",
-        "48": "Nick Sanchez",
-        "51": "Jeremy Clements",
-        "53": "Mason Maggio",
-        "54": "Taylor Gray",
-        "71": "Ryan Ellis",
-        "88": "Connor Zilisch",
-        "99": "Matt DiBenedetto"
+    "00": {
+        "driver": "Sheldon Creed",
+        "car_tier": 1,
+        "crew_tier": 2,
+        "type": "full_time_one_driver"
     },
-    "full_time_multiple_drivers": [
-        "14",
-        "20",
-        "35",
-        "43",
-        "81",
-        "92"
-    ],
-    "part_time": [
-        "17",
-        "30",
-        "32",
-        "36",
-        "45",
-        "50"
-    ]
+    "1": {
+        "driver": "Carson Kvapil",
+        "car_tier": 1,
+        "crew_tier": 1,
+        "type": "full_time_one_driver"
+    },
+    "02": {
+        "driver": "Anthony Alfredo",
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "full_time_one_driver"
+    },
+    "2": {
+        "driver": "Jesse Love",
+        "car_tier": 1,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "4": {
+        "driver": "Parker Retzlaff",
+        "car_tier": 3,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "5": {
+        "driver": "Kris Wright",
+        "car_tier": 2,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "07": {
+        "driver": "Patrick Emerling",
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "full_time_one_driver"
+    },
+    "7": {
+        "driver": "Justin Allgaier",
+        "car_tier": 1,
+        "crew_tier": 1,
+        "type": "full_time_one_driver"
+    },
+    "8": {
+        "driver": "Sammy Smith",
+        "car_tier": 1,
+        "crew_tier": 2,
+        "type": "full_time_one_driver"
+    },
+    "10": {
+        "driver": "Daniel Dye",
+        "car_tier": 1,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "11": {
+        "driver": "Josh Williams",
+        "car_tier": 1,
+        "crew_tier": 2,
+        "type": "full_time_one_driver"
+    },
+    "14": {
+        "driver": "Garrett Smithley",
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "full_time_one_driver"
+    },
+    "15": {
+        "driver": "Harrison Burton",
+        "car_tier": 3,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "16": {
+        "driver": "Christian Eckes",
+        "car_tier": 1,
+        "crew_tier": 2,
+        "type": "full_time_one_driver"
+    },
+    "18": {
+        "driver": "William Sawalich",
+        "car_tier": 1,
+        "crew_tier": 1,
+        "type": "full_time_one_driver"
+    },
+    "20": {
+        "driver": "Brandon Jones",
+        "car_tier": 1,
+        "crew_tier": 2,
+        "type": "full_time_one_driver"
+    },
+    "21": {
+        "driver": "Austin Hill",
+        "car_tier": 1,
+        "crew_tier": 1,
+        "type": "full_time_one_driver"
+    },
+    "25": {
+        "driver": "Lawless Alan",
+        "car_tier": 3,
+        "crew_tier": 4,
+        "type": "full_time_one_driver"
+    },
+    "26": {
+        "driver": "Dean Thompson",
+        "car_tier": 2,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "27": {
+        "driver": "Jeb Burton",
+        "car_tier": 2,
+        "crew_tier": 2,
+        "type": "full_time_one_driver"
+    },
+    "28": {
+        "driver": "Kyle Sieg",
+        "car_tier": 2,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "29": {
+        "driver": "",
+        "car_tier": 2,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "31": {
+        "driver": "Blaine Perkins",
+        "car_tier": 2,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "35": {
+        "driver": "Greg Van Alst",
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "full_time_one_driver"
+    },
+    "39": {
+        "driver": "Ryan Sieg",
+        "car_tier": 2,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "41": {
+        "driver": "Sam Meyer",
+        "car_tier": 1,
+        "crew_tier": 2,
+        "type": "full_time_one_driver"
+    },
+    "42": {
+        "driver": "Leland Honeyman Jr.",
+        "car_tier": 4,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "44": {
+        "driver": "Brennan Poole",
+        "car_tier": 3,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "48": {
+        "driver": "Nick Sanchez",
+        "car_tier": 2,
+        "crew_tier": 2,
+        "type": "full_time_one_driver"
+    },
+    "51": {
+        "driver": "Jeremy Clements",
+        "car_tier": 3,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "53": {
+        "driver": "Mason Maggio",
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "full_time_one_driver"
+    },
+    "54": {
+        "driver": "Taylor Gray",
+        "car_tier": 1,
+        "crew_tier": 1,
+        "type": "full_time_one_driver"
+    },
+    "71": {
+        "driver": "Ryan Ellis",
+        "car_tier": 3,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "88": {
+        "driver": "Connor Zilisch",
+        "car_tier": 1,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "99": {
+        "driver": "Matt DiBenedetto",
+        "car_tier": 3,
+        "crew_tier": 3,
+        "type": "full_time_one_driver"
+    },
+    "19": {
+        "car_tier": 1,
+        "crew_tier": 1,
+        "type": "full_time_multiple_drivers"
+    },
+    "91": {
+        "car_tier": 3,
+        "crew_tier": 3,
+        "type": "full_time_multiple_drivers"
+    },
+    "17": {
+        "car_tier": 1,
+        "crew_tier": 1,
+        "type": "part_time"
+    },
+    "24": {
+        "car_tier": 2,
+        "crew_tier": 4,
+        "type": "part_time"
+    },
+    "30": {
+        "car_tier": 3,
+        "crew_tier": 4,
+        "type": "part_time"
+    },
+    "32": {
+        "car_tier": 2,
+        "crew_tier": 4,
+        "type": "part_time"
+    },
+    "33": {
+        "car_tier": 1,
+        "crew_tier": 3,
+        "type": "part_time"
+    },
+    "36": {
+        "car_tier": 3,
+        "crew_tier": 4,
+        "type": "part_time"
+    },
+    "45": {
+        "car_tier": 3,
+        "crew_tier": 4,
+        "type": "part_time"
+    },
+    "50": {
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "part_time"
+    },
+    "70": {
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "part_time"
+    },
+    "74": {
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "part_time"
+    },
+    "78": {
+        "car_tier": 4,
+        "crew_tier": 4,
+        "type": "part_time"
+    }
 }
