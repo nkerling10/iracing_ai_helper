@@ -155,11 +155,10 @@ class iRacing:
 
     def _race(self):
         time.sleep(5)
-        #TODO : find full path to file
-        playsound(os.path.abspath("start-your-engines.mp3"))
-        # wait 15 seconds for AI cars to grid
+        playsound(os.path.join(os.getcwd(), "src/start-your-engines.mp3"))
+        # wait 20 seconds for AI cars to grid
         # start the grid or else it will wait 5 minutes for DQ'd cars
-        time.sleep(15)
+        time.sleep(20)
         self._send_iracing_command("!gridstart")
         self.ir.freeze_var_buffer_latest()
         self._pre_race_penalties()
@@ -240,7 +239,6 @@ class iRacing:
                 time.sleep(1)
 
     def main(self):
-        playsound(os.path.join(os.getcwd(), "src/start-your-engines.mp3"))
         state = State()
         try:
             while True:
