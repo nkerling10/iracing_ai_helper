@@ -3,11 +3,14 @@ import random
 import os
 import wikipediaapi
 from pathlib import Path
-from datetime import datetime, date
+from datetime import date
 import dateutil.parser as dparser
+import shutil
 
 date_format = '%B %d, %Y'
 today = date.today()
+
+roster_path = Path("./rosters/2025_Xfinity_Series_NSK_AI")
 
 class Driver:
     def __init__(self, name, car, attributes) -> None:
@@ -21,22 +24,22 @@ class Driver:
         self.pit_skill = attributes[5]
         self.strategy = attributes[6]
 
-def get_convert_page_data(wiki_wiki, driver_name):
-    page_py = wiki_wiki.page(driver_name)
+def get_convert_page_data(wiki, driver_name):
+    page_py = wiki.page(driver_name)
     born_text = page_py.summary[page_py.summary.find("(")+1:page_py.summary.find(")")]
     date_obj = dparser.parse(born_text,fuzzy=True).date()
 
     return date_obj
 
 def get_driver_age(driver_name):
-    wiki_wiki = wikipediaapi.Wikipedia('MyProjectName (merlin@example.com)', 'en')
+    wiki = wikipediaapi.Wikipedia('MyProjectName (merlin@example.com)', 'en')
     if "Leland Honeyman" in driver_name:
         driver_name = "Leland Honeyman"
 
     try:
-        date_obj = get_convert_page_data(wiki_wiki, driver_name)
+        date_obj = get_convert_page_data(wiki, driver_name)
     except ValueError:
-        date_obj = get_convert_page_data(wiki_wiki, f"{driver_name} (racing driver)")
+        date_obj = get_convert_page_data(wiki, f"{driver_name} (racing driver)")
 
     return today.year - date_obj.year - ((today.month, today.day) < (date_obj.month, date_obj.day))
 
@@ -64,17 +67,13 @@ def set_attributes(driver_name, car, driver_tiers, car_list):
         quit()
 
     if car_list[car]["car_tier"] == 1:
-        car_smoothness = random.randint(-100, 0)
-        #random.randint(25, 75)
+        car_smoothness = random.randint(25, 75)
     elif car_list[car]["car_tier"] == 2:
-        car_smoothness = random.randint(-200, -100)
-        #random.randint(0, 100)
+        car_smoothness = random.randint(0, 100)
     elif car_list[car]["car_tier"] == 3:
-        car_smoothness = random.randint(-400, -300)
-        #random.randint(-100, 150)
+        car_smoothness = random.randint(-100, 150)
     elif car_list[car]["car_tier"] == 4:
-        car_smoothness = random.randint(-500, -400)
-        #random.randint(-150, 200)
+        car_smoothness = random.randint(-150, 200)
     else:
         print(f"Fix car tier for {car}!")
         quit()
@@ -116,7 +115,35 @@ def set_attributes(driver_name, car, driver_tiers, car_list):
                                            driverAge, pitCrewSkill, strategyRiskiness])
 
     return set_driver
-    
+
+def change_paint_scheme(car_num, driver_name):
+    try:
+        paint_files = os.listdir(f"{Path(f"{roster_path}/{car_num}/")}")
+    except FileNotFoundError:
+        print(f"No folder found for {car_num}")
+        return
+
+    if len(paint_files) == 1:
+        print(f"No alternate schemes")
+        return
+    else:
+        driver_paints = [file for file in paint_files
+                         if driver_name.lower().replace(" ", "_")
+                         in file]
+        if len(driver_paints) == 0:
+            new_paint_file = f"{Path(f"{roster_path}/{car_num}/{random.choice(paint_files)}")}"
+            print(f"Selected {new_paint_file}")
+        else:
+            new_paint_file = f"{Path(f"{roster_path}/{car_num}/{driver_paints[0]}")}"
+            print(f"Selected {new_paint_file}")
+
+    try:
+        print("Attempting to copy file")
+        shutil.copyfile(new_paint_file, f"{Path(f"{roster_path}/car_{car_num}.tga")}")
+    except:
+        print("Uncategorized error, skipping copy operation")
+        return
+
 def open_files():
     with open(Path("./driver_tiers.json"), "r") as tier_file:
         driver_tiers = json.loads(tier_file.read())
@@ -128,7 +155,7 @@ def open_files():
 
 def main(track):
     driver_tiers, car_list, schedule_list = open_files()
-    with open(Path("./rosters/2025_Xfinity_Series_NSK_AI/roster.json"), "r") as roster_file:
+    with open(Path(f"{roster_path}/roster.json"), "r") as roster_file:
         driver_list = json.loads(roster_file.read())
     for roster_driver in driver_list["drivers"]:
         if car_list[roster_driver["carNumber"]]["type"] == "full_time_one_driver":
@@ -150,6 +177,9 @@ def main(track):
         else:
             continue
 
+        change_paint_scheme(roster_driver["carNumber"],
+                            new_ratings.name)
+
         roster_driver["driverName"] = new_ratings.name
         roster_driver["driverSkill"] = new_ratings.driver_skill
         roster_driver["driverAggression"] = new_ratings.aggression
@@ -159,7 +189,7 @@ def main(track):
         roster_driver["strategyRiskiness"] = new_ratings.strategy
         roster_driver["driverAge"] = new_ratings.age
 
-    with open(Path("./rosters/2025_Xfinity_Series_NSK_AI/roster.json"), "w", encoding="utf-8") as roster_file:
+    with open(Path(f"{roster_path}/roster.json"), "w", encoding="utf-8") as roster_file:
         json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
 
 if __name__ == "__main__":
