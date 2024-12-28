@@ -10,7 +10,8 @@ import shutil
 date_format = '%B %d, %Y'
 today = date.today()
 
-roster_path = Path("./rosters/2025_Xfinity_Series_NSK_AI")
+roster_path = Path("./rosters/")
+ai_roster_path = Path.home()/"Documents"/"iRacing"/"airosters"
 
 class Driver:
     def __init__(self, name, car, attributes) -> None:
@@ -153,9 +154,9 @@ def open_files():
         schedule_list = json.loads(schedule_file.read())
     return driver_tiers, car_list, schedule_list
 
-def main(track):
+def main(track, roster):
     driver_tiers, car_list, schedule_list = open_files()
-    with open(Path(f"{roster_path}/roster.json"), "r") as roster_file:
+    with open(Path(f"{ai_roster_path}/{roster}/roster.json"), "r") as roster_file:
         driver_list = json.loads(roster_file.read())
     for roster_driver in driver_list["drivers"]:
         if car_list[roster_driver["carNumber"]]["type"] == "full_time_one_driver":
@@ -189,9 +190,19 @@ def main(track):
         roster_driver["strategyRiskiness"] = new_ratings.strategy
         roster_driver["driverAge"] = new_ratings.age
 
-    with open(Path(f"{roster_path}/roster.json"), "w", encoding="utf-8") as roster_file:
+    with open(Path(f"{ai_roster_path}/{roster}/roster.json"), "w", encoding="utf-8") as roster_file:
         json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
 
+def perform_copy(roster_dir):
+    try:
+        shutil.copytree(Path(roster_path/roster_dir), Path(ai_roster_path/roster_dir), dirs_exist_ok=True)
+        print("Roster directory successfully copied")
+    except Exception as e:
+        print(e)
+
 if __name__ == "__main__":
-    race = input("Enter race designation: ")
-    main(race)
+    roster = "2025_Xfinity_Series_NSK_AI"
+    perform_copy(roster)
+    #race = input("Enter race designation: ")
+    race = "daytona_1"
+    main(race, roster)
