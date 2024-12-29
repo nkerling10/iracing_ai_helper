@@ -9,13 +9,16 @@ import logging
 from pathlib import Path
 from enum import Enum
 from playsound import playsound
+from datetime import datetime
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
+
+os.makedirs(f"{os.getcwd()}/logs", exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler(f"{os.getcwd()}/logs/debug.log"),
+        logging.FileHandler(f"{os.getcwd()}/logs/{datetime.now()}.log"),
         logging.StreamHandler()
     ]
 )

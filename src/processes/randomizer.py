@@ -10,7 +10,7 @@ import shutil
 date_format = '%B %d, %Y'
 today = date.today()
 
-roster_path = Path("./rosters/")
+roster_path = Path("././rosters/")
 ai_roster_path = Path.home()/"Documents"/"iRacing"/"airosters"
 
 class Driver:
@@ -119,7 +119,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list):
 
 def change_paint_scheme(car_num, driver_name):
     try:
-        paint_files = os.listdir(f"{Path(f"{roster_path}/{car_num}/")}")
+        paint_files = os.listdir({Path(f"{roster_path}/{car_num}/")})
     except FileNotFoundError:
         print(f"No folder found for {car_num}")
         return
@@ -132,25 +132,25 @@ def change_paint_scheme(car_num, driver_name):
                          if driver_name.lower().replace(" ", "_")
                          in file]
         if len(driver_paints) == 0:
-            new_paint_file = f"{Path(f"{roster_path}/{car_num}/{random.choice(paint_files)}")}"
+            new_paint_file = Path(f"{roster_path}/{car_num}/{random.choice(paint_files)}")
             print(f"Selected {new_paint_file}")
         else:
-            new_paint_file = f"{Path(f"{roster_path}/{car_num}/{driver_paints[0]}")}"
+            new_paint_file = Path(f"{roster_path}/{car_num}/{driver_paints[0]}")
             print(f"Selected {new_paint_file}")
 
     try:
         print("Attempting to copy file")
-        shutil.copyfile(new_paint_file, f"{Path(f"{roster_path}/car_{car_num}.tga")}")
+        shutil.copyfile(new_paint_file, Path(f"{roster_path}/car_{car_num}.tga"))
     except:
         print("Uncategorized error, skipping copy operation")
         return
 
 def open_files():
-    with open(Path("./driver_tiers.json"), "r") as tier_file:
+    with open(Path("src/assets/driver_tiers.json"), "r") as tier_file:
         driver_tiers = json.loads(tier_file.read())
-    with open(Path("./cars.json"), "r") as car_file:
+    with open(Path("src/assets/cars.json"), "r") as car_file:
         car_list = json.loads(car_file.read())
-    with open(Path("./schedule.json"), "r") as schedule_file:
+    with open(Path("src/assets/schedule.json"), "r") as schedule_file:
         schedule_list = json.loads(schedule_file.read())
     return driver_tiers, car_list, schedule_list
 
