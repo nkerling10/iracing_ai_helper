@@ -12,13 +12,13 @@ from playsound import playsound
 from datetime import datetime
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
 
-os.makedirs(f"{os.getcwd()}/logs", exist_ok=True)
+#os.makedirs(f"{os.getcwd()}/logs", exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler(f"{os.getcwd()}/logs/{datetime.now()}.log"),
+        logging.FileHandler(f"run.log"),
         logging.StreamHandler()
     ]
 )
@@ -91,6 +91,7 @@ class iRacing:
             penalty = random.choice(self.penalties_player)
         else:
             penalty = random.choice(self.penalties)
+
 
         flag_color, _meatball = self._get_flag(self.ir["SessionFlags"])
 
@@ -177,7 +178,7 @@ class iRacing:
         logging.info("Starting race handler, sleeping for 5 seconds")
         time.sleep(5)
         logging.info("Playing sound file")
-        playsound(os.path.join(os.getcwd(), "src/start-your-engines.mp3"))
+        playsound(os.path.join(os.getcwd(), "src\assets\start-your-engines.mp3"))
         # wait 20 seconds for AI cars to grid
         # start the grid or else it will wait 5 minutes for DQ'd cars
         logging.info("Sleeping for 20 seconds")
@@ -212,10 +213,10 @@ class iRacing:
                     for car in pit_tracking:
                         if car not in cars_on_pit_road:
                             logging.info(f"{car} is no longer on pit road, checking for penalty")
-                            pit_tracking.remove(car)
                             # calculate penalty chance once car leaves pit road
                             if random.randint(1, 100) < self.penalty_chance:
                                 self._pit_penalty(car_num)
+                            pit_tracking.remove(car)
                 else:
                     logging.info("No cars on pit road")
                     pit_tracking = []

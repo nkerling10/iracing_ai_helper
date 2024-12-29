@@ -118,6 +118,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list):
     return set_driver
 
 def change_paint_scheme(car_num, driver_name):
+    print(os.listdir({Path(f"{roster_path}/{car_num}/")}))
     try:
         paint_files = os.listdir({Path(f"{roster_path}/{car_num}/")})
     except FileNotFoundError:
