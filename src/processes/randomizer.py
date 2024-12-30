@@ -10,7 +10,7 @@ import shutil
 date_format = '%B %d, %Y'
 today = date.today()
 
-roster_path = Path("././rosters/")
+roster_path = Path("rosters")
 ai_roster_path = Path.home()/"Documents"/"iRacing"/"airosters"
 
 class Driver:
@@ -117,10 +117,9 @@ def set_attributes(driver_name, car, driver_tiers, car_list):
 
     return set_driver
 
-def change_paint_scheme(car_num, driver_name):
-    print(os.listdir({Path(f"{roster_path}/{car_num}/")}))
+def change_paint_scheme(car_num, driver_name, roster):
     try:
-        paint_files = os.listdir({Path(f"{roster_path}/{car_num}/")})
+        paint_files = os.listdir(Path(roster_path/roster/car_num))
     except FileNotFoundError:
         print(f"No folder found for {car_num}")
         return
@@ -133,15 +132,15 @@ def change_paint_scheme(car_num, driver_name):
                          if driver_name.lower().replace(" ", "_")
                          in file]
         if len(driver_paints) == 0:
-            new_paint_file = Path(f"{roster_path}/{car_num}/{random.choice(paint_files)}")
+            new_paint_file = Path(roster_path/roster/car_num/random.choice(paint_files))
             print(f"Selected {new_paint_file}")
         else:
-            new_paint_file = Path(f"{roster_path}/{car_num}/{driver_paints[0]}")
+            new_paint_file = Path(roster_path/car_num/driver_paints[0])
             print(f"Selected {new_paint_file}")
 
     try:
         print("Attempting to copy file")
-        shutil.copyfile(new_paint_file, Path(f"{roster_path}/car_{car_num}.tga"))
+        shutil.copyfile(new_paint_file, Path(roster_path/roster/f"car_{car_num}.tga"))
     except:
         print("Uncategorized error, skipping copy operation")
         return
@@ -157,7 +156,7 @@ def open_files():
 
 def main(track, roster):
     driver_tiers, car_list, schedule_list = open_files()
-    with open(Path(f"{ai_roster_path}/{roster}/roster.json"), "r") as roster_file:
+    with open(Path(ai_roster_path/roster/"roster.json"), "r") as roster_file:
         driver_list = json.loads(roster_file.read())
     for roster_driver in driver_list["drivers"]:
         if car_list[roster_driver["carNumber"]]["type"] == "full_time_one_driver":
@@ -180,7 +179,8 @@ def main(track, roster):
             continue
 
         change_paint_scheme(roster_driver["carNumber"],
-                            new_ratings.name)
+                            new_ratings.name,
+                            roster)
 
         roster_driver["driverName"] = new_ratings.name
         roster_driver["driverSkill"] = new_ratings.driver_skill
@@ -191,7 +191,7 @@ def main(track, roster):
         roster_driver["strategyRiskiness"] = new_ratings.strategy
         roster_driver["driverAge"] = new_ratings.age
 
-    with open(Path(f"{ai_roster_path}/{roster}/roster.json"), "w", encoding="utf-8") as roster_file:
+    with open(Path(ai_roster_path/roster/"roster.json"), "w", encoding="utf-8") as roster_file:
         json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
 
 def perform_copy(roster_dir):

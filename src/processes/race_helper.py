@@ -12,13 +12,13 @@ from playsound import playsound
 from datetime import datetime
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
 
-#os.makedirs(f"{os.getcwd()}/logs", exist_ok=True)
+os.makedirs(f"{os.getcwd()}\\logs", exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler(f"run.log"),
+        logging.FileHandler(f"{os.getcwd()}\\logs\\{datetime.now()}.log"),
         logging.StreamHandler()
     ]
 )
@@ -92,7 +92,6 @@ class iRacing:
         else:
             penalty = random.choice(self.penalties)
 
-
         flag_color, _meatball = self._get_flag(self.ir["SessionFlags"])
 
         if flag_color == "green":
@@ -122,7 +121,9 @@ class iRacing:
            logging.info(f"Disqualifying car {number} for NO DRIVER name")
            self._send_iracing_command(f"!dq {number} Car unused this week.")
 
-    # identify when the session is QUALIFYING
+        logging.info("Issuing pre-race penalties")
+        return self._pre_race_penalties()
+
     def _qualifying(self):
         logging.info("Starting qualifying handler")
         qual_done = False
@@ -153,41 +154,44 @@ class iRacing:
                     
                     qual_done = True
 
-    def _issue_pre_race_penalty(self, car_num):
-        penalty = random.choice(self.pre_race_penalties)
-        if penalty == "Failed Inspection x2":
-            logging.info(f"#{car_num} to the rear: {penalty}")
-            self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
-        elif penalty == "Failed Inspection x3":
-            logging.info(f"#{car_num} to the rear: {penalty}")
-            logging.info(f"#{car_num} drivethrough")
-            self._send_iracing_command(f"!eol {car_num}")
-            self._send_iracing_command(f"!bl {car_num} D")
-            self._send_iracing_command(f"#{car_num} to the rear plus drivethrough penalty: {penalty}")
-        elif penalty == "Unapproved Adjustments":
-            logging.info(f"#{car_num} to the rear: {penalty}")
-            self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
+    def _issue_pre_race_penalty(self, penalty_cars):
+        for car_num in penalty_cars:
+            penalty = random.choice(self.pre_race_penalties)
+            if penalty == "Failed Inspection x2":
+                logging.info(f"#{car_num} to the rear: {penalty}")
+                self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
+            elif penalty == "Failed Inspection x3":
+                logging.info(f"#{car_num} to the rear: {penalty}")
+                logging.info(f"#{car_num} drivethrough")
+                self._send_iracing_command(f"!eol {car_num}")
+                self._send_iracing_command(f"!bl {car_num} D")
+                self._send_iracing_command(f"#{car_num} to the rear plus drivethrough penalty: {penalty}")
+            elif penalty == "Unapproved Adjustments":
+                logging.info(f"#{car_num} to the rear: {penalty}")
+                self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
 
     def _pre_race_penalties(self):
+        penalty_cars = []
         for driver in self.ir["DriverInfo"]["Drivers"]:
             if driver["CarIsPaceCar"] != 1:
                 if random.randint(1, 100) < self.pre_race_penalty_chance:
-                    self._issue_pre_race_penalty(driver["CarNumber"])
+                    penalty_cars.append(driver["CarNumber"])
+        return penalty_cars
 
-    def _race(self):
-        logging.info("Starting race handler, sleeping for 5 seconds")
-        time.sleep(5)
+    def _race(self, penalty_cars):
+        logging.info("Starting race handler")
         logging.info("Playing sound file")
-        playsound(os.path.join(os.getcwd(), "src\assets\start-your-engines.mp3"))
+        playsound(os.path.join(os.getcwd(), "src\\assets\\start-your-engines.mp3"))
         # wait 20 seconds for AI cars to grid
         # start the grid or else it will wait 5 minutes for DQ'd cars
-        logging.info("Sleeping for 20 seconds")
-        time.sleep(20)
+        logging.info("Sleeping for 10 seconds")
+        time.sleep(10)
         logging.info("Issuing gridstart command")
         self._send_iracing_command("!gridstart")
         self.ir.freeze_var_buffer_latest()
+        logging.info("Sleeping for 10 seconds")
         logging.info("Issuing pre-race penalties")
-        self._pre_race_penalties()
+        self._issue_pre_race_penalty(penalty_cars)
         pit_tracking = []
         while True:
             if self.ir["Lap"] > 0:
@@ -209,20 +213,18 @@ class iRacing:
                         # if the car has already been processed, skip it
                         else:
                             continue
-                    # check if any cars need to be removed from tracking
+                    # track for when a car leaves pit road
                     for car in pit_tracking:
                         if car not in cars_on_pit_road:
-                            logging.info(f"{car} is no longer on pit road, checking for penalty")
+                            logging.info(f"{car} is no longer on pit road, penalty check")
                             # calculate penalty chance once car leaves pit road
                             if random.randint(1, 100) < self.penalty_chance:
                                 self._pit_penalty(car_num)
                             pit_tracking.remove(car)
                 else:
-                    logging.info("No cars on pit road")
-                    pit_tracking = []
                     time.sleep(1)
             else:
-                logging.info("Lap is not >0, sleeping")
+                logging.info("Waiting for race to start..")
                 time.sleep(1)
 
     def _check_iracing(self, state):
@@ -246,18 +248,18 @@ class iRacing:
             logging.info(f"Current session: {current_session} - {session_name}")
             if current_session == 0:
                 if session_name == "PRACTICE":
-                    self._practice()
+                    penalty_cars = self._practice()
                 if session_name == "QUALIFYING":
-                    self._practice()
+                    penalty_cars = self._practice()
                     self._qualifying()
             elif current_session == 1:
                 if session_name == "QUALIFYING":
-                    self._practice()
+                    penalty_cars = self._practice()
                     self._qualifying()
                 if session_name == "RACE":
-                    self._race()
+                    self._race(penalty_cars)
             elif current_session == 2:
-                self._race()
+                self._race(penalty_cars)
             else:
                 time.sleep(1)
 
