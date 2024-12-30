@@ -5,12 +5,13 @@ import json
 import os
 import pyautogui
 import pygetwindow as gw
+from pygetwindow import PyGetWindowException
 import logging
 import sounddevice as sd
 import soundfile as sf
+import math
 from pathlib import Path
 from enum import Enum
-from playsound import playsound
 from datetime import datetime
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
 
@@ -27,6 +28,50 @@ logging.basicConfig(
 
 class State:
     ir_connected = False
+
+class Race:
+    def __init__(self, track, laps):
+        self.track = track
+        self.pre_race_penalties = []
+        self.in_race_penalties = []
+        self.pole_winner = ""
+        self.race_laps = laps
+        self.stage_1_end_lap = 0
+        self.stage_1_results = []
+        self.stage_2_end_lap = 0
+        self.stage_2_results = []
+        self.stage_3_end_lap = laps
+        self.stage_3_results = []
+
+        self._set_stage_lengths()
+    
+    def _set_stage_lengths(self):
+        if self.track in ["Daytona", "Atlanta", "Watkins Glen"]:
+            stage_1_mod = .25
+        elif self.track == "COTA":
+            stage_1_mod = .31
+        elif self.track in ["Phoenix", "Las Vegas", "Homestead",
+                            "Texas", "Charlotte", "Dover", "Kansas"]:
+            stage_1_mod = .225
+        elif self.track in ["Martinsville", "Nashville", "Sebring", "Rockingham"]:
+            stage_1_mod = .24
+        elif self.track == "Darlington":
+            stage_1_mod = .307
+        elif self.track == "Bristol":
+            stage_1_mod = .285
+        elif self.track in ["Talladega", "Pocono"]:
+            stage_1_mod = .23
+        elif self.track == "Sonoma":
+            stage_1_mod = .26
+        elif self.track in ["Indianapolis", "Iowa", "Charlotte Roval", "Chicago"]:
+            stage_1_mod = .30
+        elif self.track == "Laguna Seca":
+            stage_1_mod = .34
+        elif self.track == "WWTR":
+            stage_1_mod = .22
+        
+        self.stage_1_end_lap = math.floor(self.race_laps * stage_1_mod)
+        self.stage_2_end_lap = self.stage_1_end_lap * 2.15 if self.track == "COTA" else 2
 
 class iRacing:
     def __init__(self):
@@ -51,20 +96,29 @@ class iRacing:
         self.main()
 
     def _send_iracing_command(self, command):
-        #try
-        window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
-        window.activate()
-        #except pygetwindow.PyGetWindowException
+        '''
+            Issue a command to iRacing via pyautogui.typewrite library
+        '''
+        while True:
+            try:
+                window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
+                window.activate()
+            except PyGetWindowException:
+                continue
+            break
         self.ir.chat_command(1)
-        time.sleep(0.5)
+        time.sleep(1)
         pyautogui.typewrite(command)
         pyautogui.press("enter")
 
     @staticmethod
     def _get_flag(flag):
         '''
-            Big thanks to fruzyna for this function
+            Big thanks to `fruzyna` for this function
                 source: https://github.com/fruzyna/iracing-apps
+            
+            Determines the current flag status of the race, used when
+                issuing pit penalty
         '''
         if flag & irsdk.Flags.checkered:
             flag_color = "checkered"
@@ -88,33 +142,41 @@ class iRacing:
             else:
                 flag_color = "green"
 
-        return flag_color, flag & irsdk.Flags.repair
+        return flag_color
 
     def _pit_penalty(self, car_num):
+        '''
+            Select and issue a pit penalty to designated car number
+        '''
         if car_num == self.ir["DriverInfo"]["Drivers"][0]["CarNumber"]:
             penalty = random.choice(self.penalties_player)
         else:
             penalty = random.choice(self.penalties)
 
-        flag_color, _meatball = self._get_flag(self.ir["SessionFlags"])
+        flag_color = self._get_flag(self.ir["SessionFlags"])
 
         if flag_color == "green":
-            logging.info(f"PENALTY - Passthrough for #{car_num}: {penalty}")
+            logging.info(f"PENALTY: Passthrough for #{car_num}: {penalty}")
             self._send_iracing_command(f"!bl {car_num} D")
             self._send_iracing_command(f"PENALTY #{car_num}: {penalty}")
         elif flag_color == "yellow":
-            logging.info(f"EOL for #{car_num}: {penalty}")
+            logging.info(f"PENALTY: EOL for #{car_num}: {penalty}")
             self._send_iracing_command(f"!eol {car_num} PENALTY #{car_num}: {penalty}")
 
-    # disable chat for all drivers to stop them from posting
-    # when they are pitting
     def _disable_chat(self):
+        '''
+            disable chat for all drivers 1 by 1
+                to stop them from posting when they are pitting
+        '''
         for driver in self.ir["DriverInfo"]["Drivers"]:
             if driver["CarIsAI"] == 1:
                 self._send_iracing_command(f"!nchat {driver['UserName'].replace(' ', '.')}")
 
-    # disqualify all cars who are named NO DRIVER
     def _practice(self):
+        '''
+            1. Disqualify all drivers who are named NODRIVER{car_num}
+            2. Calculate any pre-race penalties
+        '''
         logging.info("Starting practice handler")
         #self._send_iracing_command("!nchat")
         #self._disable_chat()
@@ -128,7 +190,11 @@ class iRacing:
         logging.info("Issuing pre-race penalties")
         return self._pre_race_penalties()
 
-    def _qualifying(self):
+    def _qualifying(self, weekend):
+        '''
+            Disqualify cars that qualify outside the designated
+                field size in self.field_size
+        '''
         logging.info("Starting qualifying handler")
         qual_done = False
         while qual_done is False:
@@ -157,24 +223,29 @@ class iRacing:
                             self._send_iracing_command(f"!dq {match[0]} #{match[0]} missed the race")
                     
                     qual_done = True
+        weekend.pole_winner = 
 
     def _issue_pre_race_penalty(self, penalty_cars):
+        '''
+            Issue a pit penalty to each car as necessary
+        '''
         for car_num in penalty_cars:
             penalty = random.choice(self.pre_race_penalties)
-            if penalty == "Failed Inspection x2":
+            if penalty in ["Failed Inspection x2", "Unapproved Adjustments"]:
                 logging.info(f"#{car_num} to the rear: {penalty}")
-                self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
-            elif penalty == "Failed Inspection x3":
+                self._send_iracing_command(f"!eol {car_num}")
+                self._send_iracing_command(f"PENALTY: #{car_num} to the rear: {penalty}")
+            elif penalty in ["Failed Inspection x3"]:
                 logging.info(f"#{car_num} to the rear: {penalty}")
                 logging.info(f"#{car_num} drivethrough")
                 self._send_iracing_command(f"!eol {car_num}")
                 self._send_iracing_command(f"!bl {car_num} D")
-                self._send_iracing_command(f"#{car_num} to the rear plus drivethrough penalty: {penalty}")
-            elif penalty == "Unapproved Adjustments":
-                logging.info(f"#{car_num} to the rear: {penalty}")
-                self._send_iracing_command(f"!eol {car_num} #{car_num} to the rear: {penalty}")
+                self._send_iracing_command(f"PENALTY: #{car_num} to the rear plus drivethrough penalty: {penalty}")
 
     def _pre_race_penalties(self):
+        '''
+            Calculate pre-race penalties for each driver in the field
+        '''
         penalty_cars = []
         for driver in self.ir["DriverInfo"]["Drivers"]:
             if driver["CarIsPaceCar"] != 1:
@@ -182,8 +253,16 @@ class iRacing:
                     penalty_cars.append(driver["CarNumber"])
         return penalty_cars
 
-    def _race(self, penalty_cars):
-        logging.info("Starting race handler")
+    def _pre_race_events(self, penalty_cars):
+        '''
+            Handle all desired pre-race events
+
+            Currently Implemented:
+            1. Play `start your engines` sound file
+            2. Issue gridstart command after waiting 30 seconds
+            3. Issue pre-race penalties that were calculated
+            4. TODO: Set up autostage/race result exporter
+        '''
         logging.info("Playing sound file")
         try:
             sd.default.device = "Speakers (Realtek(R) Audio), MME"
@@ -191,9 +270,10 @@ class iRacing:
             sd.play(data, fs)
         except Exception as e:
             logging.info(e)
-        # wait 10 seconds for AI cars to grid
-        # start the grid or else it will wait all 5 minutes for DQ'd cars
-        logging.info("Sleeping for 10 seconds")
+        # wait 30 seconds for AI cars to grid
+        self._send_iracing_command(f"Race will start in 30 seconds.")
+        self._send_iracing_command(f"REMEMBER TO OPEN AUTOSTAGES!")
+        logging.info("Sleeping for 30 seconds")
         time.sleep(30)
         logging.info("Issuing gridstart command")
         self._send_iracing_command("!gridstart")
@@ -202,6 +282,10 @@ class iRacing:
         time.sleep(5)
         logging.info("Issuing pre-race penalties")
         self._issue_pre_race_penalty(penalty_cars)
+
+    def _race(self, penalty_cars):
+        logging.info("Starting race handler")
+        self._pre_race_events(penalty_cars)
         pit_tracking = []
         while True:
             if self.ir["Lap"] > 0:
@@ -226,7 +310,7 @@ class iRacing:
                     # track for when a car leaves pit road
                     for car in pit_tracking:
                         if car not in cars_on_pit_road:
-                            logging.info(f"{car} is no longer on pit road, penalty check")
+                            logging.info(f"{car} left pit road, penalty check")
                             # calculate penalty chance once car leaves pit road
                             if random.randint(1, 100) < self.penalty_chance:
                                 self._pit_penalty(car_num)
@@ -246,8 +330,27 @@ class iRacing:
             state.ir_connected = True
             logging.info("irsdk connected")
 
+    @staticmethod
+    def _define_sessions(event_sessions):
+        practice_session = [session["SessionNum"] for session in
+                            event_sessions if
+                            session["SessionName"] == "PRACTICE"][0]
+        qualifying_session = [session["SessionNum"] for session in
+                              event_sessions if
+                              session["SessionName"] == "QUALIFY"][0]
+        race_session = [session["SessionNum"] for session in
+                        event_sessions if
+                        session["SessionName"] == "RACE"][0]
+
     def _process_race(self):
+        event_sessions = self.ir["SessionInfo"]["Sessions"]
         logging.info("Starting race processor!")
+        self._define_sessions(event_sessions)
+        race_session = [session["SessionNum"] for session in
+                        self.ir["SessionInfo"]["Sessions"] if
+                        session["SessionType"] == "Race"][0]
+        weekend = Race(self.ir["WeekendInfo"]["TrackDisplayShortName"],
+                       self.ir["SessionInfo"]["Sessions"][race_session]["SessionLaps"])
         penalties_set = False
         while True:
             self.ir.freeze_var_buffer_latest()
@@ -265,13 +368,13 @@ class iRacing:
                     if penalties_set is False:
                         penalty_cars = self._practice()
                         penalties_set = True
-                    self._qualifying()
+                    self._qualifying(weekend)
             elif current_session == 1:
                 if session_name == "QUALIFYING":
                     if penalties_set is False:
                         penalty_cars = self._practice()
                         penalties_set = True
-                    self._qualifying()
+                    self._qualifying(weekend)
                 if session_name == "RACE":
                     self._race(penalty_cars)
             elif current_session == 2:
@@ -293,5 +396,10 @@ class iRacing:
 
 
 if __name__ == '__main__':
+    event = Race("Darlington", 147)
+    print(f"Stage 1: lap {event.stage_1_end_lap}")
+    print(f"Stage 2: lap {event.stage_2_end_lap}")
+    print(f"Stage 2 -> End: {event.laps - event.stage_2_end_lap} laps")
+    quit()
     logging.info("App startup")
     iRacing()
