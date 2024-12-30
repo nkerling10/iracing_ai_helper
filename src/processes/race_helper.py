@@ -51,8 +51,10 @@ class iRacing:
         self.main()
 
     def _send_iracing_command(self, command):
+        #try
         window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
         window.activate()
+        #except pygetwindow.PyGetWindowException
         self.ir.chat_command(1)
         time.sleep(0.5)
         pyautogui.typewrite(command)
@@ -118,9 +120,9 @@ class iRacing:
         #self._disable_chat()
         dq_drivers = [driver["CarNumber"] for driver in
                       self.ir["DriverInfo"]["Drivers"] if
-                      "NO DRIVER" in driver["UserName"]]
+                      "NODRIVER" in driver["UserName"]]
         for number in dq_drivers:
-           logging.info(f"Disqualifying car {number} for NO DRIVER name")
+           logging.info(f"Disqualifying car {number} for NODRIVER name")
            self._send_iracing_command(f"!dq {number} Car unused this week.")
 
         logging.info("Issuing pre-race penalties")
@@ -184,7 +186,7 @@ class iRacing:
         logging.info("Starting race handler")
         logging.info("Playing sound file")
         try:
-            sd.default.device = "Speakers (Apple Audio Device), MME"
+            sd.default.device = "Speakers (Realtek(R) Audio), MME"
             data, fs = sf.read(Path(f"{os.getcwd()}\\src\\assets\\start-your-engines.wav"), dtype='float32')  
             sd.play(data, fs)
         except Exception as e:
@@ -192,7 +194,7 @@ class iRacing:
         # wait 10 seconds for AI cars to grid
         # start the grid or else it will wait all 5 minutes for DQ'd cars
         logging.info("Sleeping for 10 seconds")
-        time.sleep(10)
+        time.sleep(30)
         logging.info("Issuing gridstart command")
         self._send_iracing_command("!gridstart")
         self.ir.freeze_var_buffer_latest()

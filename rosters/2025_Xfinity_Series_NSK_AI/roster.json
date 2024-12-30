@@ -649,6 +649,27 @@
             "carTgaName": "car_32.tga"
         },
         {
+			"driverName": "NODRIVER33",
+			"carDesign": "9,2a3795,ed2129,ffffff",
+			"carNumber": "33",
+			"suitDesign": "5,2a3795,ed2129,ffffff",
+			"helmetDesign": "16,2a3795,ed2129,ffffff",
+			"carPath": "stockcars2\\camaro2019",
+			"carId": 114,
+			"sponsor1": 0,
+			"sponsor2": 44,
+			"numberDesign": "0,0,,,",
+			"driverSkill": 2,
+			"driverAggression": 60,
+			"driverOptimism": 63,
+			"driverSmoothness": 52,
+			"pitCrewSkill": 60,
+			"strategyRiskiness": 64,
+			"driverAge": 35,
+			"id": "1bf2f908-c440-61ee-0dc7-d8b8ea782596",
+			"rowIndex": 27
+		},
+        {
             "driverName": "Greg Van Alst",
             "carNumber": "35",
             "carDesign": "2,050505,D4AF37,FFFFFF",

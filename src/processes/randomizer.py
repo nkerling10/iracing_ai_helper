@@ -159,7 +159,7 @@ def main(track, roster):
                 new_ratings = set_attributes(scheduled_driver, roster_driver["carNumber"], driver_tiers, car_list, driver_birthdays)
             else:
                 print(f"No driver found for #{roster_driver['carNumber']} this week")
-                roster_driver["driverName"] = "NO DRIVER"
+                roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
                 continue
         else:
             continue
@@ -191,5 +191,5 @@ if __name__ == "__main__":
     roster = "2025_Xfinity_Series_NSK_AI"
     perform_copy(roster)
     #race = input("Enter race designation: ")
-    race = "daytona_1"
+    race = "bristol_1"
     main(race, roster)
