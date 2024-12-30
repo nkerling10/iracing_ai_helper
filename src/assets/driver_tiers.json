@@ -15,18 +15,16 @@
         "Sam Mayer",
         "Sammy Smith",
         "Ryan Sieg",
-        "Anthony Alfredo",
         "Connor Zilisch",
         "William Sawalich",
         "Alex Bowman"
     ],
     "tier_3": [
+        "Anthony Alfredo",
         "Brandon Jones",
         "Brennan Poole",
         "Nick Sanchez",
         "Daniel Dye",
-        "Josh Williams",
-        "Jeb Burton",
         "Harrison Burton",
         "Christian Eckes",
         "Taylor Gray",
@@ -36,6 +34,8 @@
         "Kaz Grala"
     ],
     "tier_4": [
+        "Josh Williams",
+        "Jeb Burton",
         "Matt DiBenedetto",
         "Kyle Sieg",
         "Jeremy Clements",
@@ -76,7 +76,6 @@
         "Sage Karam",
         "Brad Perez",
         "Preston Pardus",
-        "Mike Skeen",
         "Mason Massey",
         "RC Enerson",
         "Andre Castro",

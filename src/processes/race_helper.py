@@ -6,6 +6,8 @@ import os
 import pyautogui
 import pygetwindow as gw
 import logging
+import sounddevice as sd
+import soundfile as sf
 from pathlib import Path
 from enum import Enum
 from playsound import playsound
@@ -181,17 +183,21 @@ class iRacing:
     def _race(self, penalty_cars):
         logging.info("Starting race handler")
         logging.info("Playing sound file")
-        playsound(Path(f"{os.getcwd()}\\src\\assets\\start-your-engines.mp3"))
-        # wait 20 seconds for AI cars to grid
-        # start the grid or else it will wait 5 minutes for DQ'd cars
-        '''
+        try:
+            sd.default.device = "Speakers (Apple Audio Device), MME"
+            data, fs = sf.read(Path(f"{os.getcwd()}\\src\\assets\\start-your-engines.wav"), dtype='float32')  
+            sd.play(data, fs)
+        except Exception as e:
+            logging.info(e)
+        # wait 10 seconds for AI cars to grid
+        # start the grid or else it will wait all 5 minutes for DQ'd cars
         logging.info("Sleeping for 10 seconds")
         time.sleep(10)
         logging.info("Issuing gridstart command")
         self._send_iracing_command("!gridstart")
         self.ir.freeze_var_buffer_latest()
-        logging.info("Sleeping for 10 seconds")
-        '''
+        logging.info("Sleeping for 5 seconds")
+        time.sleep(5)
         logging.info("Issuing pre-race penalties")
         self._issue_pre_race_penalty(penalty_cars)
         pit_tracking = []

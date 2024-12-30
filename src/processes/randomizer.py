@@ -1,7 +1,6 @@
 import json
 import random
 import os
-import wikipediaapi
 from pathlib import Path
 from datetime import date
 import dateutil.parser as dparser
@@ -25,26 +24,11 @@ class Driver:
         self.pit_skill = attributes[5]
         self.strategy = attributes[6]
 
-def get_convert_page_data(wiki, driver_name):
-    page_py = wiki.page(driver_name)
-    born_text = page_py.summary[page_py.summary.find("(")+1:page_py.summary.find(")")]
-    date_obj = dparser.parse(born_text,fuzzy=True).date()
-
-    return date_obj
-
-def get_driver_age(driver_name):
-    wiki = wikipediaapi.Wikipedia('MyProjectName (merlin@example.com)', 'en')
-    if "Leland Honeyman" in driver_name:
-        driver_name = "Leland Honeyman"
-
-    try:
-        date_obj = get_convert_page_data(wiki, driver_name)
-    except ValueError:
-        date_obj = get_convert_page_data(wiki, f"{driver_name} (racing driver)")
-
+def get_driver_age(driver_name, driver_birthdays):
+    date_obj = dparser.parse(driver_birthdays.get(driver_name).get("birthday"),fuzzy=True).date()
     return today.year - date_obj.year - ((today.month, today.day) < (date_obj.month, date_obj.day))
 
-def set_attributes(driver_name, car, driver_tiers, car_list):
+def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     if driver_name in driver_tiers["tier_1"]:
         skill_min = 92
         skill_max = 100
@@ -107,7 +91,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list):
     driverAggression = 500
     driverOptimism = 250
     driverSmoothness = car_smoothness
-    driverAge = get_driver_age(driver_name)
+    driverAge = get_driver_age(driver_name, driver_birthdays)
     pitCrewSkill = random.randint(pit_min, pit_max)
     strategyRiskiness = random.randint(strategy_min, strategy_max)
 
@@ -135,7 +119,7 @@ def change_paint_scheme(car_num, driver_name, roster):
             new_paint_file = Path(roster_path/roster/car_num/random.choice(paint_files))
             print(f"Selected {new_paint_file}")
         else:
-            new_paint_file = Path(roster_path/car_num/driver_paints[0])
+            new_paint_file = Path(roster_path/roster/car_num/driver_paints[0])
             print(f"Selected {new_paint_file}")
 
     try:
@@ -152,25 +136,27 @@ def open_files():
         car_list = json.loads(car_file.read())
     with open(Path("src/assets/schedule.json"), "r") as schedule_file:
         schedule_list = json.loads(schedule_file.read())
-    return driver_tiers, car_list, schedule_list
+    with open(Path("src/assets/drivers.json"), "r") as driver_file:
+        driver_birthdays = json.loads(driver_file.read())
+    return driver_tiers, car_list, schedule_list, driver_birthdays
 
 def main(track, roster):
-    driver_tiers, car_list, schedule_list = open_files()
+    driver_tiers, car_list, schedule_list, driver_birthdays = open_files()
     with open(Path(ai_roster_path/roster/"roster.json"), "r") as roster_file:
         driver_list = json.loads(roster_file.read())
     for roster_driver in driver_list["drivers"]:
         if car_list[roster_driver["carNumber"]]["type"] == "full_time_one_driver":
             print(f"Randomizing attributes for {roster_driver['driverName']} - #{roster_driver['carNumber']}")
-            new_ratings = set_attributes(roster_driver['driverName'], roster_driver["carNumber"], driver_tiers, car_list)
+            new_ratings = set_attributes(roster_driver['driverName'], roster_driver["carNumber"], driver_tiers, car_list, driver_birthdays)
         elif car_list[roster_driver["carNumber"]]["type"] == "full_time_multiple_drivers":
             scheduled_driver = schedule_list[track]["full_time"][roster_driver["carNumber"]]
             print(f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}")
-            new_ratings = set_attributes(scheduled_driver, roster_driver["carNumber"], driver_tiers, car_list)
+            new_ratings = set_attributes(scheduled_driver, roster_driver["carNumber"], driver_tiers, car_list, driver_birthdays)
         elif car_list[roster_driver["carNumber"]]["type"] == "part_time":
             scheduled_driver = schedule_list[track]["part_time"][roster_driver["carNumber"]]
             if scheduled_driver:
                 print(f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}")
-                new_ratings = set_attributes(scheduled_driver, roster_driver["carNumber"], driver_tiers, car_list)
+                new_ratings = set_attributes(scheduled_driver, roster_driver["carNumber"], driver_tiers, car_list, driver_birthdays)
             else:
                 print(f"No driver found for #{roster_driver['carNumber']} this week")
                 roster_driver["driverName"] = "NO DRIVER"
@@ -205,5 +191,5 @@ if __name__ == "__main__":
     roster = "2025_Xfinity_Series_NSK_AI"
     perform_copy(roster)
     #race = input("Enter race designation: ")
-    race = "phoenix_1"
+    race = "daytona_1"
     main(race, roster)
