@@ -12,13 +12,13 @@ from playsound import playsound
 from datetime import datetime
 # https://github.com/kutu/pyirsdk/blob/master/tutorials/02%20Using%20irsdk%20script.md
 
-os.makedirs(f"{os.getcwd()}\\logs", exist_ok=True)
+os.makedirs(Path(os.getcwd())/"logs", exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler(f"{os.getcwd()}\\logs\\{datetime.now()}.log"),
+        logging.FileHandler(Path(os.getcwd())/"logs"/"debug.log"),
         logging.StreamHandler()
     ]
 )
@@ -181,15 +181,17 @@ class iRacing:
     def _race(self, penalty_cars):
         logging.info("Starting race handler")
         logging.info("Playing sound file")
-        playsound(os.path.join(os.getcwd(), "src\\assets\\start-your-engines.mp3"))
+        playsound(Path(f"{os.getcwd()}\\src\\assets\\start-your-engines.mp3"))
         # wait 20 seconds for AI cars to grid
         # start the grid or else it will wait 5 minutes for DQ'd cars
+        '''
         logging.info("Sleeping for 10 seconds")
         time.sleep(10)
         logging.info("Issuing gridstart command")
         self._send_iracing_command("!gridstart")
         self.ir.freeze_var_buffer_latest()
         logging.info("Sleeping for 10 seconds")
+        '''
         logging.info("Issuing pre-race penalties")
         self._issue_pre_race_penalty(penalty_cars)
         pit_tracking = []
@@ -238,7 +240,7 @@ class iRacing:
 
     def _process_race(self):
         logging.info("Starting race processor!")
-
+        penalties_set = False
         while True:
             self.ir.freeze_var_buffer_latest()
             current_session = self.ir["SessionNum"]
@@ -248,13 +250,19 @@ class iRacing:
             logging.info(f"Current session: {current_session} - {session_name}")
             if current_session == 0:
                 if session_name == "PRACTICE":
-                    penalty_cars = self._practice()
+                    if penalties_set is False:
+                        penalty_cars = self._practice()
+                        penalties_set = True
                 if session_name == "QUALIFYING":
-                    penalty_cars = self._practice()
+                    if penalties_set is False:
+                        penalty_cars = self._practice()
+                        penalties_set = True
                     self._qualifying()
             elif current_session == 1:
                 if session_name == "QUALIFYING":
-                    penalty_cars = self._practice()
+                    if penalties_set is False:
+                        penalty_cars = self._practice()
+                        penalties_set = True
                     self._qualifying()
                 if session_name == "RACE":
                     self._race(penalty_cars)

@@ -205,5 +205,5 @@ if __name__ == "__main__":
     roster = "2025_Xfinity_Series_NSK_AI"
     perform_copy(roster)
     #race = input("Enter race designation: ")
-    race = "daytona_1"
+    race = "phoenix_1"
     main(race, roster)
