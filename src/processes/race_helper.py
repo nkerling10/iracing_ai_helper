@@ -69,7 +69,8 @@ class Race:
             stage_1_mod = .34
         elif self.track == "WWTR":
             stage_1_mod = .22
-        
+        print(self.race_laps)
+        print(stage_1_mod)
         self.stage_1_end_lap = math.floor(self.race_laps * stage_1_mod)
         self.stage_2_end_lap = self.stage_1_end_lap * 2.15 if self.track == "COTA" else 2
 
@@ -89,9 +90,12 @@ class iRacing:
         self.pre_race_penalties = ["Failed Inspection x2",
                                    "Failed Inspection x3",
                                    "Unapproved Adjustments"]
+        self.practice_session_num = None
+        self.qualifying_session_num = None
+        self.race_session_num = None
         self.ir = irsdk.IRSDK()
-        #self.ir.startup(test_file="C:\\Users\\Nick\\Documents\\iracing_ai_randomizer\\session_data\\qual_ending.bin")
-        self.ir.startup()
+        self.ir.startup(test_file="C:\\Users\\Nick\\Documents\\iracing_ai_randomizer\\session_data\\data_practice.bin")
+        #self.ir.startup()
         
         self.main()
 
@@ -206,13 +210,18 @@ class iRacing:
                 while True:
                     logging.info("Session state is finalized, waiting for official results..")
                     self.ir.freeze_var_buffer_latest()
-                    if self.ir["SessionInfo"]["Sessions"][1]["ResultsOfficial"] != 1:
+                    if self.ir["SessionInfo"]["Sessions"][self.qualifying_session_num]["ResultsOfficial"] != 1:
                         logging.info("Waiting for results to become official..")
                         time.sleep(1)
                     else:
                         logging.info("Qualifying results are now official.")
                         break
-                for position in self.ir["SessionInfo"]["Sessions"][1]["ResultsPositions"]:
+                for position in self.ir["SessionInfo"]["Sessions"][self.qualifying_session_num]["ResultsPositions"]:
+                    if position["Position"] == 1:
+                        weekend.pole_winner = [driver["UserName"] for driver in
+                                               self.ir["DriverInfo"]["Drivers"] if
+                                               driver["CarIdx"] == position["CarIdx"]][0]
+                        logging.info(f"Congrats to {weekend.pole_winner} for winning the pole this week.")
                     if position["Position"] > self.field_size:
                         match = [driver["CarNumber"] for driver in
                                 self.ir["DriverInfo"]["Drivers"] if
@@ -223,7 +232,6 @@ class iRacing:
                             self._send_iracing_command(f"!dq {match[0]} #{match[0]} missed the race")
                     
                     qual_done = True
-        weekend.pole_winner = 
 
     def _issue_pre_race_penalty(self, penalty_cars):
         '''
@@ -330,27 +338,31 @@ class iRacing:
             state.ir_connected = True
             logging.info("irsdk connected")
 
-    @staticmethod
-    def _define_sessions(event_sessions):
+    def _define_sessions(self, event_sessions):
         practice_session = [session["SessionNum"] for session in
-                            event_sessions if
-                            session["SessionName"] == "PRACTICE"][0]
+                                event_sessions if
+                                session["SessionName"] == "PRACTICE"]
+        if practice_session:
+            self.practice_session_num = practice_session[0]
+
         qualifying_session = [session["SessionNum"] for session in
-                              event_sessions if
-                              session["SessionName"] == "QUALIFY"][0]
+                                  event_sessions if
+                                  session["SessionName"] == "QUALIFY"]
+        if qualifying_session:
+            self.qualifying_session_num = qualifying_session[0]
+
         race_session = [session["SessionNum"] for session in
-                        event_sessions if
-                        session["SessionName"] == "RACE"][0]
+                            event_sessions if
+                            session["SessionName"] == "RACE"]
+        if race_session:
+            self.race_session_num = race_session[0]
 
     def _process_race(self):
         event_sessions = self.ir["SessionInfo"]["Sessions"]
         logging.info("Starting race processor!")
         self._define_sessions(event_sessions)
-        race_session = [session["SessionNum"] for session in
-                        self.ir["SessionInfo"]["Sessions"] if
-                        session["SessionType"] == "Race"][0]
         weekend = Race(self.ir["WeekendInfo"]["TrackDisplayShortName"],
-                       self.ir["SessionInfo"]["Sessions"][race_session]["SessionLaps"])
+                       self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"])
         penalties_set = False
         while True:
             self.ir.freeze_var_buffer_latest()
@@ -381,9 +393,11 @@ class iRacing:
                 self._race(penalty_cars)
             else:
                 time.sleep(1)
+            time.sleep(1)
 
     def main(self):
         state = State()
+        self._process_race()
         try:
             while True:
                 self._check_iracing(state)
@@ -394,12 +408,12 @@ class iRacing:
         except KeyboardInterrupt:
             pass
 
-
-if __name__ == '__main__':
-    event = Race("Darlington", 147)
+def _test_print_stage_lengths(event):
     print(f"Stage 1: lap {event.stage_1_end_lap}")
     print(f"Stage 2: lap {event.stage_2_end_lap}")
-    print(f"Stage 2 -> End: {event.laps - event.stage_2_end_lap} laps")
+    print(f"Stage 2 -> End: {event.race_laps - event.stage_2_end_lap} laps")
     quit()
+
+if __name__ == '__main__':
     logging.info("App startup")
     iRacing()
