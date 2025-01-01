@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class Track(Enum):
     Daytona = 191
     Atlanta = 447

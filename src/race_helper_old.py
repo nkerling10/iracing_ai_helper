@@ -15,8 +15,9 @@ from datetime import datetime
 
 from config.race_weekend import RaceWeekend
 from config.race_settings import RaceSettings
-# 
-os.makedirs(Path(os.getcwd())/"logs", exist_ok=True)
+
+#
+os.makedirs(Path(os.getcwd()) / "logs", exist_ok=True)
 
 
 class iRacing:
@@ -31,10 +32,12 @@ class iRacing:
             if self.ir["Lap"] > 0:
                 self.ir.freeze_var_buffer_latest()
                 # get all cars currently on pit road
-                cars_on_pit_road = [driver["CarNumber"] for driver
-                                    in self.ir["DriverInfo"]["Drivers"]
-                                    if self.ir["CarIdxOnPitRoad"][driver["CarIdx"]]
-                                    and driver["UserName"] != "Pace Car"]
+                cars_on_pit_road = [
+                    driver["CarNumber"]
+                    for driver in self.ir["DriverInfo"]["Drivers"]
+                    if self.ir["CarIdxOnPitRoad"][driver["CarIdx"]]
+                    and driver["UserName"] != "Pace Car"
+                ]
                 # if there is at least 1 car on pit road
                 if len(cars_on_pit_road) > 0:
                     # for each car in this pulled instance
@@ -60,7 +63,6 @@ class iRacing:
             else:
                 logging.info("Waiting for race to start..")
                 time.sleep(1)
-
 
 
 def _test_print_stage_lengths(event):
