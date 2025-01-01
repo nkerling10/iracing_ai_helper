@@ -1,17 +1,18 @@
 ## Standard library imports
 import logging
+import os
 import random
+import time
+from pathlib import Path
 
 ## Third party imports
-import irsdk
+import sounddevice as sd
+import soundfile as sf
 
 ## Local imports
 
 
 class RaceService:
-    def __init__(self):
-        self.player_car_num = 0
-
     @staticmethod
     def _get_flag(flag):
         '''
@@ -41,73 +42,87 @@ class RaceService:
                 return "green"
             else:
                 return "green"
-    
-    def _pit_penalty(self, car_num):
+
+    @staticmethod
+    def _pit_penalty(cls, race_manager, car_num):
         '''
             Select and issue a pit penalty to designated car number
         '''
-        penalty = random.choice(self.race_settings.penalties_player
-                                if car_num == self.player_car_num
-                                else self.race_settings.penalties)
+        penalty = random.choice(race_manager.race_settings.penalties_player
+                                if car_num == race_manager.race_weekend.player_car_num
+                                else race_manager.race_settings.penalties)
 
-        self.ir.freeze_var_buffer_latest()
-        flag_color = self._get_flag(self.ir["SessionFlags"])
+        race_manager.ir.freeze_var_buffer_latest()
+        flag_color = cls._get_flag(race_manager.ir["SessionFlags"])
 
         if flag_color == "green":
             logging.info(f"PENALTY: Passthrough for #{car_num}: {penalty}")
-            self._send_iracing_command(f"!bl {car_num} D")
-            self._send_iracing_command(f"PT PENALTY #{car_num}: {penalty}")
+            race_manager._send_iracing_command(f"!bl {car_num} D")
+            penalty_message = f"Passthrough PENALTY #{car_num}: {penalty}"
         elif flag_color == "yellow":
             logging.info(f"PENALTY: EOL for #{car_num}: {penalty}")
-            self._send_iracing_command(f"!eol {car_num}")
-            self._send_iracing_command(f"EOL PENALTY #{car_num}: {penalty}")
+            race_manager._send_iracing_command(f"!eol {car_num}")
+            penalty_message = f"EOL PENALTY #{car_num}: {penalty}"
+        race_manager._send_iracing_command(penalty_message)
 
-    def _issue_pre_race_penalty(self, penalty_cars):
+    @staticmethod
+    def _issue_pre_race_penalty(race_manager):
         '''
-            Issue a pit penalty to each car as necessary
+            Issue a pre-race penalty to each defined car
         '''
-        for car_num, penalty in penalty_cars:
+        for car_num, penalty in race_manager.race_weekend.pre_race_penalties:
             if penalty in ["Failed Inspection x2", "Unapproved Adjustments"]:
                 logging.info(f"#{car_num} to the rear: {penalty}")
-                self._send_iracing_command(f"!eol {car_num}")
-                self._send_iracing_command(f"PENALTY: #{car_num} to the rear: {penalty}")
+                race_manager._send_iracing_command(f"!eol {car_num}")
+                penalty_message = f"PENALTY: #{car_num} to the rear: {penalty}"
             elif penalty in ["Failed Inspection x3"]:
-                logging.info(f"#{car_num} to the rear: {penalty}")
-                logging.info(f"#{car_num} drivethrough")
-                self._send_iracing_command(f"!eol {car_num}")
-                self._send_iracing_command(f"!bl {car_num} D")
-                self._send_iracing_command(f"PENALTY: #{car_num} to the rear plus drivethrough penalty: {penalty}")
+                logging.info(f"#{car_num} to the rear plus drivethrough: {penalty}")
+                race_manager._send_iracing_command(f"!eol {car_num}")
+                race_manager._send_iracing_command(f"!bl {car_num} D")
+                penalty_message = f"PENALTY: #{car_num} to the rear plus drivethrough penalty: {penalty}"
+            race_manager._send_iracing_command(penalty_message)
 
-
-    def _pre_race_events(self):
-        '''
-            Handle all desired pre-race events
-
-            Currently Implemented:
-            1. Play `start your engines` sound file
-            2. Issue gridstart command after waiting 30 seconds
-            3. Issue pre-race penalties that were calculated
-            4. TODO: Set up autostage/race result exporter
-        '''
-        logging.info("Playing sound file")
+    @staticmethod
+    def _play_sound():
+        logging.debug("Playing sound file")
         try:
             sd.default.device = "Speakers (Realtek(R) Audio), MME"
-            data, fs = sf.read(Path(f"{os.getcwd()}\\src\\assets\\start-your-engines.wav"), dtype='float32')  
+            data, fs = sf.read(Path(f"{os.getcwd()}\\src\\assets\\sounds\\start-your-engines.wav"), dtype='float32')  
             sd.play(data, fs)
         except Exception as e:
-            logging.info(e)
-        # wait 30 seconds for AI cars to grid
-        self._send_iracing_command(f"Race will start in 30 seconds.")
-        self._send_iracing_command(f"REMEMBER TO OPEN AUTOSTAGES!")
-        logging.info("Sleeping for 30 seconds")
-        time.sleep(30)
-        logging.info("Issuing gridstart command")
-        self._send_iracing_command("!gridstart")
-        self.ir.freeze_var_buffer_latest()
-        logging.info("Sleeping for 5 seconds")
-        time.sleep(5)
-        logging.info("Issuing pre-race penalties")
-        self._issue_pre_race_penalty(penalty_cars)
+            logging.error(e)
 
-    def main(self):
-        pass
+    @classmethod
+    def _pre_race_actions(cls, race_manager):
+        '''
+        Ideally wait until player has gotten into car first
+
+        if player in car:
+            cls._play_sound()
+        else:
+            time.sleep(1)
+        '''
+        ## Play starting command
+        cls._play_sound()
+        ## Wait ~30 seconds
+        logging.debug("Sleeping for 30 seconds")
+        time.sleep(30)
+        ## Issue gridstart command, then sleep 10 seconds
+        logging.debug("Issuing gridstart command")
+        race_manager._send_iracing_command("!gridstart")
+        time.sleep(10)
+        ## Issue calculated pre-race penalties
+        if len(race_manager.race_weekend.pre_race_penalties) > 0:
+            logging.debug("Issuing pre-race penalties")
+            cls._issue_pre_race_penalty(race_manager)
+        else:
+            logging.debug("No pre-race penalties to issue")
+
+    @classmethod
+    def race(cls, race_manager):
+        while True:
+            ## IF RACE HAS NOT ALREADY STARTED!!
+            ## Perform pre-race actions
+            cls._pre_race_actions(race_manager)
+
+RaceService.race("blah")

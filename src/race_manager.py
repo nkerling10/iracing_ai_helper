@@ -27,7 +27,7 @@ from services.session.race_service import RaceService
 from assets import tracks
 
 logging.basicConfig(
-    level=logging.INFO,
+    level=logging.DEBUG,
     format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
     handlers=[
         logging.FileHandler(Path(os.getcwd())/"logs"/"debug.log"),
@@ -42,7 +42,8 @@ class State:
 
 class RaceWeekend:
     def __init__(self, track_short_name,
-                 track_long_name, race_length):
+                 track_long_name, race_length,
+                 player_car_num):
         self.track_short_name = track_short_name
         self.track_long_name = track_long_name
         self.race_length = race_length
@@ -54,6 +55,7 @@ class RaceWeekend:
         self.stage_2_results = []
         self.stage_3_end_lap = self.race_length
         self.stage_3_results = []
+        self.player_car_num = player_car_num
 
         self._set_stage_lengths()
     
@@ -221,7 +223,8 @@ def set_weekend_data(race_manager) -> None:
     race_manager.race_weekend = RaceWeekend(
         track_short_name = race_manager.ir["WeekendInfo"]["TrackDisplayShortName"],
         track_long_name = race_manager.ir["WeekendInfo"]["TrackDisplayName"],
-        race_length = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["SessionLaps"]
+        race_length = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["SessionLaps"],
+        player_car_num = race_manager.ir["Drivers"][0]["CarNumber"]
     )
 
 def main() -> None:
