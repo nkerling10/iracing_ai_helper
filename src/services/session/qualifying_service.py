@@ -9,7 +9,7 @@ import time
 
 class QualifyingService:
     @classmethod
-    def _set_field_size(cls, race_manager):
+    def _set_field_size(cls, race_manager) -> None:
         for position in race_manager.ir["SessionInfo"]["Sessions"][race_manager.qualifying_session_num]["ResultsPositions"]:
             if position["Position"] == 1:
                 race_manager.race_weekend.pole_winner = [driver["UserName"] for driver in
@@ -26,7 +26,7 @@ class QualifyingService:
                     race_manager._send_iracing_command(f"!dq {match[0]} #{match[0]} missed the race")
 
     @classmethod
-    def qualifying(cls, race_manager):
+    def qualifying(cls, race_manager) -> None:
         ## Loop until the qualifying session state is finalized
         while True:
             race_manager.ir.freeze_var_buffer_latest()

@@ -8,7 +8,7 @@ import random
 
 class PracticeService:
     @classmethod
-    def _disable_chat(cls, race_manager, driver_data, global_=False):
+    def _disable_chat(cls, race_manager, driver_data, global_=False) -> None:
         '''
             Disable chat so AI drivers won't type when they are
                 supposedly pitting.
@@ -21,7 +21,7 @@ class PracticeService:
                     race_manager.ir._send_iracing_command(f"!nchat {driver['UserName'].replace(' ', '.')}")
 
     @classmethod
-    def _disqualify_drivers(cls, race_manager, driver_data):
+    def _disqualify_drivers(cls, race_manager, driver_data) -> None:
         '''
             Disqualify driverless cars in the session, they will
                 be denoted by their name: NODRIVER{carnumber}.
@@ -36,7 +36,7 @@ class PracticeService:
 
     @classmethod
     def _calculate_pre_race_penalties(cls, race_manager,
-                                      driver_data):
+                                      driver_data) -> None:
         '''
             Calculate pre-race penalties for each driver in the field based
                 off the chance modifier in the race_settings class.
@@ -49,7 +49,7 @@ class PracticeService:
                     race_manager.race_weekend.pre_race_penalties.append([driver["CarNumber"], penalty])
 
     @classmethod
-    def practice(cls, race_manager, disable=False):
+    def practice(cls, race_manager, disable=False) -> None:
         '''
             1. Disable chat for AI drivers (optional)
             2. Disqualify all drivers who are named NODRIVER{car_num}

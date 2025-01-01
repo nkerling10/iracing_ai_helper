@@ -63,39 +63,6 @@ class iRacing:
 
 
 
-    def _process_race(self):
-        event_sessions = self.ir["SessionInfo"]["Sessions"]
-        logging.info("Starting race processor!")
-        self._define_sessions(event_sessions)
-        weekend = RaceWeekend(self.ir["WeekendInfo"]["TrackDisplayShortName"],
-                              self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"])
-        while True:
-            current_session, session_name = self._get_current_session()
-            if current_session == 0:
-                if session_name == "PRACTICE":
-                    if self.penalties_set is False:
-                        penalty_cars = self._practice()
-                        self.penalties_set = True
-                if session_name == "QUALIFYING":
-                    if self.penalties_set is False:
-                        penalty_cars = self._practice()
-                        self.penalties_set = True
-                    self._qualifying(weekend)
-            elif current_session == 1:
-                if session_name == "QUALIFYING":
-                    if self.penalties_set is False:
-                        penalty_cars = self._practice()
-                        self.penalties_set = True
-                    self._qualifying(weekend)
-                if session_name == "RACE":
-                    self._race(penalty_cars)
-            elif current_session == 2:
-                self._race(penalty_cars)
-            else:
-                time.sleep(1)
-            time.sleep(1)
-
-
 def _test_print_stage_lengths(event):
     print(f"Stage 1: lap {event.stage_1_end_lap}")
     print(f"Stage 2: lap {event.stage_2_end_lap}")

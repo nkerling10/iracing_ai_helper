@@ -20,7 +20,6 @@ import pygetwindow as gw
 from pygetwindow import PyGetWindowException
 
 ## Local imports
-from config.race_weekend import RaceWeekend
 from config.race_settings import RaceSettings
 from services.session.practice_service import PracticeService
 from services.session.qualifying_service import QualifyingService
@@ -58,7 +57,7 @@ class RaceWeekend:
 
         self._set_stage_lengths()
     
-    def _set_stage_lengths(self):
+    def _set_stage_lengths(self) -> None:
         if self.track_short_name in ["Daytona", "Atlanta", "Watkins Glen"]:
             stage_1_mod = .25
         elif self.track_short_name == "COTA":
@@ -103,7 +102,7 @@ class RaceManager:
         if not test_file:
             self._connect()
 
-    def send_iracing_command(self, command):
+    def send_iracing_command(self, command) -> None:
         '''
             Issue a command to iRacing via pyautogui.typewrite library
         '''
@@ -119,7 +118,7 @@ class RaceManager:
         pyautogui.typewrite(command)
         pyautogui.press("enter")
 
-    def define_sessions(self):
+    def define_sessions(self) -> None:
         event_sessions = self.ir["SessionInfo"]["Sessions"]
         practice_session = [session["SessionNum"] for session in
                             event_sessions if
@@ -139,7 +138,7 @@ class RaceManager:
         if race_session:
             self.race_session_num = race_session[0]
 
-    def get_current_sessions(self):
+    def get_current_sessions(self) -> tuple[int, str]:
         self.ir.freeze_var_buffer_latest()
         current_session_num = self.ir["SessionNum"]
         current_session_name = [session["SessionName"] for session in
@@ -148,7 +147,7 @@ class RaceManager:
 
         return current_session_num, current_session_name
 
-    def _check_iracing(self, state):
+    def _check_iracing(self, state) -> None:
         if state.ir_connected and not (self.ir.is_initialized and self.ir.is_connected):
             state.ir_connected = False
             self.ir.shutdown()
@@ -157,7 +156,7 @@ class RaceManager:
             state.ir_connected = True
             logging.info("irsdk connected")
 
-    def _connect(self):
+    def _connect(self) -> None:
         try:
             while True:
                 self._check_iracing(self.state)
@@ -168,16 +167,16 @@ class RaceManager:
         except KeyboardInterrupt:
             quit()
 
-def practice(race_manager):
+def practice(race_manager) -> None:
     PracticeService.practice(race_manager)
 
-def qualifying(race_manager):
+def qualifying(race_manager) -> None:
     QualifyingService.qualifying(race_manager)
 
-def race(race_manager):
+def race(race_manager) -> None:
     RaceService.race(race_manager)
 
-def loop(race_manager):    
+def loop(race_manager) -> None:
     while True:
         ## Figure out what session is currently active
         ## This will prove useful if the app crashes during any session
@@ -215,7 +214,7 @@ def loop(race_manager):
         else:
             time.sleep(1)
 
-def set_weekend_data(race_manager):
+def set_weekend_data(race_manager) -> None:
     ## Identify which sessions exist in the "race weekend"
     race_manager.define_sessions()
     ## Set the initially required data
@@ -225,7 +224,7 @@ def set_weekend_data(race_manager):
         race_length = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["SessionLaps"]
     )
 
-def main():
+def main() -> None:
     race_manager = RaceManager(test_file)
     ## Once iRacing is connected, set required weekend data
     set_weekend_data(race_manager)
