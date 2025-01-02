@@ -175,7 +175,7 @@ class RaceService:
         logging.debug(f"Starting penalty tracker for stage {stage}")
         pit_tracking = []
         while True:
-            logging.debug(f"Lap {race_manager.ir["Lap"]} (penalty_tracker)")
+            logging.debug(f"Lap {race_manager.ir['Lap']} (penalty_tracker)")
             if race_manager.ir["Lap"] > 0:
                 race_manager.ir.freeze_var_buffer_latest()
                 # get all cars currently on pit road
@@ -227,14 +227,14 @@ class RaceService:
 
         while True:
             race_manager.ir.freeze_var_buffer_latest()
-            logging.debug(f"Lap {race_manager.ir["Lap"]} (process_stage)")
+            logging.debug(f"Lap {race_manager.ir['Lap']} (process_stage)")
             current_flag = cls._get_flag(race_manager.ir["SessionFlags"])
 
             ## TODO: If the caution is out within 3 laps of stage end
             ## the stage will end early
             if current_flag == "yellow" and race_manager.ir["Lap"] <= stage_end - 3:
                 logging.debug(f"Stage needs to end early: \
-                              {stage_end - race_manager.ir["Lap"]} laps until stage end")
+                              {stage_end - race_manager.ir['Lap']} laps until stage end")
                 race_manager.send_iracing_command(f"Stage {stage} will end early under caution")
                 stage_end_early = True
                 break
@@ -319,7 +319,7 @@ class RaceService:
             # race_manager.ir.freeze_var_buffer_latest()
             ## Enum is useful to map session state id to its name
             logging.debug(
-                f"Session state is {SessionName(race_manager.ir["SessionState"]).name}"
+                f"Session state is {SessionName(race_manager.ir['SessionState']).name}"
             )
             ## Loop until player enters the car
             while True:
@@ -353,5 +353,5 @@ class RaceService:
             else:
                 logging.warning(
                     f"Unexpected issue: session state is \
-                                {race_manager.ir["SessionState"]}"
+                                {race_manager.ir['SessionState']}"
                 )

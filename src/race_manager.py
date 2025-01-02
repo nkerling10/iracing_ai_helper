@@ -134,9 +134,12 @@ class RaceManager:
             try:
                 window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
                 window.activate()
+                logging.debug("Activated window")
             except PyGetWindowException:
+                logging.error("PyGetWindowException error!")
                 continue
             break
+        logging.debug("Sending chat command")
         self.ir.chat_command(1)
         time.sleep(1)
         pyautogui.typewrite(command)
@@ -292,7 +295,7 @@ def set_weekend_data(race_manager) -> None:
 
 
 def main() -> None:
-    race_manager = RaceManager(test_file)
+    race_manager = RaceManager()#test_file)
     ## Once iRacing is connected, set required weekend data
     set_weekend_data(race_manager)
     ## After data is set, proceed to looping logic
