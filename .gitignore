@@ -164,3 +164,4 @@ cython_debug/
 .DS_Store
 logs
 paint_storage
+iracing_ai_helper.code-workspace
