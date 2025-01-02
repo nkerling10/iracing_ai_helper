@@ -16,6 +16,7 @@ import soundfile as sf
 
 audio_device = "Speakers (Realtek(R) Audio), MME"
 
+
 class SessionName(Enum):
     INVALID = 0
     GET_IN_CAR = 1
@@ -105,7 +106,7 @@ class RaceService:
     @staticmethod
     def _play_sound():
         """
-            Plays packaged sound file of start engine command
+        Plays packaged sound file of start engine command
         """
         if sd.query_devices(device=audio_device):
             logging.debug(f"Setting audio output to {audio_device}")
@@ -124,83 +125,94 @@ class RaceService:
     @classmethod
     def _pre_race_actions(cls, race_manager):
         """
-            Executes pre-race actions to:
-                1. Play engine start command
-                2. Start the grid/parade laps
-                3. Issue calculated pre-race penalties
+        Executes pre-race actions to:
+            1. Play engine start command
+            2. Start the grid/parade laps
+            3. Issue calculated pre-race penalties
         """
         ## Play start engine command
         cls._play_sound()
-        ## Wait 30 seconds while sound plays
-        logging.debug("Sleeping for 30 seconds")
+        logging.debug("Sleeping for 30 seconds while sound plays")
         time.sleep(30)
-        ## Issue gridstart command, then sleep 10 seconds
         ## This will change session state from 2 -> 3
+        ## warmup -> parade_laps
         logging.debug("Issuing gridstart command")
         race_manager._send_iracing_command("!gridstart")
         time.sleep(10)
-        ## Issue calculated pre-race penalties
+        ## Wait for cars to get rolling, then issue any pre-race penalties
         if len(race_manager.race_weekend.pre_race_penalties) > 0:
             logging.debug("Issuing pre-race penalties")
             cls._issue_pre_race_penalty(race_manager)
         else:
             logging.debug("No pre-race penalties to issue")
         logging.info("Pre-race actions are complete")
+        logging.debug(
+            f"Stage lengths: \
+                      {race_manager.race_weekend.stage_1.stage_end_lap}/ \
+                      {race_manager.race_weekend.stage_2.stage_end_lap}/ \
+                      {race_manager.race_weekend.stage_3.stage_end_lap}"
+        )
+        race_manager._send_iracing_command(
+            f"Stage lengths: \
+                                           {race_manager.race_weekend.stage_1.stage_end_lap}/ \
+                                           {race_manager.race_weekend.stage_2.stage_end_lap}/ \
+                                           {race_manager.race_weekend.stage_3.stage_end_lap}"
+        )
 
     @classmethod
     def _process_race(cls, race_manager):
-        print(race_manager.race_weekend.stage_1.stage_end_lap)
-        print(race_manager.race_weekend.stage_2.stage_end_lap)
-        print(race_manager.race_weekend.stage_3.stage_end_lap)
+        # handle stage 1
+        logging.debug(
+            f"Starting tracking of Stage 1 - ends on lap {race_manager.race_weekend.stage_1.stage_end_lap}"
+        )
+        # handle stage 2
+        logging.debug(
+            f"Starting tracking of Stage 2 - ends on lap {race_manager.race_weekend.stage_2.stage_end_lap}"
+        )
+        # handle stage 3
+        logging.debug(
+            f"Starting tracking of Stage 3 - ends on lap {race_manager.race_weekend.stage_3.stage_end_lap}"
+        )
+
         quit()
 
     @classmethod
     def race(cls, race_manager):
         while True:
-            #race_manager.ir.freeze_var_buffer_latest()
-            ## Enum is useful to identify which session state id corresponds to its name
-            logging.debug(f"Session state is {SessionName(race_manager.ir["SessionState"]).name}")
+            # race_manager.ir.freeze_var_buffer_latest()
+            ## Enum is useful to map session state id to its name
+            logging.debug(
+                f"Session state is {SessionName(race_manager.ir["SessionState"]).name}"
+            )
             ## Loop until player enters the car
             while True:
-                #race_manager.ir.freeze_var_buffer_latest()
+                # race_manager.ir.freeze_var_buffer_latest()
+                ## Session state GET_IN_CAR
                 if race_manager.ir["SessionState"] == 1:
                     time.sleep(1)
                 else:
                     break
-
+            ## Session state WARMUP (sitting on pitroad waiting for cars to grid)
+            ## Session state PARADE_LAPS is also handled in this logic
             if race_manager.ir["SessionState"] == 2:
                 ## Perform pre-race actions
                 cls._pre_race_actions(race_manager)
-            ## If race session is active
+            ## Pre-race penalties will finish being issued before session state
+            ## changes from 3 -> 4. Just sleep and wait until the race starts
+            elif race_manager.ir["SessionState"] == 3:
+                time.sleep(1)
+            ## Session state RACING
             elif race_manager.ir["SessionState"] == 4:
+                logging.debug("Race has started!")
                 cls._process_race(race_manager)
+            ## Session state CHECKERED
             elif race_manager.ir["SessionState"] == 5:
                 pass
+            ## Session state COOLDOWN
             elif race_manager.ir["SessionState"] == 6:
                 pass
             else:
-                logging.warning(f"Unexpected issue: session state is
-                                {race_manager.ir["SessionState"]}")
-
-'''
-class RaceManager:
-    def __init__(self, test_file=None):
-        self.state = None
-        self.race_settings = None
-        self.practice_session_num = None
-        self.practice_done = False
-        self.qualifying_session_num = None
-        self.qualifying_done = False
-        self.race_session_num = None
-        self.race_done = False
-        self.ir = irsdk.IRSDK()
-        self.ir.startup(test_file)
-        self.race_weekend = None
-
-test_file = Path(
-    "C:\\Users\\Nick\\Documents\\iracing_ai_randomizer\\session_data\\dataracing.bin"
-)
-
-race_manager = RaceManager(test_file)
-RaceService.race(race_manager)
-'''
+                logging.warning(
+                    f"Unexpected issue: session state is \
+                                {race_manager.ir["SessionState"]}"
+                )

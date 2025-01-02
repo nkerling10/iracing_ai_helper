@@ -104,8 +104,9 @@ class RaceWeekend:
 
         self.stage_1.stage_end_lap = math.floor(self.race_length * stage_1_mod)
         self.stage_2.stage_end_lap = math.floor(
-            self.stage_1.stage_end_lap * 2.15 if self.track_short_name == "COTA" else
-            self.stage_1.stage_end_lap * 2
+            self.stage_1.stage_end_lap * 2.15
+            if self.track_short_name == "COTA"
+            else self.stage_1.stage_end_lap * 2
         )
 
 
@@ -264,8 +265,8 @@ def loop(race_manager) -> None:
 
         elif current_session_name == "RACE":
             if (
-                race_manager.qualifying_session_num is None or
-                race_manager.ir["SessionInfo"]["Sessions"][
+                race_manager.qualifying_session_num is None
+                or race_manager.ir["SessionInfo"]["Sessions"][
                     race_manager.qualifying_session_num
                 ]["ResultsOfficial"]
                 == 1
