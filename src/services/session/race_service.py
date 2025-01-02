@@ -142,11 +142,16 @@ class RaceService:
             3. Issue calculated pre-race penalties
         """
         ## Play start engine command
+        while True:
+            race_manager.ir.freeze_var_buffer_latest()
+            if race_manager.ir["PlayerTrackSurface"] != -1:
+                break
+            logging.debug("Waiting for player to enter car")
         cls._play_sound()
         logging.debug("Sleeping for 30 seconds while sound plays")
         time.sleep(30)
-        ## This will change session state from 2 -> 3
-        ## warmup -> parade_laps
+        ## This will change session state from 1 -> 3
+        ## get_in_car -> parade_laps
         logging.debug("Issuing gridstart command")
         race_manager.send_iracing_command("!gridstart")
         time.sleep(10)
@@ -157,18 +162,8 @@ class RaceService:
         else:
             logging.debug("No pre-race penalties to issue")
         logging.info("Pre-race actions are complete")
-        logging.debug(
-            f"Stage lengths: \
-                      {race_manager.race_weekend.stage_1.stage_end_lap}/ \
-                      {race_manager.race_weekend.stage_2.stage_end_lap}/ \
-                      {race_manager.race_weekend.stage_3.stage_end_lap}"
-        )
-        race_manager.send_iracing_command(
-            f"Stage lengths: \
-                                           {race_manager.race_weekend.stage_1.stage_end_lap}/ \
-                                           {race_manager.race_weekend.stage_2.stage_end_lap}/ \
-                                           {race_manager.race_weekend.stage_3.stage_end_lap}"
-        )
+        logging.debug(f"Stage lengths: {race_manager.race_weekend.stage_1.stage_end_lap}/{race_manager.race_weekend.stage_2.stage_end_lap}/{race_manager.race_weekend.stage_3.stage_end_lap}")
+        race_manager.send_iracing_command(f"Stage lengths: {race_manager.race_weekend.stage_1.stage_end_lap}/{race_manager.race_weekend.stage_2.stage_end_lap}/{race_manager.race_weekend.stage_3.stage_end_lap}")
 
     @classmethod
     def _penalty_tracker(cls, race_manager, stage):
@@ -222,6 +217,8 @@ class RaceService:
             f"Stage {stage} started - ends on lap {stage_end}"
         )
 
+        pits_closed = False
+        last_lap_notice = False
         stage_end_early = False
         stage_complete = False
 
@@ -240,13 +237,15 @@ class RaceService:
                 break
 
             ## Close the pits with 2 laps to go in the stage
-            if race_manager.ir["Lap"] == stage_end - 2 and stage_end_early is False:
+            if race_manager.ir["Lap"] == stage_end - 2 and stage_end_early is False and pits_closed is False:
                 logging.debug("Closing pits - 2 laps to go in stage")
                 race_manager.send_iracing_command("!pitclose")
+                pits_closed = True
             ## Announce when there is 1 lap left in the stage
-            elif race_manager.ir["Lap"] == stage_end - 1 and stage_end_early is False:
+            elif race_manager.ir["Lap"] == stage_end - 1 and stage_end_early is False and last_lap_notice is False:
                 logging.debug(f"1 lap to go in stage {stage}")
                 race_manager.send_iracing_command(f"1 lap to go in Stage {stage}")
+                last_lap_notice = True
             ## When the current lap equals the stage end
             elif race_manager.ir["Lap"] == stage_end:
                 logging.info("Stage end has been reached")
@@ -266,7 +265,6 @@ class RaceService:
                             [race_manager.race_session_num]["ResultsPositions"]
                 if positions[10]["LapsComplete"] != stage_end:
                     logging.debug(f"Waiting for 10th place to cross the line")
-                    time.sleep(1)
                 else:
                     stage_complete = True
 
@@ -316,27 +314,21 @@ class RaceService:
     @classmethod
     def race(cls, race_manager):
         while True:
-            # race_manager.ir.freeze_var_buffer_latest()
+            race_manager.ir.freeze_var_buffer_latest()
             ## Enum is useful to map session state id to its name
             logging.debug(
                 f"Session state is {SessionName(race_manager.ir['SessionState']).name}"
             )
-            ## Loop until player enters the car
-            while True:
-                # race_manager.ir.freeze_var_buffer_latest()
-                ## Session state GET_IN_CAR (garage/settings menu)
-                if race_manager.ir["SessionState"] == 1:
-                    time.sleep(1)
-                else:
-                    break
-            ## Session state WARMUP (sitting on pitroad waiting for cars to grid)
+            ## Session state GET_IN_CAR (garage/settings menu)
             ## Session state PARADE_LAPS is also handled in this logic
-            if race_manager.ir["SessionState"] == 2:
+            if race_manager.ir["SessionState"] == 1:
+                logging.debug("Sessionstate 1 detected")
                 ## Perform pre-race actions
                 cls._pre_race_actions(race_manager)
             ## Pre-race penalties will finish being issued before session state
             ## changes from 3 -> 4. Just sleep and wait until the race starts
             elif race_manager.ir["SessionState"] == 3:
+                logging.debug("Sleeping for sessionstate 3")
                 time.sleep(1)
             ## Session state RACING
             elif race_manager.ir["SessionState"] == 4:
