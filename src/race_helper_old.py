@@ -63,10 +63,3 @@ class iRacing:
             else:
                 logging.info("Waiting for race to start..")
                 time.sleep(1)
-
-
-def _test_print_stage_lengths(event):
-    print(f"Stage 1: lap {event.stage_1_end_lap}")
-    print(f"Stage 2: lap {event.stage_2_end_lap}")
-    print(f"Stage 2 -> End: {event.race_laps - event.stage_2_end_lap} laps")
-    quit()

@@ -32,7 +32,7 @@ class QualifyingService:
                 ]
                 if match:
                     logging.info(f"{match[0]} car missed the race")
-                    race_manager._send_iracing_command(
+                    race_manager.send_iracing_command(
                         f"!dq {match[0]} #{match[0]} missed the race"
                     )
 

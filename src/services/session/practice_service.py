@@ -17,11 +17,11 @@ class PracticeService:
             prevent them from using chat.
         """
         if global_ is True:
-            race_manager.ir._send_iracing_command("!nchat")
+            race_manager.ir.send_iracing_command("!nchat")
         else:
             for driver in driver_data:
                 if driver["CarIsAI"] == 1:
-                    race_manager.ir._send_iracing_command(
+                    race_manager.ir.send_iracing_command(
                         f"!nchat {driver['UserName'].replace(' ', '.')}"
                     )
 
@@ -39,7 +39,7 @@ class PracticeService:
         ]
         for number in dq_drivers:
             logging.info(f"Disqualifying car {number} for NODRIVER name")
-            race_manager.ir._send_iracing_command(f"!dq {number} Car unused this week.")
+            race_manager.ir.send_iracing_command(f"!dq {number} Car unused this week.")
 
     @classmethod
     def _calculate_pre_race_penalties(cls, race_manager, driver_data) -> None:
