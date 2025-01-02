@@ -22,6 +22,7 @@ from pygetwindow import PyGetWindowException
 
 ## Local imports
 from config.race_settings import RaceSettings
+from services.core.stage import Stage
 from services.session.practice_service import PracticeService
 from services.session.qualifying_service import QualifyingService
 from services.session.race_service import RaceService
@@ -37,7 +38,7 @@ logging.basicConfig(
 )
 
 test_file = Path(
-    "C:\\Users\\Nick\\Documents\\iracing_ai_randomizer\\session_data\\data_practice.bin"
+    "C:\\Users\\Nick\\Documents\\iracing_ai_randomizer\\session_data\\dataracing.bin"
 )
 
 
@@ -52,12 +53,9 @@ class RaceWeekend:
         self.race_length = race_length
         self.pre_race_penalties = []
         self.pole_winner = ""
-        self.stage_1_end_lap = 0
-        self.stage_1_results = []
-        self.stage_2_end_lap = 0
-        self.stage_2_results = []
-        self.stage_3_end_lap = self.race_length
-        self.stage_3_results = []
+        self.stage_1 = Stage()
+        self.stage_2 = Stage()
+        self.stage_3 = Stage(stage_end_lap=race_length)
         self.player_car_num = player_car_num
 
         self._set_stage_lengths()
@@ -104,9 +102,10 @@ class RaceWeekend:
         elif self.track_short_name == "WWTR":
             stage_1_mod = 0.22
 
-        self.stage_1_end_lap = math.floor(self.race_length * stage_1_mod)
-        self.stage_2_end_lap = math.floor(
-            self.stage_1_end_lap * 2.15 if self.track_short_name == "COTA" else 2
+        self.stage_1.stage_end_lap = math.floor(self.race_length * stage_1_mod)
+        self.stage_2.stage_end_lap = math.floor(
+            self.stage_1.stage_end_lap * 2.15 if self.track_short_name == "COTA" else
+            self.stage_1.stage_end_lap * 2
         )
 
 
@@ -265,10 +264,11 @@ def loop(race_manager) -> None:
 
         elif current_session_name == "RACE":
             if (
+                race_manager.qualifying_session_num is None or
                 race_manager.ir["SessionInfo"]["Sessions"][
                     race_manager.qualifying_session_num
                 ]["ResultsOfficial"]
-                == 0
+                == 1
             ):
                 race(race_manager)
 
@@ -286,7 +286,7 @@ def set_weekend_data(race_manager) -> None:
         race_length=race_manager.ir["SessionInfo"]["Sessions"][
             race_manager.race_session_num
         ]["SessionLaps"],
-        player_car_num=race_manager.ir["Drivers"][0]["CarNumber"],
+        player_car_num=race_manager.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
     )
 
 
