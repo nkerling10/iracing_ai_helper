@@ -141,9 +141,9 @@ class RaceManager:
             break
         logging.debug("Sending chat command")
         self.ir.chat_command(1)
-        time.sleep(1)
         pyautogui.typewrite(command)
         pyautogui.press("enter")
+        time.sleep(1)
 
     def define_sessions(self) -> None:
         event_sessions = self.ir["SessionInfo"]["Sessions"]
@@ -295,7 +295,8 @@ def set_weekend_data(race_manager) -> None:
 
 
 def main() -> None:
-    race_manager = RaceManager()#test_file)
+    # race_manager = RaceManager(test_file)
+    race_manager = RaceManager()
     ## Once iRacing is connected, set required weekend data
     set_weekend_data(race_manager)
     ## After data is set, proceed to looping logic
