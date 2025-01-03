@@ -170,8 +170,8 @@ class RaceService:
         logging.debug(f"Starting penalty tracker for stage {stage}")
         pit_tracking = []
         while True:
-            logging.debug(f"Lap {race_manager.ir['Lap']} (penalty_tracker)")
             if race_manager.ir["Lap"] > 0:
+                logging.debug(f"Lap {race_manager.ir['Lap']} (penalty_tracker)")
                 race_manager.ir.freeze_var_buffer_latest()
                 # get all cars currently on pit road
                 cars_on_pit_road = [
@@ -258,6 +258,7 @@ class RaceService:
             if stage_end_early is True:
                 ## determine how many caution laps should be added
                 ## wait until the stage lap actually comes
+                logging.warning("Early caution feature needs to be implemented")
                 stage_complete = True
             else:
                 ## Wait until 10th place crosses the finish line
@@ -282,6 +283,7 @@ class RaceService:
                                   race_manager.ir["DriverInfo"]["Drivers"]
                                   if position["CarIdx"] == driver["CarIdx"]][0])
         ## Announce stage winner via chat
+        logging.info(f"{stage_top_ten[0]} is the winner of Stage {stage}!")
         race_manager.send_iracing_command(f"{stage_top_ten[0]} is the winner of Stage {stage}!")
         ## Update race_manager.race_weekend.stage_X values
         if stage == 1:
@@ -335,10 +337,12 @@ class RaceService:
                 logging.debug("Race has started!")
                 cls._process_race(race_manager)
             ## Session state CHECKERED
+            ## Checkered flag is officially out
             elif race_manager.ir["SessionState"] == 5:
                 #start finalizing and assigning race results
                 pass
             ## Session state COOLDOWN
+            ## All cars have taken the checkered, time remaining counter has expired
             elif race_manager.ir["SessionState"] == 6:
                 #probably break here, or even before it reaches this state
                 pass
