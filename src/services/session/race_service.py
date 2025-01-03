@@ -17,6 +17,10 @@ import soundfile as sf
 audio_device = "Speakers (Realtek(R) Audio), MME"
 
 
+class CustomException(Exception):
+    pass
+
+
 class SessionName(Enum):
     INVALID = 0
     GET_IN_CAR = 1
@@ -291,6 +295,9 @@ class RaceService:
         elif stage == 2:
             race_manager.race_weekend.stage_2.stage_results = stage_top_ten
 
+        ##
+        raise CustomException
+
     @classmethod
     def _process_race(cls, race_manager):
         for stage in [1, 2]:
@@ -304,6 +311,8 @@ class RaceService:
             try:
                 while True:
                     time.sleep(2)
+            except CustomException:
+                continue
             except KeyboardInterrupt:
                 quit()
             
