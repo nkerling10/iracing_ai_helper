@@ -151,14 +151,15 @@ class RaceService:
             if race_manager.ir["PlayerTrackSurface"] != -1:
                 break
             logging.debug("Waiting for player to enter car")
+            time.sleep(1)
         cls._play_sound()
         logging.debug("Sleeping for 30 seconds while sound plays")
-        time.sleep(30)
+        time.sleep(20)
         ## This will change session state from 1 -> 3
         ## get_in_car -> parade_laps
         logging.debug("Issuing gridstart command")
         race_manager.send_iracing_command("!gridstart")
-        time.sleep(10)
+        time.sleep(20)
         ## Wait for cars to get rolling, then issue any pre-race penalties
         if len(race_manager.race_weekend.pre_race_penalties) > 0:
             logging.debug("Issuing pre-race penalties")
@@ -174,7 +175,7 @@ class RaceService:
         logging.debug(f"Starting penalty tracker for stage {stage}")
         pit_tracking = []
         while True:
-            if race_manager.ir["Lap"] > 0:
+            if race_manager.ir["Lap"] > 0 and race_manager.ir["Lap"] <= race_manager.race_weekend.race_length:
                 logging.debug(f"Lap {race_manager.ir['Lap']} (penalty_tracker)")
                 race_manager.ir.freeze_var_buffer_latest()
                 # get all cars currently on pit road
@@ -268,8 +269,9 @@ class RaceService:
                 ## Wait until 10th place crosses the finish line
                 positions = race_manager.ir["SessionInfo"]["Sessions"] \
                             [race_manager.race_session_num]["ResultsPositions"]
-                if positions[10]["LapsComplete"] != stage_end:
+                if positions[9]["LapsComplete"] != stage_end:
                     logging.debug(f"Waiting for 10th place to cross the line")
+                    logging.debug(f"Laps complete for 10th place: {positions[9]['LapsComplete']}")
                 else:
                     stage_complete = True
 
@@ -289,6 +291,7 @@ class RaceService:
         ## Announce stage winner via chat
         logging.info(f"{stage_top_ten[0]} is the winner of Stage {stage}!")
         race_manager.send_iracing_command(f"{stage_top_ten[0]} is the winner of Stage {stage}!")
+        logging.info(stage_top_ten)
         ## Update race_manager.race_weekend.stage_X values
         if stage == 1:
             race_manager.race_weekend.stage_1.stage_results = stage_top_ten
@@ -296,23 +299,31 @@ class RaceService:
             race_manager.race_weekend.stage_2.stage_results = stage_top_ten
 
         ##
+        logging.debug("Raising CustomException")
         raise CustomException
 
     @classmethod
     def _process_race(cls, race_manager):
         for stage in [1, 2]:
-            process_stage = threading.Thread(target=cls._process_stage, args=(race_manager, stage))
-            process_stage.daemon = True
-            process_stage.start()
-            penalty_tracker = threading.Thread(target=cls._penalty_tracker, args=(race_manager, stage))
-            penalty_tracker.daemon = True
-            penalty_tracker.start()
+            threads = []
+            threads.append(threading.Thread(target=cls._process_stage, args=(race_manager, stage)))
+            #process_stage.daemon = True
+            #process_stage.start()
+            threads.append(threading.Thread(target=cls._penalty_tracker, args=(race_manager, stage)))
+            #penalty_tracker.daemon = True
+            #penalty_tracker.start()
+
+            for t in threads:
+                t.start()
 
             try:
                 while True:
                     time.sleep(2)
             except CustomException:
-                continue
+                logging.warning("Custom exception hit")
+                for t in threads:
+                    t.join()
+                #continue
             except KeyboardInterrupt:
                 quit()
             
