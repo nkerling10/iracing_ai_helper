@@ -38,7 +38,7 @@ logging.basicConfig(
 )
 
 test_file = Path(
-    "C:\\Users\\Nick\\Documents\\iracing_ai_randomizer\\session_data\\dataracing.bin"
+    "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\session_data\\dataracing.bin"
 )
 
 
@@ -145,7 +145,7 @@ class RaceManager:
         pyautogui.press("enter")
         time.sleep(1)
 
-    def define_sessions(self) -> None:
+    def _define_sessions(self) -> None:
         event_sessions = self.ir["SessionInfo"]["Sessions"]
         practice_session = [
             session["SessionNum"]
@@ -207,6 +207,18 @@ class RaceManager:
         except KeyboardInterrupt:
             quit()
 
+    def _set_weekend_data(self) -> None:
+        ## Identify which sessions exist in the "race weekend"
+        self._define_sessions()
+        ## Set the initially required data
+        self.race_weekend = RaceWeekend(
+            track_short_name=self.ir["WeekendInfo"]["TrackDisplayShortName"],
+            track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"],
+            race_length=self.ir["SessionInfo"]["Sessions"][
+                self.race_session_num
+            ]["SessionLaps"],
+            player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
+        )
 
 def practice(race_manager) -> None:
     PracticeService.practice(race_manager)
@@ -280,25 +292,10 @@ def loop(race_manager) -> None:
             time.sleep(1)
 
 
-def set_weekend_data(race_manager) -> None:
-    ## Identify which sessions exist in the "race weekend"
-    race_manager.define_sessions()
-    ## Set the initially required data
-    race_manager.race_weekend = RaceWeekend(
-        track_short_name=race_manager.ir["WeekendInfo"]["TrackDisplayShortName"],
-        track_long_name=race_manager.ir["WeekendInfo"]["TrackDisplayName"],
-        race_length=race_manager.ir["SessionInfo"]["Sessions"][
-            race_manager.race_session_num
-        ]["SessionLaps"],
-        player_car_num=race_manager.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
-    )
-
-
 def main() -> None:
-    # race_manager = RaceManager(test_file)
+    #race_manager = RaceManager(test_file)
     race_manager = RaceManager()
-    ## Once iRacing is connected, set required weekend data
-    set_weekend_data(race_manager)
+    race_manager._set_weekend_data()
     ## After data is set, proceed to looping logic
     loop(race_manager)
 
@@ -306,7 +303,7 @@ def main() -> None:
 if __name__ == "__main__":
     main()
 
-
+'''
 def get_next_race(ai_season_file):
     for event in ai_season_file.get("events"):
         if not event.get("results"):
@@ -335,3 +332,4 @@ def main2():
         season_type = "Truck"
 
     print(get_next_race(ai_season_file))
+'''

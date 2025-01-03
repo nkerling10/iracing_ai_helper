@@ -179,9 +179,10 @@ class RaceService:
 
     @classmethod
     def _penalty_tracker(cls, race_manager):
-        logging.debug(f"Starting penalty tracker!")
+        logging.debug(f"Starting penalty tracker")
         pit_tracking = []
         while True:
+            logging.debug("Penalty tracker active")
             ## Quit tracking penalties once the checkered flag comes out
             if race_manager.ir["SessionState"] == 5:
                 break
@@ -245,6 +246,7 @@ class RaceService:
                 else:
                     logging.debug("No cars on pitroad")
                     time.sleep(1)
+            time.sleep(1)
 
     @classmethod
     def _process_stage(cls, race_manager):
