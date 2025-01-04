@@ -11,11 +11,13 @@ from enum import Enum
 import irsdk
 import sounddevice as sd
 import soundfile as sf
+from concurrent.futures import ProcessPoolExecutor
 
 ## Local imports
 
 audio_device = "Speakers (Realtek(R) Audio), MME"
-
+# the global executor
+executor = ProcessPoolExecutor(max_workers=2)
 
 class CustomException(Exception):
     pass
@@ -249,7 +251,7 @@ class RaceService:
             time.sleep(1)
 
     @classmethod
-    def _process_stage(cls, race_manager):
+    def _process_stages(cls, race_manager):
         for stage in [1, 2]:
             if stage == 1:
                 stage_end = race_manager.race_weekend.stage_1.stage_end_lap
@@ -366,6 +368,15 @@ class RaceService:
 
     @classmethod
     def _process_race(cls, race_manager):
+        results = []
+        # submit the tasks
+        penalty_tracker = executor.submit(cls._penalty_tracker, kwargs=race_manager)
+        process_stages = executor.submit(cls._process_stages, kwargs=race_manager)
+
+        # wait for the tasks to complete
+        results.append(penalty_tracker.result())
+        results.append(process_stages.result())
+        """
         threads = []
         threads.append(
             threading.Thread(
@@ -374,10 +385,10 @@ class RaceService:
         )
         threads.append(
             threading.Thread(
-                daemon=True, target=cls._process_stage, args=(race_manager,)
+                daemon=True, target=cls._process_stages, args=(race_manager,)
             )
         )
-        # process_stage.start()
+        # process_stages.start()
 
         # penalty_tracker.start()
 
@@ -387,17 +398,17 @@ class RaceService:
                 logging.debug(f"Starting thread {t}")
             except Exception as e:
                 logging.error(e)
-        """logging.debug("This is after both threads are started")
+        logging.debug("This is after both threads are started")
         try:
             while True:
                 logging.debug("In while True of Try/Except")
                 time.sleep(2)
         except KeyboardInterrupt:
-            quit()"""
+            quit()
         for t in threads:
             t.join()
         logging.debug("After the try except")
-
+        """
     @classmethod
     def race(cls, race_manager):
         while True:

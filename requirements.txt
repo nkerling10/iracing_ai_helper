@@ -5,3 +5,4 @@ sounddevice==0.5.1
 numpy==2.2.1
 soundfile==0.12.1
 multiprocess==0.70.17
+pysimplegui==5.0.7
