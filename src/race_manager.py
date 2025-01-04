@@ -139,11 +139,12 @@ class RaceManager:
                 logging.error("PyGetWindowException error!")
                 continue
             break
-        logging.debug("Sending chat command")
+        logging.debug(f"Sending chat command: {command}")
         self.ir.chat_command(1)
+        time.sleep(0.5)
         pyautogui.typewrite(command)
         pyautogui.press("enter")
-        time.sleep(1)
+        time.sleep(0.5)
 
     def _define_sessions(self) -> None:
         event_sessions = self.ir["SessionInfo"]["Sessions"]

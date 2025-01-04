@@ -156,7 +156,7 @@ class RaceService:
             logging.debug("Waiting for player to enter car")
             time.sleep(1)
         cls._play_sound()
-        logging.debug("Sleeping for 30 seconds while sound plays")
+        logging.debug("Sleeping for 20 seconds while sound plays")
         time.sleep(20)
         ## This will change session state from 1 -> 3
         ## get_in_car -> parade_laps
@@ -307,6 +307,7 @@ class RaceService:
                     logging.info("Stage end has been reached")
                     break
                 else:
+                    logging.debug("Just sleeping!")
                     time.sleep(1)
 
             while stage_complete is False:
@@ -381,20 +382,20 @@ class RaceService:
         # penalty_tracker.start()
 
         for t in threads:
-            logging.debug(f"Starting thread {t}")
-            t.start()
-        logging.debug("This is after both threads are started")
+            try:
+                t.start()
+                logging.debug(f"Starting thread {t}")
+            except Exception as e:
+                logging.error(e)
+        """logging.debug("This is after both threads are started")
         try:
             while True:
                 logging.debug("In while True of Try/Except")
                 time.sleep(2)
-        except CustomException:
-            logging.warning("Custom exception hit")
-            for t in threads:
-                t.join()
-            # continue
         except KeyboardInterrupt:
-            quit()
+            quit()"""
+        for t in threads:
+            t.join()
         logging.debug("After the try except")
 
     @classmethod
