@@ -57,7 +57,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         skill_min = 45
         skill_max = 55
     else:
-        print(f"{driver_name} not found, fix it!")
+        print(f"{driver_name} not found in tier file, fix it!")
         quit()
 
     if car_list[car]["car_tier"] == 1:
@@ -69,7 +69,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     elif car_list[car]["car_tier"] == 4:
         car_smoothness = random.randint(-150, 200)
     else:
-        print(f"Fix car tier for {car}!")
+        print(f"Fix car tier for {car} in car file!")
         quit()
 
     if car_list[car]["crew_tier"] == 1:
