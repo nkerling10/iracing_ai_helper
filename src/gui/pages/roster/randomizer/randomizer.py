@@ -39,23 +39,23 @@ def get_driver_age(driver_name, driver_birthdays):
 
 def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     if driver_name in driver_tiers["tier_1"]:
-        skill_min = 92
+        skill_min = 90
         skill_max = 100
     elif driver_name in driver_tiers["tier_2"]:
-        skill_min = 85
-        skill_max = 95
+        skill_min = 80
+        skill_max = 90
     elif driver_name in driver_tiers["tier_3"]:
-        skill_min = 75
-        skill_max = 85
-    elif driver_name in driver_tiers["tier_4"]:
         skill_min = 70
-        skill_max = 82
+        skill_max = 80
+    elif driver_name in driver_tiers["tier_4"]:
+        skill_min = 60
+        skill_max = 70
     elif driver_name in driver_tiers["tier_5"]:
-        skill_min = 62
-        skill_max = 72
-    elif driver_name in driver_tiers["tier_6"]:
         skill_min = 50
-        skill_max = 65
+        skill_max = 60
+    elif driver_name in driver_tiers["tier_6"]:
+        skill_min = 45
+        skill_max = 55
     else:
         print(f"{driver_name} not found, fix it!")
         quit()
