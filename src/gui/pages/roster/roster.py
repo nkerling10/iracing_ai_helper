@@ -1,5 +1,12 @@
 import PySimpleGUI as sg
 import json
+import sys
+import os
+
+from randomizer import randomizer
+
+roster_path = "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\rosters\\2025_Xfinity_Series_NSK_AI\\roster.json"
+
 
 class Driver:
     def __init__(self, driver):
@@ -14,9 +21,8 @@ class Driver:
         self.strategy = driver["strategyRiskiness"]
 
 class Roster:
-    def _build_table(driver_objs):
-        driver_data = []
-
+    @staticmethod
+    def _build_headers():
         headers = [
             "Car",
             "Name",
@@ -29,7 +35,11 @@ class Roster:
             "Strat."
         ]
 
-        col_widths = list(map(lambda x:len(x)+2, headers))
+        return headers
+
+    @staticmethod
+    def _build_driver_table(driver_objs):
+        driver_data = []
 
         for obj in driver_objs:
             driver_data.append(
@@ -45,45 +55,55 @@ class Roster:
                     obj.strategy
                 ]
             )
+        
+        return driver_data
 
-        return headers, driver_data, col_widths
-
-    @classmethod
-    def _format_drivers(cls, driver_data):
+    @staticmethod
+    def _format_drivers(drivers):
         driver_objs = []
-        for driver in driver_data:
+        for driver in drivers:
             driver_objs.append(Driver(driver))
 
         return driver_objs
 
     @classmethod
-    def _assemble_data(cls, drivers):
+    def build_driver_display_info(cls, roster_path):
+        with open(roster_path, 'r') as file:
+            drivers = json.loads(file.read()).get("drivers")
         driver_objs = cls._format_drivers(drivers)
-        headers, driver_data, col_widths = cls._build_table(driver_objs)
-        return headers, driver_data, col_widths
+        driver_data = cls._build_driver_table(driver_objs)
+
+        return driver_data
 
     @classmethod
-    def main(cls, data):
-        with open(data, 'r') as file:
-            roster_data = json.loads(file.read())
-
-        headers, driver_data, col_widths = cls._assemble_data(roster_data.get("drivers"))
-
-        layout = [[sg.Table(driver_data,
+    def build_layout(cls, driver_data):
+        headers = cls._build_headers()
+        layout = [[sg.Table(values=driver_data,
                             headings=headers,
                             justification='center',
                             key='-TABLE-',
-                            num_rows=len(driver_data))],]
+                            num_rows=30)],
+                    [sg.Button('Randomize')]]
+
+        return layout
+
+    @classmethod
+    def main(cls, roster_path):
+        driver_data = cls.build_driver_display_info(roster_path)
+        layout = cls.build_layout(driver_data)
 
         window = sg.Window('NSK AI Roster Randomizer - Alpha v0.1',
                            layout,
-                           finalize=True,
-                           size=(715, 700))
+                           finalize=True)
         while True:
-            event, values = window.read()
-            print(event)
+            event, values = window.read(timeout=1000)
+            #print(event, values)
             if event in (sg.WIN_CLOSED, None, 'Exit'):
                 break
+            elif event == "Randomize":
+                randomizer.main("iowa", roster_path)
+                driver_data = cls.build_driver_display_info(roster_path)
+                window['-TABLE-'].update(values=driver_data)
 
 if __name__ == '__main__':
-    Roster.main("C:\\Users\\Nick\\Documents\\iracing_ai_helper\\rosters\\2025_Xfinity_Series_NSK_AI\\roster.json")
+    Roster.main(roster_path)

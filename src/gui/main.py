@@ -1,5 +1,5 @@
 import PySimpleGUI as sg
-from pages.roster import Roster
+from src.gui.pages.roster.roster import Roster
 from splash.splash import Splash
 from pathlib import Path
 

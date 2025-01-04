@@ -121,9 +121,10 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     return set_driver
 
 
-def change_paint_scheme(car_num, driver_name, roster):
+def change_paint_scheme(car_num, driver_name, roster_path):
+    roster_dir = Path(roster_path).parent
     try:
-        paint_files = os.listdir(Path(roster_path / roster / car_num))
+        paint_files = os.listdir(Path(f"{roster_dir}\\{car_num}"))
     except FileNotFoundError:
         print(f"No folder found for {car_num}")
         return
@@ -138,18 +139,17 @@ def change_paint_scheme(car_num, driver_name, roster):
             if driver_name.lower().replace(" ", "_") in file
         ]
         if len(driver_paints) == 0:
-            new_paint_file = Path(
-                roster_path / roster / car_num / random.choice(paint_files)
+            new_paint_file = Path(f"{roster_dir}\\{car_num}\\{random.choice(paint_files)}"
             )
             print(f"Selected {new_paint_file}")
         else:
-            new_paint_file = Path(roster_path / roster / car_num / driver_paints[0])
+            new_paint_file = Path(f"{roster_dir}\\{car_num}\\{driver_paints[0]}")
             print(f"Selected {new_paint_file}")
 
     try:
         print("Attempting to copy file")
         shutil.copyfile(
-            new_paint_file, Path(roster_path / roster / f"car_{car_num}.tga")
+            new_paint_file, Path(f"{roster_dir}\\car_{car_num}.tga")
         )
     except:
         print("Uncategorized error, skipping copy operation")
@@ -157,20 +157,20 @@ def change_paint_scheme(car_num, driver_name, roster):
 
 
 def open_files():
-    with open(Path("src/assets/driver_tiers.json"), "r") as tier_file:
+    with open(Path(f"{os.getcwd()}/src/gui/pages/roster/randomizer/files/driver_tiers.json"), "r") as tier_file:
         driver_tiers = json.loads(tier_file.read())
-    with open(Path("src/assets/cars.json"), "r") as car_file:
+    with open(Path(f"{os.getcwd()}/src/gui/pages/roster/randomizer/files/cars.json"), "r") as car_file:
         car_list = json.loads(car_file.read())
-    with open(Path("src/assets/schedule.json"), "r") as schedule_file:
+    with open(Path(f"{os.getcwd()}/src/gui/pages/roster/randomizer/files/schedule.json"), "r") as schedule_file:
         schedule_list = json.loads(schedule_file.read())
-    with open(Path("src/assets/drivers.json"), "r") as driver_file:
+    with open(Path(f"{os.getcwd()}/src/gui/pages/roster/randomizer/files/drivers.json"), "r") as driver_file:
         driver_birthdays = json.loads(driver_file.read())
     return driver_tiers, car_list, schedule_list, driver_birthdays
 
 
-def main(track, roster):
+def main(track, roster_path):
     driver_tiers, car_list, schedule_list, driver_birthdays = open_files()
-    with open(Path(ai_roster_path / roster / "roster.json"), "r") as roster_file:
+    with open(Path(roster_path), "r") as roster_file:
         driver_list = json.loads(roster_file.read())
     for roster_driver in driver_list["drivers"]:
         if car_list[roster_driver["carNumber"]]["type"] == "full_time_one_driver":
@@ -222,7 +222,7 @@ def main(track, roster):
         else:
             continue
 
-        change_paint_scheme(roster_driver["carNumber"], new_ratings.name, roster)
+        change_paint_scheme(roster_driver["carNumber"], new_ratings.name, roster_path)
 
         roster_driver["driverName"] = new_ratings.name
         roster_driver["driverSkill"] = new_ratings.driver_skill
@@ -234,7 +234,7 @@ def main(track, roster):
         roster_driver["driverAge"] = new_ratings.age
 
     with open(
-        Path(ai_roster_path / roster / "roster.json"), "w", encoding="utf-8"
+        Path(roster_path), "w", encoding="utf-8"
     ) as roster_file:
         json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
 
@@ -255,5 +255,5 @@ if __name__ == "__main__":
     roster = "2025_Xfinity_Series_NSK_AI"
     perform_copy(roster)
     # race = input("Enter race designation: ")
-    race = "bristol_1"
+    race = "iowa"
     main(race, roster)
