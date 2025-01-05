@@ -202,7 +202,9 @@ def main(track, roster_path):
                 roster_driver["carNumber"]
             ]
             if roster_driver["driverName"] != scheduled_driver:
-                logger.debug(f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}")
+                logger.debug(
+                    f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}"
+                )
             logger.info(
                 f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}"
             )
@@ -219,15 +221,21 @@ def main(track, roster_path):
                     roster_driver["carNumber"]
                 ]
                 if roster_driver["driverName"] != scheduled_driver:
-                    logger.debug(f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}")
+                    logger.debug(
+                        f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}"
+                    )
                 if not scheduled_driver:
                     logger.info(
                         f"No driver found for #{roster_driver['carNumber']} this week"
                     )
-                    roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
+                    roster_driver["driverName"] = (
+                        f"NODRIVER{roster_driver['carNumber']}"
+                    )
                     continue
             except KeyError:
-                logger.info(f"No driver found for #{roster_driver['carNumber']} this week")
+                logger.info(
+                    f"No driver found for #{roster_driver['carNumber']} this week"
+                )
                 roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
                 continue
 

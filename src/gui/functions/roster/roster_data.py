@@ -5,11 +5,13 @@ Details to come...
 ## Standard library imports
 import json
 import logging
+
 ## Third party imports
 
 ## Local imports
 
 logger = logging.getLogger(__name__)
+
 
 class Driver:
     def __init__(self, driver: dict) -> None:
@@ -52,8 +54,9 @@ def _build_driver_table(driver_objs: list) -> list:
 
 def build_driver_display_info(roster_path: str) -> list:
     with open(roster_path, "r") as roster_file:
-        driver_objs = [Driver(driver) for driver in 
-                       json.loads(roster_file.read()).get("drivers")]
+        driver_objs = [
+            Driver(driver) for driver in json.loads(roster_file.read()).get("drivers")
+        ]
     active_driver_data, inactive_driver_data = _build_driver_table(driver_objs)
 
     return active_driver_data, inactive_driver_data
