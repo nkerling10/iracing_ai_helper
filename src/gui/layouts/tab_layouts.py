@@ -43,7 +43,7 @@ class RosterTabLayout:
 
     @classmethod
     def build_roster_tab_layout(
-        cls, active_driver_data: list = {}, inactive_driver_data: list = {}
+        cls, active_driver_data: list = [], inactive_driver_data: list = []
     ) -> list:
         return [
             [
@@ -91,10 +91,10 @@ class RosterTabLayout:
 class SeasonTabLayout:
     @staticmethod
     def _season_file_headers() -> list:
-        return ["Week", "Track", "Laps"]
+        return ["Week", "Track", "Laps", "Results"]
 
     @classmethod
-    def build_season_tab_layout(cls, season_data: list) -> list:
+    def build_season_tab_layout(cls, season_data: list = []) -> list:
         return [
             [
                 sg.Table(
@@ -108,6 +108,7 @@ class SeasonTabLayout:
                 )
             ],
             [sg.Text(text="File loaded:"), sg.Text(key="-SEASONFILELOADED-")],
+            [sg.Button("Load", key="-LOADSEASONBUTTON-")]
         ]
 
 

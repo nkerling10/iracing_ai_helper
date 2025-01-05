@@ -13,6 +13,7 @@ from pathlib import Path
 ## Local imports
 from functions.roster import roster_data
 from functions.roster.randomizer import randomizer
+from functions.season import season_data
 from layouts.tab_layouts import RosterTabLayout
 from layouts.tab_layouts import SeasonTabLayout
 from layouts.tab_layouts import LoggingTabLayout
@@ -24,7 +25,7 @@ logging.basicConfig()
 def build_layout() -> list[list]:
     main_tab_layout = [[sg.Ok()]]
     roster_tab_layout = RosterTabLayout.build_roster_tab_layout()
-    season_tab_layout = SeasonTabLayout.build_season_tab_layout({})
+    season_tab_layout = SeasonTabLayout.build_season_tab_layout()
     standings_tab_layout = [[]]
     logging_tab_layout = LoggingTabLayout._build_logging_tab_layout()
 
@@ -74,6 +75,8 @@ def main_window():
             window["-ROSTERFILELOADED-"].update(f"File loaded: {local_roster_path}")
             window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
             window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
+        if event == "-LOADSEASONBUTTON-":
+            window["-SEASONTABLE-"].update(values=season_data.build_season_display_info(local_season_path))
         if event == "Randomize":
             randomizer.main(values["-TRACKBOX-"], local_roster_path)
             window["-TRACKSTATUS-"].update("Success!")
@@ -94,11 +97,12 @@ if __name__ == "__main__":
     sg.theme("Python")
     settings = sg.UserSettings(
         path=Path.cwd() / "src" / "gui" / "assets" / "config",
-        filename="roster_tab_config.ini",
+        filename="config.ini",
         use_config_file=True,
         convert_bools_and_none=True,
     )
     local_roster_path = settings["PATHS"]["LOCAL_ROSTER"]
     iracing_ai_roster_path = settings["PATHS"]["AI_ROSTER_FOLDER"]
+    local_season_path = settings["PATHS"]["LOCAL_SEASON"]
 
     main_window()
