@@ -2,16 +2,16 @@
 import logging
 import os
 import random
-import threading
 import time
-from pathlib import Path
 from enum import Enum
+from concurrent.futures import ProcessPoolExecutor
+from pathlib import Path
 
 ## Third party imports
 import irsdk
 import sounddevice as sd
 import soundfile as sf
-from concurrent.futures import ProcessPoolExecutor
+
 
 ## Local imports
 

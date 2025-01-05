@@ -1,6 +1,5 @@
 ## Standard library imports
 import logging
-import random
 import time
 
 ## Third party imports
