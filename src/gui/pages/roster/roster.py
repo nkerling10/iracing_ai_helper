@@ -42,19 +42,20 @@ class Roster:
         driver_data = []
 
         for obj in driver_objs:
-            driver_data.append(
-                [
-                    obj.car,
-                    obj.name,
-                    obj.age,
-                    obj.skill,
-                    obj.aggression,
-                    obj.optimism,
-                    obj.smoothness,
-                    obj.pitcrew,
-                    obj.strategy
-                ]
-            )
+            if "NODRIVER" not in obj.name:
+                driver_data.append(
+                    [
+                        obj.car,
+                        obj.name,
+                        obj.age,
+                        obj.skill,
+                        obj.aggression,
+                        obj.optimism,
+                        obj.smoothness,
+                        obj.pitcrew,
+                        obj.strategy
+                    ]
+                )
         
         return driver_data
 
@@ -82,8 +83,11 @@ class Roster:
                             headings=headers,
                             justification='center',
                             key='-TABLE-',
-                            num_rows=30)],
-                    [sg.Button('Randomize')]]
+                            num_rows=35)],
+                    [sg.Text(text="Track: "), sg.Input(key='-TRACK-',
+                                                       enable_events=True,
+                                                       size=(15, None))],
+                    [sg.Button('Randomize'), sg.Button('Copy')]]
 
         return layout
 
@@ -101,9 +105,11 @@ class Roster:
             if event in (sg.WIN_CLOSED, None, 'Exit'):
                 break
             elif event == "Randomize":
-                randomizer.main("iowa", roster_path)
+                randomizer.main(values['-TRACK-'], roster_path)
                 driver_data = cls.build_driver_display_info(roster_path)
                 window['-TABLE-'].update(values=driver_data)
+            elif event == "Copy":
+                randomizer.perform_copy(roster_path)
 
 if __name__ == '__main__':
     Roster.main(roster_path)

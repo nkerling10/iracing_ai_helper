@@ -1854,12 +1854,12 @@ DriverInfo:
    CurDriverIncidentCount: 0
    TeamIncidentCount: 0
  - CarIdx: 30
-   UserName: Leland Honeyman Jr.
+   UserName: Leland Honeyman
    AbbrevName: 
    Initials: 
    UserID: 9729
    TeamID: 31
-   TeamName: Leland Honeyman Jr.
+   TeamName: Leland Honeyman
    CarNumber: "42"
    CarNumberRaw: 42
    CarPath: stockcars2 camaro2019

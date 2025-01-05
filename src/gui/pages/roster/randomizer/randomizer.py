@@ -8,10 +8,8 @@ import shutil
 
 date_format = "%B %d, %Y"
 today = date.today()
-
-roster_path = Path("rosters")
 ai_roster_path = Path.home() / "Documents" / "iRacing" / "airosters"
-
+standard_file_path = f"{os.getcwd()}/src/gui/pages/roster/randomizer/files"
 
 class Driver:
     def __init__(self, name, car, attributes) -> None:
@@ -43,16 +41,16 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         skill_max = 100
     elif driver_name in driver_tiers["tier_2"]:
         skill_min = 80
-        skill_max = 90
+        skill_max = 89
     elif driver_name in driver_tiers["tier_3"]:
         skill_min = 70
-        skill_max = 80
+        skill_max = 79
     elif driver_name in driver_tiers["tier_4"]:
         skill_min = 60
-        skill_max = 70
+        skill_max = 69
     elif driver_name in driver_tiers["tier_5"]:
         skill_min = 50
-        skill_max = 60
+        skill_max = 59
     elif driver_name in driver_tiers["tier_6"]:
         skill_min = 45
         skill_max = 55
@@ -97,8 +95,8 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         quit()
 
     driverSkill = random.randint(skill_min, skill_max)
-    driverAggression = 500
-    driverOptimism = 250
+    driverAggression = 999
+    driverOptimism = 500
     driverSmoothness = car_smoothness
     driverAge = get_driver_age(driver_name, driver_birthdays)
     pitCrewSkill = random.randint(pit_min, pit_max)
@@ -157,13 +155,13 @@ def change_paint_scheme(car_num, driver_name, roster_path):
 
 
 def open_files():
-    with open(Path(f"{os.getcwd()}/src/gui/pages/roster/randomizer/files/driver_tiers.json"), "r") as tier_file:
+    with open(Path(f"{standard_file_path}/driver_tiers.json"), "r") as tier_file:
         driver_tiers = json.loads(tier_file.read())
-    with open(Path(f"{os.getcwd()}/src/gui/pages/roster/randomizer/files/cars.json"), "r") as car_file:
+    with open(Path(f"{standard_file_path}/cars.json"), "r") as car_file:
         car_list = json.loads(car_file.read())
-    with open(Path(f"{os.getcwd()}/src/gui/pages/roster/randomizer/files/schedule.json"), "r") as schedule_file:
+    with open(Path(f"{standard_file_path}/schedule.json"), "r") as schedule_file:
         schedule_list = json.loads(schedule_file.read())
-    with open(Path(f"{os.getcwd()}/src/gui/pages/roster/randomizer/files/drivers.json"), "r") as driver_file:
+    with open(Path(f"{standard_file_path}/drivers.json"), "r") as driver_file:
         driver_birthdays = json.loads(driver_file.read())
     return driver_tiers, car_list, schedule_list, driver_birthdays
 
@@ -201,24 +199,29 @@ def main(track, roster_path):
                 driver_birthdays,
             )
         elif car_list[roster_driver["carNumber"]]["type"] == "part_time":
-            scheduled_driver = schedule_list[track]["part_time"][
-                roster_driver["carNumber"]
-            ]
-            if scheduled_driver:
-                print(
-                    f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}"
-                )
-                new_ratings = set_attributes(
-                    scheduled_driver,
-                    roster_driver["carNumber"],
-                    driver_tiers,
-                    car_list,
-                    driver_birthdays,
-                )
-            else:
+            try:
+                scheduled_driver = schedule_list[track]["part_time"][
+                    roster_driver["carNumber"]
+                ]
+                if not scheduled_driver:
+                    print(f"No driver found for #{roster_driver['carNumber']} this week")
+                    continue
+            except KeyError:
                 print(f"No driver found for #{roster_driver['carNumber']} this week")
                 roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
                 continue
+
+            print(
+                f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}"
+            )
+            new_ratings = set_attributes(
+                scheduled_driver,
+                roster_driver["carNumber"],
+                driver_tiers,
+                car_list,
+                driver_birthdays,
+            )
+                
         else:
             continue
 
@@ -239,21 +242,17 @@ def main(track, roster_path):
         json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
 
 
-def perform_copy(roster_dir):
+def perform_copy(roster_path):
     try:
+        roster_dir = Path(roster_path).parent
+        roster_name = roster_path.split("\\")[-2]
+        print(f"Copying directory {roster_dir}")
+        print(f"Pasting into directory {ai_roster_path}/{roster_name}")
         shutil.copytree(
-            Path(roster_path / roster_dir),
-            Path(ai_roster_path / roster_dir),
-            dirs_exist_ok=True,
+            Path(roster_dir),
+            Path(ai_roster_path / roster_name),
+            dirs_exist_ok=True
         )
         print("Roster directory successfully copied")
     except Exception as e:
         print(e)
-
-
-if __name__ == "__main__":
-    roster = "2025_Xfinity_Series_NSK_AI"
-    perform_copy(roster)
-    # race = input("Enter race designation: ")
-    race = "iowa"
-    main(race, roster)
