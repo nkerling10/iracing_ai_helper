@@ -82,7 +82,7 @@ class Roster:
     @classmethod
     def build_layout(cls, driver_data: list) -> list:
         headers = cls._build_headers()
-        layout = [
+        roster_tab_layout = [
             [
                 sg.Table(
                     values=driver_data,
@@ -99,6 +99,14 @@ class Roster:
             ],
             [sg.Button("Randomize"), sg.Button("Copy")],
         ]
+
+        season_tab_layout = [[]]
+        standings_tab_layout = [[]]
+
+        layout = [[sg.TabGroup([[sg.Tab("Roster", roster_tab_layout, key="-rostertab-"),
+                                 sg.Tab("Season", season_tab_layout, key="-seasontab"),
+                                 sg.Tab("Standings", standings_tab_layout, key="-standingstab-")]],
+                                 key="-tabgroup1-", tab_location="topleft"),]]
 
         return layout
 
@@ -128,7 +136,7 @@ class Roster:
 
 
 if __name__ == "__main__":
-    sg.theme("NeonGreen1")
+    sg.theme("DarkBrown4")
     SETTINGS_PATH = Path.cwd() / "src" / "gui" / "pages" / "roster"
     settings = sg.UserSettings(
         path = SETTINGS_PATH,
