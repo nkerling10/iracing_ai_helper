@@ -5,14 +5,11 @@ Details to come...
 ## Standard library imports
 import PySimpleGUI as sg
 import json
-
+from pathlib import Path
 ## Third party imports
 
 ## Local imports
 from randomizer import randomizer
-
-sg.theme("NeonGreen1")
-roster_path = "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\rosters\\2025_Xfinity_Series_NSK_AI\\roster.json"
 
 
 class Driver:
@@ -106,10 +103,9 @@ class Roster:
         return layout
 
     @classmethod
-    def main(cls, roster_path: str) -> None:
-        driver_data = cls.build_driver_display_info(roster_path)
+    def main_window(cls) -> None:
+        driver_data = cls.build_driver_display_info(local_roster_path)
         layout = cls.build_layout(driver_data)
-
         window = sg.Window(
             "NSK AI Roster Randomizer - Alpha v0.1", layout, finalize=True
         )
@@ -119,19 +115,27 @@ class Roster:
                 break
             elif event == "Randomize":
                 if values["-TRACK-"] != "":
-                    randomizer.main(values["-TRACK-"], roster_path)
+                    randomizer.main(values["-TRACK-"], local_roster_path)
                     window["-TRACKSTATUS-"].update("Success!")
-                    driver_data = cls.build_driver_display_info(roster_path)
+                    driver_data = cls.build_driver_display_info(local_roster_path)
                     window["-TABLE-"].update(values=driver_data)
                     window.read(timeout=1500)
                     window["-TRACKSTATUS-"].update("")
                 else:
                     window["-TRACKSTATUS-"].update("ERROR! Track missing")
             elif event == "Copy":
-                randomizer.perform_copy(roster_path)
-            else:
-                print(event, values)
+                randomizer.perform_copy(local_roster_path)
 
 
 if __name__ == "__main__":
-    Roster.main(roster_path)
+    sg.theme("NeonGreen1")
+    SETTINGS_PATH = Path.cwd() / "src" / "gui" / "pages" / "roster"
+    settings = sg.UserSettings(
+        path = SETTINGS_PATH,
+        filename="roster_config.ini",
+        use_config_file=True,
+        convert_bools_and_none=True
+    )
+    local_roster_path = settings["PATHS"]["LOCAL_ROSTER"]
+    iracing_ai_roster_path = settings["PATHS"]["AI_ROSTER_FOLDER"]
+    Roster.main_window()
