@@ -4,6 +4,7 @@ Details to come...
 
 ## Standard library imports
 import json
+import logging
 import os
 import random
 from datetime import date
@@ -15,7 +16,8 @@ import dateutil.parser as dparser
 
 ## Local imports
 
-
+## Global vars
+logger = logging.getLogger(__name__)
 date_format = "%B %d, %Y"
 today = date.today()
 ai_roster_path = Path.home() / "Documents" / "iRacing" / "airosters"
@@ -177,6 +179,7 @@ def open_files():
 
 
 def main(track, roster_path):
+    logger.info("I'm here!")
     driver_tiers, car_list, schedule_list, driver_birthdays = open_files()
     with open(Path(roster_path), "r") as roster_file:
         driver_list = json.loads(roster_file.read())

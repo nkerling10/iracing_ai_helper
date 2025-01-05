@@ -3,14 +3,20 @@ Details to come...
 """
 
 ## Standard library imports
-import PySimpleGUI as sg
 import json
+import logging
+import PySimpleGUI as sg
 from pathlib import Path
 ## Third party imports
 
 ## Local imports
 from randomizer import randomizer
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
+    force=True
+)
 
 class Driver:
     def __init__(self, driver: dict) -> None:
@@ -70,7 +76,7 @@ def build_driver_display_info(roster_path: str) -> list:
     return driver_data
 
 
-def build_roster_tab_layout(driver_data: list) -> list:
+def _build_roster_tab_layout(driver_data: list) -> list:
     return [
         [
             sg.Table(
@@ -90,15 +96,33 @@ def build_roster_tab_layout(driver_data: list) -> list:
         [sg.Button("Randomize"), sg.Button("Copy")]
     ]
 
-def build_layout(driver_data: list) -> list:
-    roster_tab_layout = build_roster_tab_layout(driver_data)
 
+def _build_logging_tab_layout() -> list:
+    return [
+        [
+            sg.Multiline(key="-LOGGINGBOX-",
+                         write_only=True,
+                         auto_refresh=True,
+                         autoscroll=True,
+                         expand_x=True,
+                         expand_y=True,
+                         disabled=True,
+                         reroute_stdout=True,
+                         reroute_stderr=True)
+        ]
+    ]
+
+
+def build_layout(driver_data: list) -> list:
+    roster_tab_layout = _build_roster_tab_layout(driver_data)
     season_tab_layout = [[]]
     standings_tab_layout = [[]]
+    logging_tab_layout = _build_logging_tab_layout()
 
     layout = [[sg.TabGroup([[sg.Tab("Roster", roster_tab_layout, key="-rostertab-"),
                                 sg.Tab("Season", season_tab_layout, key="-seasontab"),
-                                sg.Tab("Standings", standings_tab_layout, key="-standingstab-")]],
+                                sg.Tab("Standings", standings_tab_layout, key="-standingstab-"),
+                                sg.Tab("Logging", logging_tab_layout, key="-loggingtab-")]],
                                 key="-tabgroup1-", tab_location="topleft"),]]
 
     return layout
@@ -110,6 +134,11 @@ def main_window() -> None:
     window = sg.Window(
         "NSK AI Roster Randomizer - Alpha v0.1", layout, finalize=True
     )
+    logger = logging.getLogger()
+    log_stream = window['-LOGGINGBOX-']
+    logger.addHandler(logging.StreamHandler(log_stream))
+    logger
+    logger.debug("boom!")
     window["-ROSTERFILELOADED-"].update(value=local_roster_path)
     while True:
         event, values = window.read(timeout=1000)
