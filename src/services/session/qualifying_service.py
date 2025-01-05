@@ -27,7 +27,7 @@ class QualifyingService:
                     driver["CarNumber"]
                     for driver in race_manager.ir["DriverInfo"]["Drivers"]
                     if driver["CarIdx"] == position["CarIdx"]
-                    and "NO DRIVER" not in driver["UserName"]
+                    and "NODRIVER" not in driver["UserName"]
                 ]
                 if match:
                     logging.info(f"{match[0]} car missed the race")
