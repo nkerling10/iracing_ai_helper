@@ -151,10 +151,10 @@ def change_paint_scheme(car_num, driver_name, roster_path):
             new_paint_file = Path(
                 f"{roster_dir}\\{car_num}\\{random.choice(paint_files)}"
             )
-            print(f"Selected {new_paint_file}")
         else:
             new_paint_file = Path(f"{roster_dir}\\{car_num}\\{driver_paints[0]}")
-            print(f"Selected {new_paint_file}")
+
+        print(f"Selected {str(new_paint_file).split('\\')[-1]}")
 
     try:
         print("Attempting to copy file")

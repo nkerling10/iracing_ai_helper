@@ -11,6 +11,7 @@ import json
 ## Local imports
 from randomizer import randomizer
 
+sg.theme("NeonGreen1")
 roster_path = "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\rosters\\2025_Xfinity_Series_NSK_AI\\roster.json"
 
 
@@ -97,6 +98,7 @@ class Roster:
             [
                 sg.Text(text="Track: "),
                 sg.Input(key="-TRACK-", enable_events=True, size=(15, None)),
+                sg.Text(key="-TRACKSTATUS-"),
             ],
             [sg.Button("Randomize"), sg.Button("Copy")],
         ]
@@ -116,9 +118,15 @@ class Roster:
             if event in (sg.WIN_CLOSED, None, "Exit"):
                 break
             elif event == "Randomize":
-                randomizer.main(values["-TRACK-"], roster_path)
-                driver_data = cls.build_driver_display_info(roster_path)
-                window["-TABLE-"].update(values=driver_data)
+                if values["-TRACK-"] != "":
+                    randomizer.main(values["-TRACK-"], roster_path)
+                    window["-TRACKSTATUS-"].update("Success!")
+                    driver_data = cls.build_driver_display_info(roster_path)
+                    window["-TABLE-"].update(values=driver_data)
+                    window.read(timeout=1500)
+                    window["-TRACKSTATUS-"].update("")
+                else:
+                    window["-TRACKSTATUS-"].update("ERROR! Track missing")
             elif event == "Copy":
                 randomizer.perform_copy(roster_path)
             else:
