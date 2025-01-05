@@ -68,7 +68,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         skill_min = 45
         skill_max = 55
     else:
-        print(f"{driver_name} not found in tier file, fix it!")
+        logger.info(f"{driver_name} not found in tier file, fix it!")
         quit()
 
     if car_list[car]["car_tier"] == 1:
@@ -80,7 +80,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     elif car_list[car]["car_tier"] == 4:
         car_smoothness = random.randint(-150, 200)
     else:
-        print(f"Fix car tier for {car} in car file!")
+        logger.info(f"Fix car tier for {car} in car file!")
         quit()
 
     if car_list[car]["crew_tier"] == 1:
@@ -104,7 +104,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         strategy_min = 50
         strategy_max = 100
     else:
-        print(f"Fix crew tier for {car} in car file!")
+        logger.info(f"Fix crew tier for {car} in car file!")
         quit()
 
     driverSkill = random.randint(skill_min, skill_max)
@@ -137,11 +137,11 @@ def change_paint_scheme(car_num, driver_name, roster_path):
     try:
         paint_files = os.listdir(Path(f"{roster_dir}\\{car_num}"))
     except FileNotFoundError:
-        print(f"No folder found for {car_num}")
+        logger.info(f"No folder found for {car_num}")
         return
 
     if len(paint_files) == 1:
-        print(f"No alternate schemes")
+        logger.info(f"No alternate schemes")
         return
     else:
         driver_paints = [
@@ -156,13 +156,13 @@ def change_paint_scheme(car_num, driver_name, roster_path):
         else:
             new_paint_file = Path(f"{roster_dir}\\{car_num}\\{driver_paints[0]}")
 
-        print(f"Selected {str(new_paint_file).split('\\')[-1]}")
+        logger.info(f"Selected {str(new_paint_file).split('\\')[-1]}")
 
     try:
-        print("Attempting to copy file")
+        logger.info("Attempting to copy file")
         copyfile(new_paint_file, Path(f"{roster_dir}\\car_{car_num}.tga"))
     except:
-        print("Uncategorized error, skipping copy operation")
+        logger.info("Uncategorized error, skipping copy operation")
         return
 
 
@@ -179,13 +179,12 @@ def open_files():
 
 
 def main(track, roster_path):
-    logger.info("I'm here!")
     driver_tiers, car_list, schedule_list, driver_birthdays = open_files()
     with open(Path(roster_path), "r") as roster_file:
         driver_list = json.loads(roster_file.read())
     for roster_driver in driver_list["drivers"]:
         if car_list[roster_driver["carNumber"]]["type"] == "full_time_one_driver":
-            print(
+            logger.info(
                 f"Randomizing attributes for {roster_driver['driverName']} - #{roster_driver['carNumber']}"
             )
             new_ratings = set_attributes(
@@ -201,7 +200,7 @@ def main(track, roster_path):
             scheduled_driver = schedule_list[track]["full_time"][
                 roster_driver["carNumber"]
             ]
-            print(
+            logger.info(
                 f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}"
             )
             new_ratings = set_attributes(
@@ -217,16 +216,16 @@ def main(track, roster_path):
                     roster_driver["carNumber"]
                 ]
                 if not scheduled_driver:
-                    print(
+                    logger.info(
                         f"No driver found for #{roster_driver['carNumber']} this week"
                     )
                     continue
             except KeyError:
-                print(f"No driver found for #{roster_driver['carNumber']} this week")
+                logger.info(f"No driver found for #{roster_driver['carNumber']} this week")
                 roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
                 continue
 
-            print(
+            logger.info(
                 f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}"
             )
             new_ratings = set_attributes(
@@ -258,7 +257,7 @@ def main(track, roster_path):
 def perform_copy(roster_path):
     roster_dir = Path(roster_path).parent
     roster_name = roster_path.split("\\")[-2]
-    print(
+    logger.info(
         f"Copying paints and roster from {roster_dir} into {ai_roster_path}/{roster_name}"
     )
     copy_files = [
@@ -271,7 +270,7 @@ def perform_copy(roster_path):
             copyfile(
                 Path(f"{roster_dir}\\{file}"), Path(ai_roster_path / roster_name / file)
             )
-            print(f"{file} copied successfully!")
+            logger.info(f"{file} copied successfully!")
         except Exception as e:
-            print(e)
+            logger.info(e)
             continue

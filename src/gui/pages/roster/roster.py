@@ -12,11 +12,7 @@ from pathlib import Path
 ## Local imports
 from randomizer import randomizer
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
-    force=True
-)
+logging.basicConfig()
 
 class Driver:
     def __init__(self, driver: dict) -> None:
@@ -108,7 +104,8 @@ def _build_logging_tab_layout() -> list:
                          expand_y=True,
                          disabled=True,
                          reroute_stdout=True,
-                         reroute_stderr=True)
+                         reroute_stderr=True,
+                         echo_stdout_stderr=True)
         ]
     ]
 
@@ -134,11 +131,12 @@ def main_window() -> None:
     window = sg.Window(
         "NSK AI Roster Randomizer - Alpha v0.1", layout, finalize=True
     )
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
+        force=True
+    )
     logger = logging.getLogger()
-    log_stream = window['-LOGGINGBOX-']
-    logger.addHandler(logging.StreamHandler(log_stream))
-    logger
-    logger.debug("boom!")
     window["-ROSTERFILELOADED-"].update(value=local_roster_path)
     while True:
         event, values = window.read(timeout=1000)
@@ -159,7 +157,7 @@ def main_window() -> None:
 
 
 if __name__ == "__main__":
-    sg.theme("DarkBrown4")
+    sg.theme("Python")
     SETTINGS_PATH = Path.cwd() / "src" / "gui" / "pages" / "roster"
     settings = sg.UserSettings(
         path = SETTINGS_PATH,
