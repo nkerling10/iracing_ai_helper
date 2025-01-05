@@ -81,34 +81,3 @@ while True:
             # window.close()
     else:
         print(f"Event: {event} - {values}")
-
-"""
-sg.set_options(font=("Arial Bold",14))
-l1=sg.Text("Enter Name")
-lt1=sg.Text("Address")
-t1=sg.Input("", key='-NM-')
-a11=sg.Input(key='-a11-')
-a12=sg.Input(key='-a12-')
-a13=sg.Input(key='-a13-')
-tab1=[[l1,t1],[lt1],[a11], [a12], [a13]]
-lt2=sg.Text("EmailID:")
-lt3=sg.Text("Mob No:")
-a21=sg.Input("", key='-ID-')
-a22=sg.Input("", key='-MOB-')
-tab2=[[lt2, a21], [lt3, a22]]
-layout = [[sg.TabGroup([
-   [sg.Tab('Basic Info', tab1),
-   sg.Tab('Contact Details', tab2)]])],
-   [sg.OK(), sg.Cancel()]
-]
-
-
-window = sg.Window('Tab Group Example', layout)
-while True:
-   event, values = window.read()
-   print (event, values)
-   if event in (sg.WIN_CLOSED, 'Exit'):
-      break
-
-window.close()
-"""

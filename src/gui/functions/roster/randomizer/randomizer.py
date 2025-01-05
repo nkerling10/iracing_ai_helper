@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 date_format = "%B %d, %Y"
 today = date.today()
 ai_roster_path = Path.home() / "Documents" / "iRacing" / "airosters"
-standard_file_path = f"{os.getcwd()}/src/gui/pages/roster/randomizer/files"
+standard_file_path = f"{os.getcwd()}/src/gui/functions/roster/randomizer/files"
 
 
 class Driver:
@@ -50,25 +50,25 @@ def get_driver_age(driver_name, driver_birthdays):
 
 def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     if driver_name in driver_tiers["tier_1"]:
-        skill_min = 90
+        skill_min = 91
         skill_max = 100
     elif driver_name in driver_tiers["tier_2"]:
-        skill_min = 80
-        skill_max = 89
+        skill_min = 81
+        skill_max = 90
     elif driver_name in driver_tiers["tier_3"]:
-        skill_min = 70
-        skill_max = 79
+        skill_min = 71
+        skill_max = 80
     elif driver_name in driver_tiers["tier_4"]:
-        skill_min = 60
-        skill_max = 69
+        skill_min = 61
+        skill_max = 70
     elif driver_name in driver_tiers["tier_5"]:
-        skill_min = 50
-        skill_max = 59
+        skill_min = 51
+        skill_max = 60
     elif driver_name in driver_tiers["tier_6"]:
         skill_min = 45
         skill_max = 55
     else:
-        logger.info(f"{driver_name} not found in tier file, fix it!")
+        logger.critical(f"{driver_name} not found in tier file, fix it!")
         quit()
 
     if car_list[car]["car_tier"] == 1:
@@ -80,7 +80,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     elif car_list[car]["car_tier"] == 4:
         car_smoothness = random.randint(-150, 200)
     else:
-        logger.info(f"Fix car tier for {car} in car file!")
+        logger.critical(f"Fix car tier for {car} in car file!")
         quit()
 
     if car_list[car]["crew_tier"] == 1:
@@ -104,7 +104,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         strategy_min = 50
         strategy_max = 100
     else:
-        logger.info(f"Fix crew tier for {car} in car file!")
+        logger.critical(f"Fix crew tier for {car} in car file!")
         quit()
 
     driverSkill = random.randint(skill_min, skill_max)
@@ -137,11 +137,11 @@ def change_paint_scheme(car_num, driver_name, roster_path):
     try:
         paint_files = os.listdir(Path(f"{roster_dir}\\{car_num}"))
     except FileNotFoundError:
-        logger.info(f"No folder found for {car_num}")
+        logger.warning(f"No folder found for {car_num}")
         return
 
     if len(paint_files) == 1:
-        logger.info(f"No alternate schemes")
+        logger.debug(f"No alternate schemes found for {car_num}")
         return
     else:
         driver_paints = [
@@ -158,11 +158,12 @@ def change_paint_scheme(car_num, driver_name, roster_path):
 
         logger.info(f"Selected {str(new_paint_file).split('\\')[-1]}")
 
+    logger.debug(f"Attempting to copy file {new_paint_file}")
     try:
-        logger.info("Attempting to copy file")
         copyfile(new_paint_file, Path(f"{roster_dir}\\car_{car_num}.tga"))
+        logger.info(f"Sucessfully copied to {Path(f"{roster_dir}\\car_{car_num}.tga")}")
     except:
-        logger.info("Uncategorized error, skipping copy operation")
+        logger.warning("Uncategorized error, skipping copy operation")
         return
 
 
@@ -200,6 +201,8 @@ def main(track, roster_path):
             scheduled_driver = schedule_list[track]["full_time"][
                 roster_driver["carNumber"]
             ]
+            if roster_driver["driverName"] != scheduled_driver:
+                logger.debug(f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}")
             logger.info(
                 f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}"
             )
@@ -215,10 +218,13 @@ def main(track, roster_path):
                 scheduled_driver = schedule_list[track]["part_time"][
                     roster_driver["carNumber"]
                 ]
+                if roster_driver["driverName"] != scheduled_driver:
+                    logger.debug(f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}")
                 if not scheduled_driver:
                     logger.info(
                         f"No driver found for #{roster_driver['carNumber']} this week"
                     )
+                    roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
                     continue
             except KeyError:
                 logger.info(f"No driver found for #{roster_driver['carNumber']} this week")
@@ -251,7 +257,9 @@ def main(track, roster_path):
         roster_driver["driverAge"] = new_ratings.age
 
     with open(Path(roster_path), "w", encoding="utf-8") as roster_file:
+        logger.info("Writing changes to file")
         json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
+    logger.info("Roster write operations are complete")
 
 
 def perform_copy(roster_path):
@@ -272,5 +280,5 @@ def perform_copy(roster_path):
             )
             logger.info(f"{file} copied successfully!")
         except Exception as e:
-            logger.info(e)
+            logger.critical(e)
             continue
