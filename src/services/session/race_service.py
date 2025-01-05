@@ -19,6 +19,7 @@ audio_device = "Speakers (Realtek(R) Audio), MME"
 # the global executor
 executor = ProcessPoolExecutor(max_workers=2)
 
+
 class CustomException(Exception):
     pass
 
@@ -409,6 +410,7 @@ class RaceService:
             t.join()
         logging.debug("After the try except")
         """
+
     @classmethod
     def race(cls, race_manager):
         while True:

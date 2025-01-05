@@ -215,11 +215,12 @@ class RaceManager:
         self.race_weekend = RaceWeekend(
             track_short_name=self.ir["WeekendInfo"]["TrackDisplayShortName"],
             track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"],
-            race_length=self.ir["SessionInfo"]["Sessions"][
-                self.race_session_num
-            ]["SessionLaps"],
+            race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num][
+                "SessionLaps"
+            ],
             player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
         )
+
 
 def practice(race_manager) -> None:
     PracticeService.practice(race_manager)
@@ -294,7 +295,7 @@ def loop(race_manager) -> None:
 
 
 def main() -> None:
-    #race_manager = RaceManager(test_file)
+    # race_manager = RaceManager(test_file)
     race_manager = RaceManager()
     race_manager._set_weekend_data()
     ## After data is set, proceed to looping logic

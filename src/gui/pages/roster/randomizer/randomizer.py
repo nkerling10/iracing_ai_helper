@@ -1,15 +1,26 @@
+"""
+Details to come...
+"""
+
+## Standard library imports
 import json
-import random
 import os
-from pathlib import Path
+import random
 from datetime import date
+from pathlib import Path
+from shutil import copyfile
+
+## Third party imports
 import dateutil.parser as dparser
-import shutil
+
+## Local imports
+
 
 date_format = "%B %d, %Y"
 today = date.today()
 ai_roster_path = Path.home() / "Documents" / "iRacing" / "airosters"
 standard_file_path = f"{os.getcwd()}/src/gui/pages/roster/randomizer/files"
+
 
 class Driver:
     def __init__(self, name, car, attributes) -> None:
@@ -83,15 +94,15 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     elif car_list[car]["crew_tier"] == 3:
         pit_min = 70
         pit_max = 80
-        strategy_min = 15
-        strategy_max = 35
+        strategy_min = 20
+        strategy_max = 50
     elif car_list[car]["crew_tier"] == 4:
         pit_min = 60
         pit_max = 70
         strategy_min = 50
         strategy_max = 100
     else:
-        print(f"Fix crew tier for {car}!")
+        print(f"Fix crew tier for {car} in car file!")
         quit()
 
     driverSkill = random.randint(skill_min, skill_max)
@@ -137,7 +148,8 @@ def change_paint_scheme(car_num, driver_name, roster_path):
             if driver_name.lower().replace(" ", "_") in file
         ]
         if len(driver_paints) == 0:
-            new_paint_file = Path(f"{roster_dir}\\{car_num}\\{random.choice(paint_files)}"
+            new_paint_file = Path(
+                f"{roster_dir}\\{car_num}\\{random.choice(paint_files)}"
             )
             print(f"Selected {new_paint_file}")
         else:
@@ -146,9 +158,7 @@ def change_paint_scheme(car_num, driver_name, roster_path):
 
     try:
         print("Attempting to copy file")
-        shutil.copyfile(
-            new_paint_file, Path(f"{roster_dir}\\car_{car_num}.tga")
-        )
+        copyfile(new_paint_file, Path(f"{roster_dir}\\car_{car_num}.tga"))
     except:
         print("Uncategorized error, skipping copy operation")
         return
@@ -204,7 +214,9 @@ def main(track, roster_path):
                     roster_driver["carNumber"]
                 ]
                 if not scheduled_driver:
-                    print(f"No driver found for #{roster_driver['carNumber']} this week")
+                    print(
+                        f"No driver found for #{roster_driver['carNumber']} this week"
+                    )
                     continue
             except KeyError:
                 print(f"No driver found for #{roster_driver['carNumber']} this week")
@@ -221,7 +233,7 @@ def main(track, roster_path):
                 car_list,
                 driver_birthdays,
             )
-                
+
         else:
             continue
 
@@ -236,23 +248,27 @@ def main(track, roster_path):
         roster_driver["strategyRiskiness"] = new_ratings.strategy
         roster_driver["driverAge"] = new_ratings.age
 
-    with open(
-        Path(roster_path), "w", encoding="utf-8"
-    ) as roster_file:
+    with open(Path(roster_path), "w", encoding="utf-8") as roster_file:
         json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
 
 
 def perform_copy(roster_path):
-    try:
-        roster_dir = Path(roster_path).parent
-        roster_name = roster_path.split("\\")[-2]
-        print(f"Copying directory {roster_dir}")
-        print(f"Pasting into directory {ai_roster_path}/{roster_name}")
-        shutil.copytree(
-            Path(roster_dir),
-            Path(ai_roster_path / roster_name),
-            dirs_exist_ok=True
-        )
-        print("Roster directory successfully copied")
-    except Exception as e:
-        print(e)
+    roster_dir = Path(roster_path).parent
+    roster_name = roster_path.split("\\")[-2]
+    print(
+        f"Copying paints and roster from {roster_dir} into {ai_roster_path}/{roster_name}"
+    )
+    copy_files = [
+        file
+        for file in os.listdir(Path(roster_dir))
+        if ".tga" in file or ".json" in file
+    ]
+    for file in copy_files:
+        try:
+            copyfile(
+                Path(f"{roster_dir}\\{file}"), Path(ai_roster_path / roster_name / file)
+            )
+            print(f"{file} copied successfully!")
+        except Exception as e:
+            print(e)
+            continue
