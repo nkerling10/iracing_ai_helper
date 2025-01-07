@@ -19,6 +19,8 @@ from functions.race_manager.race_manager import ButtonException
 from functions.roster import roster_data
 from functions.roster.randomizer import randomizer
 from functions.season import season_data
+from functions.database.db_manager import DatabaseManager
+from layouts.tab_layouts import DatabaseTabLayout
 from layouts.tab_layouts import RosterTabLayout
 from layouts.tab_layouts import SeasonTabLayout
 from layouts.tab_layouts import LoggingTabLayout
@@ -30,6 +32,7 @@ logging.basicConfig()
 def build_layout() -> list[list]:
     main_tab_layout = [[sg.Button(button_text="Start", key="-RACEMANAGER-"),
                         sg.Button(button_text="Stop", key="-BUTTONEXCEPTION-")]]
+    db_tab_layout = DatabaseTabLayout.build_db_tab_layout()
     roster_tab_layout = RosterTabLayout.build_roster_tab_layout()
     season_tab_layout = SeasonTabLayout.build_season_tab_layout()
     standings_tab_layout = [[]]
@@ -41,6 +44,7 @@ def build_layout() -> list[list]:
                 [
                     [
                         sg.Tab("Main", main_tab_layout, key="-maintab-"),
+                        sg.Tab("Database", db_tab_layout, key="-databasetab-"),
                         sg.Tab("Roster", roster_tab_layout, key="-rostertab-"),
                         sg.Tab("Season", season_tab_layout, key="-seasontab"),
                         sg.Tab("Standings", standings_tab_layout, key="-standingstab-"),
@@ -58,6 +62,7 @@ def build_layout() -> list[list]:
 
 
 def main_window():
+    db_table_options = []
     window = sg.Window(
         "NSK AI Roster Randomizer - Alpha v0.1",
         build_layout(),
@@ -70,12 +75,44 @@ def main_window():
         force=True,
     )
     logger = logging.getLogger()
+    prev_table = ""
     while True:
         event, values = window.read(timeout=1000)
         if event in (sg.WIN_CLOSED, None, "Exit"):
+            try:
+                db.conn.close()
+            except:
+                pass
             break
         if event == "-RACEMANAGER-":
-            race_manager()
+            pass
+            #race_manager()
+        if event == "-DBTABCONNECTBUTTON-":
+            db = DatabaseManager(database_path)
+            window["-DBTABCONNECTTEXT-"].update(database_path)
+            window["-DBTABCONNECTCOMBO-"].update(values=db.tables, size=(30, 50))
+            for table in db.tables:
+                db_table_options.append(table)
+        if event == "-DBTABCONNECTCOMBO-":
+            try:
+                if prev_table != "":
+                    window["-DBTABTABLE-", prev_table].table_frame.master.destroy()
+                    del window.AllKeysDict["-DBTABTABLE-", prev_table]
+                results, headers = db.execute_query(values["-DBTABCONNECTCOMBO-"])
+                window.extend_layout(window["-DBTABLECOLUMN-"], [[sg.Table(
+                        values=results,
+                        headings=headers,
+                        justification="center",
+                        key=("-DBTABTABLE-", values["-DBTABCONNECTCOMBO-"]),
+                        num_rows=30,
+                        auto_size_columns=True,
+                        expand_x=True,
+                        expand_y=True
+                    )]])
+                prev_table = values["-DBTABCONNECTCOMBO-"]
+                window.refresh()
+            except Exception as e:
+                print(e)
         if event == "-LOADROSTERBUTTON-":
             active_driver_data, inactive_driver_data = (
                 roster_data.build_driver_display_info(local_roster_path)
@@ -117,6 +154,7 @@ if __name__ == "__main__":
         use_config_file=True,
         convert_bools_and_none=True,
     )
+    database_path = settings["SYSTEM"]["DATABASE_PATH"]
     local_roster_path = settings["PATHS"]["LOCAL_ROSTER"]
     iracing_ai_roster_path = settings["PATHS"]["AI_ROSTER_FOLDER"]
     local_season_path = settings["PATHS"]["LOCAL_SEASON"]
