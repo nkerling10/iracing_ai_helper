@@ -20,10 +20,10 @@ from functions.roster import roster_data
 from functions.roster.randomizer import randomizer
 from functions.season import season_data
 from functions.database.db_manager import DatabaseManager
-from layouts.tab_layouts import DatabaseTabLayout
-from layouts.tab_layouts import RosterTabLayout
-from layouts.tab_layouts import SeasonTabLayout
-from layouts.tab_layouts import LoggingTabLayout
+from layouts.tabs.database_tab import DatabaseTabLayout
+from layouts.tabs.roster_tab import RosterTabLayout
+from layouts.tabs.season_tab import SeasonTabLayout
+from layouts.tabs.logging_tab import LoggingTabLayout
 
 
 logging.basicConfig()
