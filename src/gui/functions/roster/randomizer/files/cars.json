@@ -111,13 +111,6 @@
         "type": "full_time_one_driver",
         "owner": "Richard Childress Racing"
     },
-    "25": {
-        "driver": "Lawless Alan",
-        "car_tier": 3,
-        "crew_tier": 4,
-        "type": "full_time_one_driver",
-        "owner": "AM Racing"
-    },
     "26": {
         "driver": "Dean Thompson",
         "car_tier": 2,

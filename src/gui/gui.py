@@ -5,12 +5,17 @@ Details to come...
 ## Standard library imports
 import json
 import logging
+import threading
+import time
 import PySimpleGUI as sg
+import sqlite3
 from pathlib import Path
 
 ## Third party imports
 
 ## Local imports
+from functions.race_manager.race_manager import main as race_manager
+from functions.race_manager.race_manager import ButtonException
 from functions.roster import roster_data
 from functions.roster.randomizer import randomizer
 from functions.season import season_data
@@ -23,7 +28,8 @@ logging.basicConfig()
 
 
 def build_layout() -> list[list]:
-    main_tab_layout = [[sg.Ok()]]
+    main_tab_layout = [[sg.Button(button_text="Start", key="-RACEMANAGER-"),
+                        sg.Button(button_text="Stop", key="-BUTTONEXCEPTION-")]]
     roster_tab_layout = RosterTabLayout.build_roster_tab_layout()
     season_tab_layout = SeasonTabLayout.build_season_tab_layout()
     standings_tab_layout = [[]]
@@ -55,7 +61,7 @@ def main_window():
     window = sg.Window(
         "NSK AI Roster Randomizer - Alpha v0.1",
         build_layout(),
-        # no_titlebar=True,
+        no_titlebar=True,
         finalize=True,
     )
     logging.basicConfig(
@@ -68,6 +74,8 @@ def main_window():
         event, values = window.read(timeout=1000)
         if event in (sg.WIN_CLOSED, None, "Exit"):
             break
+        if event == "-RACEMANAGER-":
+            race_manager()
         if event == "-LOADROSTERBUTTON-":
             active_driver_data, inactive_driver_data = (
                 roster_data.build_driver_display_info(local_roster_path)
@@ -76,9 +84,15 @@ def main_window():
             window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
             window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
         if event == "-LOADSEASONBUTTON-":
-            window["-SEASONTABLE-"].update(values=season_data.build_season_display_info(local_season_path))
+            season_rows = season_data.build_season_display_info(local_season_path)
+            window["-SEASONTABLE-"].update(values=season_rows)
+            window["-SEASONFILELOADED-"].update(f"File loaded: {local_season_path}")
+            window["-TRACKBOXLABEL-"].update(visible=True)
+            window["-TRACKBOX-"].update(values=RosterTabLayout._roster_file_track_choices(len(season_rows)),
+                                        visible=True)
+            ## TODO: UPDATE THE DEFAULT VALUE TO THE NEXT RACE IN THE SEASON
         if event == "Randomize":
-            randomizer.main(values["-TRACKBOX-"], local_roster_path)
+            randomizer.main(str(values["-TRACKBOX-"]), local_roster_path)
             window["-TRACKSTATUS-"].update("Success!")
             active_driver_data, inactive_driver_data = (
                 roster_data.build_driver_display_info(local_roster_path)
@@ -91,6 +105,8 @@ def main_window():
             randomizer.perform_copy(local_roster_path)
         if event == "-CLEARLOGBOX-":
             window["-LOGGINGBOX-"].update("")
+        if event == "-SEASONTABLE-":
+            window["-TRACKBOX-"].update(value=values['-SEASONTABLE-'][0]+1)
 
 
 if __name__ == "__main__":

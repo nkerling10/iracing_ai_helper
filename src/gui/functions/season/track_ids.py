@@ -1,4 +1,8 @@
+import re
 from enum import Enum
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class Track(Enum):
@@ -28,3 +32,11 @@ class Track(Enum):
     WWTRaceway = 237
     Kansas = 214
     CharlotteRoval = 350
+
+
+def _convert_track(track_enum: str):
+    return re.sub('([A-Z][a-z]+)', r' \1', re.sub('([A-Z]+)', r' \1', track_enum)).split()
+    
+
+def track_name(track_id: int):
+    return _convert_track(Track(track_id).name)

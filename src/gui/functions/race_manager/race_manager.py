@@ -6,12 +6,8 @@ Massive credit to kutu for the pyirsdk linked below:
 ## Standard library imports
 import logging
 import os
-import json
 import time
-import platform
 import math
-import tkinter as tk
-from tkinter import filedialog
 from pathlib import Path
 
 ## Third party imports
@@ -21,12 +17,13 @@ import pygetwindow as gw
 from pygetwindow import PyGetWindowException
 
 ## Local imports
-from config.race_settings import RaceSettings
-from services.core.stage import Stage
-from services.session.practice_service import PracticeService
-from services.session.qualifying_service import QualifyingService
-from services.session.race_service import RaceService
+from .config.race_settings import RaceSettings
+from .services.core.stage import Stage
+from .services.session.practice_service import PracticeService
+from .services.session.qualifying_service import QualifyingService
+from .services.session.race_service import RaceService
 
+'''
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
@@ -35,6 +32,11 @@ logging.basicConfig(
         logging.StreamHandler(),
     ],
 )
+'''
+class ButtonException(Exception):
+    pass
+
+logger = logging.getLogger(__name__)
 
 test_file = Path(
     "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\session_data\\dataracing.bin"
@@ -133,12 +135,12 @@ class RaceManager:
             try:
                 window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
                 window.activate()
-                logging.debug("Activated window")
+                logger.debug("Activated window")
             except PyGetWindowException:
-                logging.error("PyGetWindowException error!")
+                logger.error("PyGetWindowException error!")
                 continue
             break
-        logging.debug(f"Sending chat command: {command}")
+        logger.debug(f"Sending chat command: {command}")
         self.ir.chat_command(1)
         time.sleep(0.5)
         pyautogui.typewrite(command)
@@ -186,7 +188,7 @@ class RaceManager:
         if state.ir_connected and not (self.ir.is_initialized and self.ir.is_connected):
             state.ir_connected = False
             self.ir.shutdown()
-            logging.info("irsdk disconnected")
+            logger.info("irsdk disconnected")
         elif (
             not state.ir_connected
             and self.ir.startup()
@@ -194,7 +196,7 @@ class RaceManager:
             and self.ir.is_connected
         ):
             state.ir_connected = True
-            logging.info("irsdk connected")
+            logger.info("irsdk connected")
 
     def _connect(self) -> None:
         try:
@@ -202,10 +204,13 @@ class RaceManager:
                 self._check_iracing(self.state)
                 if self.state.ir_connected:
                     return
-                logging.info("Waiting for connection to iRacing..")
+                logger.info("Waiting for connection to iRacing..")
                 time.sleep(1)
         except KeyboardInterrupt:
             quit()
+        except ButtonException:
+            logger.warning("Cancelling connection.")
+            return
 
     def _set_weekend_data(self) -> None:
         ## Identify which sessions exist in the "race weekend"
@@ -221,19 +226,19 @@ class RaceManager:
         )
 
 
-def practice(race_manager) -> None:
+def practice(race_manager: object) -> None:
     PracticeService.practice(race_manager)
 
 
-def qualifying(race_manager) -> None:
+def qualifying(race_manager: object) -> None:
     QualifyingService.qualifying(race_manager)
 
 
-def race(race_manager) -> None:
+def race(race_manager: object) -> None:
     RaceService.race(race_manager)
 
 
-def loop(race_manager) -> None:
+def loop(race_manager: object) -> None:
     while True:
         ## Figure out what session is currently active
         ## This will prove useful if the app crashes during any session
@@ -252,9 +257,9 @@ def loop(race_manager) -> None:
             ):
                 practice(race_manager)
                 race_manager.practice_done = True
-                logging.info("Practice operations are complete!")
+                logger.info("Practice operations are complete!")
             else:
-                logging.debug("Practice stage does not need to be executed, skipping")
+                logger.debug("Practice stage does not need to be executed, skipping")
                 race_manager.practice_done = True
 
         elif (
@@ -274,9 +279,9 @@ def loop(race_manager) -> None:
             ):
                 qualifying(race_manager)
                 race_manager.qualifying_done = True
-                logging.info("Qualifying operations are complete!")
+                logger.info("Qualifying operations are complete!")
             else:
-                logging.debug("Qualifying stage does not need to be executed, skipping")
+                logger.debug("Qualifying stage does not need to be executed, skipping")
                 race_manager.qualifying_done = True
 
         elif current_session_name == "RACE":

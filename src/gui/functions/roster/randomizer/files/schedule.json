@@ -1,5 +1,6 @@
 {
-    "daytona_1": {
+    "1": {
+        "track": "daytona",
         "full_time": {
             "19": "Ryan Truex",
             "70": "Leland Honeyman",
@@ -9,7 +10,6 @@
             "17": "",
             "30": "",
             "32": "Jordan Anderson",
-            "33": "",
             "36": "",
             "45": "Caesar Bacarella",
             "50": "",
@@ -17,7 +17,8 @@
             "78": ""
         }
     },
-    "atlanta_1": {
+    "2": {
+        "track": "atlanta",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Leland Honeyman",
@@ -27,15 +28,16 @@
             "17": "",
             "30": "",
             "32": "Jordan Anderson",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "cota": {
+    "3": {
+        "track": "cota",
         "full_time": {
             "19": "John Hunter Nemechek",
             "70": "Thomas Annunziata",
@@ -53,7 +55,8 @@
             "78": ""
         }
     },
-    "phoenix_1": {
+    "4": {
+        "track": "phoenix",
         "full_time": {
             "19": "Chase Briscoe",
             "70": "Leland Honeyman",
@@ -63,15 +66,16 @@
             "17": "William Byron",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "Stefan Parsons",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "las_vegas_1": {
+    "5": {
+        "track": "las vegas",
         "full_time": {
             "19": "Christopher Bell",
             "70": "Leland Honeyman",
@@ -81,15 +85,16 @@
             "17": "",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "homestead": {
+    "6": {
+        "track": "homestead",
         "full_time": {
             "19": "Ryan Truex",
             "70": "Thomas Annunziata",
@@ -99,6 +104,7 @@
             "17": "Rajah Caruth",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
@@ -106,7 +112,8 @@
             "78": ""
         }
     },
-    "martinsville_1": {
+    "7": {
+        "track": "martinsville",
         "full_time": {
             "19": "Justin Bonsignore",
             "70": "Leland Honeyman",
@@ -116,15 +123,16 @@
             "17": "",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "darlington": {
+    "8": {
+        "track": "darlington",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Leland Honeyman",
@@ -134,15 +142,16 @@
             "17": "William Byron",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "bristol_1": {
+    "9": {
+        "track": "bristol",
         "full_time": {
             "19": "Justin Bonsignore",
             "70": "Leland Honeyman",
@@ -152,15 +161,16 @@
             "17": "Corey Day",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "Stefan Parsons",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "rockingham": {
+    "10": {
+        "track": "rockingham",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Leland Honeyman",
@@ -170,15 +180,16 @@
             "17": "",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "talladega_1": {
+    "11": {
+        "track": "talladega",
         "full_time": {
             "19": "Joe Graf Jr.",
             "70": "Leland Honeyman",
@@ -188,15 +199,16 @@
             "17": "",
             "30": "",
             "32": "Jordan Anderson",
+            "33": "",
             "36": "",
             "45": "Caesar Bacarella",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "texas": {
+    "12": {
+        "track": "texas",
         "full_time": {
             "19": "Christopher Bell",
             "70": "Leland Honeyman",
@@ -206,15 +218,16 @@
             "17": "Alex Bowman",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "charlotte": {
+    "13": {
+        "track": "charlotte",
         "full_time": {
             "19": "Ty Gibbs",
             "70": "Leland Honeyman",
@@ -224,15 +237,16 @@
             "17": "Chase Elliott",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "nashville": {
+    "14": {
+        "track": "nashville",
         "full_time": {
             "19": "Joe Graf Jr.",
             "70": "Leland Honeyman",
@@ -242,15 +256,16 @@
             "17": "",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "sebring": {
+    "15": {
+        "track": "sebring",
         "full_time": {
             "19": "John Hunter Nemechek",
             "70": "Thomas Annunziata",
@@ -260,15 +275,16 @@
             "17": "",
             "30": "",
             "32": "Austin Green",
+            "33": "",
             "36": "",
             "45": "Alon Day",
             "50": "Preston Pardus",
-            
             "74": "",
             "78": ""
         }
     },
-    "pocono": {
+    "16": {
+        "track": "pocono",
         "full_time": {
             "19": "Ryan Truex",
             "70": "Thomas Annunziata",
@@ -278,15 +294,16 @@
             "17": "William Byron",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "atlanta": {
+    "17": {
+        "track": "atlanta",
         "full_time": {
             "19": "Justin Bonsignore",
             "70": "Leland Honeyman",
@@ -296,15 +313,16 @@
             "17": "",
             "30": "",
             "32": "Jordan Anderson",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "chicago": {
+    "18": {
+        "track": "chicago street course",
         "full_time": {
             "19": "Ty Gibbs",
             "70": "Thomas Annunziata",
@@ -314,15 +332,16 @@
             "17": "Kyle Larson",
             "30": "",
             "32": "Austin Green",
+            "33": "",
             "36": "",
             "45": "Alon Day",
             "50": "Preston Pardus",
-            
             "74": "",
             "78": ""
         }
     },
-    "sonoma": {
+    "19": {
+        "track": "sonoma",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Thomas Annunziata",
@@ -332,15 +351,16 @@
             "17": "",
             "30": "",
             "32": "Austin Green",
+            "33": "",
             "36": "",
             "45": "Alon Day",
             "50": "Preston Pardus",
-            
             "74": "",
             "78": ""
         }
     },
-    "dover": {
+    "20": {
+        "track": "dover",
         "full_time": {
             "19": "Ryan Truex",
             "70": "Leland Honeyman",
@@ -350,15 +370,16 @@
             "17": "",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "indianapolis": {
+    "21": {
+        "track": "indianapolis",
         "full_time": {
             "19": "Joe Graf Jr.",
             "70": "Leland Honeyman",
@@ -368,15 +389,16 @@
             "17": "Alex Bowman",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "iowa": {
+    "22": {
+        "track": "iowa",
         "full_time": {
             "19": "Justin Bonsignore",
             "70": "Leland Honeyman",
@@ -394,7 +416,8 @@
             "78": ""
         }
     },
-    "watkins_glen": {
+    "23": {
+        "track": "watkins glen",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Thomas Annunziata",
@@ -404,15 +427,16 @@
             "17": "William Byron",
             "30": "",
             "32": "Austin Green",
+            "33": "",
             "36": "",
             "45": "Alon Day",
             "50": "Preston Pardus",
-            
             "74": "",
             "78": ""
         }
     },
-    "daytona_2": {
+    "24": {
+        "track": "daytona",
         "full_time": {
             "19": "Ryan Truex",
             "70": "Leland Honeyman",
@@ -422,15 +446,16 @@
             "17": "",
             "30": "",
             "32": "Jordan Anderson",
+            "33": "",
             "36": "",
             "45": "Caesar Bacarella",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "laguna seca": {
+    "25": {
+        "track": "laguna seca",
         "full_time": {
             "19": "John Hunter Nemechek",
             "70": "Thomas Annunziata",
@@ -440,15 +465,16 @@
             "17": "",
             "30": "",
             "32": "Austin Green",
+            "33": "",
             "36": "",
             "45": "Alon Day",
             "50": "Preston Pardus",
-            
             "74": "",
             "78": ""
         }
     },
-    "wwt raceway": {
+    "26": {
+        "track": "wwt raceway",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Leland Honeyman",
@@ -458,15 +484,16 @@
             "17": "Chase Elliott",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "bristol_2": {
+    "27": {
+        "track": "bristol",
         "full_time": {
             "19": "Justin Bonsignore",
             "70": "Leland Honeyman",
@@ -476,15 +503,16 @@
             "17": "",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "Stefan Parsons",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "kansas": {
+    "28": {
+        "track": "kansas",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Leland Honeyman",
@@ -494,15 +522,16 @@
             "17": "",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "Brad Perez",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "charlotte roval": {
+    "29": {
+        "track": "charlotte roval",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Thomas Annunziata",
@@ -512,15 +541,16 @@
             "17": "",
             "30": "",
             "32": "Austin Green",
+            "33": "",
             "36": "",
             "45": "Brad Perez",
             "50": "Preston Pardus",
-            
             "74": "",
             "78": ""
         }
     },
-    "las vegas_2": {
+    "30": {
+        "track": "las vegas",
         "full_time": {
             "19": "Aric Almirola",
             "70": "Leland Honeyman",
@@ -530,15 +560,16 @@
             "17": "Rajah Caruth",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "talladega_2": {
+    "31": {
+        "track": "talladega",
         "full_time": {
             "19": "Ryan Truex",
             "70": "Leland Honeyman",
@@ -548,15 +579,16 @@
             "17": "",
             "30": "",
             "32": "Jordan Anderson",
+            "33": "",
             "36": "",
             "45": "Caesar Bacarella",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "martinsville_2": {
+    "32": {
+        "track": "martinsville",
         "full_time": {
             "19": "Justin Bonsignore",
             "70": "Leland Honeyman",
@@ -566,15 +598,16 @@
             "17": "Corey Day",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "",
             "50": "",
-            
             "74": "",
             "78": ""
         }
     },
-    "phoenix_2": {
+    "33": {
+        "track": "phoenix",
         "full_time": {
             "19": "Justin Bonsignore",
             "70": "Leland Honeyman",
@@ -584,10 +617,10 @@
             "17": "",
             "30": "",
             "32": "",
+            "33": "",
             "36": "",
             "45": "Stefan Parsons",
             "50": "",
-            
             "74": "",
             "78": ""
         }

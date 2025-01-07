@@ -5,9 +5,38 @@ import PySimpleGUI as sg
 
 
 class RosterTabLayout:
+
     @staticmethod
-    def _roster_file_track_choices() -> list:
-        return ["daytona_1", "iowa", "bristol_1"]
+    def _tier_settings_drivers_table(title: str, tier_subject: str):
+        return [
+            [
+                sg.Text(text=title, justification="c", pad=(0,0),
+                        expand_x=True)
+            ],
+            [
+                sg.Table(values=[], headings=[tier_subject, "Tier"],
+                         expand_x=True)
+            ]
+        ]
+
+    @classmethod
+    def _tier_settings_tab_layout(cls):
+        return [
+            [
+                sg.Column(layout=cls._tier_settings_drivers_table("Drivers", "Name"),
+                           expand_x=True),
+                sg.VerticalSeparator(color="black"),
+                sg.Column(layout=cls._tier_settings_drivers_table("Car", "Car"),
+                           expand_x=True)
+            ]
+        ]
+
+    @staticmethod
+    def _roster_file_track_choices(race_count: int = 0) -> list:
+        races = []
+        for num in range(1, race_count+1):
+            races.append(num)
+        return races
 
     @staticmethod
     def _roster_file_headers() -> list:
@@ -66,6 +95,14 @@ class RosterTabLayout:
                                 expand_x=True,
                                 expand_y=True,
                             ),
+                            sg.Tab(
+                                "Tier Settings",
+                                layout=cls._tier_settings_tab_layout(
+                                    
+                                ),
+                                expand_x=True,
+                                expand_y=True
+                            )
                         ]
                     ],
                     key="-ROSTERTABLETABS-",
@@ -75,8 +112,8 @@ class RosterTabLayout:
                 ),
             ],
             [
-                sg.Text(text="Race:"),
-                sg.Combo(cls._roster_file_track_choices(), key="-TRACKBOX-"),
+                sg.Text(text="Race:", key="-TRACKBOXLABEL-", visible=False),
+                sg.Combo(cls._roster_file_track_choices(), key="-TRACKBOX-", visible=False),
                 sg.Text(key="-TRACKSTATUS-"),
             ],
             [sg.Text(key="-ROSTERFILELOADED-")],
@@ -102,9 +139,13 @@ class SeasonTabLayout:
                     headings=cls._season_file_headers(),
                     justification="center",
                     key="-SEASONTABLE-",
-                    num_rows=33,
+                    num_rows=34,
                     expand_x=True,
                     expand_y=True,
+                    hide_vertical_scroll = True,
+                    enable_click_events = True,
+                    enable_events=True,
+                    starting_row_number=1
                 )
             ],
             [sg.Text(text="File loaded:"), sg.Text(key="-SEASONFILELOADED-")],

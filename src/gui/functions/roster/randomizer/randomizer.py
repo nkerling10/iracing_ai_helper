@@ -69,7 +69,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         skill_max = 55
     else:
         logger.critical(f"{driver_name} not found in tier file, fix it!")
-        quit()
+        return
 
     if car_list[car]["car_tier"] == 1:
         car_smoothness = random.randint(25, 75)
@@ -81,7 +81,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         car_smoothness = random.randint(-150, 200)
     else:
         logger.critical(f"Fix car tier for {car} in car file!")
-        quit()
+        return
 
     if car_list[car]["crew_tier"] == 1:
         pit_min = 90
@@ -105,7 +105,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
         strategy_max = 100
     else:
         logger.critical(f"Fix crew tier for {car} in car file!")
-        quit()
+        return
 
     driverSkill = random.randint(skill_min, skill_max)
     driverAggression = 999
@@ -179,7 +179,7 @@ def open_files():
     return driver_tiers, car_list, schedule_list, driver_birthdays
 
 
-def main(track, roster_path):
+def main(race_index, roster_path):
     driver_tiers, car_list, schedule_list, driver_birthdays = open_files()
     with open(Path(roster_path), "r") as roster_file:
         driver_list = json.loads(roster_file.read())
@@ -198,7 +198,7 @@ def main(track, roster_path):
         elif (
             car_list[roster_driver["carNumber"]]["type"] == "full_time_multiple_drivers"
         ):
-            scheduled_driver = schedule_list[track]["full_time"][
+            scheduled_driver = schedule_list[race_index]["full_time"][
                 roster_driver["carNumber"]
             ]
             if roster_driver["driverName"] != scheduled_driver:
@@ -217,9 +217,13 @@ def main(track, roster_path):
             )
         elif car_list[roster_driver["carNumber"]]["type"] == "part_time":
             try:
-                scheduled_driver = schedule_list[track]["part_time"][
-                    roster_driver["carNumber"]
-                ]
+                try:
+                    scheduled_driver = schedule_list[race_index]["part_time"][
+                        roster_driver["carNumber"]
+                    ]
+                except KeyError:
+                    logger.warning(f"{roster_driver["carNumber"]} not found in race {race_index}, aborting")
+                    return
                 if roster_driver["driverName"] != scheduled_driver:
                     logger.debug(
                         f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}"
