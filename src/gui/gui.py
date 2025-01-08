@@ -66,7 +66,7 @@ def main_window():
     window = sg.Window(
         "NSK AI Roster Randomizer - Alpha v0.1",
         build_layout(),
-        no_titlebar=True,
+        no_titlebar=False,
         finalize=True,
     )
     logging.basicConfig(
@@ -121,13 +121,21 @@ def main_window():
             window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
             window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
         if event == "-LOADSEASONBUTTON-":
+            colored_rows = []
             season_rows = season_data.build_season_display_info(local_season_path)
-            window["-SEASONTABLE-"].update(values=season_rows)
+            next_race = [next(x[0]-1 for x in season_rows if x[3] is False)]
+            done_races = [([x[0]-1], "white", "green") for x in season_rows if x[3] is True]
+            not_done_races = [([x[0]-1], "white", "red") for x in season_rows if x[3] is False and x[0]-1 != next_race]
+            for each in not_done_races:
+                colored_rows.append(each)
+            for each in done_races:
+                colored_rows.append(each)
+            colored_rows.append((next_race, "white", "orange"))
+            window["-SEASONTABLE-"].update(values=season_rows, row_colors=colored_rows)
             window["-SEASONFILELOADED-"].update(f"File loaded: {local_season_path}")
             window["-TRACKBOXLABEL-"].update(visible=True)
             window["-TRACKBOX-"].update(values=RosterTabLayout._roster_file_track_choices(len(season_rows)),
                                         visible=True)
-            ## TODO: UPDATE THE DEFAULT VALUE TO THE NEXT RACE IN THE SEASON
         if event == "Randomize":
             randomizer.main(str(values["-TRACKBOX-"]), local_roster_path)
             window["-TRACKSTATUS-"].update("Success!")
