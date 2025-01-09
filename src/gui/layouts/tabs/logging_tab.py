@@ -9,7 +9,7 @@ class LoggingTabLayout:
                     key="-LOGGINGBOX-",
                     write_only=True,
                     auto_refresh=True,
-                    autoscroll=True,
+                    autoscroll_only_at_bottom = True,
                     expand_x=True,
                     expand_y=True,
                     disabled=True,

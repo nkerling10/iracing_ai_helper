@@ -9,7 +9,7 @@ import logging
 ## Third party imports
 
 ## Local imports
-from functions.season.track_ids import track_name
+from gui.functions.season.track_ids import track_name
 
 logger = logging.getLogger(__name__)
 
