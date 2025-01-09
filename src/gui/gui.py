@@ -29,13 +29,17 @@ from layouts.tabs.logging_tab import LoggingTabLayout
 
 logging.basicConfig()
 
-def _load_files():
+
+def _load_roster_file() -> None:
     active_driver_data, inactive_driver_data = (
         roster_data.build_driver_display_info(config.local_roster_file)
     )
     window["-ROSTERFILELOADED-"].update(f"File loaded: {config.local_roster_file}")
     window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
     window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
+
+
+def _load_season_file() -> None:
     colored_rows = []
     season_rows = season_data.build_season_display_info(config.local_season_file)
     next_race = [next(x[0]-1 for x in season_rows if x[3] is False)]
@@ -52,12 +56,14 @@ def _load_files():
     window["-TRACKBOX-"].update(values=RosterTabLayout._roster_file_track_choices(len(season_rows)),
                                 visible=True)
 
-def _set_tab_visibility(tab_status):
+
+def _set_tab_visibility(tab_status) -> None:
     window["-maintab-"].update(visible=tab_status)
     window["-databasetab-"].update(visible=tab_status)
     window["-rostertab-"].update(visible=tab_status)
     window["-seasontab"].update(visible=tab_status)
     window["-standingstab-"].update(visible=tab_status)
+
 
 def _build_layout() -> list[list]:
     main_tab_layout = [[sg.Button(button_text="Start", key="-RACEMANAGER-"),
@@ -95,6 +101,7 @@ def _build_layout() -> list[list]:
         [sg.Exit()]
     ]
 
+
 def main_window():
     db_table_options = []
     '''
@@ -107,12 +114,14 @@ def main_window():
     logger = logging.getLogger()
 
     if config.first_time_setup is True:
+        logger.debug("config.first_time_setup is True, hiding tabs")
         _set_tab_visibility(False)
     else:
+        logger.debug("config.first_time_setup is False, displaying tabs")
         _set_tab_visibility(True)
+        _load_roster_file()
+        _load_season_file()
 
-    if not config.first_time_setup:
-        _load_files()
     prev_table = ""
     while True:
         event, values = window.read()#timeout=1000)

@@ -26,7 +26,8 @@ class ConfigTabLayout:
                         ]
                     ],
                     expand_x=True,
-                    pad=((0,0), (20, 5))
+                    pad=((0,0), (20, 5)),
+                    title_location="n"
                 )
             ],
             [
@@ -46,7 +47,8 @@ class ConfigTabLayout:
                         ]
                     ],
                     expand_x=True,
-                    pad=((0,0), (15, 5))
+                    pad=((0,0), (15, 5)),
+                    title_location="n"
                 )
             ],
             [
@@ -66,7 +68,8 @@ class ConfigTabLayout:
                         ]
                     ],
                     expand_x=True,
-                    pad=((0,0), (15, 5))
+                    pad=((0,0), (15, 5)),
+                    title_location="n"
                 )
             ],
             [
@@ -86,7 +89,8 @@ class ConfigTabLayout:
                         ]
                     ],
                     expand_x=True,
-                    pad=((0,0), (15, 5))
+                    pad=((0,0), (15, 5)),
+                    title_location="n"
                 )
             ],
             [
@@ -106,7 +110,8 @@ class ConfigTabLayout:
                         ]
                     ],
                     expand_x=True,
-                    pad=((0,0), (15, 5))
+                    pad=((0,0), (15, 10)),
+                    title_location="n"
                 )
             ],
             [
