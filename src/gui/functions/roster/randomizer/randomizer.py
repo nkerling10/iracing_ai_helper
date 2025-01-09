@@ -150,9 +150,13 @@ def change_paint_scheme(car_num, driver_name, roster_path):
             if driver_name.lower().replace(" ", "_") in file
         ]
         if len(driver_paints) == 0:
-            new_paint_file = Path(
-                f"{roster_dir}\\{car_num}\\{random.choice(paint_files)}"
-            )
+            try:
+                new_paint_file = Path(
+                    f"{roster_dir}\\{car_num}\\{random.choice(paint_files)}"
+                )
+            except IndexError:
+                logging.debug(f"No paint files found for {car_num}")
+                return
         else:
             new_paint_file = Path(f"{roster_dir}\\{car_num}\\{driver_paints[0]}")
 

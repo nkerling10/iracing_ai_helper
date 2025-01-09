@@ -115,7 +115,8 @@ class RosterTabLayout:
             [sg.Text(key="-ROSTERFILELOADED-")],
             [
                 sg.Button("Load", key="-LOADROSTERBUTTON-"),
-                sg.Button("Randomize"),
-                sg.Button("Copy"),
+                #TODO: introduce randomization for only selected drivers?
+                sg.Button("Randomize", tooltip="Randomizes all attributes for all drivers"),
+                sg.Button("Copy", tooltip="Copies the randomized file into your iRacing airosters folder"),
             ],
         ]
