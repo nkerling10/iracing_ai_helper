@@ -1,9 +1,7 @@
 import logging
 from gui.functions.season import season_data
 
-
 logger = logging.getLogger()
-
 
 class LoadSeasonFile:
     def _load_season_file(config) -> tuple[list, list]:

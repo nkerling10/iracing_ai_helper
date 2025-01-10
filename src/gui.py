@@ -4,7 +4,9 @@ Details to come...
 
 ## Standard library imports
 import logging
+import os
 import PySimpleGUI as sg
+from pathlib import Path
 
 ## Third party imports
 
@@ -55,7 +57,7 @@ def _set_tab_visibility(tab_status: bool) -> None:
 
 
 def _build_main_layout() -> list[list]:
-    main_tab_layout = SplashTabLayout.build_splash_tab_layout()
+    splash_tab_layout = SplashTabLayout.build_splash_tab_layout()
     db_tab_layout = DatabaseTabLayout.build_db_tab_layout()
     local_files_tab_layout = LocalFileTab._build_local_file_tab()
     config_tab_layout = ConfigTabLayout.build_config_tab_layout(config.database_path,
@@ -67,7 +69,7 @@ def _build_main_layout() -> list[list]:
             sg.TabGroup(
                 [
                     [
-                        sg.Tab("Main", main_tab_layout, key="-maintab-"),
+                        sg.Tab("Home", splash_tab_layout, key="-maintab-"),
                         sg.Tab("Database", db_tab_layout, key="-databasetab-"),
                         sg.Tab("Local Files", local_files_tab_layout, key="-localfiletab-"),
                         sg.Tab("Config", config_tab_layout, key="-configtab-", visible=True),
@@ -128,10 +130,11 @@ def main_window() -> None:
                 )
                 _set_tab_visibility(True)
         if event == "-LOADSAVEDSEASONBUTTON-":
-            sg.popup("Not implemented yet")
+            loaded_season = sg.popup_get_file("Load a Season", initial_folder=Path.cwd() / "ai_seasons")
         if event == "-CREATESEASONBUTTON-":
             new_season = _create_new_season(config)
-            print(new_season)
+            window["-LOADSAVEDSEASONBUTTON-"].update(disabled=False)
+            ##TODO: Proceed to load newly created season
         if event == "-DBTABCONNECTBUTTON-":
             db = DatabaseManager(config.database_path)
             window["-DBTABCONNECTTEXT-"].update(config.database_path)

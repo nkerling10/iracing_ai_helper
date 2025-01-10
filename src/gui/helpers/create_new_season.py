@@ -1,5 +1,38 @@
+import json
+import logging
+import os
 import PySimpleGUI as sg
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
+ai_seasons_file_path = Path.cwd() / "ai_seasons"
+
+def _create_local_season_file(values: dict) -> bool:
+    if not os.path.exists(ai_seasons_file_path):
+        logger.info(f"Folder {ai_seasons_file_path} does not exist, creating")
+        os.makedirs(ai_seasons_file_path)
+    if os.path.exists(ai_seasons_file_path / f"{values['__SEASONNAME__']}.json"):
+        sg.Popup("Warning! A season file with that name already exists")
+        return False
+    with open(ai_seasons_file_path / f"{values['__SEASONNAME__']}.json", "w") as new_season_file:
+        new_season_file.write(
+            json.dumps(
+                {
+                    "season_info": {
+                        "season_name": values["__SEASONNAME__"],
+                        "roster_folder": values["__ROSTERFOLDERINPUT__"],
+                        "season_file": "OFFICIAL" if values["__OFFICIALSEASONFILE__"]
+                            is True else values["__SEASONFILEINPUT__"],
+                        "season_series": _season_type(values),
+                        "race_distance_percent": int(values["__RACEDISTANCEPERCENT__"]),
+                        "points_format": _points_format(values)
+                    },
+                    "season_drivers": {},
+                    "season_races": {}
+                },
+                indent=4))
+        return True
 
 
 def _points_format(values: dict) -> str:
@@ -9,6 +42,7 @@ def _points_format(values: dict) -> str:
         return "CHASE"
     elif values["__WINSTONCUPPOINTSFORMAT__"]:
         return "WINSTON"
+
 
 def _season_type(values: dict) -> str:
     if values["__SEASONTYPECUP__"]:
@@ -89,15 +123,9 @@ def _create_new_season(config) -> dict:
             if not any([values["__SEASONFILEINPUT__"], values["__OFFICIALSEASONFILE__"]]):
                 sg.popup("You must either select an iRacing season file or check the box to use the official season")
             else:
-                window.close()
-                return {
-                    "season_name": values["__SEASONNAME__"],
-                    "roster_folder": values["__ROSTERFOLDERINPUT__"],
-                    "season_file": "OFFICIAL" if values["__OFFICIALSEASONFILE__"]
-                        is True else values["__SEASONFILEINPUT__"],
-                    "season_series": _season_type(values),
-                    "race_distance_percent": values["__RACEDISTANCEPERCENT__"],
-                    "points_format": _points_format(values)
-                }
+                result = _create_local_season_file(values)
+                if result:
+                    window.close()
+                    return True
         else:
             print(event, values)
