@@ -36,24 +36,16 @@ def _build_driver_table(driver_objs: list) -> list:
         else:
             list = inactive_driver_data
         list.append(
-            [
-                obj.car,
-                obj.name,
-                obj.age,
-                obj.skill,
-                obj.aggression,
-                obj.optimism,
-                obj.smoothness,
-                obj.pitcrew,
-                obj.strategy,
-            ]
+            [obj.car, obj.name, obj.age, obj.skill,
+             obj.aggression, obj.optimism, obj.smoothness,
+             obj.pitcrew, obj.strategy]
         )
 
     return active_driver_data, inactive_driver_data
 
 
 def build_driver_display_info(roster_path: str) -> list:
-    with open(roster_path, "r") as roster_file:
+    with open(roster_path / "roster.json", "r") as roster_file:
         driver_objs = [
             Driver(driver) for driver in json.loads(roster_file.read()).get("drivers")
         ]

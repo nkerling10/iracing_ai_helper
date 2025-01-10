@@ -1,0 +1,83 @@
+import PySimpleGUI as sg
+from pathlib import Path
+
+
+def _season_type(values: dict) -> str:
+    if values["__SEASONTYPECUP__"]:
+        return "CUP"
+    elif values["__SEASONTYPEXFINITY__"]:
+        return "XFINITY"
+    elif values["__SEASONTYPETRUCKS__"]:
+        return "TRUCKS"
+    elif values["__SEASONTYPEARCA__"]:
+        return "ARCA"
+
+
+def _block_focus(window) -> None:
+    for key in window.key_dict:    # Remove dash box of all Buttons
+        element = window[key]
+        if isinstance(element, sg.Button):
+            element.block_focus()
+
+
+def _create_new_season(config) -> dict:
+    layout = [
+        [sg.Frame(layout=[[sg.InputText(key="__SEASONNAME__")]],
+                  title="Enter a name for the season",
+                  expand_x=True)],
+        [sg.Frame(layout=[[sg.FolderBrowse(key="__ROSTERFOLDER__",
+                                           target="__ROSTERFOLDERINPUT__",
+                                           initial_folder=config.iracing_folder / "airosters"),
+                           sg.Input(key="__ROSTERFOLDERINPUT__",
+                                    disabled=True,
+                                    text_color="black")]],
+                  title="Select desired iRacing roster folder",
+                  expand_x=True)],
+        [sg.Frame(layout=[[sg.FileBrowse(key="__SEASONFILE__",
+                                         target="__SEASONFILEINPUT__",
+                                         file_types = (("JSON Files", "*.json"),),
+                                         initial_folder=config.iracing_folder / "aiseasons"),
+                           sg.Input(key="__SEASONFILEINPUT__",
+                                    disabled=True,
+                                    text_color="black")],
+                            [sg.Text("or")],
+                            [sg.Checkbox(text='Use "official" season file', key="__OFFICIALSEASONFILE__")]],
+                  title="Select desired season file",
+                  expand_x=True)],
+        [sg.Frame(layout=[[sg.Radio("Cup", group_id=1, key="__SEASONTYPECUP__"),
+                           sg.Radio("Xfinity", group_id=1, key="__SEASONTYPEXFINITY__"),
+                           sg.Radio("Truck", group_id=1, key="__SEASONTYPETRUCKS__"),
+                           sg.Radio("ARCA", group_id=1, key="__SEASONTYPEARCA__")]],
+                  title="Select series type",
+                  expand_x=True)],
+        [sg.Frame(layout=[[sg.Slider(range=(10, 100), default_value=100,
+                                     orientation="horizontal", key="__RACEDISTANCEPERCENT__")]],
+                  title="Select desired race distance")],
+        [sg.Button("Create"), sg.Button("Cancel")]
+    ]
+    window = sg.Window("Create New Season", layout, use_default_focus=False, finalize=True, modal=True)
+    _block_focus(window)
+    while True:
+        event, values = window.read()
+        if event in (sg.WIN_CLOSED, "Exit", "Cancel"):
+            window.close()
+            return
+        if event == "Create":
+            if not any([values["__SEASONNAME__"], values["__ROSTERFOLDERINPUT__"]]) and not all([
+                            values["__SEASONTYPECUP__"], values["__SEASONTYPEXFINITY__"],
+                            values["__SEASONTYPETRUCKS__"], values["__SEASONTYPEARCA__"]]):
+                sg.popup("Missing a required entry!", no_titlebar=True)
+            if not any([values["__SEASONFILEINPUT__"], values["__OFFICIALSEASONFILE__"]]):
+                sg.popup("You must either select an iRacing season file or check the box to use the official season")
+            else:
+                window.close()
+                return {
+                    "season_name": values["__SEASONNAME__"],
+                    "roster_folder": values["__ROSTERFOLDERINPUT__"],
+                    "season_file": "OFFICIAL" if values["__OFFICIALSEASONFILE__"]
+                        is True else values["__SEASONFILEINPUT__"],
+                    "season_series": _season_type(values),
+                    "race_distance_percent": values["__RACEDISTANCEPERCENT__"]
+                }
+        else:
+            print(event, values)

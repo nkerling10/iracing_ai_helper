@@ -6,7 +6,7 @@ class SeasonTabLayout:
         return ["Week", "Track", "Laps", "Results"]
 
     @classmethod
-    def build_season_tab_layout(cls, season_data: list = []) -> list:
+    def build_season_tab_layout(cls, season_data: list = []) -> list[list]:
         return [
             [
                 sg.Table(
@@ -23,7 +23,10 @@ class SeasonTabLayout:
                     starting_row_number=1
                 )
             ],
-            [sg.Text(text="File loaded:"), sg.Text(key="-SEASONFILELOADED-")],
-            [sg.Button("Load", key="-LOADSEASONBUTTON-")]
+            [
+                sg.Text(text="File loaded:"), sg.Text(key="-SEASONFILELOADED-")
+            ],
+            [
+                sg.Button("Load", key="-LOADSEASONFILEBUTTON-")
+            ]
         ]
-

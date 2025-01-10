@@ -1,9 +1,8 @@
 import PySimpleGUI as sg
 
 class RosterTabLayout:
-
     @staticmethod
-    def _tier_settings_drivers_table(title: str, tier_subject: str):
+    def _tier_settings_drivers_table(title: str, tier_subject: str) -> list[list]:
         return [
             [
                 sg.Text(text=title, justification="c", pad=(0,0),
@@ -16,7 +15,7 @@ class RosterTabLayout:
         ]
 
     @classmethod
-    def _tier_settings_tab_layout(cls):
+    def _tier_settings_tab_layout(cls) -> list[list]:
         return [
             [
                 sg.Column(layout=cls._tier_settings_drivers_table("Drivers", "Name"),
