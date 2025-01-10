@@ -2,6 +2,14 @@ import PySimpleGUI as sg
 from pathlib import Path
 
 
+def _points_format(values: dict) -> str:
+    if values["__CURRENTPOINTSFORMAT__"]:
+        return "CURRENT"
+    elif values["__CHASEPOINTSFORMAT__"]:
+        return "CHASE"
+    elif values["__WINSTONCUPPOINTSFORMAT__"]:
+        return "WINSTON"
+
 def _season_type(values: dict) -> str:
     if values["__SEASONTYPECUP__"]:
         return "CUP"
@@ -50,9 +58,20 @@ def _create_new_season(config) -> dict:
                            sg.Radio("ARCA", group_id=1, key="__SEASONTYPEARCA__")]],
                   title="Select series type",
                   expand_x=True)],
-        [sg.Frame(layout=[[sg.Slider(range=(10, 100), default_value=100,
-                                     orientation="horizontal", key="__RACEDISTANCEPERCENT__")]],
-                  title="Select desired race distance")],
+        [
+            sg.Frame(layout=[[sg.Slider(range=(10, 100), default_value=100,
+                                        orientation="horizontal", key="__RACEDISTANCEPERCENT__",
+                                        expand_x=True)]],
+                    title="Select desired race distance",
+                    expand_x=True,
+                    expand_y=True,),
+            sg.Frame(layout=[[sg.Radio("Current", group_id=2, key="__CURRENTPOINTSFORMAT__", default=True)],
+                             [sg.Radio("The Chase", group_id=2, key="__CHASEPOINTSFORMAT__")],
+                             [sg.Radio("Winston Cup", group_id=2, key="__WINSTONCUPPOINTSFORMAT__")]],
+                    title="Points format",
+                    expand_x=True,
+                    expand_y=True)
+        ],
         [sg.Button("Create"), sg.Button("Cancel")]
     ]
     window = sg.Window("Create New Season", layout, use_default_focus=False, finalize=True, modal=True)
@@ -77,7 +96,8 @@ def _create_new_season(config) -> dict:
                     "season_file": "OFFICIAL" if values["__OFFICIALSEASONFILE__"]
                         is True else values["__SEASONFILEINPUT__"],
                     "season_series": _season_type(values),
-                    "race_distance_percent": values["__RACEDISTANCEPERCENT__"]
+                    "race_distance_percent": values["__RACEDISTANCEPERCENT__"],
+                    "points_format": _points_format(values)
                 }
         else:
             print(event, values)
