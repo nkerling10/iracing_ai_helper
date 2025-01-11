@@ -40,7 +40,7 @@ def _build_season_table(race_objs: list) -> list:
 
 
 def build_season_display_info(season_path: str) -> list:
-    with open(season_path / "2025 NSK Xfinity Series.json", "r") as season_file:
+    with open(season_path, "r") as season_file:
         logger.debug(f"Opening {season_path}")
         race_objs = [
             Race(race) for race in json.loads(season_file.read()).get("events")
