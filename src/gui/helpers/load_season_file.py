@@ -17,25 +17,14 @@ def _configure_season_file(config: object, season: dict):
         logger.error(f"Failed to read season file: {e}")
         return
 
-    # set tires and fuel
-    if season.get("season_series") == "ARCA":
-        modified_season_file["carSettings"][0]["max_pct_fuel_fill"] = season.get("fuel_capacity")
-        modified_season_file["carSettings"][0]["max_dry_tire_sets"] = (
+    # set tires and fuel to desired settings
+    counter = 0
+    while counter < len(modified_season_file["carSettings"]):
+        modified_season_file["carSettings"][counter]["max_pct_fuel_fill"] = season.get("fuel_capacity")
+        modified_season_file["carSettings"][counter]["max_dry_tire_sets"] = (
             -1 if season.get("tire_sets") == "UNLIMITED" else int(season.get("tire_sets"))
         )
-    elif season.get("season_series") in ["CUP", "XFINITY", "TRUCKS"]:
-        modified_season_file["carSettings"][0]["max_pct_fuel_fill"] = season.get("fuel_capacity")
-        modified_season_file["carSettings"][0]["max_dry_tire_sets"] = (
-            -1 if season.get("tire_sets") == "UNLIMITED" else int(season.get("tire_sets"))
-        )
-        modified_season_file["carSettings"][1]["max_pct_fuel_fill"] = season.get("fuel_capacity")
-        modified_season_file["carSettings"][1]["max_dry_tire_sets"] = (
-            -1 if season.get("tire_sets") == "UNLIMITED" else int(season.get("tire_sets"))
-        )
-        modified_season_file["carSettings"][2]["max_pct_fuel_fill"] = season.get("fuel_capacity")
-        modified_season_file["carSettings"][2]["max_dry_tire_sets"] = (
-            -1 if season.get("tire_sets") == "UNLIMITED" else int(season.get("tire_sets"))
-        )
+        counter += 1
 
     # set ai roster
     modified_season_file["rosterName"] = season.get("roster_name")
