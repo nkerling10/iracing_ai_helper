@@ -46,7 +46,7 @@ def _build_driver_table(driver_objs: list) -> list:
 
 
 def build_driver_display_info(roster_path: str) -> list:
-    with open(Path(roster_path) / "roster.json", "r") as roster_file:
+    with open(roster_path / "roster.json", "r") as roster_file:
         driver_objs = [
             Driver(driver) for driver in json.loads(roster_file.read()).get("drivers")
         ]

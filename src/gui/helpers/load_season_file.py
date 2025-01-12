@@ -8,24 +8,35 @@ from gui.functions.season import season_data
 logger = logging.getLogger()
 
 def _configure_season_file(config: object, season: dict):
-    with open(season.get("season_file"), "r") as file:
-        modified_season_file = json.loads(file.read())
-    
+    try:
+        with open(config.iracing_folder / "aiseasons" / season.get("season_file"), "r") as file:
+            modified_season_file = json.loads(file.read())
+    except Exception as e:
+        logger.error(e)
+        return
+
     # set tires and fuel
-    if season.get("series") == "ARCA":
+    if season.get("season_series") == "ARCA":
         modified_season_file["carSettings"][0]["max_pct_fuel_fill"] = season.get("fuel_capacity")
-        modified_season_file["carSettings"][0]["max_dry_tire_sets"] = -1 if season.get("tire_sets") == "UNLIMITED" else season.get("tire_sets")
-    else:
+        modified_season_file["carSettings"][0]["max_dry_tire_sets"] = -1 if season.get("tire_sets") == "UNLIMITED" else int(season.get("tire_sets"))
+    elif season.get("season_series") in ["CUP", "XFINITY", "TRUCKS"]:
         modified_season_file["carSettings"][0]["max_pct_fuel_fill"] = season.get("fuel_capacity")
-        modified_season_file["carSettings"][0]["max_dry_tire_sets"] = -1 if season.get("tire_sets") == "UNLIMITED" else season.get("tire_sets")
+        modified_season_file["carSettings"][0]["max_dry_tire_sets"] = -1 if season.get("tire_sets") == "UNLIMITED" else int(season.get("tire_sets"))
         modified_season_file["carSettings"][1]["max_pct_fuel_fill"] = season.get("fuel_capacity")
-        modified_season_file["carSettings"][1]["max_dry_tire_sets"] = -1 if season.get("tire_sets") == "UNLIMITED" else season.get("tire_sets")
+        modified_season_file["carSettings"][1]["max_dry_tire_sets"] = -1 if season.get("tire_sets") == "UNLIMITED" else int(season.get("tire_sets"))
         modified_season_file["carSettings"][2]["max_pct_fuel_fill"] = season.get("fuel_capacity")
-        modified_season_file["carSettings"][2]["max_dry_tire_sets"] = -1 if season.get("tire_sets") == "UNLIMITED" else season.get("tire_sets")
+        modified_season_file["carSettings"][2]["max_dry_tire_sets"] = -1 if season.get("tire_sets") == "UNLIMITED" else int(season.get("tire_sets"))
 
     # set ai roster
     modified_season_file["rosterName"] = season.get("roster_name")
-    
+
+    # set race length
+    # for race in modified_season_file["events"]:
+    # pass
+
+    # write file
+    with open(config.iracing_folder / "aiseasons" / season.get("season_file"), "w") as file:
+        json.dump(modified_season_file, file, ensure_ascii=False, indent=4)
 
 def _get_base_season_file(series: str) -> str:
     if series == "CUP":
@@ -68,7 +79,7 @@ def _season_file_check(config: object, season: dict) -> dict | bool:
             return False
     
     # TODO modify the newly copied season to reflect user choices
-    #_configure_season_file(config, season)
+    _configure_season_file(config, season)
 
     return season
 

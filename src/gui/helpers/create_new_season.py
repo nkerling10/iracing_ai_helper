@@ -3,10 +3,39 @@ import logging
 import os
 import PySimpleGUI as sg
 from pathlib import Path
+from shutil import copyfile
 
 logger = logging.getLogger(__name__)
 
 ai_seasons_file_path = Path.cwd() / "ai_seasons"
+base_files_roster_path = Path.cwd() / "base_files" / "rosters"
+
+def _copy_roster_file(config, season):
+    roster_path_dest = config.iracing_folder / "airosters" / season.get("roster_name")
+
+    if season.get("season_series") == "CUP":
+        file = base_files_roster_path / "2025_Cup_Series" / "roster.json"
+    elif season.get("season_series") == "XFINITY":
+        file = base_files_roster_path / "2025_Xfinity_Series" / "roster.json"
+    elif season.get("season_series") == "TRUCKS":
+        file = base_files_roster_path / "2025_Truck_Series" / "roster.json"
+    elif season.get("season_series") == "ARCA":
+        file = base_files_roster_path / "2025_ARCA_Series" / "roster.json"
+
+    if not os.path.exists(roster_path_dest):
+        logger.info(f"Folder {roster_path_dest} does not exist, creating")
+        os.makedirs(roster_path_dest)
+
+    try:
+        logger.info(f"Copying roster file {file}")
+        copyfile(
+            file,
+            config.iracing_folder / "airosters" / season.get("roster_name") / "roster.json"
+        )
+        logger.info("File copied successfully")
+    except Exception as e:
+        logger.error(f"Error copying file: {e}")
+
 
 def _create_local_season_file(values: dict, custom_tireset: int = 0) -> dict:
     if not os.path.exists(ai_seasons_file_path):
@@ -132,6 +161,7 @@ def _create_new_season(config) -> dict:
                 sg.popup("Missing a required entry!", no_titlebar=True)
             else:
                 season = _create_local_season_file(values, window["__TIRESETS__"].get())
+                _copy_roster_file(config, season)
                 if season:
                     window.close()
                     return season
@@ -148,14 +178,3 @@ def _create_new_season(config) -> dict:
                 window["__TIRESETS__"].update(tire_sets)
         else:
             print(event, values)
-        """
-        if event in ["__SEASONTYPEXFINITY__", "__SEASONTYPETRUCKS__", "__SEASONTYPEARCA__"]:
-            window["__CHASEPOINTSFORMAT__"].update(disabled=True)
-            window["__WINSTONCUPPOINTSFORMAT__"].update(disabled=True)
-            window["__CURRENTPOINTSFORMAT__"].update(value = True)
-        if event == "__SEASONTYPECUP__":
-            window["__CHASEPOINTSFORMAT__"].update(disabled=False)
-            window["__WINSTONCUPPOINTSFORMAT__"].update(disabled=False)
-            window["__CURRENTPOINTSFORMAT__"].update(value = True)
-        """
-        

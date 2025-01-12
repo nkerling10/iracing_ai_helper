@@ -30,8 +30,23 @@ from gui.layouts.tabs.logging_tab import LoggingTabLayout
 
 logging.basicConfig()
 
+def _connect_to_local_db() -> object:
+    logger.info(f"Attempting connection to local database: {config.database_path}")
+    try:
+        db = DatabaseManager(config.database_path)
+        logger.info("Database connection successful")
+    except Exception as e:
+        logger.error(f"Database connection failed: {e}")
+    window["-DBTABCONNECTTEXT-"].update(config.database_path)
+    window["-DBTABCONNECTCOMBO-"].update(values=db.tables, size=(30, 50))
+    window["-DBTABCONNECTBUTTON-"].update(disabled=True)
+    for table in db.tables:
+        db_table_options.append(table)
 
-def _open_saved_season(logger: object, loaded_season: str) -> dict:
+    return db
+
+
+def _open_saved_season(loaded_season: str) -> dict:
     try:
         with open(loaded_season, "r") as file:
             return json.loads(file.read())
@@ -39,17 +54,19 @@ def _open_saved_season(logger: object, loaded_season: str) -> dict:
         logger.warning(f"ERROR: Unable to open {loaded_season}")
 
 
-def _load_roster_file(logger: object, season: dict) -> None:
+def _load_roster_file(season: dict) -> None:
     logger.info("Loading roster file")
     active_driver_data, inactive_driver_data = (
-        roster_data.build_driver_display_info(season.get("roster_folder"))
+        roster_data.build_driver_display_info(
+            config.iracing_folder / "airosters" / season.get("roster_name")
+        )
     )
     logger.info("Updating roster table values")
     window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
     window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
 
 
-def _load_iracing_season_file(logger: object, season: dict) -> None:
+def _load_iracing_season_file(season: dict) -> None:
     logger.info("Loading season file")
     season_rows, colored_rows = LoadSeasonFile._load_season_file(config, season)
     logger.info("Updating season table values")
@@ -93,23 +110,17 @@ def _build_main_layout() -> list[list]:
     ]
 
 
-def main_window() -> None:
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
-        force=True,
-    )
-    logger = logging.getLogger()
-    logger.info("Main window has been loaded, logger has been instantiated")
+def main_window(prev_table: str) -> None:
     if config.first_time_setup is True:
         logger.debug("config.first_time_setup is True, hiding tabs")
         _set_tab_visibility(False)
     else:
         logger.debug("config.first_time_setup is False, displaying tabs")
         _set_tab_visibility(True)
+    db = _connect_to_local_db()
     logger.debug("Starting infinite gui loop, happy racing :)")
     while True:
-        event, values = window.read()#timeout=1000)
+        event, values = window.read()
         if event in (sg.WIN_CLOSED, "Exit"):
             try:
                 logger.debug("Attempting to close database connection")
@@ -142,27 +153,23 @@ def main_window() -> None:
                                                        initial_folder=Path.cwd() / "ai_seasons",
                                                        no_window=True)
                 if select_season_file:
-                    season = _open_saved_season(logger, select_season_file)
+                    season = _open_saved_season(select_season_file)
             if event == "-CREATESEASONBUTTON-":
                 season = _create_new_season(config)
                 if season:
                     window["-LOADSAVEDSEASONBUTTON-"].update(disabled=False)
             try:
                 if season:
-                    _load_iracing_season_file(logger, season)
-                    _load_roster_file(logger, season)
+                    _load_iracing_season_file(season)
+                    _load_roster_file(season)
                     window["-seasontab-"].select()
             except UnboundLocalError:
                 continue
         if event == "-DBTABCONNECTBUTTON-":
-            db = DatabaseManager(config.database_path)
-            window["-DBTABCONNECTTEXT-"].update(config.database_path)
-            window["-DBTABCONNECTCOMBO-"].update(values=db.tables, size=(30, 50))
-            for table in db.tables:
-                db_table_options.append(table)
+            _connect_to_local_db()
         if event == "-DBTABCONNECTCOMBO-":
             try:
-                if prev_table != "":
+                if prev_table != None:
                     window["-DBTABTABLE-", prev_table].table_frame.master.destroy()
                     del window.AllKeysDict["-DBTABTABLE-", prev_table]
                 results, headers = db.execute_query(values["-DBTABCONNECTCOMBO-"])
@@ -179,7 +186,7 @@ def main_window() -> None:
                 prev_table = values["-DBTABCONNECTCOMBO-"]
                 window.refresh()
             except Exception as e:
-                print(e)
+                logger.error(e)
         if event == "Randomize":
             randomizer.main(str(values["-TRACKBOX-"]), Path(season.get("roster_folder")) / "roster.json")
             window["-TRACKSTATUS-"].update("Success!")
@@ -193,8 +200,8 @@ def main_window() -> None:
             randomizer.perform_copy(config.local_roster_file)
         if event == "-CLEARLOGBOX-":
             window["-LOGGINGBOX-"].update("")
-        if event == "-SEASONTABLE-":
-            window["-TRACKBOX-"].update(value=values['-SEASONTABLE-'][0]+1)
+        if event == "-SCHEDULETABLE-":
+            window["-TRACKBOX-"].update(value=values['-SCHEDULETABLE-'][0]+1)
 
 
 if __name__ == "__main__":
@@ -209,7 +216,14 @@ if __name__ == "__main__":
     )
 
     db_table_options = []
-    prev_table = ""
     config_fail = ""
 
-    main_window()
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
+        force=True,
+    )
+    logger = logging.getLogger()
+    logger.info("Main window has been loaded, logger has been instantiated")
+
+    main_window(prev_table=None)

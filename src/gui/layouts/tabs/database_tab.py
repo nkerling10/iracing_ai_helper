@@ -6,6 +6,7 @@ class DatabaseTabLayout:
         return [
             [
                 sg.Button("Connect", key="-DBTABCONNECTBUTTON-", pad=(15,15)),
+                sg.Text("Connected to:"),
                 sg.Text(f"", key="-DBTABCONNECTTEXT-", visible=True)
             ],
             [
