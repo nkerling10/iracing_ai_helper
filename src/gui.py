@@ -55,19 +55,19 @@ def _open_saved_season(loaded_season: str) -> dict:
         logger.warning(f"ERROR: Unable to open {loaded_season}")
 
 
-def _load_roster_file(season: dict) -> None:
+def _load_roster_file(season_settings: dict) -> None:
     logger.info("Loading roster file")
     active_driver_data, inactive_driver_data = roster_data.build_driver_display_info(
-        config.iracing_folder / "airosters" / season.get("roster_name")
+        config.iracing_folder / "airosters" / season_settings.get("roster_name")
     )
     logger.info("Updating roster table values")
     window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
     window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
 
 
-def _load_iracing_season_file(season: dict) -> None:
+def _load_iracing_season_file(season_settings: dict) -> None:
     logger.info("Loading season file")
-    season_rows, colored_rows = LoadSeasonFile._load_season_file(config, season)
+    season_rows, colored_rows = LoadSeasonFile._load_season_file(config, season_settings)
     logger.info("Updating season table values")
     window["-SCHEDULETABLE-"].update(values=season_rows, row_colors=colored_rows)
     window["-TRACKBOXLABEL-"].update(visible=True)
@@ -150,19 +150,19 @@ def main_window(prev_table: str) -> None:
                 _set_tab_visibility(True)
         if event in ["-LOADSAVEDSEASONBUTTON-", "-CREATESEASONBUTTON-"]:
             if event == "-LOADSAVEDSEASONBUTTON-":
-                select_season_file = sg.popup_get_file(
+                select_season_settings_file = sg.popup_get_file(
                     "Load a Season", initial_folder=Path.cwd() / "ai_seasons", no_window=True
                 )
-                if select_season_file:
-                    season = _open_saved_season(select_season_file)
+                if select_season_settings_file:
+                    season_settings = _open_saved_season(select_season_settings_file)
             if event == "-CREATESEASONBUTTON-":
-                season = _create_new_season(config)
-                if season:
+                season_settings = _create_new_season(config)
+                if season_settings:
                     window["-LOADSAVEDSEASONBUTTON-"].update(disabled=False)
             try:
-                if season:
-                    _load_iracing_season_file(season)
-                    _load_roster_file(season)
+                if season_settings:
+                    _load_iracing_season_file(season_settings)
+                    _load_roster_file(season_settings)
                     window["-seasontab-"].select()
             except UnboundLocalError:
                 continue
@@ -196,10 +196,10 @@ def main_window(prev_table: str) -> None:
             except Exception as e:
                 logger.error(e)
         if event == "Randomize":
-            randomizer.main(str(values["-TRACKBOX-"]), Path(season.get("roster_folder")) / "roster.json")
+            randomizer.main(str(values["-TRACKBOX-"]), Path(season_settings.get("roster_folder")) / "roster.json")
             window["-TRACKSTATUS-"].update("Success!")
             active_driver_data, inactive_driver_data = roster_data.build_driver_display_info(
-                season.get("roster_folder")
+                season_settings.get("roster_folder")
             )
             window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
             window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
