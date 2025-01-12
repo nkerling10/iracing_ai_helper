@@ -163,3 +163,4 @@ cython_debug/
 .DS_Store
 paint_storage
 iracing_ai_helper.code-workspace
+ai_seasons/*

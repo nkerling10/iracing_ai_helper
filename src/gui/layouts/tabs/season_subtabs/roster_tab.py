@@ -1,35 +1,28 @@
 import PySimpleGUI as sg
 
+
 class RosterTabLayout:
     @staticmethod
     def _tier_settings_drivers_table(title: str, tier_subject: str) -> list[list]:
         return [
-            [
-                sg.Text(text=title, justification="c", pad=(0,0),
-                        expand_x=True)
-            ],
-            [
-                sg.Table(values=[], headings=[tier_subject, "Tier"],
-                         expand_x=True)
-            ]
+            [sg.Text(text=title, justification="c", pad=(0, 0), expand_x=True)],
+            [sg.Table(values=[], headings=[tier_subject, "Tier"], expand_x=True)],
         ]
 
     @classmethod
     def _tier_settings_tab_layout(cls) -> list[list]:
         return [
             [
-                sg.Column(layout=cls._tier_settings_drivers_table("Drivers", "Name"),
-                           expand_x=True),
+                sg.Column(layout=cls._tier_settings_drivers_table("Drivers", "Name"), expand_x=True),
                 sg.VerticalSeparator(color="black"),
-                sg.Column(layout=cls._tier_settings_drivers_table("Car", "Car"),
-                           expand_x=True)
+                sg.Column(layout=cls._tier_settings_drivers_table("Car", "Car"), expand_x=True),
             ]
         ]
 
     @staticmethod
     def _roster_file_track_choices(race_count: int = 0) -> list:
         races = []
-        for num in range(1, race_count+1):
+        for num in range(1, race_count + 1):
             races.append(num)
         return races
 
@@ -66,9 +59,7 @@ class RosterTabLayout:
         ]
 
     @classmethod
-    def build_roster_tab_layout(
-        cls, active_driver_data: list = [], inactive_driver_data: list = []
-    ) -> list:
+    def build_roster_tab_layout(cls, active_driver_data: list = [], inactive_driver_data: list = []) -> list:
         return [
             [
                 sg.TabGroup(
@@ -76,28 +67,19 @@ class RosterTabLayout:
                         [
                             sg.Tab(
                                 "Active",
-                                layout=cls._roster_tab_layout(
-                                    "-ACTIVEDRIVERS-", active_driver_data
-                                ),
+                                layout=cls._roster_tab_layout("-ACTIVEDRIVERS-", active_driver_data),
                                 expand_x=True,
                                 expand_y=True,
                             ),
                             sg.Tab(
                                 "Inactive",
-                                layout=cls._roster_tab_layout(
-                                    "-INACTIVEDRIVERS-", inactive_driver_data
-                                ),
+                                layout=cls._roster_tab_layout("-INACTIVEDRIVERS-", inactive_driver_data),
                                 expand_x=True,
                                 expand_y=True,
                             ),
                             sg.Tab(
-                                "Tier Settings",
-                                layout=cls._tier_settings_tab_layout(
-                                    
-                                ),
-                                expand_x=True,
-                                expand_y=True
-                            )
+                                "Tier Settings", layout=cls._tier_settings_tab_layout(), expand_x=True, expand_y=True
+                            ),
                         ]
                     ],
                     key="-ROSTERTABLETABS-",

@@ -38,14 +38,8 @@ class Driver:
 
 
 def get_driver_age(driver_name, driver_birthdays):
-    date_obj = dparser.parse(
-        driver_birthdays.get(driver_name).get("birthday"), fuzzy=True
-    ).date()
-    return (
-        today.year
-        - date_obj.year
-        - ((today.month, today.day) < (date_obj.month, date_obj.day))
-    )
+    date_obj = dparser.parse(driver_birthdays.get(driver_name).get("birthday"), fuzzy=True).date()
+    return today.year - date_obj.year - ((today.month, today.day) < (date_obj.month, date_obj.day))
 
 
 def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
@@ -144,16 +138,10 @@ def change_paint_scheme(car_num, driver_name, roster_path):
         logger.debug(f"No alternate schemes found for {car_num}")
         return
     else:
-        driver_paints = [
-            file
-            for file in paint_files
-            if driver_name.lower().replace(" ", "_") in file
-        ]
+        driver_paints = [file for file in paint_files if driver_name.lower().replace(" ", "_") in file]
         if len(driver_paints) == 0:
             try:
-                new_paint_file = Path(
-                    f"{roster_dir}\\{car_num}\\{random.choice(paint_files)}"
-                )
+                new_paint_file = Path(f"{roster_dir}\\{car_num}\\{random.choice(paint_files)}")
             except IndexError:
                 logging.debug(f"No paint files found for {car_num}")
                 return
@@ -189,9 +177,7 @@ def main(race_index, roster_path):
         driver_list = json.loads(roster_file.read())
     for roster_driver in driver_list["drivers"]:
         if car_list[roster_driver["carNumber"]]["type"] == "full_time_one_driver":
-            logger.info(
-                f"Randomizing attributes for {roster_driver['driverName']} - #{roster_driver['carNumber']}"
-            )
+            logger.info(f"Randomizing attributes for {roster_driver['driverName']} - #{roster_driver['carNumber']}")
             new_ratings = set_attributes(
                 roster_driver["driverName"],
                 roster_driver["carNumber"],
@@ -199,19 +185,11 @@ def main(race_index, roster_path):
                 car_list,
                 driver_birthdays,
             )
-        elif (
-            car_list[roster_driver["carNumber"]]["type"] == "full_time_multiple_drivers"
-        ):
-            scheduled_driver = schedule_list[race_index]["full_time"][
-                roster_driver["carNumber"]
-            ]
+        elif car_list[roster_driver["carNumber"]]["type"] == "full_time_multiple_drivers":
+            scheduled_driver = schedule_list[race_index]["full_time"][roster_driver["carNumber"]]
             if roster_driver["driverName"] != scheduled_driver:
-                logger.debug(
-                    f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}"
-                )
-            logger.info(
-                f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}"
-            )
+                logger.debug(f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}")
+            logger.info(f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}")
             new_ratings = set_attributes(
                 scheduled_driver,
                 roster_driver["carNumber"],
@@ -222,9 +200,7 @@ def main(race_index, roster_path):
         elif car_list[roster_driver["carNumber"]]["type"] == "part_time":
             try:
                 try:
-                    scheduled_driver = schedule_list[race_index]["part_time"][
-                        roster_driver["carNumber"]
-                    ]
+                    scheduled_driver = schedule_list[race_index]["part_time"][roster_driver["carNumber"]]
                 except KeyError:
                     logger.warning(f"{roster_driver["carNumber"]} not found in race {race_index}, aborting")
                     return
@@ -233,23 +209,15 @@ def main(race_index, roster_path):
                         f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}"
                     )
                 if not scheduled_driver:
-                    logger.info(
-                        f"No driver found for #{roster_driver['carNumber']} this week"
-                    )
-                    roster_driver["driverName"] = (
-                        f"NODRIVER{roster_driver['carNumber']}"
-                    )
+                    logger.info(f"No driver found for #{roster_driver['carNumber']} this week")
+                    roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
                     continue
             except KeyError:
-                logger.info(
-                    f"No driver found for #{roster_driver['carNumber']} this week"
-                )
+                logger.info(f"No driver found for #{roster_driver['carNumber']} this week")
                 roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
                 continue
 
-            logger.info(
-                f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}"
-            )
+            logger.info(f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}")
             new_ratings = set_attributes(
                 scheduled_driver,
                 roster_driver["carNumber"],
@@ -281,19 +249,11 @@ def main(race_index, roster_path):
 def perform_copy(roster_path):
     roster_dir = Path(roster_path).parent
     roster_name = roster_path.split("\\")[-2]
-    logger.info(
-        f"Copying paints and roster from {roster_dir} into {ai_roster_path}/{roster_name}"
-    )
-    copy_files = [
-        file
-        for file in os.listdir(Path(roster_dir))
-        if ".tga" in file or ".json" in file
-    ]
+    logger.info(f"Copying paints and roster from {roster_dir} into {ai_roster_path}/{roster_name}")
+    copy_files = [file for file in os.listdir(Path(roster_dir)) if ".tga" in file or ".json" in file]
     for file in copy_files:
         try:
-            copyfile(
-                Path(f"{roster_dir}\\{file}"), Path(ai_roster_path / roster_name / file)
-            )
+            copyfile(Path(f"{roster_dir}\\{file}"), Path(ai_roster_path / roster_name / file))
             logger.info(f"{file} copied successfully!")
         except Exception as e:
             logger.critical(e)

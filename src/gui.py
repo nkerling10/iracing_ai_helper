@@ -30,6 +30,7 @@ from gui.layouts.tabs.logging_tab import LoggingTabLayout
 
 logging.basicConfig()
 
+
 def _connect_to_local_db() -> object:
     logger.info(f"Attempting connection to local database: {config.database_path}")
     try:
@@ -56,10 +57,8 @@ def _open_saved_season(loaded_season: str) -> dict:
 
 def _load_roster_file(season: dict) -> None:
     logger.info("Loading roster file")
-    active_driver_data, inactive_driver_data = (
-        roster_data.build_driver_display_info(
-            config.iracing_folder / "airosters" / season.get("roster_name")
-        )
+    active_driver_data, inactive_driver_data = roster_data.build_driver_display_info(
+        config.iracing_folder / "airosters" / season.get("roster_name")
     )
     logger.info("Updating roster table values")
     window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
@@ -72,8 +71,7 @@ def _load_iracing_season_file(season: dict) -> None:
     logger.info("Updating season table values")
     window["-SCHEDULETABLE-"].update(values=season_rows, row_colors=colored_rows)
     window["-TRACKBOXLABEL-"].update(visible=True)
-    window["-TRACKBOX-"].update(values=RosterTabLayout._roster_file_track_choices(len(season_rows)),
-                                visible=True)
+    window["-TRACKBOX-"].update(values=RosterTabLayout._roster_file_track_choices(len(season_rows)), visible=True)
 
 
 def _set_tab_visibility(tab_status: bool) -> None:
@@ -86,8 +84,7 @@ def _build_main_layout() -> list[list]:
     splash_tab_layout = SplashTabLayout.build_splash_tab_layout()
     season_tab_layout = SeasonTab._build_season_tab()
     db_tab_layout = DatabaseTabLayout.build_db_tab_layout()
-    config_tab_layout = ConfigTabLayout.build_config_tab_layout(config.database_path,
-                                                                config.iracing_folder)
+    config_tab_layout = ConfigTabLayout.build_config_tab_layout(config.database_path, config.iracing_folder)
     logging_tab_layout = LoggingTabLayout._build_logging_tab_layout()
 
     return [
@@ -99,14 +96,14 @@ def _build_main_layout() -> list[list]:
                         sg.Tab("Season", season_tab_layout, key="-seasontab-"),
                         sg.Tab("Database", db_tab_layout, key="-databasetab-"),
                         sg.Tab("Config", config_tab_layout, key="-configtab-", visible=True),
-                        sg.Tab("Logging", [[]], key="-loggingtab-", visible=True)
+                        sg.Tab("Logging", [[]], key="-loggingtab-", visible=True),
                     ]
                 ],
                 key="-tabgroup1-",
-                tab_location="topleft"
+                tab_location="topleft",
             )
         ],
-        [sg.Exit()]
+        [sg.Exit()],
     ]
 
 
@@ -130,28 +127,32 @@ def main_window(prev_table: str) -> None:
                 pass
             break
         if event == "-SAVECONFIGBUTTON-":
-            if not any([values["-LOCALDATABASEFILE-"],
-                       values["-LOCALROSTERFOLDER-"],
-                       values["-LOCALSEASONFILE-"],
-                       values["-IRACINGAIROSTERFOLDER-"],
-                       values["-IRACINGAISEASONFOLDER-"]]):
-                config_fail = sg.popup("Please select a file for each required item",
-                                        no_titlebar=True,
-                                        background_color="gray")
+            if not any(
+                [
+                    values["-LOCALDATABASEFILE-"],
+                    values["-LOCALROSTERFOLDER-"],
+                    values["-LOCALSEASONFILE-"],
+                    values["-IRACINGAIROSTERFOLDER-"],
+                    values["-IRACINGAISEASONFOLDER-"],
+                ]
+            ):
+                config_fail = sg.popup(
+                    "Please select a file for each required item", no_titlebar=True, background_color="gray"
+                )
             if not config_fail:
                 config._write_settings(
                     values["-LOCALDATABASEFILE-"],
                     values["-LOCALROSTERFOLDER-"],
                     values["-LOCALSEASONFILE-"],
                     values["-IRACINGAIROSTERFOLDER-"],
-                    values["-IRACINGAISEASONFOLDER-"]
+                    values["-IRACINGAISEASONFOLDER-"],
                 )
                 _set_tab_visibility(True)
         if event in ["-LOADSAVEDSEASONBUTTON-", "-CREATESEASONBUTTON-"]:
             if event == "-LOADSAVEDSEASONBUTTON-":
-                select_season_file = sg.popup_get_file("Load a Season",
-                                                       initial_folder=Path.cwd() / "ai_seasons",
-                                                       no_window=True)
+                select_season_file = sg.popup_get_file(
+                    "Load a Season", initial_folder=Path.cwd() / "ai_seasons", no_window=True
+                )
                 if select_season_file:
                     season = _open_saved_season(select_season_file)
             if event == "-CREATESEASONBUTTON-":
@@ -173,16 +174,23 @@ def main_window(prev_table: str) -> None:
                     window["-DBTABTABLE-", prev_table].table_frame.master.destroy()
                     del window.AllKeysDict["-DBTABTABLE-", prev_table]
                 results, headers = db.execute_query(values["-DBTABCONNECTCOMBO-"])
-                window.extend_layout(window["-DBTABLECOLUMN-"], [[sg.Table(
-                        values=results,
-                        headings=headers,
-                        justification="center",
-                        key=("-DBTABTABLE-", values["-DBTABCONNECTCOMBO-"]),
-                        num_rows=30,
-                        auto_size_columns=True,
-                        expand_x=True,
-                        expand_y=True
-                    )]])
+                window.extend_layout(
+                    window["-DBTABLECOLUMN-"],
+                    [
+                        [
+                            sg.Table(
+                                values=results,
+                                headings=headers,
+                                justification="center",
+                                key=("-DBTABTABLE-", values["-DBTABCONNECTCOMBO-"]),
+                                num_rows=30,
+                                auto_size_columns=True,
+                                expand_x=True,
+                                expand_y=True,
+                            )
+                        ]
+                    ],
+                )
                 prev_table = values["-DBTABCONNECTCOMBO-"]
                 window.refresh()
             except Exception as e:
@@ -190,8 +198,8 @@ def main_window(prev_table: str) -> None:
         if event == "Randomize":
             randomizer.main(str(values["-TRACKBOX-"]), Path(season.get("roster_folder")) / "roster.json")
             window["-TRACKSTATUS-"].update("Success!")
-            active_driver_data, inactive_driver_data = (
-                roster_data.build_driver_display_info(season.get("roster_folder"))
+            active_driver_data, inactive_driver_data = roster_data.build_driver_display_info(
+                season.get("roster_folder")
             )
             window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
             window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
@@ -201,13 +209,13 @@ def main_window(prev_table: str) -> None:
         if event == "-CLEARLOGBOX-":
             window["-LOGGINGBOX-"].update("")
         if event == "-SCHEDULETABLE-":
-            window["-TRACKBOX-"].update(value=values['-SCHEDULETABLE-'][0]+1)
+            window["-TRACKBOX-"].update(value=values["-SCHEDULETABLE-"][0] + 1)
 
 
 if __name__ == "__main__":
     sg.theme("Python")
     config = Settings()
-    #TODO: build copy or download feature to take base provided files with the tool
+    # TODO: build copy or download feature to take base provided files with the tool
     window = sg.Window(
         "NSK AI Roster Randomizer - Alpha v0.1",
         _build_main_layout(),

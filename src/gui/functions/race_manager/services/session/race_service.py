@@ -15,6 +15,7 @@ import soundfile as sf
 
 audio_device = "Speakers (Realtek(R) Audio), MME"
 
+
 class SessionName(Enum):
     INVALID = 0
     GET_IN_CAR = 1
@@ -176,20 +177,16 @@ class RaceService:
         ## Quit tracking penalties once the checkered flag comes out
         if race_manager.ir["SessionState"] == 5:
             return
-        leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
-            race_manager.race_session_num
-        ]["ResultsPositions"][0]["LapsComplete"]
-        if (
-            leader_laps_complete > 0
-            and leader_laps_complete <= race_manager.race_weekend.race_length
-        ):
+        leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num][
+            "ResultsPositions"
+        ][0]["LapsComplete"]
+        if leader_laps_complete > 0 and leader_laps_complete <= race_manager.race_weekend.race_length:
             logging.debug(f"Lap {race_manager.ir['Lap']} (penalty_tracker)")
             # get all cars currently on pit road
             cars_on_pit_road = [
                 driver["CarNumber"]
                 for driver in race_manager.ir["DriverInfo"]["Drivers"]
-                if race_manager.ir["CarIdxOnPitRoad"][driver["CarIdx"]]
-                and driver["UserName"] != "Pace Car"
+                if race_manager.ir["CarIdxOnPitRoad"][driver["CarIdx"]] and driver["UserName"] != "Pace Car"
             ]
             # if there is at least 1 car on pit road
             if len(cars_on_pit_road) > 0:
@@ -208,27 +205,22 @@ class RaceService:
                     if car not in cars_on_pit_road:
                         logging.debug(f"{car} left pit road, penalty check")
                         # calculate penalty chance once car leaves pit road
-                        if (
-                            random.randint(1, 100)
-                            < race_manager.race_settings.penalty_chance
-                        ):
+                        if random.randint(1, 100) < race_manager.race_settings.penalty_chance:
                             caridx = [
                                 driver["CarIdx"]
-                                for driver in race_manager.ir["DriverInfo"][
-                                    "Drivers"
-                                ]
+                                for driver in race_manager.ir["DriverInfo"]["Drivers"]
                                 if driver["CarNumber"] == car
                             ]
                             car_pos = [
                                 position["LapsComplete"]
-                                for position in race_manager.ir["SessionInfo"][
-                                    "Sessions"
-                                ][race_manager.race_session_num]["ResultsPositions"]
+                                for position in race_manager.ir["SessionInfo"]["Sessions"][
+                                    race_manager.race_session_num
+                                ]["ResultsPositions"]
                                 if position["CarIdx"] == caridx
                             ]
-                            car_on_lap = race_manager.ir["SessionInfo"]["Sessions"][
-                                race_manager.race_session_num
-                            ]["ResultsPositions"][car_pos]["LapsComplete"]
+                            car_on_lap = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num][
+                                "ResultsPositions"
+                            ][car_pos]["LapsComplete"]
                             cls._pit_penalty(race_manager, car_num, car_on_lap)
                         pit_tracking.remove(car)
             else:
@@ -238,9 +230,9 @@ class RaceService:
     def _process_stage_results(race_manager, stage):
         ## Grab the results for top 10
         race_manager.ir.freeze_var_buffer_latest()
-        stage_top_ten_raw = race_manager.ir["SessionInfo"]["Sessions"][
-            race_manager.race_session_num
-        ]["ResultsPositions"][:10]
+        stage_top_ten_raw = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num][
+            "ResultsPositions"
+        ][:10]
         stage_top_ten = []
         for position in stage_top_ten_raw:
             stage_top_ten.append(
@@ -252,9 +244,7 @@ class RaceService:
             )
         ## Announce stage winner via chat
         logging.info(f"{stage_top_ten[0]} is the winner of Stage {stage}!")
-        race_manager.send_iracing_command(
-            f"{stage_top_ten[0]} is the winner of Stage {stage}!"
-        )
+        race_manager.send_iracing_command(f"{stage_top_ten[0]} is the winner of Stage {stage}!")
         logging.info(stage_top_ten)
         ## Update race_manager.race_weekend.stage_X values
         if stage == 1:
@@ -273,14 +263,10 @@ class RaceService:
             stage_complete = True
         else:
             ## Wait until 10th place crosses the finish line
-            positions = race_manager.ir["SessionInfo"]["Sessions"][
-                race_manager.race_session_num
-            ]["ResultsPositions"]
+            positions = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["ResultsPositions"]
             if positions[9]["LapsComplete"] != stage_end:
                 logging.debug(f"Waiting for 10th place to cross the line")
-                logging.debug(
-                    f"Laps complete for 10th place: {positions[9]['LapsComplete']}"
-                )
+                logging.debug(f"Laps complete for 10th place: {positions[9]['LapsComplete']}")
             else:
                 stage_complete = True
 
@@ -288,7 +274,7 @@ class RaceService:
         current_flag = cls._get_flag(race_manager.ir["SessionFlags"])
         if current_flag == "green":
             race_manager.send_iracing_command(f"!yellow End of Stage {stage}")
-        
+
         return stage_complete
 
     @classmethod
@@ -307,9 +293,9 @@ class RaceService:
             stage_end = race_manager.race_weekend.laps
 
         race_manager.ir.freeze_var_buffer_latest()
-        leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
-            race_manager.race_session_num
-        ]["ResultsPositions"][0]["LapsComplete"]
+        leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num][
+            "ResultsPositions"
+        ][0]["LapsComplete"]
         logging.debug(f"Leader laps completed: {leader_laps_complete}")
 
         current_flag = cls._get_flag(race_manager.ir["SessionFlags"])
@@ -318,26 +304,16 @@ class RaceService:
                 f"Stage needs to end early: \
                         {stage_end - race_manager.ir['Lap']} laps until stage end"
             )
-            race_manager.send_iracing_command(
-                f"Stage {stage} will end early under caution"
-            )
+            race_manager.send_iracing_command(f"Stage {stage} will end early under caution")
             stage_end_early = True
 
         ## Close the pits with 2 laps to go in the stage
-        if (
-            leader_laps_complete == stage_end - 2
-            and stage_end_early is False
-            and pits_closed is False
-        ):
+        if leader_laps_complete == stage_end - 2 and stage_end_early is False and pits_closed is False:
             logging.info("Closing pits - 2 laps to go in stage")
             race_manager.send_iracing_command("!pitclose")
             pits_closed = True
         ## Announce when there is 1 lap left in the stage
-        elif (
-            leader_laps_complete == stage_end - 1
-            and stage_end_early is False
-            and last_lap_notice is False
-        ):
+        elif leader_laps_complete == stage_end - 1 and stage_end_early is False and last_lap_notice is False:
             logging.info(f"1 lap to go in stage {stage}")
             race_manager.send_iracing_command(f"1 lap to go in Stage {stage}")
             last_lap_notice = True
@@ -349,7 +325,7 @@ class RaceService:
                 cls._process_stage_results(race_manager, stage)
         else:
             logging.debug("No actions to perform yet!")
-        
+
         return [stage, pits_closed, last_lap_notice, stage_end_early, stage_complete]
 
     @classmethod

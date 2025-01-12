@@ -1,5 +1,6 @@
 import PySimpleGUI as sg
 
+
 class ScheduleTabLayout:
     @staticmethod
     def _season_file_headers() -> list:
@@ -17,10 +18,10 @@ class ScheduleTabLayout:
                     num_rows=34,
                     expand_x=True,
                     expand_y=True,
-                    hide_vertical_scroll = True,
-                    enable_click_events = True,
+                    hide_vertical_scroll=True,
+                    enable_click_events=True,
                     enable_events=True,
-                    starting_row_number=1
+                    starting_row_number=1,
                 )
             ]
         ]
