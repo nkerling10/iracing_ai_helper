@@ -96,7 +96,7 @@ def _build_main_layout() -> list[list]:
                         sg.Tab("Season", season_tab_layout, key="-seasontab-"),
                         sg.Tab("Database", db_tab_layout, key="-databasetab-"),
                         sg.Tab("Config", config_tab_layout, key="-configtab-", visible=True),
-                        sg.Tab("Logging", [[]], key="-loggingtab-", visible=True),
+                        sg.Tab("Logging", logging_tab_layout, key="-loggingtab-", visible=True),
                     ]
                 ],
                 key="-tabgroup1-",

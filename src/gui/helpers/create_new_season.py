@@ -111,6 +111,34 @@ def _create_new_season(config) -> dict:
                 layout=[
                     [
                         sg.Slider(
+                            range=(10, 100),
+                            default_value=100,
+                            orientation="horizontal",
+                            key="__RACEDISTANCEPERCENT__",
+                            expand_x=True,
+                        )
+                    ]
+                ],
+                title="Select desired race distance",
+                expand_x=True,
+                expand_y=True,
+            ),
+            sg.Frame(
+                layout=[
+                    [sg.Radio("Current", group_id=2, key="__CURRENTPOINTSFORMAT__", default=True)],
+                    [sg.Radio("The Chase", group_id=2, key="__CHASEPOINTSFORMAT__", disabled=True)],
+                    [sg.Radio("Winston Cup", group_id=2, key="__WINSTONCUPPOINTSFORMAT__", disabled=True)],
+                ],
+                title="Points format",
+                expand_x=True,
+                expand_y=True,
+            ),
+        ],
+        [
+            sg.Frame(
+                layout=[
+                    [
+                        sg.Slider(
                             range=(1, 100),
                             default_value=100,
                             orientation="horizontal",
@@ -135,34 +163,6 @@ def _create_new_season(config) -> dict:
                     [sg.Button("-set"), sg.Button("+set")],
                 ],
                 title="Enter desired number of tire sets",
-                expand_x=True,
-                expand_y=True,
-            ),
-        ],
-        [
-            sg.Frame(
-                layout=[
-                    [
-                        sg.Slider(
-                            range=(10, 100),
-                            default_value=100,
-                            orientation="horizontal",
-                            key="__RACEDISTANCEPERCENT__",
-                            expand_x=True,
-                        )
-                    ]
-                ],
-                title="Select desired race distance",
-                expand_x=True,
-                expand_y=True,
-            ),
-            sg.Frame(
-                layout=[
-                    [sg.Radio("Current", group_id=2, key="__CURRENTPOINTSFORMAT__", default=True)],
-                    [sg.Radio("The Chase", group_id=2, key="__CHASEPOINTSFORMAT__", disabled=True)],
-                    [sg.Radio("Winston Cup", group_id=2, key="__WINSTONCUPPOINTSFORMAT__", disabled=True)],
-                ],
-                title="Points format",
                 expand_x=True,
                 expand_y=True,
             ),
