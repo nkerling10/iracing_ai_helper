@@ -14,8 +14,8 @@ from pathlib import Path
 ## Local imports
 from gui.config.settings import Settings
 from gui.functions.race_manager.race_manager import main as race_manager
-from gui.functions.roster import roster_data
-from gui.functions.roster.randomizer import randomizer
+from gui.layouts.tables import roster_data
+from gui.functions.randomizer import randomizer
 from gui.functions.database.db_manager import DatabaseManager
 from gui.helpers.create_new_season import _create_new_season
 from gui.helpers.load_season_file import LoadSeasonFile

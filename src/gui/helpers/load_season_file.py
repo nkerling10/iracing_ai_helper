@@ -1,6 +1,6 @@
 import logging
 
-from gui.functions.season import season_data
+from gui.layouts.tables import season_data
 
 logger = logging.getLogger()
 
