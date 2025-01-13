@@ -19,6 +19,7 @@ from gui.functions.roster.randomizer import randomizer
 from gui.functions.database.db_manager import DatabaseManager
 from gui.helpers.create_new_season import _create_new_season
 from gui.helpers.load_season_file import LoadSeasonFile
+from gui.helpers.next_race_data import NextRaceData
 from gui.layouts.tabs.splash_tab import SplashTabLayout
 from gui.layouts.tabs.database_tab import DatabaseTabLayout
 from gui.layouts.tabs.season_tab import SeasonTab
@@ -47,7 +48,7 @@ def _connect_to_local_db() -> object:
     return db
 
 
-def _update_season_player_stats_data():
+def _update_season_player_stats_data() -> None:
     window["_-POINTS-_"].update(value="")
     window["_-STARTS-_"].update(value="")
     window["_-WINS-_"].update(value="")
@@ -59,12 +60,13 @@ def _update_season_player_stats_data():
     window["_-POLES-_"].update(value="")
 
 
-def _update_season_next_race_data():
-    window["_-WEEK-_"].update(value="")
-    window["_-TRACK-_"].update(value="")
-    window["_-STAGE1-_"].update(value="")
-    window["_-STAGE2-_"].update(value="")
-    window["_-STAGE3-_"].update(value="")
+def _update_season_next_race_data(season_settings, db) -> None:
+    next_race = NextRaceData._load_next_race_data(config, season_settings, db)
+    window["_-WEEK-_"].update(value=next_race.week)
+    window["_-TRACK-_"].update(value=next_race.track)
+    window["_-STAGE1-_"].update(value=next_race.stage_1)
+    window["_-STAGE2-_"].update(value=next_race.stage_2)
+    window["_-STAGE3-_"].update(value=next_race.race_laps)
 
 
 def _open_saved_season(loaded_season: str) -> dict:
@@ -183,7 +185,7 @@ def main_window(prev_table: str) -> None:
                 if season_settings:
                     _load_iracing_season_file(season_settings)
                     _load_roster_file(season_settings)
-                    _update_season_next_race_data()
+                    _update_season_next_race_data(season_settings, db)
                     _update_season_player_stats_data()
                     window["-seasontab-"].select()
             except UnboundLocalError:

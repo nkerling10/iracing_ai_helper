@@ -40,3 +40,11 @@ class DatabaseManager:
         except Exception as e:
             print(e)
             return
+
+    def execute_select_query(self, table: str, condition: str) -> list[list]:
+        try:
+            results = self.cursor.execute(f"SELECT * FROM {table} WHERE {condition};")
+            return results.fetchall()
+        except Exception as e:
+            print(e)
+            return
