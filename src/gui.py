@@ -47,12 +47,32 @@ def _connect_to_local_db() -> object:
     return db
 
 
+def _update_season_player_stats_data():
+    window["_-POINTS-_"].update(value="")
+    window["_-STARTS-_"].update(value="")
+    window["_-WINS-_"].update(value="")
+    window["_-TOP5-_"].update(value="")
+    window["_-TOP10-_"].update(value="")
+    window["_-DNF-_"].update(value="")
+    window["_-LAPSLED-_"].update(value="")
+    window["_-STAGEWINS-_"].update(value="")
+    window["_-POLES-_"].update(value="")
+
+
+def _update_season_next_race_data():
+    window["_-WEEK-_"].update(value="")
+    window["_-TRACK-_"].update(value="")
+    window["_-STAGE1-_"].update(value="")
+    window["_-STAGE2-_"].update(value="")
+    window["_-STAGE3-_"].update(value="")
+
+
 def _open_saved_season(loaded_season: str) -> dict:
     try:
         with open(loaded_season, "r") as file:
             return json.loads(file.read())
     except Exception as e:
-        logger.warning(f"ERROR: Unable to open {loaded_season}")
+        logger.warning(f"ERROR: Unable to open {loaded_season}: {e}")
 
 
 def _load_roster_file(season_settings: dict) -> None:
@@ -163,6 +183,8 @@ def main_window(prev_table: str) -> None:
                 if season_settings:
                     _load_iracing_season_file(season_settings)
                     _load_roster_file(season_settings)
+                    _update_season_next_race_data()
+                    _update_season_player_stats_data()
                     window["-seasontab-"].select()
             except UnboundLocalError:
                 continue

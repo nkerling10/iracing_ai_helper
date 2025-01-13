@@ -1,4 +1,5 @@
 import PySimpleGUI as sg
+from gui.layouts.tabs.season_subtabs.standings_tab import StandingsTabLayout
 from gui.layouts.tabs.season_subtabs.roster_tab import RosterTabLayout
 from gui.layouts.tabs.season_subtabs.schedule_tab import ScheduleTabLayout
 
@@ -11,14 +12,8 @@ class SeasonTab:
                     [
                         [
                             sg.Tab(
-                                "Next Race",
-                                layout=[[]],
-                                expand_x=True,
-                                expand_y=True,
-                            ),
-                            sg.Tab(
                                 "Standings",
-                                layout=[[]],
+                                layout=StandingsTabLayout.build_standings_tab_layout(),
                                 expand_x=True,
                                 expand_y=True,
                             ),
