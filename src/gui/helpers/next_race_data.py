@@ -1,20 +1,28 @@
 import json
+from gui.helpers.calc_stage_length import _calc_stage_lengths
 
 class RaceData:
     def __init__(self, values):
         self.week = values.get("week")
         self.track = values.get("track_name")
-        self.stage_1 = int(values.get("race_laps") / 4)
-        self.stage_2 = int(values.get("race_laps") / 2)
+        self.stage_1, self.stage_2 = self._set_stage_lengths(
+            values.get("track_short_name"), values.get("race_laps")
+        )
         self.race_laps = values.get("race_laps")
+    
+    @staticmethod
+    def _set_stage_lengths(track_short_name: str, race_length: int) -> tuple[int, int]:
+        return _calc_stage_lengths(track_short_name, race_length)
 
 
 def _convert_race_data(values: dict, db: object) -> dict:
     track_data = db.execute_select_query("TRACK", f"ID = {values.get("track_id")}")[0]
     values["track_name"] = track_data[0]
+    values["track_short_name"] = track_data[1]
     del values["track_id"]
 
     return values
+
 
 class NextRaceData:
     def _load_next_race_data(config: object, season_settings: dict, db: object) -> object:

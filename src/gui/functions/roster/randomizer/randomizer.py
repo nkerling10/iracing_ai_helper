@@ -37,7 +37,7 @@ class Driver:
         self.strategy = attributes[6]
 
 
-def get_driver_age(driver_name, driver_birthdays):
+def _get_driver_age(driver_name, driver_birthdays):
     date_obj = dparser.parse(driver_birthdays.get(driver_name).get("birthday"), fuzzy=True).date()
     return today.year - date_obj.year - ((today.month, today.day) < (date_obj.month, date_obj.day))
 
@@ -105,7 +105,7 @@ def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
     driverAggression = 999
     driverOptimism = 500
     driverSmoothness = car_smoothness
-    driverAge = get_driver_age(driver_name, driver_birthdays)
+    driverAge = _get_driver_age(driver_name, driver_birthdays)
     pitCrewSkill = random.randint(pit_min, pit_max)
     strategyRiskiness = random.randint(strategy_min, strategy_max)
 

@@ -27,7 +27,7 @@ class Driver:
         self.strategy = driver["strategyRiskiness"]
 
 
-def _build_driver_table(driver_objs: list) -> list:
+def _build_driver_table(driver_objs: list) -> list[list]:
     active_driver_data = []
     inactive_driver_data = []
 
@@ -53,7 +53,7 @@ def _build_driver_table(driver_objs: list) -> list:
     return active_driver_data, inactive_driver_data
 
 
-def build_driver_display_info(roster_path: str) -> list:
+def build_driver_display_info(roster_path: str) -> tuple[list, list]:
     with open(roster_path / "roster.json", "r") as roster_file:
         driver_objs = [Driver(driver) for driver in json.loads(roster_file.read()).get("drivers")]
     active_driver_data, inactive_driver_data = _build_driver_table(driver_objs)
