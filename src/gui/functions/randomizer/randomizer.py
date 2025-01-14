@@ -7,6 +7,7 @@ import json
 import logging
 import os
 import random
+import sqlite3
 from datetime import date
 from pathlib import Path
 from shutil import copyfile
@@ -25,21 +26,120 @@ standard_file_path = f"{os.getcwd()}/src/gui/functions/roster/randomizer/files"
 
 
 class Driver:
-    def __init__(self, name, car, attributes) -> None:
-        self.name = name
-        self.car = car
-        self.driver_skill = attributes[0]
-        self.aggression = attributes[1]
-        self.optimism = attributes[2]
-        self.smoothness = attributes[3]
-        self.age = attributes[4]
-        self.pit_skill = attributes[5]
-        self.strategy = attributes[6]
+    def __init__(self, car_entry: dict, drivers: list, cars_assign: list) -> None:
+        self.name = car_entry.get("driverName")
+        self.car = car_entry.get("carNumber")
+        self.driver_skill = car_entry.get("driverSkill")
+        self.aggression = car_entry.get("driverAggression")
+        self.optimism = car_entry.get("driverOptimism")
+        self.smoothness = car_entry.get("driverSmoothness")
+        self.pit_skill = car_entry.get("pitCrewSkill")
+        self.strategy = car_entry.get("strategyRiskiness")
+        self.age = self._calc_driver_age(
+            [driver[1] for driver in drivers if self.name == driver[0]][0]
+        ) if self.name != f"NODRIVER{self.car}" else 50
+        self.paint_file = car_entry.get("carTgaName")
+        
+        week_driver = [pair for pair in cars_assign if pair[0] == self.car]
+        if week_driver:
+            self._assign_new_driver(week_driver[0], drivers)
+    
+    def _calc_driver_age(self, birthday) -> int:
+        date_obj = dparser.parse(birthday, fuzzy=True).date()
+        return today.year - date_obj.year - ((today.month, today.day) < (date_obj.month, date_obj.day))
+
+    def _assign_new_driver(self, week_driver, drivers) -> None:
+        self.name = week_driver[1] if week_driver[1] != None else f"NODRIVER{self.car}"
+        self.age = self._calc_driver_age(
+            [driver[1] for driver in drivers if self.name == driver[0]][0]
+        ) if self.name != f"NODRIVER{self.car}" else 50
 
 
-def _get_driver_age(driver_name, driver_birthdays):
-    date_obj = dparser.parse(driver_birthdays.get(driver_name).get("birthday"), fuzzy=True).date()
-    return today.year - date_obj.year - ((today.month, today.day) < (date_obj.month, date_obj.day))
+class Randomizer:
+    def __init__(self, config: object, series: str, single_race: bool, db: object=None):
+        self.db = db
+        self.config = config
+        self.series = series
+        self.roster = {}
+        self.roster_prev = {}
+        self.drivers = []
+        self.cars_full = []
+        self.cars_part = []
+        self.car_assigns = []
+        self._randomize(single_race)
+
+    def _randomize(self, mode: str):
+        # 1. load roster file
+        # DONE
+        self._load_roster(mode)
+        # 2. pull required data
+        # DONE
+        self._pull_required_data()
+        # 3. assign drivers for the race and randomize driver attributes
+        self._assign_and_randomize_drivers()
+        # 4. randomize paint schemes
+        self._randomize_paints()
+        # 5. store data for comparison (+/- from last week, maybe a historical record week by week)
+        self._store_driver_attribute_compare()
+        # 6. write changes to file
+        self._write_changes_to_file()
+
+    def _load_roster(self, single_race=True) -> None:
+        local_file = Path.cwd() / "base_files" / "rosters" / "2025_Xfinity_Series" / "roster.json"
+        with open(local_file if single_race is True else self.config.season_file, "r") as roster_file:
+            self.roster = json.loads(roster_file.read())
+            self.roster_prev = self.roster
+
+    def _pull_required_data(self):
+        self.drivers = self.db.execute(f"SELECT * FROM DRIVER").fetchall()
+        cars = self.db.execute(f"SELECT * FROM CAR_{self.series}").fetchall()
+        self.cars_full = [car[0] for car in cars if car[2] == "FULL"]
+        self.cars_part = [car[0] for car in cars if car[2] == "PART"]
+        self.car_assigns = self.db.execute(
+            f"SELECT CAR, WEEK_1 FROM {self.series}_DRIVER_CAR_MAPPING").fetchall()
+
+    def _assign_and_randomize_drivers(self):
+        for car_entry in self.roster["drivers"]:
+            roster_driver = Driver(car_entry, self.drivers, self.car_assigns)
+            #randomize attributes
+            roster_driver_updated = self._randomize_attributes(roster_driver)
+            #update values
+            car_entry = self._update_roster_car_entry(roster_driver_updated, car_entry)
+
+    def _randomize_attributes(roster_driver: dict) -> dict:
+        # randomize skill
+        # randomize aggression***
+        # randomize optimism***
+        # randomize smoothness
+        # randomize pit skill
+        # randomize strategy
+        
+        return roster_driver
+
+    @staticmethod
+    def _update_roster_car_entry(roster_driver: dict, car_entry: dict) -> dict:
+        car_entry["driverName"] = roster_driver.driver_name
+        car_entry["driverSkill"] = roster_driver.driver_skill
+        car_entry["driverAggression"] = roster_driver.aggression
+        car_entry["driverOptimism"] = roster_driver.optimism
+        car_entry["driverSmoothness"] = roster_driver.smoothness
+        car_entry["pitCrewSkill"] = roster_driver.pit_skill
+        car_entry["strategyRiskiness"] = roster_driver.strategy
+        car_entry["driverAge"] = roster_driver.age
+
+        return car_entry
+
+    def _randomize_paints(self):
+        pass
+
+    def _store_driver_attribute_compare(self):
+        pass
+
+    def _write_changes_to_file(self):
+        with open("", "w", encoding="utf-8") as roster_file:
+            logger.info("Writing changes to file")
+            json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
+
 
 
 def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
@@ -159,93 +259,6 @@ def change_paint_scheme(car_num, driver_name, roster_path):
         return
 
 
-def open_files():
-    with open(Path(f"{standard_file_path}/driver_tiers.json"), "r") as tier_file:
-        driver_tiers = json.loads(tier_file.read())
-    with open(Path(f"{standard_file_path}/cars.json"), "r") as car_file:
-        car_list = json.loads(car_file.read())
-    with open(Path(f"{standard_file_path}/schedule.json"), "r") as schedule_file:
-        schedule_list = json.loads(schedule_file.read())
-    with open(Path(f"{standard_file_path}/drivers.json"), "r") as driver_file:
-        driver_birthdays = json.loads(driver_file.read())
-    return driver_tiers, car_list, schedule_list, driver_birthdays
-
-
-def main(race_index, roster_path):
-    driver_tiers, car_list, schedule_list, driver_birthdays = open_files()
-    with open(Path(roster_path), "r") as roster_file:
-        driver_list = json.loads(roster_file.read())
-    for roster_driver in driver_list["drivers"]:
-        if car_list[roster_driver["carNumber"]]["type"] == "full_time_one_driver":
-            logger.info(f"Randomizing attributes for {roster_driver['driverName']} - #{roster_driver['carNumber']}")
-            new_ratings = set_attributes(
-                roster_driver["driverName"],
-                roster_driver["carNumber"],
-                driver_tiers,
-                car_list,
-                driver_birthdays,
-            )
-        elif car_list[roster_driver["carNumber"]]["type"] == "full_time_multiple_drivers":
-            scheduled_driver = schedule_list[race_index]["full_time"][roster_driver["carNumber"]]
-            if roster_driver["driverName"] != scheduled_driver:
-                logger.debug(f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}")
-            logger.info(f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}")
-            new_ratings = set_attributes(
-                scheduled_driver,
-                roster_driver["carNumber"],
-                driver_tiers,
-                car_list,
-                driver_birthdays,
-            )
-        elif car_list[roster_driver["carNumber"]]["type"] == "part_time":
-            try:
-                try:
-                    scheduled_driver = schedule_list[race_index]["part_time"][roster_driver["carNumber"]]
-                except KeyError:
-                    logger.warning(f"{roster_driver["carNumber"]} not found in race {race_index}, aborting")
-                    return
-                if roster_driver["driverName"] != scheduled_driver:
-                    logger.debug(
-                        f"Driver for this week is changing: {roster_driver["driverName"]} -> {scheduled_driver}"
-                    )
-                if not scheduled_driver:
-                    logger.info(f"No driver found for #{roster_driver['carNumber']} this week")
-                    roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
-                    continue
-            except KeyError:
-                logger.info(f"No driver found for #{roster_driver['carNumber']} this week")
-                roster_driver["driverName"] = f"NODRIVER{roster_driver['carNumber']}"
-                continue
-
-            logger.info(f"Randomizing attributes for {scheduled_driver} - #{roster_driver['carNumber']}")
-            new_ratings = set_attributes(
-                scheduled_driver,
-                roster_driver["carNumber"],
-                driver_tiers,
-                car_list,
-                driver_birthdays,
-            )
-
-        else:
-            continue
-
-        change_paint_scheme(roster_driver["carNumber"], new_ratings.name, roster_path)
-
-        roster_driver["driverName"] = new_ratings.name
-        roster_driver["driverSkill"] = new_ratings.driver_skill
-        roster_driver["driverAggression"] = new_ratings.aggression
-        roster_driver["driverOptimism"] = new_ratings.optimism
-        roster_driver["driverSmoothness"] = new_ratings.smoothness
-        roster_driver["pitCrewSkill"] = new_ratings.pit_skill
-        roster_driver["strategyRiskiness"] = new_ratings.strategy
-        roster_driver["driverAge"] = new_ratings.age
-
-    with open(Path(roster_path), "w", encoding="utf-8") as roster_file:
-        logger.info("Writing changes to file")
-        json.dump(driver_list, roster_file, ensure_ascii=False, indent=4)
-    logger.info("Roster write operations are complete")
-
-
 def perform_copy(roster_path):
     roster_dir = Path(roster_path).parent
     roster_name = roster_path.split("\\")[-2]
@@ -258,3 +271,9 @@ def perform_copy(roster_path):
         except Exception as e:
             logger.critical(e)
             continue
+
+
+if __name__ == "__main__":
+    conn = sqlite3.connect("C:\\Users\\Nick\\Documents\\iracing_ai_helper\\database\\iracing_ai_helper.db")
+    cursor = conn.cursor()
+    Randomizer(config=None, series="XFINITY", single_race=True, db=cursor)
