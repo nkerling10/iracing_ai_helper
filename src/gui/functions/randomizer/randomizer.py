@@ -24,35 +24,52 @@ today = date.today()
 ai_roster_path = Path.home() / "Documents" / "iRacing" / "airosters"
 standard_file_path = f"{os.getcwd()}/src/gui/functions/roster/randomizer/files"
 
+DRIVER_NAME_COLUMN = 0
+DRIVER_BIRTHDAY_COLUMN = 1
+DRIVER_SPECIALTY_COLUMN = 3
+CUP_TIER_COLUMN = 4
+XFINITY_TIER_COLUMN = 5
+TRUCKS_TIER_COLUMN = 6
+ARCA_TIER_COLUMN = 7
+
+class Car:
+    def __init__(self, number: int, car_info: tuple):
+        self.number = number
+        self.team = car_info[1]
+        self.status = car_info[2]
+        self.car_tier = car_info[3]
+        self.pit_crew_tier = car_info[4]
+        self.strategy_tier = car_info[5]
 
 class Driver:
-    def __init__(self, car_entry: dict, drivers: list, cars_assign: list) -> None:
-        self.name = car_entry.get("driverName")
-        self.car = car_entry.get("carNumber")
-        self.driver_skill = car_entry.get("driverSkill")
-        self.aggression = car_entry.get("driverAggression")
-        self.optimism = car_entry.get("driverOptimism")
-        self.smoothness = car_entry.get("driverSmoothness")
-        self.pit_skill = car_entry.get("pitCrewSkill")
-        self.strategy = car_entry.get("strategyRiskiness")
-        self.age = self._calc_driver_age(
-            [driver[1] for driver in drivers if self.name == driver[0]][0]
-        ) if self.name != f"NODRIVER{self.car}" else 50
+    def __init__(self, randomizer: object, car_entry: dict) -> None:
+        self.car = Car(car_entry.get("carNumber"),
+                       [car for car in randomizer.cars if car[0] == car_entry.get("carNumber")][0])
+        self.name = self._assign_driver(randomizer, car_entry)
+        self.driver_skill = 0 if f"NODRIVER{self.car}" == self.name else car_entry.get("driverSkill")
+        self.aggression = 0 if f"NODRIVER{self.car}" == self.name else car_entry.get("driverAggression")
+        self.optimism = 0 if f"NODRIVER{self.car}" == self.name else car_entry.get("driverOptimism")
+        self.smoothness = 0 if f"NODRIVER{self.car}" == self.name else car_entry.get("driverSmoothness")
+        self.pit_skill = 0 if f"NODRIVER{self.car}" == self.name else car_entry.get("pitCrewSkill")
+        self.strategy = 0 if f"NODRIVER{self.car}" == self.name else car_entry.get("strategyRiskiness")
+        self.age = 0 if f"NODRIVER{self.car}" == self.name else self._calc_driver_age(randomizer)
         self.paint_file = car_entry.get("carTgaName")
+        self.tier = None if f"NODRIVER{self.car}" == self.name \
+                    else [driver[randomizer.driver_table_columns.index(f"{randomizer.series}_TIER")]
+                    for driver in randomizer.drivers if self.name == driver[0]][0]
         
-        week_driver = [pair for pair in cars_assign if pair[0] == self.car]
+    def _assign_driver(self, randomizer: object, car_entry: dict) -> str:
+        week_driver = [pair for pair in randomizer.car_assigns if pair[0] == self.car]
         if week_driver:
-            self._assign_new_driver(week_driver[0], drivers)
-    
-    def _calc_driver_age(self, birthday) -> int:
-        date_obj = dparser.parse(birthday, fuzzy=True).date()
-        return today.year - date_obj.year - ((today.month, today.day) < (date_obj.month, date_obj.day))
+            if week_driver[0][1] != None:
+                return week_driver[0][1]
+            return f"NODRIVER{self.car}"
+        return car_entry.get("driverName")
 
-    def _assign_new_driver(self, week_driver, drivers) -> None:
-        self.name = week_driver[1] if week_driver[1] != None else f"NODRIVER{self.car}"
-        self.age = self._calc_driver_age(
-            [driver[1] for driver in drivers if self.name == driver[0]][0]
-        ) if self.name != f"NODRIVER{self.car}" else 50
+    def _calc_driver_age(self, randomizer: object) -> int:
+        date_obj = dparser.parse([driver[randomizer.driver_table_columns.index("BIRTHDAY")] for driver in
+                                  randomizer.drivers if self.name == driver[0]][0], fuzzy=True).date()
+        return today.year - date_obj.year - ((today.month, today.day) < (date_obj.month, date_obj.day))
 
 
 class Randomizer:
@@ -63,8 +80,8 @@ class Randomizer:
         self.roster = {}
         self.roster_prev = {}
         self.drivers = []
-        self.cars_full = []
-        self.cars_part = []
+        self.driver_table_columns = []
+        self.cars = []
         self.car_assigns = []
         self._randomize(single_race)
 
@@ -92,27 +109,78 @@ class Randomizer:
 
     def _pull_required_data(self):
         self.drivers = self.db.execute(f"SELECT * FROM DRIVER").fetchall()
-        cars = self.db.execute(f"SELECT * FROM CAR_{self.series}").fetchall()
-        self.cars_full = [car[0] for car in cars if car[2] == "FULL"]
-        self.cars_part = [car[0] for car in cars if car[2] == "PART"]
+        self.driver_table_columns = [column[1] for column in self.db.execute(f"PRAGMA table_info(DRIVER);").fetchall()]
+        self.cars = self.db.execute(f"SELECT * FROM CAR_{self.series}").fetchall()
         self.car_assigns = self.db.execute(
             f"SELECT CAR, WEEK_1 FROM {self.series}_DRIVER_CAR_MAPPING").fetchall()
 
     def _assign_and_randomize_drivers(self):
         for car_entry in self.roster["drivers"]:
-            roster_driver = Driver(car_entry, self.drivers, self.car_assigns)
+            roster_driver = Driver(self, car_entry)
             #randomize attributes
             roster_driver_updated = self._randomize_attributes(roster_driver)
+            print(f"{roster_driver_updated.name}: Skill {roster_driver_updated.driver_skill}")
             #update values
-            car_entry = self._update_roster_car_entry(roster_driver_updated, car_entry)
+            #car_entry = self._update_roster_car_entry(roster_driver_updated, car_entry)
+        quit()
 
+    @staticmethod
     def _randomize_attributes(roster_driver: dict) -> dict:
         # randomize skill
-        # randomize aggression***
-        # randomize optimism***
+        if roster_driver.tier == 1:
+            roster_driver.driver_skill = random.randint(95, 100)
+        elif roster_driver.tier == 2:
+            roster_driver.driver_skill = random.randint(90, 97)
+        elif roster_driver.tier == 3:
+            roster_driver.driver_skill = random.randint(85, 92)
+        elif roster_driver.tier == 4:
+            roster_driver.driver_skill = random.randint(80, 87)
+        elif roster_driver.tier == 5:
+            roster_driver.driver_skill = random.randint(75, 80)
+        elif roster_driver.tier == 6:
+            roster_driver.driver_skill = random.randint(70, 75)
+        elif roster_driver.tier == 7:
+            roster_driver.driver_skill = random.randint(60, 69)
+        elif roster_driver.tier == 8:
+            roster_driver.driver_skill = random.randint(50, 59)
+        # randomize aggression*** this is static set for testing
+        roster_driver.aggression = 999
+        # randomize optimism*** this is static set for testing
+        roster_driver.optimism = 500
         # randomize smoothness
+        # iracing scale of 0-100 (loose -> tight), midpoint of 50
+        if roster_driver.car.car_tier == 1:
+            roster_driver.smoothness = random.randint(40, 60)
+        elif roster_driver.car.car_tier == 2:
+            roster_driver.smoothness = random.randint(20, 80)
+        elif roster_driver.car.car_tier == 3:
+            roster_driver.smoothness = random.randint(0, 100)
+        elif roster_driver.car.car_tier == 4:
+            roster_driver.smoothness = random.randint(-50, 150)
+        elif roster_driver.car.car_tier == 5:
+            roster_driver.smoothness = random.randint(-100, 200)
         # randomize pit skill
-        # randomize strategy
+        if roster_driver.car.pit_crew_tier == 1:
+            roster_driver.pit_skill = random.randint(90, 100)
+        elif roster_driver.car.pit_crew_tier == 2:
+            roster_driver.pit_skill = random.randint(80, 90)
+        elif roster_driver.car.pit_crew_tier == 3:
+            roster_driver.pit_skill = random.randint(70, 80)
+        elif roster_driver.car.pit_crew_tier == 4:
+            roster_driver.pit_skill = random.randint(60, 70)
+        elif roster_driver.car.pit_crew_tier == 5:
+            roster_driver.pit_skill = random.randint(50, 60)
+        # randomize strategy riskiness
+        if roster_driver.car.strategy_tier == 1:
+            roster_driver.strategy = random.randint(25, 50)
+        elif roster_driver.car.strategy_tier == 2:
+            roster_driver.strategy = random.randint(35, 65)
+        elif roster_driver.car.strategy_tier == 3:
+            roster_driver.strategy = random.randint(50, 75)
+        elif roster_driver.car.strategy_tier == 4:
+            roster_driver.strategy = random.randint(65, 85)
+        elif roster_driver.car.strategy_tier == 5:
+            roster_driver.strategy = random.randint(75, 100)
         
         return roster_driver
 
@@ -143,28 +211,6 @@ class Randomizer:
 
 
 def set_attributes(driver_name, car, driver_tiers, car_list, driver_birthdays):
-    if driver_name in driver_tiers["tier_1"]:
-        skill_min = 91
-        skill_max = 100
-    elif driver_name in driver_tiers["tier_2"]:
-        skill_min = 81
-        skill_max = 90
-    elif driver_name in driver_tiers["tier_3"]:
-        skill_min = 71
-        skill_max = 80
-    elif driver_name in driver_tiers["tier_4"]:
-        skill_min = 61
-        skill_max = 70
-    elif driver_name in driver_tiers["tier_5"]:
-        skill_min = 51
-        skill_max = 60
-    elif driver_name in driver_tiers["tier_6"]:
-        skill_min = 45
-        skill_max = 55
-    else:
-        logger.critical(f"{driver_name} not found in tier file, fix it!")
-        return
-
     if car_list[car]["car_tier"] == 1:
         car_smoothness = random.randint(25, 75)
     elif car_list[car]["car_tier"] == 2:
