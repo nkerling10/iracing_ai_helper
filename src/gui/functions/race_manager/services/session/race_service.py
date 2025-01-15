@@ -408,11 +408,16 @@ class RaceService:
             elif race_manager.ir["SessionState"] == 5:
                 # start finalizing and exporting any race results
                 pass
+
             ## Session state COOLDOWN
             ## All cars have taken the checkered, time remaining counter has expired
             elif race_manager.ir["SessionState"] == 6:
                 # probably break here, or even before it reaches this state
-                pass
+                race_manager.ir.freeze_var_buffer_latest()
+                irsdk.IRSDK.parse_to(
+                    race_manager.ir,
+                    to_file="C:\\Users\\Nick\\Documents\\iracing_ai_helper\\src\\gui\\functions\\race_manager\\services\\session\\race_output_sessionnum_6.txt")
+                break
             else:
                 logging.warning(
                     f"Unexpected issue: session state is \

@@ -17,11 +17,11 @@ import pygetwindow as gw
 from pygetwindow import PyGetWindowException
 
 ## Local imports
-from .config.race_settings import RaceSettings
-from .services.core.stage import Stage
-from .services.session.practice_service import PracticeService
-from .services.session.qualifying_service import QualifyingService
-from .services.session.race_service import RaceService
+from config.race_settings import RaceSettings
+from services.core.stage import Stage
+from services.session.practice_service import PracticeService
+from services.session.qualifying_service import QualifyingService
+from services.session.race_service import RaceService
 
 """
 logging.basicConfig(
@@ -33,11 +33,6 @@ logging.basicConfig(
     ],
 )
 """
-
-
-class ButtonException(Exception):
-    pass
-
 
 logger = logging.getLogger(__name__)
 
@@ -211,9 +206,6 @@ class RaceManager:
                 time.sleep(1)
         except KeyboardInterrupt:
             quit()
-        except ButtonException:
-            logger.warning("Cancelling connection.")
-            return
 
     def _set_weekend_data(self) -> None:
         ## Identify which sessions exist in the "race weekend"
@@ -302,7 +294,7 @@ def loop(race_manager: object) -> None:
 
 
 def main() -> None:
-    # race_manager = RaceManager(test_file)
+    #race_manager = RaceManager(test_file)
     race_manager = RaceManager()
     race_manager._set_weekend_data()
     ## After data is set, proceed to looping logic
@@ -311,12 +303,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
-"""
-def get_next_race(ai_season_file):
-    for event in ai_season_file.get("events"):
-        if not event.get("results"):
-            next_event = tracks.Track(event.get("trackId")).name
-            return f"{next_event} is the next race"
-
-"""
