@@ -297,7 +297,7 @@ class Randomizer:
                     / driver_paints[0]
                 )
 
-            logger.info(f"Selected {str(new_paint_file).split('\\')[-1]}")
+            #logger.info(f"Selected {str(new_paint_file).split('\\\\')[-1]}")
 
         logger.debug(f"Attempting to copy file {new_paint_file}")
         try:

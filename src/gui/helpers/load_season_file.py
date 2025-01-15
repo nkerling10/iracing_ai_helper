@@ -15,7 +15,7 @@ class LoadSeasonFile:
         season_rows = season_data.build_season_display_info(
             config.iracing_folder
             / "aiseasons"
-            / f"{season_settings.get("season_name")}.json"
+            / f"{season_settings.get('season_name')}.json"
         )
         next_race = [next(x[0] - 1 for x in season_rows if x[3] is False)]
         logger.debug(f"Next race is week {next_race[0]+1}")

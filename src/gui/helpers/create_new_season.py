@@ -76,11 +76,7 @@ def _copy_season_base_file(config: object, season_settings: dict) -> bool:
         logger.info(f"Copying official file {base_file}.json")
         copyfile(
             Path(Path.cwd() / "base_files" / "seasons" / f"{base_file}.json"),
-            Path(
-                config.iracing_folder
-                / "aiseasons"
-                / f"{season_settings.get("season_name")}.json"
-            ),
+            Path(config.iracing_folder / "aiseasons" / f"{season_settings.get('season_name')}.json")
         )
         logger.info(
             "File copied successfully, updating file path in season_settings file"
@@ -89,38 +85,38 @@ def _copy_season_base_file(config: object, season_settings: dict) -> bool:
             with open(
                 Path.cwd()
                 / "ai_seasons"
-                / f"{season_settings.get("season_name")}.json",
+                / f"{season_settings.get('season_name')}.json",
                 "r",
             ) as file:
                 season_file = json.loads(file.read())
                 logger.debug("File read successful")
         except Exception as e:
             logger.error(
-                f"Could not read file {Path.cwd() / "ai_seasons" / {season_settings.get("season_name")}}.json"
+                f"Could not read file {Path.cwd()}" / "ai_seasons" / f"{season_settings.get('season_name')}.json"
             )
             return False
         season_file["season_file"] = str(
             config.iracing_folder
             / "aiseasons"
-            / f"{season_settings.get("season_name")}.json"
+            / f"{season_settings.get('season_name')}.json"
         ).replace("\\", "/")
         season_settings["season_file"] = str(
             config.iracing_folder
             / "aiseasons"
-            / f"{season_settings.get("season_name")}.json"
+            / f"{season_settings.get('season_name')}.json"
         ).replace("\\", "/")
         try:
             with open(
                 Path.cwd()
                 / "ai_seasons"
-                / f"{season_settings.get("season_name")}.json",
+                / f"{season_settings.get('season_name')}.json",
                 "w",
             ) as file:
                 file.write(json.dumps(season_file, indent=4))
             logger.debug("File write successful")
         except Exception as e:
             logger.error(
-                f"Could not write to file {Path.cwd() / "ai_seasons" / {season_settings.get("season_name")}}.json"
+                f"Could not write to file {Path.cwd()}" / "ai_seasons" / f"{season_settings.get('season_name')}.json"
             )
             return False
         return True
@@ -193,7 +189,7 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
         return False
     season_settings = {
         "settings_version": "1.0",
-        "season_name": values["__SEASONNAME__"],
+        'season_name': values["__SEASONNAME__"],
         "season_series": _season_type(values),
         "roster_name": values["__ROSTERNAME__"],
         "fuel_capacity": int(values["__FUELCAPACITY__"]),
