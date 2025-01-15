@@ -94,7 +94,6 @@ class RosterTabLayout:
                 sg.Text(key="-TRACKSTATUS-"),
             ],
             [
-                sg.Button("Randomize", tooltip="Randomizes all attributes for all drivers"),
-                sg.Button("Save"),
+                sg.Button("Randomize", tooltip="Randomizes all attributes for all drivers")
             ],
         ]

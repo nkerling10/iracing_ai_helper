@@ -41,9 +41,17 @@ class DatabaseManager:
             print(e)
             return
 
-    def execute_select_query(self, table: str, condition: str) -> list[list]:
+    def execute_select_query(self, table: str, condition: str, columns: str = "*") -> list[list]:
         try:
-            results = self.cursor.execute(f"SELECT * FROM {table} WHERE {condition};")
+            results = self.cursor.execute(f"SELECT {columns} FROM {table} WHERE {condition};")
+            return results.fetchall()
+        except Exception as e:
+            print(e)
+            return
+    
+    def execute_select_columns_query(self, table: str, columns: str = "*") -> list[list]:
+        try:
+            results = self.cursor.execute(f"SELECT {columns} FROM {table}")
             return results.fetchall()
         except Exception as e:
             print(e)

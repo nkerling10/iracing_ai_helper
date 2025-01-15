@@ -15,7 +15,7 @@ from pathlib import Path
 from gui.config.settings import Settings
 from gui.functions.race_manager.race_manager import main as race_manager
 from gui.layouts.tables import roster_data
-from gui.functions.randomizer import randomizer
+from gui.functions.randomizer.randomizer import Randomizer
 from gui.functions.database.db_manager import DatabaseManager
 from gui.helpers.create_new_season import _create_new_season
 from gui.helpers.load_season_file import LoadSeasonFile
@@ -220,16 +220,16 @@ def main_window(prev_table: str) -> None:
             except Exception as e:
                 logger.error(e)
         if event == "Randomize":
-            randomizer.main(str(values["-TRACKBOX-"]), Path(season_settings.get("roster_folder")) / "roster.json")
+            Randomizer(config, season_settings, db)
             window["-TRACKSTATUS-"].update("Success!")
             active_driver_data, inactive_driver_data = roster_data.build_driver_display_info(
-                season_settings.get("roster_folder")
+                config.iracing_folder / "airosters" / season_settings.get("roster_name")
             )
             window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
             window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
             window["-TRACKSTATUS-"].update("")
         if event == "Copy":
-            randomizer.perform_copy(config.local_roster_file)
+            Randomizer.perform_copy(config.local_roster_file)
         if event == "-CLEARLOGBOX-":
             window["-LOGGINGBOX-"].update("")
         if event == "-SCHEDULETABLE-":
