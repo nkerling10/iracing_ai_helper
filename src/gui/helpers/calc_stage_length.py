@@ -1,5 +1,6 @@
 import math
 
+
 def _calc_stage_lengths(track_short_name: str, race_length: int) -> tuple[int, int]:
     if track_short_name in ["Daytona", "Atlanta", "Watkins Glen"]:
         stage_1_mod = 0.25
@@ -41,7 +42,7 @@ def _calc_stage_lengths(track_short_name: str, race_length: int) -> tuple[int, i
         stage_1_mod = 0.34
     elif track_short_name == "WWT":
         stage_1_mod = 0.22
-    
+
     stage_1_end_lap = math.floor(race_length * stage_1_mod)
 
     return stage_1_end_lap, math.floor(

@@ -13,9 +13,14 @@ class RosterTabLayout:
     def _tier_settings_tab_layout(cls) -> list[list]:
         return [
             [
-                sg.Column(layout=cls._tier_settings_drivers_table("Drivers", "Name"), expand_x=True),
+                sg.Column(
+                    layout=cls._tier_settings_drivers_table("Drivers", "Name"),
+                    expand_x=True,
+                ),
                 sg.VerticalSeparator(color="black"),
-                sg.Column(layout=cls._tier_settings_drivers_table("Car", "Car"), expand_x=True),
+                sg.Column(
+                    layout=cls._tier_settings_drivers_table("Car", "Car"), expand_x=True
+                ),
             ]
         ]
 
@@ -59,7 +64,9 @@ class RosterTabLayout:
         ]
 
     @classmethod
-    def build_roster_tab_layout(cls, active_driver_data: list = [], inactive_driver_data: list = []) -> list:
+    def build_roster_tab_layout(
+        cls, active_driver_data: list = [], inactive_driver_data: list = []
+    ) -> list:
         return [
             [
                 sg.TabGroup(
@@ -67,18 +74,25 @@ class RosterTabLayout:
                         [
                             sg.Tab(
                                 "Active",
-                                layout=cls._roster_tab_layout("-ACTIVEDRIVERS-", active_driver_data),
+                                layout=cls._roster_tab_layout(
+                                    "-ACTIVEDRIVERS-", active_driver_data
+                                ),
                                 expand_x=True,
                                 expand_y=True,
                             ),
                             sg.Tab(
                                 "Inactive",
-                                layout=cls._roster_tab_layout("-INACTIVEDRIVERS-", inactive_driver_data),
+                                layout=cls._roster_tab_layout(
+                                    "-INACTIVEDRIVERS-", inactive_driver_data
+                                ),
                                 expand_x=True,
                                 expand_y=True,
                             ),
                             sg.Tab(
-                                "Tier Settings", layout=cls._tier_settings_tab_layout(), expand_x=True, expand_y=True
+                                "Tier Settings",
+                                layout=cls._tier_settings_tab_layout(),
+                                expand_x=True,
+                                expand_y=True,
                             ),
                         ]
                     ],
@@ -89,11 +103,16 @@ class RosterTabLayout:
                 ),
             ],
             [
-                sg.Text(text="Race:", key="-TRACKBOXLABEL-", visible=False),
-                sg.Combo(cls._roster_file_track_choices(), key="-TRACKBOX-", visible=False),
+                sg.Text(text="Raceweek:", key="-TRACKBOXLABEL-", visible=False),
+                sg.Combo(
+                    cls._roster_file_track_choices(), key="-TRACKBOX-", visible=False
+                ),
                 sg.Text(key="-TRACKSTATUS-"),
             ],
             [
-                sg.Button("Randomize", tooltip="Randomizes all attributes for all drivers")
+                sg.Button(
+                    "Randomize",
+                    tooltip="Randomizes all attributes for all drivers, then saves to roster file",
+                )
             ],
         ]

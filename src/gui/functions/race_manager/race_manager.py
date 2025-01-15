@@ -41,7 +41,9 @@ class ButtonException(Exception):
 
 logger = logging.getLogger(__name__)
 
-test_file = Path("C:\\Users\\Nick\\Documents\\iracing_ai_helper\\session_data\\dataracing.bin")
+test_file = Path(
+    "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\session_data\\dataracing.bin"
+)
 
 
 class State:
@@ -106,7 +108,9 @@ class RaceWeekend:
 
         self.stage_1.stage_end_lap = math.floor(self.race_length * stage_1_mod)
         self.stage_2.stage_end_lap = math.floor(
-            self.stage_1.stage_end_lap * 2.15 if self.track_short_name == "COTA" else self.stage_1.stage_end_lap * 2
+            self.stage_1.stage_end_lap * 2.15
+            if self.track_short_name == "COTA"
+            else self.stage_1.stage_end_lap * 2
         )
 
 
@@ -148,17 +152,27 @@ class RaceManager:
 
     def _define_sessions(self) -> None:
         event_sessions = self.ir["SessionInfo"]["Sessions"]
-        practice_session = [session["SessionNum"] for session in event_sessions if session["SessionName"] == "PRACTICE"]
+        practice_session = [
+            session["SessionNum"]
+            for session in event_sessions
+            if session["SessionName"] == "PRACTICE"
+        ]
         if practice_session:
             self.practice_session_num = practice_session[0]
 
         qualifying_session = [
-            session["SessionNum"] for session in event_sessions if session["SessionName"] == "QUALIFY"
+            session["SessionNum"]
+            for session in event_sessions
+            if session["SessionName"] == "QUALIFY"
         ]
         if qualifying_session:
             self.qualifying_session_num = qualifying_session[0]
 
-        race_session = [session["SessionNum"] for session in event_sessions if session["SessionName"] == "RACE"]
+        race_session = [
+            session["SessionNum"]
+            for session in event_sessions
+            if session["SessionName"] == "RACE"
+        ]
         if race_session:
             self.race_session_num = race_session[0]
 
@@ -178,7 +192,12 @@ class RaceManager:
             state.ir_connected = False
             self.ir.shutdown()
             logger.info("irsdk disconnected")
-        elif not state.ir_connected and self.ir.startup() and self.ir.is_initialized and self.ir.is_connected:
+        elif (
+            not state.ir_connected
+            and self.ir.startup()
+            and self.ir.is_initialized
+            and self.ir.is_connected
+        ):
             state.ir_connected = True
             logger.info("irsdk connected")
 
@@ -203,7 +222,9 @@ class RaceManager:
         self.race_weekend = RaceWeekend(
             track_short_name=self.ir["WeekendInfo"]["TrackDisplayShortName"],
             track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"],
-            race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"],
+            race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num][
+                "SessionLaps"
+            ],
             player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
         )
 
@@ -228,11 +249,13 @@ def loop(race_manager: object) -> None:
         if current_session_name == "PRACTICE" and race_manager.practice_done is False:
             ## Regardless if a weekend actually has a practice session
             ## Execute the practice stage as long as the first session is not completed
-            if race_manager.ir["SessionInfo"]["Sessions"][race_manager.practice_session_num][
-                "ResultsOfficial"
-            ] == 0 or (
+            if race_manager.ir["SessionInfo"]["Sessions"][
+                race_manager.practice_session_num
+            ]["ResultsOfficial"] == 0 or (
                 race_manager.practice_session_num is None
-                and race_manager.ir["SessionInfo"]["Sessions"][race_manager.qualifying_session_num]["ResultsOfficial"]
+                and race_manager.ir["SessionInfo"]["Sessions"][
+                    race_manager.qualifying_session_num
+                ]["ResultsOfficial"]
                 == 0
             ):
                 practice(race_manager)
@@ -242,14 +265,20 @@ def loop(race_manager: object) -> None:
                 logger.debug("Practice stage does not need to be executed, skipping")
                 race_manager.practice_done = True
 
-        elif current_session_name == "QUALIFYING" and race_manager.qualifying_done is False:
+        elif (
+            current_session_name == "QUALIFYING"
+            and race_manager.qualifying_done is False
+        ):
             ## Perform the qualifying session operations
             ## Execute the operations as long as the session has not been completed
-            if race_manager.ir["SessionInfo"]["Sessions"][race_manager.qualifying_session_num][
-                "ResultsOfficial"
-            ] == 0 or (
+            if race_manager.ir["SessionInfo"]["Sessions"][
+                race_manager.qualifying_session_num
+            ]["ResultsOfficial"] == 0 or (
                 race_manager.qualifying_session_num is None
-                and race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["ResultsOfficial"] == 0
+                and race_manager.ir["SessionInfo"]["Sessions"][
+                    race_manager.race_session_num
+                ]["ResultsOfficial"]
+                == 0
             ):
                 qualifying(race_manager)
                 race_manager.qualifying_done = True
@@ -261,7 +290,9 @@ def loop(race_manager: object) -> None:
         elif current_session_name == "RACE":
             if (
                 race_manager.qualifying_session_num is None
-                or race_manager.ir["SessionInfo"]["Sessions"][race_manager.qualifying_session_num]["ResultsOfficial"]
+                or race_manager.ir["SessionInfo"]["Sessions"][
+                    race_manager.qualifying_session_num
+                ]["ResultsOfficial"]
                 == 1
             ):
                 race(race_manager)

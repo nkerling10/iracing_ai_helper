@@ -1,6 +1,7 @@
 import json
 from gui.helpers.calc_stage_length import _calc_stage_lengths
 
+
 class RaceData:
     def __init__(self, values):
         self.week = values.get("week")
@@ -9,7 +10,7 @@ class RaceData:
             values.get("track_short_name"), values.get("race_laps")
         )
         self.race_laps = values.get("race_laps")
-    
+
     @staticmethod
     def _set_stage_lengths(track_short_name: str, race_length: int) -> tuple[int, int]:
         return _calc_stage_lengths(track_short_name, race_length)
@@ -25,18 +26,30 @@ def _convert_race_data(values: dict, db: object) -> dict:
 
 
 class NextRaceData:
-    def _load_next_race_data(config: object, season_settings: dict, db: object) -> object:
-        with open(config.iracing_folder / "aiseasons" / f"{season_settings.get("season_name")}.json") as file:
+    def _load_next_race_data(
+        config: object, season_settings: dict, db: object
+    ) -> object:
+        with open(
+            config.iracing_folder
+            / "aiseasons"
+            / f"{season_settings.get("season_name")}.json"
+        ) as file:
             season_file = json.loads(file.read())
         # loop through events to get first race without results
         try:
-            next_race = [next(race for race in season_file.get("events") if not race.get("results"))][0]
+            next_race = [
+                next(
+                    race
+                    for race in season_file.get("events")
+                    if not race.get("results")
+                )
+            ][0]
         except IndexError:
-             return
+            return
         values = {
-            "week": season_file["events"].index(next_race)+1,
+            "week": season_file["events"].index(next_race) + 1,
             "track_id": next_race.get("trackId"),
-            "race_laps": next_race.get("race_laps")
+            "race_laps": next_race.get("race_laps"),
         }
 
         values = _convert_race_data(values, db)

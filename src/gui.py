@@ -67,6 +67,7 @@ def _update_season_next_race_data(season_settings, db) -> None:
     window["_-STAGE1-_"].update(value=next_race.stage_1)
     window["_-STAGE2-_"].update(value=next_race.stage_2)
     window["_-STAGE3-_"].update(value=next_race.race_laps)
+    window["-TRACKBOX-"].update(value=next_race.week)
 
 
 def _open_saved_season(loaded_season: str) -> dict:
@@ -89,11 +90,16 @@ def _load_roster_file(season_settings: dict) -> None:
 
 def _load_iracing_season_file(season_settings: dict) -> None:
     logger.info("Loading season file")
-    season_rows, colored_rows = LoadSeasonFile._load_season_file(config, season_settings)
+    season_rows, colored_rows = LoadSeasonFile._load_season_file(
+        config, season_settings
+    )
     logger.info("Updating season table values")
     window["-SCHEDULETABLE-"].update(values=season_rows, row_colors=colored_rows)
     window["-TRACKBOXLABEL-"].update(visible=True)
-    window["-TRACKBOX-"].update(values=RosterTabLayout._roster_file_track_choices(len(season_rows)), visible=True)
+    window["-TRACKBOX-"].update(
+        values=RosterTabLayout._roster_file_track_choices(len(season_rows)),
+        visible=True,
+    )
 
 
 def _set_tab_visibility(tab_status: bool) -> None:
@@ -106,7 +112,9 @@ def _build_main_layout() -> list[list]:
     splash_tab_layout = SplashTabLayout.build_splash_tab_layout()
     season_tab_layout = SeasonTab._build_season_tab()
     db_tab_layout = DatabaseTabLayout.build_db_tab_layout()
-    config_tab_layout = ConfigTabLayout.build_config_tab_layout(config.database_path, config.iracing_folder)
+    config_tab_layout = ConfigTabLayout.build_config_tab_layout(
+        config.database_path, config.iracing_folder
+    )
     logging_tab_layout = LoggingTabLayout._build_logging_tab_layout()
 
     return [
@@ -117,7 +125,9 @@ def _build_main_layout() -> list[list]:
                         sg.Tab("Home", splash_tab_layout, key="-hometab-"),
                         sg.Tab("Season", season_tab_layout, key="-seasontab-"),
                         sg.Tab("Database", db_tab_layout, key="-databasetab-"),
-                        sg.Tab("Config", config_tab_layout, key="-configtab-", visible=True),
+                        sg.Tab(
+                            "Config", config_tab_layout, key="-configtab-", visible=True
+                        ),
                         sg.Tab("Logging", [[]], key="-loggingtab-", visible=True),
                     ]
                 ],
@@ -159,7 +169,9 @@ def main_window(prev_table: str) -> None:
                 ]
             ):
                 config_fail = sg.popup(
-                    "Please select a file for each required item", no_titlebar=True, background_color="gray"
+                    "Please select a file for each required item",
+                    no_titlebar=True,
+                    background_color="gray",
                 )
             if not config_fail:
                 config._write_settings(
@@ -173,7 +185,9 @@ def main_window(prev_table: str) -> None:
         if event in ["-LOADSAVEDSEASONBUTTON-", "-CREATESEASONBUTTON-"]:
             if event == "-LOADSAVEDSEASONBUTTON-":
                 select_season_settings_file = sg.popup_get_file(
-                    "Load a Season", initial_folder=Path.cwd() / "ai_seasons", no_window=True
+                    "Load a Season",
+                    initial_folder=Path.cwd() / "ai_seasons",
+                    no_window=True,
                 )
                 if select_season_settings_file:
                     season_settings = _open_saved_season(select_season_settings_file)
@@ -220,10 +234,14 @@ def main_window(prev_table: str) -> None:
             except Exception as e:
                 logger.error(e)
         if event == "Randomize":
-            Randomizer(config, season_settings, db)
+            Randomizer(config, season_settings, values["-TRACKBOX-"], db)
             window["-TRACKSTATUS-"].update("Success!")
-            active_driver_data, inactive_driver_data = roster_data.build_driver_display_info(
-                config.iracing_folder / "airosters" / season_settings.get("roster_name")
+            active_driver_data, inactive_driver_data = (
+                roster_data.build_driver_display_info(
+                    config.iracing_folder
+                    / "airosters"
+                    / season_settings.get("roster_name")
+                )
             )
             window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
             window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)

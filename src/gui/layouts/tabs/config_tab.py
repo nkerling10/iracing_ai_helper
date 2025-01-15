@@ -3,7 +3,9 @@ from pathlib import Path
 
 
 class ConfigTabLayout:
-    def build_config_tab_layout(local_database_file: str = "", iracing_folder: str = "") -> list[list]:
+    def build_config_tab_layout(
+        local_database_file: str = "", iracing_folder: str = ""
+    ) -> list[list]:
         return [
             [
                 sg.Frame(
@@ -35,7 +37,10 @@ class ConfigTabLayout:
                     layout=[
                         [
                             sg.FolderBrowse(
-                                initial_folder=Path.home() / "Documents" / "iRacing" / "aiseasons",
+                                initial_folder=Path.home()
+                                / "Documents"
+                                / "iRacing"
+                                / "aiseasons",
                                 key="-IRACINGFOLDER-",
                                 target="_IRACINGFOLDER_",
                             ),

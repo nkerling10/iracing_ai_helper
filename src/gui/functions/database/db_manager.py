@@ -12,7 +12,9 @@ class DatabaseManager:
         try:
             return [
                 table[0]
-                for table in self.cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+                for table in self.cursor.execute(
+                    "SELECT name FROM sqlite_master WHERE type='table';"
+                )
                 if "sqlite" not in table[0]
             ]
         except Exception as e:
@@ -41,15 +43,21 @@ class DatabaseManager:
             print(e)
             return
 
-    def execute_select_query(self, table: str, condition: str, columns: str = "*") -> list[list]:
+    def execute_select_query(
+        self, table: str, condition: str, columns: str = "*"
+    ) -> list[list]:
         try:
-            results = self.cursor.execute(f"SELECT {columns} FROM {table} WHERE {condition};")
+            results = self.cursor.execute(
+                f"SELECT {columns} FROM {table} WHERE {condition};"
+            )
             return results.fetchall()
         except Exception as e:
             print(e)
             return
-    
-    def execute_select_columns_query(self, table: str, columns: str = "*") -> list[list]:
+
+    def execute_select_columns_query(
+        self, table: str, columns: str = "*"
+    ) -> list[list]:
         try:
             results = self.cursor.execute(f"SELECT {columns} FROM {table}")
             return results.fetchall()

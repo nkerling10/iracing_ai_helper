@@ -13,9 +13,18 @@ class DatabaseTabLayout:
             [sg.HorizontalSeparator()],
             [
                 sg.Combo(
-                    values=[], pad=(15, 15), key="-DBTABCONNECTCOMBO-", visible=True, readonly=True, enable_events=True
+                    values=[],
+                    pad=(15, 15),
+                    key="-DBTABCONNECTCOMBO-",
+                    visible=True,
+                    readonly=True,
+                    enable_events=True,
                 )
             ],
             [sg.HorizontalSeparator(key="-DBCONNECTLINE-")],
-            [sg.Column(key="-DBTABLECOLUMN-", layout=[[]], expand_x=True, expand_y=True)],
+            [
+                sg.Column(
+                    key="-DBTABLECOLUMN-", layout=[[]], expand_x=True, expand_y=True
+                )
+            ],
         ]
