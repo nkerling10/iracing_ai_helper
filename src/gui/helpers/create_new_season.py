@@ -3,7 +3,7 @@ import logging
 import os
 import PySimpleGUI as sg
 from pathlib import Path
-from shutil import copyfile
+from shutil import copyfile, copytree
 
 logger = logging.getLogger(__name__)
 
@@ -144,7 +144,7 @@ def _create_iracing_season(config: object, season_settings: dict) -> None:
     _update_season_settings(config, season_settings)
 
 
-def _copy_roster_file(config: object, season_settings: dict) -> None:
+def _copy_roster_folder(config: object, season_settings: dict) -> None:
     """
     Performs a copy of selected series' base roster file into the iRacing airosters
     folder. It will exist in a folder titled what the user provided as roster.json.
@@ -154,28 +154,28 @@ def _copy_roster_file(config: object, season_settings: dict) -> None:
     )
 
     if season_settings.get("season_series") == "CUP":
-        file = base_files_roster_path / "2025_Cup_Series" / "roster.json"
+        folder = base_files_roster_path / "2025_Cup_Series"
     elif season_settings.get("season_series") == "XFINITY":
-        file = base_files_roster_path / "2025_Xfinity_Series" / "roster.json"
+        folder = base_files_roster_path / "2025_Xfinity_Series"
     elif season_settings.get("season_series") == "TRUCKS":
-        file = base_files_roster_path / "2025_Truck_Series" / "roster.json"
+        folder = base_files_roster_path / "2025_Truck_Series"
     elif season_settings.get("season_series") == "ARCA":
-        file = base_files_roster_path / "2025_ARCA_Series" / "roster.json"
+        folder = base_files_roster_path / "2025_ARCA_Series"
 
     if not os.path.exists(roster_path_dest):
         logger.info(f"Folder {roster_path_dest} does not exist, creating")
         os.makedirs(roster_path_dest)
 
     try:
-        logger.info(f"Copying roster file {file}")
-        copyfile(
-            file,
+        logger.info(f"Copying roster folder {folder}")
+        copytree(
+            folder,
             config.iracing_folder
             / "airosters"
-            / season_settings.get("roster_name")
-            / "roster.json",
+            / season_settings.get("roster_name"),
+            dirs_exist_ok=True
         )
-        logger.info("File copied successfully")
+        logger.info("Folder copied successfully")
     except Exception as e:
         logger.error(f"Error copying file: {e}")
 
@@ -430,7 +430,7 @@ def _create_new_season(config) -> dict:
                 season_settings = _create_local_season_settings_file(
                     values, window["__TIRESETS__"].get()
                 )
-                _copy_roster_file(config, season_settings)
+                _copy_roster_folder(config, season_settings)
                 _create_iracing_season(config, season_settings)
                 if season_settings:
                     window.close()
