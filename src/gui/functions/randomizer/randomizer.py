@@ -91,16 +91,22 @@ class Driver:
         )
 
     def _assign_driver(self, randomizer: object, car_entry: dict) -> str:
-        week_driver = [
-            pair for pair in randomizer.car_assigns if pair[0] == self.car.number
-        ]
-        if week_driver:
-            if week_driver[0][1] is None:
-                return f"NODRIVER{self.car.number}"
-            else:
-                return week_driver[0][1]
-
-        return car_entry.get("driverName")
+        try:
+            week_driver = [
+                assign
+                for assign in randomizer.car_assigns
+                if assign[0] == self.car.number
+            ][0]
+        except IndexError:
+            logger.critical(
+                f"{self.car.number} does not exist in car_driver_mapping table"
+            )
+        if week_driver[1] is not None:
+            return week_driver[1]
+        if week_driver[2] is None:
+            return f"NODRIVER{self.car.number}"
+        else:
+            return week_driver[2]
 
     def _calc_driver_age(self, randomizer: object) -> int:
         try:
@@ -170,7 +176,7 @@ class Randomizer:
         )
         self.car_assigns = self.db.execute_select_columns_query(
             table=f"{self.season_settings.get('season_series')}_DRIVER_CAR_MAPPING",
-            columns=f"CAR, WEEK_{self.week}",
+            columns=f"CAR, FULLTIME_DRIVER, WEEK_{self.week}",
         )
 
     def _assign_and_randomize_drivers(self) -> None:
@@ -297,7 +303,7 @@ class Randomizer:
                     / driver_paints[0]
                 )
 
-            #logger.info(f"Selected {str(new_paint_file).split('\\\\')[-1]}")
+            logger.info(f"Selected {str(new_paint_file).split('\\')[-1]}")
 
         logger.debug(f"Attempting to copy file {new_paint_file}")
         try:

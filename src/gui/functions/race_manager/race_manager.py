@@ -20,7 +20,9 @@ from pygetwindow import PyGetWindowException
 from gui.functions.race_manager.config.race_settings import RaceSettings
 from gui.functions.race_manager.services.core.stage import Stage
 from gui.functions.race_manager.services.session.practice_service import PracticeService
-from gui.functions.race_manager.services.session.qualifying_service import QualifyingService
+from gui.functions.race_manager.services.session.qualifying_service import (
+    QualifyingService,
+)
 from gui.functions.race_manager.services.session.race_service import RaceService
 
 """
@@ -294,7 +296,7 @@ def loop(race_manager: object) -> None:
 
 
 def main() -> None:
-    #race_manager = RaceManager(test_file)
+    # race_manager = RaceManager(test_file)
     race_manager = RaceManager()
     race_manager._set_weekend_data()
     ## After data is set, proceed to looping logic

@@ -416,7 +416,8 @@ class RaceService:
                 race_manager.ir.freeze_var_buffer_latest()
                 irsdk.IRSDK.parse_to(
                     race_manager.ir,
-                    to_file="C:\\Users\\Nick\\Documents\\iracing_ai_helper\\src\\gui\\functions\\race_manager\\services\\session\\race_output_sessionnum_6.txt")
+                    to_file="C:\\Users\\Nick\\Documents\\iracing_ai_helper\\src\\gui\\functions\\race_manager\\services\\session\\race_output_sessionnum_6.txt",
+                )
                 break
             else:
                 logging.warning(
