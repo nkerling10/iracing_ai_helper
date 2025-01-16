@@ -25,46 +25,44 @@ class SessionName(Enum):
     CHECKERED = 5
     COOLDOWN = 6
 
+def _get_flag(flag):
+    """
+    Big thanks to `fruzyna` for this function
+        source: https://github.com/fruzyna/iracing-apps
+
+    Determines the current flag status of the race.
+    """
+    if flag & irsdk.Flags.checkered:
+        return "checkered"
+    else:
+        if flag & irsdk.Flags.blue:
+            return "blue"
+        elif flag & irsdk.Flags.black:
+            return "black"
+        elif flag & irsdk.Flags.furled:
+            return "gray"
+        elif flag & irsdk.Flags.red:
+            return "red"
+        elif flag & irsdk.Flags.white:
+            return "white"
+        elif (
+            flag & irsdk.Flags.yellow
+            or flag & irsdk.Flags.yellow_waving
+            or flag & irsdk.Flags.caution
+            or flag & irsdk.Flags.caution_waving
+            or flag & irsdk.Flags.debris
+        ):
+            return "yellow"
+        elif flag & irsdk.Flags.green or flag & irsdk.Flags.green_held:
+            return "green"
+        elif flag & irsdk.Flags.one_lap_to_green:
+            return "one_to_green"
+        else:
+            return "green"
 
 class RaceService:
     @staticmethod
-    def _get_flag(flag):
-        """
-        Big thanks to `fruzyna` for this function
-            source: https://github.com/fruzyna/iracing-apps
-
-        Determines the current flag status of the race.
-        """
-        if flag & irsdk.Flags.checkered:
-            return "checkered"
-        else:
-            if flag & irsdk.Flags.blue:
-                return "blue"
-            elif flag & irsdk.Flags.black:
-                return "black"
-            elif flag & irsdk.Flags.furled:
-                return "gray"
-            elif flag & irsdk.Flags.red:
-                return "red"
-            elif flag & irsdk.Flags.white:
-                return "white"
-            elif (
-                flag & irsdk.Flags.yellow
-                or flag & irsdk.Flags.yellow_waving
-                or flag & irsdk.Flags.caution
-                or flag & irsdk.Flags.caution_waving
-                or flag & irsdk.Flags.debris
-            ):
-                return "yellow"
-            elif flag & irsdk.Flags.green or flag & irsdk.Flags.green_held:
-                return "green"
-            elif flag & irsdk.Flags.one_lap_to_green:
-                return "one_to_green"
-            else:
-                return "green"
-
-    @classmethod
-    def _pit_penalty(cls, race_manager, car_num, lap):
+    def _pit_penalty(race_manager, car_num, lap):
         """
         Select and issue a pit penalty to designated car number
         """
@@ -75,7 +73,7 @@ class RaceService:
         )
 
         race_manager.ir.freeze_var_buffer_latest()
-        flag_color = cls._get_flag(race_manager.ir["SessionFlags"])
+        flag_color = _get_flag(race_manager.ir["SessionFlags"])
 
         if flag_color == "green":
             logging.info(f"PENALTY: Passthrough for #{car_num}: {penalty}")
@@ -119,7 +117,7 @@ class RaceService:
     @staticmethod
     def _play_sound():
         """
-        Plays packaged sound file of start engine command
+        Plays packaged sound file of Kevin James' start engine command
         """
         if sd.query_devices(device=audio_device):
             logging.debug(f"Setting audio output to {audio_device}")
@@ -153,9 +151,10 @@ class RaceService:
         cls._play_sound()
         logging.debug("Sleeping for 20 seconds while sound plays")
         time.sleep(20)
-        ## This will change session state from 1 -> 3
-        ## get_in_car -> parade_laps
+        ## Session state right now is 2 (warmup) because of DQ'd AI cars
         logging.debug("Issuing gridstart command")
+        ## This will change session state from 2 -> 3
+        ## warmup -> parade_laps
         race_manager.send_iracing_command("!gridstart")
         time.sleep(20)
         ## Wait for cars to get rolling, then issue any pre-race penalties
@@ -165,9 +164,6 @@ class RaceService:
         else:
             logging.debug("No pre-race penalties to issue")
         logging.info("Pre-race actions are complete")
-        logging.debug(
-            f"Stage lengths: {race_manager.race_weekend.stage_1.stage_end_lap}/{race_manager.race_weekend.stage_2.stage_end_lap}/{race_manager.race_weekend.stage_3.stage_end_lap}"
-        )
         race_manager.send_iracing_command(
             f"Stage lengths: {race_manager.race_weekend.stage_1.stage_end_lap}/{race_manager.race_weekend.stage_2.stage_end_lap}/{race_manager.race_weekend.stage_3.stage_end_lap}"
         )
@@ -234,6 +230,7 @@ class RaceService:
                 logging.debug("No cars on pitroad")
             return pit_tracking
 
+    @staticmethod
     def _process_stage_results(race_manager, stage):
         ## Grab the results for top 10
         race_manager.ir.freeze_var_buffer_latest()
@@ -268,7 +265,7 @@ class RaceService:
         if stage_end_early is True:
             ## determine how many caution laps should be added
             ## wait until the stage lap actually comes
-            logging.warning("Early caution feature needs to be implemented")
+            logging.warning("Early caution feature needs to be completed")
             stage_complete = True
         else:
             ## Wait until 10th place crosses the finish line
@@ -284,7 +281,7 @@ class RaceService:
                 stage_complete = True
 
         ## Throw the caution flag if necessary
-        current_flag = cls._get_flag(race_manager.ir["SessionFlags"])
+        current_flag = _get_flag(race_manager.ir["SessionFlags"])
         if current_flag == "green":
             race_manager.send_iracing_command(f"!yellow End of Stage {stage}")
 
@@ -311,7 +308,7 @@ class RaceService:
         ]["ResultsPositions"][0]["LapsComplete"]
         logging.debug(f"Leader laps completed: {leader_laps_complete}")
 
-        current_flag = cls._get_flag(race_manager.ir["SessionFlags"])
+        current_flag = _get_flag(race_manager.ir["SessionFlags"])
         if current_flag == "yellow" and leader_laps_complete <= stage_end - 3:
             logging.info(
                 f"Stage needs to end early: \
@@ -382,7 +379,7 @@ class RaceService:
     def race(cls, race_manager):
         while True:
             race_manager.ir.freeze_var_buffer_latest()
-            ## Enum is useful to map session state id to its name
+            ## This Enum is useful to map session state id to its name
             """
             logging.debug(
                 f"Session state is {SessionName(race_manager.ir['SessionState']).name}"

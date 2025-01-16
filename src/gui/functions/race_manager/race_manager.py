@@ -127,7 +127,7 @@ class RaceManager:
         if not test_file:
             self._connect()
 
-    def send_iracing_command(self, command) -> None:
+    def send_iracing_command(self, command: str) -> None:
         """
         Issue a command to iRacing via pyautogui.typewrite library
         """
@@ -179,12 +179,11 @@ class RaceManager:
         current_session_name = [
             session["SessionName"]
             for session in self.ir["SessionInfo"]["Sessions"]
-            if session["SessionNum"] == current_session_num
-        ][0]
+            if session["SessionNum"] == current_session_num][0]
 
         return current_session_num, current_session_name
 
-    def _check_iracing(self, state) -> None:
+    def _check_iracing(self, state: object) -> None:
         if state.ir_connected and not (self.ir.is_initialized and self.ir.is_connected):
             state.ir_connected = False
             self.ir.shutdown()
@@ -216,10 +215,8 @@ class RaceManager:
         self.race_weekend = RaceWeekend(
             track_short_name=self.ir["WeekendInfo"]["TrackDisplayShortName"],
             track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"],
-            race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num][
-                "SessionLaps"
-            ],
-            player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
+            race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"],
+            player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"]
         )
 
 

@@ -8,8 +8,8 @@ import time
 
 
 class QualifyingService:
-    @classmethod
-    def _set_field_size(cls, race_manager) -> None:
+    @staticmethod
+    def _set_field_size(race_manager) -> None:
         for position in race_manager.ir["SessionInfo"]["Sessions"][
             race_manager.qualifying_session_num
         ]["ResultsPositions"]:

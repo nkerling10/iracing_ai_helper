@@ -430,9 +430,9 @@ def _create_new_season(config) -> dict:
                 season_settings = _create_local_season_settings_file(
                     values, window["__TIRESETS__"].get()
                 )
-                _copy_roster_folder(config, season_settings)
-                _create_iracing_season(config, season_settings)
                 if season_settings:
+                    _copy_roster_folder(config, season_settings)
+                    _create_iracing_season(config, season_settings)
                     window.close()
                     return season_settings
         if event == "__TIRESETSCUSTOM__":
