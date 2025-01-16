@@ -138,7 +138,7 @@ class RaceManager:
                 logger.debug("Activated window")
             except PyGetWindowException:
                 logger.error("PyGetWindowException error!")
-                continue
+                time.sleep(0.5)
             break
         logger.debug(f"Sending chat command: {command}")
         self.ir.chat_command(1)
