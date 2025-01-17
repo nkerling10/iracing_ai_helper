@@ -13,6 +13,7 @@ import soundfile as sf
 
 ## Local imports
 
+logger = logging.getLogger(__name__)
 audio_device = "Speakers (Realtek(R) Audio), MME"
 
 
@@ -170,6 +171,7 @@ class RaceService:
 
     @classmethod
     def _penalty_tracker(cls, race_manager, pit_tracking):
+        logger.info(f"Value of pit_tracking: {pit_tracking}")
         ## Quit tracking penalties once the checkered flag comes out
         if race_manager.ir["SessionState"] == 5:
             return
@@ -362,11 +364,7 @@ class RaceService:
         stage_2_complete = False
         pit_tracking = []
         logging.info("Race has started!")
-        pits_closed = False
-        last_lap_notice = False
-        stage_end_early = False
-        stage_complete = False
-        params = [pits_closed, last_lap_notice, stage_end_early, stage_complete]
+        params = [False, False, False, False]
         while True:
             race_manager.ir.freeze_var_buffer_latest()
             pit_tracking = cls._penalty_tracker(race_manager, pit_tracking)
