@@ -17,24 +17,24 @@ import pygetwindow as gw
 from pygetwindow import PyGetWindowException
 
 ## Local imports
-from gui.functions.race_manager.config.race_settings import RaceSettings
-from gui.functions.race_manager.services.core.stage import Stage
-from gui.functions.race_manager.services.session.practice_service import PracticeService
-from gui.functions.race_manager.services.session.qualifying_service import (
+from config.race_settings import RaceSettings
+from services.core.stage import Stage
+from services.session.practice_service import PracticeService
+from services.session.qualifying_service import (
     QualifyingService,
 )
-from gui.functions.race_manager.services.session.race_service import RaceService
+from services.session.race_service import RaceService
 
-"""
+
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler(Path(os.getcwd()) / "logs" / "debug.log"),
+        #FileHandler(Path(os.getcwd()) / "logs" / "debug.log"),
         logging.StreamHandler(),
     ],
 )
-"""
+
 
 logger = logging.getLogger(__name__)
 

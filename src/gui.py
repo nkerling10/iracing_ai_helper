@@ -13,7 +13,7 @@ from pathlib import Path
 
 ## Local imports
 from gui.config.settings import Settings
-from gui.functions.race_manager.race_manager import main as race_manager
+#from gui.functions.race_manager.race_manager import main as race_manager
 from gui.layouts.tables import roster_data
 from gui.functions.randomizer.randomizer import Randomizer
 from gui.functions.database.db_manager import DatabaseManager

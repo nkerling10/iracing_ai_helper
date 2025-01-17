@@ -40,6 +40,7 @@ class Driver:
             car_entry.get("carNumber"),
             [car for car in randomizer.cars if car[0] == car_entry.get("carNumber")][0],
         )
+        # TODO: Stefan Parsons in the 45 is not getting removed
         self.name = self._assign_driver(randomizer, car_entry)
         self.driver_skill = (
             0
@@ -119,6 +120,7 @@ class Driver:
                 fuzzy=True,
             ).date()
         except IndexError:
+            print(self.car.number)
             logger.error(
                 f"Error with {self.name} - either invalid name or birthday, defaulting to 50"
             )

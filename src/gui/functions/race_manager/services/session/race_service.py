@@ -148,9 +148,9 @@ class RaceService:
                 break
             logging.debug("Waiting for player to enter car")
             time.sleep(1)
-        cls._play_sound()
+        #cls._play_sound()
         logging.debug("Sleeping for 20 seconds while sound plays")
-        time.sleep(20)
+        time.sleep(10)
         ## Session state right now is 2 (warmup) because of DQ'd AI cars
         logging.debug("Issuing gridstart command")
         ## This will change session state from 2 -> 3
@@ -173,9 +173,12 @@ class RaceService:
         ## Quit tracking penalties once the checkered flag comes out
         if race_manager.ir["SessionState"] == 5:
             return
-        leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
-            race_manager.race_session_num
-        ]["ResultsPositions"][0]["LapsComplete"]
+        try:
+            leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
+                race_manager.race_session_num
+            ]["ResultsPositions"][0]["LapsComplete"]
+        except TypeError:
+            return pit_tracking
         if (
             leader_laps_complete > 0
             and leader_laps_complete <= race_manager.race_weekend.race_length
@@ -262,6 +265,7 @@ class RaceService:
     @classmethod
     def _stage_has_ended(cls, race_manager, stage_end_early, stage_end, stage):
         race_manager.ir.freeze_var_buffer_latest()
+
         if stage_end_early is True:
             ## determine how many caution laps should be added
             ## wait until the stage lap actually comes
@@ -288,12 +292,11 @@ class RaceService:
         return stage_complete
 
     @classmethod
-    def _process_stages(cls, race_manager, params):
-        stage = params[0]
-        pits_closed = params[1]
-        last_lap_notice = params[2]
-        stage_end_early = params[3]
-        stage_complete = params[4]
+    def _process_stages(cls, race_manager, stage, params):
+        pits_closed = params[0]
+        last_lap_notice = params[1]
+        stage_end_early = params[2]
+        stage_complete = params[3]
 
         if stage == 1:
             stage_end = race_manager.race_weekend.stage_1.stage_end_lap
@@ -303,13 +306,16 @@ class RaceService:
             stage_end = race_manager.race_weekend.laps
 
         race_manager.ir.freeze_var_buffer_latest()
-        leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
-            race_manager.race_session_num
-        ]["ResultsPositions"][0]["LapsComplete"]
+        try:
+            leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
+                race_manager.race_session_num
+            ]["ResultsPositions"][0]["LapsComplete"]
+        except TypeError:
+            return [stage, pits_closed, last_lap_notice, stage_end_early, stage_complete]
         logging.debug(f"Leader laps completed: {leader_laps_complete}")
 
         current_flag = _get_flag(race_manager.ir["SessionFlags"])
-        if current_flag == "yellow" and leader_laps_complete <= stage_end - 3:
+        if current_flag == "yellow" and leader_laps_complete <= stage_end - 3 and stage_end_early is False:
             logging.info(
                 f"Stage needs to end early: \
                         {stage_end - race_manager.ir['Lap']} laps until stage end"
@@ -356,17 +362,22 @@ class RaceService:
         stage_2_complete = False
         pit_tracking = []
         logging.info("Race has started!")
+        pits_closed = False
+        last_lap_notice = False
+        stage_end_early = False
+        stage_complete = False
+        params = [pits_closed, last_lap_notice, stage_end_early, stage_complete]
         while True:
             race_manager.ir.freeze_var_buffer_latest()
-            pit_tracking = cls._penalty_tracker(pit_tracking)
+            pit_tracking = cls._penalty_tracker(race_manager, pit_tracking)
             if stage_1_complete is False:
                 stage = 1
             elif stage_1_complete is True:
                 stage = 2
             elif stage_2_complete is True:
                 stage = 3
-            params = cls._process_stages(race_manager, stage)
-            if params[4]:
+            params = cls._process_stages(race_manager, stage, params)
+            if params[3]:
                 if stage == 1:
                     stage_1_complete = True
                 elif stage == 2:
