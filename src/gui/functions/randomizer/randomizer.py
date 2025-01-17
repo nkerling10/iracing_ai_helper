@@ -9,6 +9,7 @@ import os
 import random
 import sqlite3
 from datetime import date
+from os.path import exists
 from pathlib import Path
 from shutil import copyfile
 
@@ -40,7 +41,6 @@ class Driver:
             car_entry.get("carNumber"),
             [car for car in randomizer.cars if car[0] == car_entry.get("carNumber")][0],
         )
-        # TODO: Stefan Parsons in the 45 is not getting removed
         self.name = self._assign_driver(randomizer, car_entry)
         self.driver_skill = (
             0
@@ -102,9 +102,11 @@ class Driver:
             logger.critical(
                 f"{self.car.number} does not exist in car_driver_mapping table"
             )
-        if week_driver[1] is not None:
+        if week_driver[1] is None and week_driver[2] is None:
+            return f"NODRIVER{self.car.number}"
+        elif week_driver[1] is not None:
             return week_driver[1]
-        if week_driver[2] is None:
+        elif week_driver[2] is None:
             return f"NODRIVER{self.car.number}"
         else:
             return week_driver[2]
@@ -184,6 +186,7 @@ class Randomizer:
     def _assign_and_randomize_drivers(self) -> None:
         for car_entry in self.roster["drivers"]:
             roster_driver = Driver(self, car_entry)
+            car_entry["driverName"] = roster_driver.name
             if "NODRIVER" not in roster_driver.name:
                 orig_attrs = [
                     roster_driver.driver_skill,
@@ -194,7 +197,6 @@ class Randomizer:
                     roster_driver.strategy,
                 ]
                 roster_driver_updated = self._randomize_attributes(roster_driver)
-                car_entry["driverName"] = roster_driver_updated.name
                 car_entry["driverSkill"] = roster_driver_updated.driver_skill
                 car_entry["driverAggression"] = roster_driver_updated.aggression
                 car_entry["driverOptimism"] = roster_driver_updated.optimism
@@ -279,7 +281,11 @@ class Randomizer:
             logger.debug(
                 f"No alternate schemes found for {roster_driver_updated.car.number}"
             )
-            return
+            if not exists(self.roster_path / f"{roster_driver_updated.car.number}.tga"):
+                logger.debug(f"{roster_driver_updated.car.number}.tga doesn't exist, creating")
+                new_paint_file = self.roster_path / roster_driver_updated.car.number / [file for file in paint_files][0]
+            else:
+                return
         else:
             driver_paints = [
                 file
