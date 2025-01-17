@@ -1071,6 +1071,48 @@
             "carClassId": 0,
             "disableCarDecals": true,
             "carTgaName": "car_99.tga"
-        }
+        },
+        {
+			"driverName": "NODRIVER24",
+			"carDesign": "2,fa7fed,000000,ffffff",
+			"carNumber": "24",
+			"suitDesign": "2,fa7fed,000000,ffffff",
+			"helmetDesign": "2,fa7fed,000000,ffffff",
+			"carPath": "stockcars2\\supra2019",
+			"carId": 116,
+			"sponsor1": 0,
+			"sponsor2": 0,
+			"numberDesign": "0,0,,,",
+			"driverSkill": 73,
+			"driverAggression": 31,
+			"driverOptimism": 40,
+			"driverSmoothness": 44,
+			"pitCrewSkill": 50,
+			"strategyRiskiness": 51,
+			"driverAge": 37,
+			"id": "bd312142-7f0a-fbef-f381-cae17d0db9d7",
+			"rowIndex": 46
+		},
+		{
+			"driverName": "NODRIVER66",
+			"carDesign": "3,df7d3d,121212,a4a5a9",
+			"carNumber": "66",
+			"suitDesign": "1,df7d3d,121212,a4a5a9",
+			"helmetDesign": "8,df7d3d,121212,a4a5a9",
+			"carPath": "stockcars2\\mustang2019",
+			"carId": 115,
+			"sponsor1": 251,
+			"sponsor2": 224,
+			"numberDesign": "0,0,,,",
+			"driverSkill": 22,
+			"driverAggression": 88,
+			"driverOptimism": 59,
+			"driverSmoothness": 44,
+			"pitCrewSkill": 62,
+			"strategyRiskiness": 58,
+			"driverAge": 32,
+			"id": "d8bc705b-f59d-8769-270a-1e479f0129da",
+			"rowIndex": 47
+		}
     ]
 }
