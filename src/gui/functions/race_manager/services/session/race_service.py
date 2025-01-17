@@ -174,7 +174,7 @@ class RaceService:
         logger.info(f"Value of pit_tracking: {pit_tracking}")
         ## Quit tracking penalties once the checkered flag comes out
         if race_manager.ir["SessionState"] == 5:
-            return
+            return []
         try:
             leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
                 race_manager.race_session_num
@@ -356,7 +356,7 @@ class RaceService:
         else:
             logging.debug("No actions to perform yet!")
 
-        return [stage, pits_closed, last_lap_notice, stage_end_early, stage_complete]
+        return [pits_closed, last_lap_notice, stage_end_early, stage_complete]
 
     @classmethod
     def _process_race(cls, race_manager):
@@ -388,37 +388,31 @@ class RaceService:
     def race(cls, race_manager):
         while True:
             race_manager.ir.freeze_var_buffer_latest()
-            ## This Enum is useful to map session state id to its name
+            ## This Enum is useful to map session state id to its name if desired
             """
             logging.debug(
                 f"Session state is {SessionName(race_manager.ir['SessionState']).name}"
             )
             """
-            ## Session state GET_IN_CAR (garage/settings menu)
-            ## Session state PARADE_LAPS is also handled in this logic
+            ## Session state GET_IN_CAR (1) (garage/settings menu)
+            ## Session state WARMUP (2) AND PARADE_LAPS (3) are handled in this logic
             if race_manager.ir["SessionState"] == 1:
                 logging.debug("Sessionstate 1 detected")
                 ## Perform pre-race actions
                 cls._pre_race_actions(race_manager)
-            ## Pre-race penalties will finish being issued before session state
-            ## changes from 3 -> 4. Just sleep and wait until the race starts
-            elif race_manager.ir["SessionState"] == 3:
-                logging.debug("Sleeping for sessionstate 3")
-                time.sleep(1)
             ## Session state RACING
             elif race_manager.ir["SessionState"] == 4:
                 logging.debug("Race has started!")
                 cls._process_race(race_manager)
             ## Session state CHECKERED
-            ## Checkered flag is officially out
+            ## Checkered flag has been displayed to the leader
             elif race_manager.ir["SessionState"] == 5:
-                # start finalizing and exporting any race results
                 pass
-
             ## Session state COOLDOWN
             ## All cars have taken the checkered, time remaining counter has expired
             elif race_manager.ir["SessionState"] == 6:
-                # probably break here, or even before it reaches this state
+                # do a dump of the buffer as soon as sessionstate hits 6
+                # will be later converted into post-race processing logic
                 race_manager.ir.freeze_var_buffer_latest()
                 irsdk.IRSDK.parse_to(
                     race_manager.ir,

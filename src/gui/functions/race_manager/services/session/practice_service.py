@@ -24,6 +24,7 @@ class PracticeService:
                     race_manager.send_iracing_command(
                         f"!nchat {driver['UserName'].replace(' ', '.')}"
                     )
+
     @staticmethod
     def _disqualify_drivers(race_manager, driver_data) -> None:
         """
@@ -46,16 +47,25 @@ class PracticeService:
         Calculate pre-race penalties for each driver in the field based
             off the chance modifier in the race_settings class.
         """
-        for driver in driver_data:
-            if (
-                random.randint(1, 100)
-                < race_manager.race_settings.pre_race_penalty_chance
-            ):
-                penalty = random.choice(race_manager.race_settings.pre_race_penalties)
-                logging.debug(f"{driver['CarNumber']} hit with penalty: {penalty}")
-                race_manager.race_weekend.pre_race_penalties.append(
-                    [driver["CarNumber"], penalty]
-                )
+        fail_chance = 2
+        fail_one, fail_two, fail_three = []
+        for car in driver_data:
+            if random.randint(1, 100) < fail_chance:
+                logger.debug(f"Car #{car['CarNumber']} has failed inspection")
+                fail_one.append(car['CarNumber'])
+        
+        for car in fail_one:
+            if random.randint(1, 100) < fail_chance * 2:
+                logger.debug(f"Car #{car['CarNumber']} has failed inspection twice")
+                fail_two.append(car['CarNumber'])
+        
+        for car in fail_two:
+            if random.randint(1, 100) < fail_chance * 4:
+                logger.debug(f"Car #{car['CarNumber']} has failed inspection three times")
+                fail_three.append(car['CarNumber'])
+        
+        return fail_two, fail_three
+
 
     @classmethod
     def practice(cls, race_manager, disable=False) -> None:
