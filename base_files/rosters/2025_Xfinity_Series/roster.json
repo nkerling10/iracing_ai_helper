@@ -267,7 +267,7 @@
         {
             "driverName": "Harrison Burton",
             "carDesign": "1,efd600,d7162d,111111",
-            "carNumber": "15",
+            "carNumber": "25",
             "suitDesign": "33,efd600,d7162d,111111",
             "helmetDesign": "43,efd600,d7162d,111111",
             "carPath": "stockcars2\\mustang2019",
@@ -286,7 +286,7 @@
             "rowIndex": 12,
             "carClassId": 0,
             "disableCarDecals": true,
-            "carTgaName": "car_15.tga"
+            "carTgaName": "car_25.tga"
         },
         {
             "driverName": "Christian Eckes",
@@ -1091,7 +1091,10 @@
 			"strategyRiskiness": 51,
 			"driverAge": 37,
 			"id": "bd312142-7f0a-fbef-f381-cae17d0db9d7",
-			"rowIndex": 46
+			"rowIndex": 46,
+            "carClassId": 0,
+            "disableCarDecals": true,
+            "carTgaName": "car_24.tga"
 		},
 		{
 			"driverName": "NODRIVER66",
@@ -1112,7 +1115,34 @@
 			"strategyRiskiness": 58,
 			"driverAge": 32,
 			"id": "d8bc705b-f59d-8769-270a-1e479f0129da",
-			"rowIndex": 47
-		}
+			"rowIndex": 47,
+            "carClassId": 0,
+            "disableCarDecals": true,
+            "carTgaName": "car_66.tga"
+		},
+        {
+            "driverName": "NODRIVER15",
+            "carDesign": "1,efd600,d7162d,111111",
+            "carNumber": "15",
+            "suitDesign": "33,efd600,d7162d,111111",
+            "helmetDesign": "43,efd600,d7162d,111111",
+            "carPath": "stockcars2\\mustang2019",
+            "carId": 115,
+            "sponsor1": 51,
+            "sponsor2": 51,
+            "numberDesign": "0,0,FFFFFF,777777,000000",
+            "driverSkill": 78,
+            "driverAggression": 999,
+            "driverOptimism": 500,
+            "driverSmoothness": 48,
+            "pitCrewSkill": 75,
+            "strategyRiskiness": 26,
+            "driverAge": 24,
+            "id": "0927b165-9ba3-3915-7579-0e8dd8f3a203",
+            "rowIndex": 48,
+            "carClassId": 0,
+            "disableCarDecals": true,
+            "carTgaName": "car_15.tga"
+        }
     ]
 }

@@ -54,9 +54,9 @@ class RaceWeekend:
         self.race_length = race_length
         self.pre_race_penalties = []
         self.pole_winner = ""
-        self.stage_1 = Stage()
-        self.stage_2 = Stage()
-        self.stage_3 = Stage(stage_end_lap=race_length)
+        self.stage1_end = 0
+        self.stage2_end = 0
+        self.stage_results = []
         self.player_car_num = player_car_num
 
         self._set_stage_lengths()
@@ -102,13 +102,15 @@ class RaceWeekend:
             stage_1_mod = 0.34
         elif self.track_short_name == "WWTR":
             stage_1_mod = 0.22
+        else:
+            stage_1_mod = 0.25
 
-        self.stage_1.stage_end_lap = math.floor(self.race_length * stage_1_mod)
-        self.stage_2.stage_end_lap = math.floor(
-            self.stage_1.stage_end_lap * 2.15
+        self.stage1_end = math.floor(self.race_length * stage_1_mod)
+        self.stage2_end = math.floor(
+            self.stage1_end * 2.15
             if self.track_short_name == "COTA"
-            else self.stage_1.stage_end_lap * 2
-        )
+            else self.stage1_end * 2
+        ) + 4
 
 
 class RaceManager:
@@ -294,6 +296,7 @@ def loop(race_manager: object) -> None:
 
 def main() -> None:
     # race_manager = RaceManager(test_file)
+    
     race_manager = RaceManager()
     race_manager._set_weekend_data()
     ## After data is set, proceed to looping logic
