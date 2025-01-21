@@ -4,25 +4,25 @@ Massive credit to kutu for the pyirsdk linked below:
 """
 
 ## Standard library imports
+import json
 import logging
+import math
 import os
 import time
-import math
 from pathlib import Path
 
 ## Third party imports
 import irsdk
 import pyautogui
 import pygetwindow as gw
+import sqlite3
 from pygetwindow import PyGetWindowException
 
 ## Local imports
 from config.race_settings import RaceSettings
-from services.core.stage import Stage
+from services.core.points_calculator import PointsCalculator
 from services.session.practice_service import PracticeService
-from services.session.qualifying_service import (
-    QualifyingService,
-)
+from services.session.qualifying_service import QualifyingService
 from services.session.race_service import RaceService
 
 
@@ -48,15 +48,20 @@ class State:
 
 
 class RaceWeekend:
-    def __init__(self, track_short_name, track_long_name, race_length, player_car_num):
+    def __init__(self, track_short_name: str, track_long_name: str, race_length: int,
+                 player_car_num: int, driver_caridx_map: dict, declared_points_drivers: list):
         self.track_short_name = track_short_name
         self.track_long_name = track_long_name
         self.race_length = race_length
+        self.driver_caridx_map = driver_caridx_map
+        self.declared_points_drivers = declared_points_drivers
         self.pre_race_penalties = []
         self.pole_winner = ""
         self.stage1_end = 0
         self.stage2_end = 0
         self.stage_results = []
+        self.race_results = []
+        self.weekend_points = {}
         self.player_car_num = player_car_num
 
         self._set_stage_lengths()
@@ -109,8 +114,8 @@ class RaceWeekend:
         self.stage2_end = math.floor(
             self.stage1_end * 2.15
             if self.track_short_name == "COTA"
-            else self.stage1_end * 2
-        ) + 4
+            else self.stage1_end * 3
+        ) + 2
 
 
 class RaceManager:
@@ -210,7 +215,7 @@ class RaceManager:
         except KeyboardInterrupt:
             quit()
 
-    def _set_weekend_data(self) -> None:
+    def _set_weekend_data(self, declared_points_drivers: list) -> None:
         ## Identify which sessions exist in the "race weekend"
         self._define_sessions()
         ## Set the initially required data
@@ -218,20 +223,10 @@ class RaceManager:
             track_short_name=self.ir["WeekendInfo"]["TrackDisplayShortName"],
             track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"],
             race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"],
-            player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"]
+            player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
+            driver_caridx_map=[{"name": driver["UserName"], "car": driver["CarNumber"]} for driver in self.ir["DriverInfo"]["Drivers"] if driver["UserName"] != "Pace Car"],
+            declared_points_drivers=declared_points_drivers
         )
-
-
-def practice(race_manager: object) -> None:
-    PracticeService.practice(race_manager)
-
-
-def qualifying(race_manager: object) -> None:
-    QualifyingService.qualifying(race_manager)
-
-
-def race(race_manager: object) -> None:
-    RaceService.race(race_manager)
 
 
 def loop(race_manager: object) -> None:
@@ -251,7 +246,7 @@ def loop(race_manager: object) -> None:
                 ]["ResultsOfficial"]
                 == 0
             ):
-                practice(race_manager)
+                PracticeService.practice(race_manager)
                 race_manager.practice_done = True
                 logger.info("Practice operations are complete!")
             else:
@@ -273,7 +268,7 @@ def loop(race_manager: object) -> None:
                 ]["ResultsOfficial"]
                 == 0
             ):
-                qualifying(race_manager)
+                QualifyingService.qualifying(race_manager)
                 race_manager.qualifying_done = True
                 logger.info("Qualifying operations are complete!")
             else:
@@ -288,20 +283,32 @@ def loop(race_manager: object) -> None:
                 ]["ResultsOfficial"]
                 == 1
             ):
-                race(race_manager)
+                RaceService.race(race_manager)
+                return
 
         else:
             time.sleep(1)
 
+def get_eligible_drivers() -> list:
+    """
+        This is temporary until the functionality is merged into the GUI
+    """
+    conn = sqlite3.connect("C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db")
+    cursor = conn.cursor()
+    results = cursor.execute("SELECT NAME FROM DRIVER WHERE DECLARED_POINTS == 'XFINITY'").fetchall()
+    conn.close()
+    return [driver[0] for driver in results]
 
 def main() -> None:
     # race_manager = RaceManager(test_file)
-    
+    declared_points_drivers = get_eligible_drivers()
     race_manager = RaceManager()
-    race_manager._set_weekend_data()
+    race_manager._set_weekend_data(declared_points_drivers)
     ## After data is set, proceed to looping logic
     loop(race_manager)
-
+    PointsCalculator.main(race_manager)
+    with open("C:/Users/Nick/Documents/iracing_ai_helper/src/gui/functions/race_manager/weekend_points.json", "w") as file:
+        file.write(json.dumps(race_manager.race_weekend.weekend_points, indent=2))
 
 if __name__ == "__main__":
     main()
