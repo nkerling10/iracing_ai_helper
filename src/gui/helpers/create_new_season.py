@@ -2,6 +2,7 @@ import json
 import logging
 import os
 import PySimpleGUI as sg
+import sqlite3
 from pathlib import Path
 from shutil import copyfile, copytree
 
@@ -132,6 +133,39 @@ def _copy_season_base_file(config: object, season_settings: dict) -> bool:
         logger.critical(e)
         return False
 
+def _create_season_database_tables(config: object, season_settings: dict) -> None:
+    season_series = season_settings.get("season_series")
+    season_name = season_settings.get("season_name").upper()
+    conn = sqlite3.connect(config.database_path)
+    with conn:
+        conn.execute(
+            f"""CREATE TABLE IF NOT EXISTS {season_series}_{season_name}_POINTS_DRIVER (
+                NAME TEXT PRIMARY KEY,
+                POINTS INTEGER,
+                STAGE_POINTS INTEGER,
+                STARTS INTEGER,
+                WINS INTEGER,
+                TOP_5s INTEGER,
+                TOP_10s INTEGER,
+                DNFs INTEGER,
+                LAPS_LED INTEGER,
+                STAGE_WINS INTEGER,
+                POLES INTEGER
+            )"""
+        )
+
+        conn.execute(
+            f"""CREATE TABLE IF NOT EXISTS {season_series}_{season_name}_POINTS_OWNER (
+                CAR TEXT PRIMARY KEY,
+                TEAM TEXT,
+                ATTEMPTS INTEGER,
+                POINTS INTEGER,
+                WINS INTEGER,
+                STAGE_WINS INTEGER
+            )"""
+        )
+    conn.close()
+
 
 def _create_iracing_season(config: object, season_settings: dict) -> None:
     """
@@ -141,6 +175,7 @@ def _create_iracing_season(config: object, season_settings: dict) -> None:
     season_copied_bool = _copy_season_base_file(config, season_settings)
     if not season_copied_bool:
         return
+    _create_season_database_tables(config, season_settings)
     _update_season_settings(config, season_settings)
 
 

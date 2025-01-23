@@ -38,7 +38,7 @@ class SeasonData:
         self.past_season_winners = prev_season_winners[0]
         self.current_season_winners=[value[0] for value in conn.cursor().execute("SELECT NAME, WINS FROM XFINITY_2025_POINTS_DRIVER WHERE WINS != 0 or NULL").fetchall()],
         self.owner_points=conn.cursor().execute("SELECT * FROM XFINITY_2025_POINTS_OWNER").fetchall()
-        self.point_values=[value[0] for value in conn.cursor().execute("SELECT POINTS FROM XFINITY_POINT_TABLE").fetchall()]
+        self.point_values=[value[0] for value in conn.cursor().execute("SELECT POINTS FROM POINTS_AWARDED_TABLE").fetchall()]
         conn.close()
 
 
@@ -126,7 +126,7 @@ class RaceManager:
         self.race_done = False
         self.ir = irsdk.IRSDK()
         if test_file:
-            self.ir.startup("C:/Users/Nick/Documents/iracing_ai_helper/session_data/dataracing.bin")
+            self.ir.startup("C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_finished.bin")
         else:
             self._connect()
         self._set_weekend_data()

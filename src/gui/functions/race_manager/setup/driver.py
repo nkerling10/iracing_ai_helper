@@ -7,6 +7,8 @@ class Driver:
         self.name = name
         self.car = str(car)
         self.points_eligible = points_eligibile
+        self.made_race = True
+        self.stage_points = 0
         self.driver_points = 0
         self.owner_points = 0
         self.playoff_points = 0

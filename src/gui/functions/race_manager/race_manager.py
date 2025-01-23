@@ -14,6 +14,7 @@ from setup.driver import Driver
 from services.practice_service import PracticeService
 from services.qualifying_service import QualifyingService
 from services.race_service import RaceService
+from services.points_calculator import PointsCalculator
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -92,6 +93,7 @@ def set_drivers(race_manager):
                             True
                             if driver["UserName"]
                             in race_manager.season_data.declared_points
+                            or driver["CarIsAI"] == 0
                             else False
                         ),
                     )
@@ -123,13 +125,34 @@ def loop(race_manager, cars_to_dq):
 
 def main():
     race_manager = RaceManager(test_file=True)
+    race_manager.race_weekend.race_results = race_manager.ir["SessionInfo"]["Sessions"][0]["ResultsPositions"]
+    
+    race_manager.race_weekend.stage_results[0].stage_results = ["Austin Hill",
+                                                                "Justin Allgaier",
+                                                                "Harrison Burton",
+                                                                "Sammy Smith",
+                                                                "Brandon Jones",
+                                                                "Daniel Dye",
+                                                                "William Sawalich",
+                                                                "Jesse Love",
+                                                                "Sheldon Creed",
+                                                                "Christian Eckes"]
+    race_manager.race_weekend.stage_results[1].stage_results = ["Austin Hill",
+                                                                "Justin Allgaier",
+                                                                "Sammy Smith",
+                                                                "Brandon Jones",
+                                                                "Sheldon Creed",
+                                                                "Harrison Burton",
+                                                                "Daniel Dye",
+                                                                "William Sawalich",
+                                                                "Jesse Love",
+                                                                "Christian Eckes"]
     cars_to_dq = set_drivers(race_manager)
+    """
     loop(race_manager, cars_to_dq)
     """
     PointsCalculator.main(race_manager)
-    with open("C:/Users/Nick/Documents/iracing_ai_helper/src/gui/functions/race_manager/weekend_points.json", "w") as file:
-        file.write(json.dumps(race_manager.race_weekend.weekend_points, indent=2))
-    """
+
 
 
 if __name__ == "__main__":

@@ -4,7 +4,7 @@ import time
 from operator import itemgetter
 
 ## Third party imports
-
+import irsdk
 ## Local imports
 
 logger = logging.getLogger(__name__)
@@ -49,8 +49,8 @@ class QualifyingService:
         )
 
         ## Example 38 car field = set positions 1-33
-        logger.debug(f"Setting positions 1-{race_manager.race_settings.field_size - 5}")
-        for position in range(0, race_manager.race_settings.field_size - 5):
+        logger.debug(f"Setting positions 1-{race_manager.race_weekend.race_settings.field_size - 5}")
+        for position in range(0, race_manager.race_weekend.race_settings.field_size - 5):
             cars_in_race.append([
                     driver["CarNumber"]
                     for driver in race_manager.ir["DriverInfo"]["Drivers"]
@@ -58,7 +58,7 @@ class QualifyingService:
                 ][0])
 
         # 38 car field = set positions 34-37
-        non_locked_in_qual_cars = qualifying_results[race_manager.race_settings.field_size - 5:]
+        non_locked_in_qual_cars = qualifying_results[race_manager.race_weekend.race_settings.field_size - 5:]
         cars_drivers_left = []
         for position in non_locked_in_qual_cars:
             cars_drivers_left.append([(driver["CarNumber"], driver["UserName"]) for driver in 
@@ -67,7 +67,7 @@ class QualifyingService:
         
         points_sorting_ranked = cls._sort_owner_points(race_manager, cars_drivers_left)
 
-        logger.debug(f"Setting positions {race_manager.race_settings.field_size - 4}-{race_manager.race_settings.field_size - 1}")
+        logger.debug(f"Setting positions {race_manager.race_weekend.race_settings.field_size - 4}-{race_manager.race_weekend.race_settings.field_size - 1}")
         
         if points_sorting_ranked:
             for car in range(0, 3):
@@ -131,7 +131,7 @@ class QualifyingService:
                 else:
                     logger.debug("No owner points provisional detected, skipping to speed entries")
 
-        while len(cars_in_race) < race_manager.race_settings.field_size:
+        while len(cars_in_race) < race_manager.race_weekend.race_settings.field_size:
             logger.debug(f"{cars_drivers_left[0][1]} has made the race on speed after provisionals were applied")
             cars_in_race.append(cars_drivers_left[0][0])
             cars_drivers_left.remove(cars_drivers_left[0])
@@ -156,9 +156,16 @@ class QualifyingService:
             race_manager.ir.freeze_var_buffer_latest()
             if race_manager.ir["SessionInfo"]["Sessions"][race_manager.qualifying_session_num]["ResultsOfficial"] == 1:
                 logging.info("Qualifying results are now official.")
+                race_manager.ir.freeze_var_buffer_latest()
+                """
+                irsdk.IRSDK.parse_to(
+                    race_manager.ir,
+                    to_file="C:\\Users\\Nick\\Documents\\iracing_ai_helper\\session_data\\qual_resultsofficial.txt",
+                )
+                """
                 break
 
         logging.info(
-            f"Setting field size to {race_manager.race_settings.field_size} cars"
+            f"Setting field size to {race_manager.race_weekend.race_settings.field_size} cars"
         )
         cls._set_field_size(race_manager)
