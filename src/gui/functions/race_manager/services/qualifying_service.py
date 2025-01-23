@@ -151,18 +151,10 @@ class QualifyingService:
                 time.sleep(1)
             else:
                 break
-
+        logging.info("Session state is finalized, waiting for official results..")
         while True:
-            logging.info("Session state is finalized, waiting for official results..")
             race_manager.ir.freeze_var_buffer_latest()
-            if (
-                race_manager.ir["SessionInfo"]["Sessions"][
-                    race_manager.qualifying_session_num
-                ]["ResultsOfficial"]
-                != 1
-            ):
-                time.sleep(1)
-            else:
+            if race_manager.ir["SessionInfo"]["Sessions"][race_manager.qualifying_session_num]["ResultsOfficial"] == 1:
                 logging.info("Qualifying results are now official.")
                 break
 
