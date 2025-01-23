@@ -12,7 +12,6 @@ import sounddevice as sd
 import soundfile as sf
 
 ## Local imports
-from services.core.stage import Stage
 
 logger = logging.getLogger(__name__)
 audio_device = "Speakers (Realtek(R) Audio), MME"

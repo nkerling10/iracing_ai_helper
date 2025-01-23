@@ -1,49 +1,3 @@
-race_points_map = {
-    1: 40,
-    2: 35,
-    3: 34,
-    4: 33,
-    5: 32,
-    6: 31,
-    7: 30,
-    8: 29,
-    9: 28,
-    10: 27,
-    11: 26,
-    12: 25,
-    13: 24,
-    14: 23,
-    15: 22,
-    16: 21,
-    17: 20,
-    18: 19,
-    19: 18,
-    20: 17,
-    21: 16,
-    22: 15,
-    23: 14,
-    24: 13,
-    25: 12,
-    26: 11,
-    27: 10,
-    28: 9,
-    29: 8,
-    30: 7,
-    31: 6,
-    32: 5,
-    33: 4,
-    34: 3,
-    35: 2,
-    36: 1,
-    37: 1,
-    38: 1,
-    39: 1,
-    40: 1,
-    41: 0,
-    42: 0,
-    43: 0
-}
-
 class PointsCalculator:
     @staticmethod
     def calculate_stage_points(race_manager):
@@ -58,10 +12,10 @@ class PointsCalculator:
                                     + (10 - stage.stage_results.index(driver)),
                     "driver_points": race_manager.race_weekend.weekend_points[driver]["driver_points"]
                                     + (10 - stage.stage_results.index(driver) if driver
-                                       in race_manager.race_weekend.declared_points_drivers else 0),
+                                       in race_manager.season_data.declared_points_drivers else 0),
                     "playoff_points": race_manager.race_weekend.weekend_points[driver]["playoff_points"]
                                     + (1 if stage.stage_results.index(driver) == 0 and
-                                       driver in race_manager.race_weekend.declared_points_drivers else 0)
+                                       driver in race_manager.season_data.declared_points_drivers else 0)
                 }
 
     @staticmethod
@@ -74,13 +28,13 @@ class PointsCalculator:
                                                                     "playoff_points": 0}
             race_manager.race_weekend.weekend_points[driver] = {
                 "owner_points": race_manager.race_weekend.weekend_points[driver]["owner_points"]
-                                + (race_points_map[position.get("Position")]),
+                                + (race_manager.season_data.point_values[position.get("Position")][0]),
                 "driver_points": race_manager.race_weekend.weekend_points[driver]["driver_points"]
-                                + (race_points_map[position.get("Position")] if driver
-                                   in race_manager.race_weekend.declared_points_drivers else 0),
+                                + (race_manager.season_data.point_values[position.get("Position")][0] if driver
+                                   in race_manager.season_data.declared_points_drivers else 0),
                 "playoff_points": race_manager.race_weekend.weekend_points[driver]["playoff_points"]
                                 + (5 if race_manager.race_weekend.race_results.index(position) == 0 and
-                                   driver in race_manager.race_weekend.declared_points_drivers else 0)
+                                   driver in race_manager.season_data.declared_points_drivers else 0)
             }
 
     @classmethod
@@ -88,5 +42,16 @@ class PointsCalculator:
         cls.calculate_stage_points(race_manager)
         cls.calculate_race_points(race_manager)
 
+    @classmethod
+    def main_2(cls):
+        pass
+
 if __name__ == "__main__":
-    PointsCalculator.main()
+    drivers_in_race = [["William Byron", 17, False], ["Justin Allgaier", 7, True], ["Sheldon Creed", 00, True]]
+    driver_objs = []
+    for driver in drivers_in_race:
+        driver_objs.append(Driver(driver_info=driver))
+    for each in driver_objs:
+        print(each.driver_points)
+
+    PointsCalculator.main_2()

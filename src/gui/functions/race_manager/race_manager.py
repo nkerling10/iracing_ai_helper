@@ -4,311 +4,133 @@ Massive credit to kutu for the pyirsdk linked below:
 """
 
 ## Standard library imports
-import json
 import logging
-import math
-import os
 import time
-from pathlib import Path
-
-## Third party imports
-import irsdk
-import pyautogui
-import pygetwindow as gw
-import sqlite3
-from pygetwindow import PyGetWindowException
 
 ## Local imports
-from config.race_settings import RaceSettings
-from services.core.points_calculator import PointsCalculator
-from services.session.practice_service import PracticeService
-from services.session.qualifying_service import QualifyingService
-from services.session.race_service import RaceService
+from setup.race_setup import RaceManager
+from setup.driver import Driver
 
+from services.practice_service import PracticeService
+from services.qualifying_service import QualifyingService
+from services.race_service import RaceService
 
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
     handlers=[
-        #FileHandler(Path(os.getcwd()) / "logs" / "debug.log"),
+        # FileHandler(Path(os.getcwd()) / "logs" / "debug.log"),
         logging.StreamHandler(),
     ],
 )
 
-
 logger = logging.getLogger(__name__)
 
-test_file = Path(
-    "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\session_data\\dataracing.bin"
-)
+
+def current_session_practice(race_manager, cars_to_dq):
+    ## Regardless if a weekend actually has a practice session
+    ## Execute the practice stage as long as the first session is not completed
+    if race_manager.ir["SessionInfo"]["Sessions"][race_manager.practice_session_num][
+        "ResultsOfficial"
+    ] == 0 or (
+        race_manager.practice_session_num is None
+        and race_manager.ir["SessionInfo"]["Sessions"][
+            race_manager.qualifying_session_num
+        ]["ResultsOfficial"]
+        == 0
+    ):
+        PracticeService.practice(race_manager, cars_to_dq)
+        race_manager.practice_done = True
+        logger.info("Practice operations are complete!")
+    else:
+        logger.debug("Practice stage does not need to be executed, skipping")
+        race_manager.practice_done = True
 
 
-class State:
-    ir_connected = False
-
-
-class RaceWeekend:
-    def __init__(self, track_short_name: str, track_long_name: str, race_length: int,
-                 player_car_num: int, driver_caridx_map: dict, declared_points_drivers: list):
-        self.track_short_name = track_short_name
-        self.track_long_name = track_long_name
-        self.race_length = race_length
-        self.driver_caridx_map = driver_caridx_map
-        self.declared_points_drivers = declared_points_drivers
-        self.pre_race_penalties = []
-        self.pole_winner = ""
-        self.stage1_end = 0
-        self.stage2_end = 0
-        self.stage_results = []
-        self.race_results = []
-        self.weekend_points = {}
-        self.player_car_num = player_car_num
-
-        self._set_stage_lengths()
-
-    def _set_stage_lengths(self) -> None:
-        if self.track_short_name in ["Daytona", "Atlanta", "Watkins Glen"]:
-            stage_1_mod = 0.25
-        elif self.track_short_name == "COTA":
-            stage_1_mod = 0.31
-        elif self.track_short_name in [
-            "Phoenix",
-            "Las Vegas",
-            "Homestead",
-            "Texas",
-            "Charlotte",
-            "Dover",
-            "Kansas",
-        ]:
-            stage_1_mod = 0.225
-        elif self.track_short_name in [
-            "Martinsville",
-            "Nashville",
-            "Sebring",
-            "Rockingham",
-        ]:
-            stage_1_mod = 0.24
-        elif self.track_short_name == "Darlington":
-            stage_1_mod = 0.307
-        elif self.track_short_name == "Bristol":
-            stage_1_mod = 0.285
-        elif self.track_short_name in ["Talladega", "Pocono"]:
-            stage_1_mod = 0.23
-        elif self.track_short_name == "Sonoma":
-            stage_1_mod = 0.26
-        elif self.track_short_name in [
-            "Indianapolis",
-            "Iowa",
-            "Charlotte Roval",
-            "Chicago",
-        ]:
-            stage_1_mod = 0.30
-        elif self.track_short_name == "Laguna Seca":
-            stage_1_mod = 0.34
-        elif self.track_short_name == "WWTR":
-            stage_1_mod = 0.22
-        else:
-            stage_1_mod = 0.25
-
-        self.stage1_end = math.floor(self.race_length * stage_1_mod)
-        self.stage2_end = math.floor(
-            self.stage1_end * 2.15
-            if self.track_short_name == "COTA"
-            else self.stage1_end * 3
-        ) + 2
-
-
-class RaceManager:
-    def __init__(self, test_file=None):
-        self.state = State()
-        self.race_settings = RaceSettings()
-        self.race_weekend = None
-        self.practice_session_num = None
-        self.practice_done = False
-        self.qualifying_session_num = None
-        self.qualifying_done = False
-        self.race_session_num = None
-        self.race_done = False
-        self.ir = irsdk.IRSDK()
-        self.ir.startup(test_file)
-        if not test_file:
-            self._connect()
-
-    def send_iracing_command(self, command: str) -> None:
-        """
-        Issue a command to iRacing via pyautogui.typewrite library
-        """
-        while True:
-            try:
-                window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
-                window.activate()
-                logger.debug("Activated window")
-            except PyGetWindowException:
-                logger.error("PyGetWindowException error!")
-                time.sleep(0.5)
-            break
-        logger.debug(f"Sending chat command: {command}")
-        self.ir.chat_command(1)
-        time.sleep(0.5)
-        pyautogui.typewrite(command)
-        pyautogui.press("enter")
-        time.sleep(0.5)
-
-    def _define_sessions(self) -> None:
-        event_sessions = self.ir["SessionInfo"]["Sessions"]
-        practice_session = [
-            session["SessionNum"]
-            for session in event_sessions
-            if session["SessionName"] == "PRACTICE"
+def current_session_qualify(race_manager):
+    ## Perform the qualifying session operations
+    ## Execute the operations as long as the session has not been completed
+    if race_manager.ir["SessionInfo"]["Sessions"][race_manager.qualifying_session_num][
+        "ResultsOfficial"
+    ] == 0 or (
+        race_manager.qualifying_session_num is None
+        and race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num][
+            "ResultsOfficial"
         ]
-        if practice_session:
-            self.practice_session_num = practice_session[0]
-
-        qualifying_session = [
-            session["SessionNum"]
-            for session in event_sessions
-            if session["SessionName"] == "QUALIFY"
-        ]
-        if qualifying_session:
-            self.qualifying_session_num = qualifying_session[0]
-
-        race_session = [
-            session["SessionNum"]
-            for session in event_sessions
-            if session["SessionName"] == "RACE"
-        ]
-        if race_session:
-            self.race_session_num = race_session[0]
-
-    def get_current_sessions(self) -> tuple[int, str]:
-        self.ir.freeze_var_buffer_latest()
-        current_session_num = self.ir["SessionNum"]
-        current_session_name = [
-            session["SessionName"]
-            for session in self.ir["SessionInfo"]["Sessions"]
-            if session["SessionNum"] == current_session_num][0]
-
-        return current_session_num, current_session_name
-
-    def _check_iracing(self, state: object) -> None:
-        if state.ir_connected and not (self.ir.is_initialized and self.ir.is_connected):
-            state.ir_connected = False
-            self.ir.shutdown()
-            logger.info("irsdk disconnected")
-        elif (
-            not state.ir_connected
-            and self.ir.startup()
-            and self.ir.is_initialized
-            and self.ir.is_connected
-        ):
-            state.ir_connected = True
-            logger.info("irsdk connected")
-
-    def _connect(self) -> None:
-        try:
-            while True:
-                self._check_iracing(self.state)
-                if self.state.ir_connected:
-                    return
-                logger.info("Waiting for connection to iRacing..")
-                time.sleep(1)
-        except KeyboardInterrupt:
-            quit()
-
-    def _set_weekend_data(self, declared_points_drivers: list) -> None:
-        ## Identify which sessions exist in the "race weekend"
-        self._define_sessions()
-        ## Set the initially required data
-        self.race_weekend = RaceWeekend(
-            track_short_name=self.ir["WeekendInfo"]["TrackDisplayShortName"],
-            track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"],
-            race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"],
-            player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
-            driver_caridx_map=[{"name": driver["UserName"], "car": driver["CarNumber"]} for driver in self.ir["DriverInfo"]["Drivers"] if driver["UserName"] != "Pace Car"],
-            declared_points_drivers=declared_points_drivers
-        )
+        == 0
+    ):
+        QualifyingService.qualifying(race_manager)
+        race_manager.qualifying_done = True
+        logger.info("Qualifying operations are complete!")
+    else:
+        logger.debug("Qualifying stage does not need to be executed, skipping")
+        race_manager.qualifying_done = True
 
 
-def loop(race_manager: object) -> None:
+def current_session_race(race_manager):
+    if (
+        race_manager.qualifying_session_num is None
+        or race_manager.ir["SessionInfo"]["Sessions"][
+            race_manager.qualifying_session_num
+        ]["ResultsOfficial"]
+        == 1
+    ):
+        RaceService.race(race_manager)
+        return
+
+
+def set_drivers(race_manager):
+    cars_to_dq = []
+    for driver in race_manager.ir["DriverInfo"]["Drivers"]:
+        if driver["CarIsPaceCar"] == 0:
+            if "NODRIVER" not in driver["UserName"]:
+                race_manager.race_weekend.drivers.append(
+                    Driver(
+                        name=driver["UserName"],
+                        car=driver["CarNumber"],
+                        points_eligibile=(
+                            True
+                            if driver["UserName"]
+                            in race_manager.season_data.declared_points
+                            else False
+                        ),
+                    )
+                )
+            else:
+                cars_to_dq.append(driver["CarNumber"])
+    return cars_to_dq
+
+
+def loop(race_manager, cars_to_dq):
     while True:
         ## Figure out what session is currently active
         ## This will prove useful if the app crashes during any session
-        _current_session_num, current_session_name = race_manager.get_current_sessions()
+        _current_session_num, current_session_name = (
+            race_manager._get_current_sessions()
+        )
         if current_session_name == "PRACTICE" and race_manager.practice_done is False:
-            ## Regardless if a weekend actually has a practice session
-            ## Execute the practice stage as long as the first session is not completed
-            if race_manager.ir["SessionInfo"]["Sessions"][
-                race_manager.practice_session_num
-            ]["ResultsOfficial"] == 0 or (
-                race_manager.practice_session_num is None
-                and race_manager.ir["SessionInfo"]["Sessions"][
-                    race_manager.qualifying_session_num
-                ]["ResultsOfficial"]
-                == 0
-            ):
-                PracticeService.practice(race_manager)
-                race_manager.practice_done = True
-                logger.info("Practice operations are complete!")
-            else:
-                logger.debug("Practice stage does not need to be executed, skipping")
-                race_manager.practice_done = True
-
+            current_session_practice(race_manager, cars_to_dq)
         elif (
-            current_session_name == "QUALIFYING"
+            current_session_name in ["QUALIFYING", "QUALIFY"]
             and race_manager.qualifying_done is False
         ):
-            ## Perform the qualifying session operations
-            ## Execute the operations as long as the session has not been completed
-            if race_manager.ir["SessionInfo"]["Sessions"][
-                race_manager.qualifying_session_num
-            ]["ResultsOfficial"] == 0 or (
-                race_manager.qualifying_session_num is None
-                and race_manager.ir["SessionInfo"]["Sessions"][
-                    race_manager.race_session_num
-                ]["ResultsOfficial"]
-                == 0
-            ):
-                QualifyingService.qualifying(race_manager)
-                race_manager.qualifying_done = True
-                logger.info("Qualifying operations are complete!")
-            else:
-                logger.debug("Qualifying stage does not need to be executed, skipping")
-                race_manager.qualifying_done = True
-
+            current_session_qualify(race_manager)
         elif current_session_name == "RACE":
-            if (
-                race_manager.qualifying_session_num is None
-                or race_manager.ir["SessionInfo"]["Sessions"][
-                    race_manager.qualifying_session_num
-                ]["ResultsOfficial"]
-                == 1
-            ):
-                RaceService.race(race_manager)
-                return
-
+            current_session_race(race_manager)
         else:
             time.sleep(1)
 
-def get_eligible_drivers() -> list:
-    """
-        This is temporary until the functionality is merged into the GUI
-    """
-    conn = sqlite3.connect("C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db")
-    cursor = conn.cursor()
-    results = cursor.execute("SELECT NAME FROM DRIVER WHERE DECLARED_POINTS == 'XFINITY'").fetchall()
-    conn.close()
-    return [driver[0] for driver in results]
 
-def main() -> None:
-    # race_manager = RaceManager(test_file)
-    declared_points_drivers = get_eligible_drivers()
-    race_manager = RaceManager()
-    race_manager._set_weekend_data(declared_points_drivers)
-    ## After data is set, proceed to looping logic
-    loop(race_manager)
+def main():
+    race_manager = RaceManager(test_file=True)
+    cars_to_dq = set_drivers(race_manager)
+    loop(race_manager, cars_to_dq)
+    """
     PointsCalculator.main(race_manager)
     with open("C:/Users/Nick/Documents/iracing_ai_helper/src/gui/functions/race_manager/weekend_points.json", "w") as file:
         file.write(json.dumps(race_manager.race_weekend.weekend_points, indent=2))
+    """
+
 
 if __name__ == "__main__":
     main()
