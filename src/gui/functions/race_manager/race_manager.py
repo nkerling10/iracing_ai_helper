@@ -15,6 +15,7 @@ from services.practice_service import PracticeService
 from services.qualifying_service import QualifyingService
 from services.race_service import RaceService
 from services.points_calculator import PointsCalculator
+from services.points_importer import PointsImporter
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -89,6 +90,8 @@ def set_drivers(race_manager):
                     Driver(
                         name=driver["UserName"],
                         car=driver["CarNumber"],
+                        team="Kerling Motorsports" if driver["CarNumber"] == race_manager.race_weekend.race_data.player_car_num[0] else
+                            [car[1] for car in race_manager.season_data.cars_teams if car[0] == driver["CarNumber"]][0],
                         points_eligibile=(
                             True
                             if driver["UserName"]
@@ -152,7 +155,7 @@ def main():
     loop(race_manager, cars_to_dq)
     """
     PointsCalculator.main(race_manager)
-
+    PointsImporter(race_manager)
 
 
 if __name__ == "__main__":

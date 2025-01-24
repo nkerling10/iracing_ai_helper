@@ -143,6 +143,7 @@ def _create_season_database_tables(config: object, season_settings: dict) -> Non
                 NAME TEXT PRIMARY KEY,
                 POINTS INTEGER,
                 STAGE_POINTS INTEGER,
+                PLAYOFF_POINTS INTEGER,
                 STARTS INTEGER,
                 WINS INTEGER,
                 TOP_5s INTEGER,

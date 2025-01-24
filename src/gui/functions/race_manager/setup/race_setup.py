@@ -18,6 +18,7 @@ class State:
 class SeasonData:
     def __init__(self):
         self.drivers_list = None
+        self.cars_teams = None
         self.past_season_winners = None
         self.current_season_winners = None
         self.owner_points = None
@@ -32,6 +33,7 @@ class SeasonData:
         ## TODO: utilize the global db manager passed in from gui
         conn = sqlite3.connect("C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db")
         self.drivers_list=conn.cursor().execute("SELECT * FROM DRIVER WHERE DECLARED_POINTS == 'XFINITY'").fetchall()
+        self.cars_teams = conn.cursor().execute("SELECT NUMBER, TEAM FROM CAR_XFINITY").fetchall()
         points_eligible=[driver[0] for driver in conn.cursor().execute("SELECT NAME FROM DRIVER WHERE DECLARED_POINTS == 'XFINITY'").fetchall()]
         self.declared_points = points_eligible
         prev_season_winners=[value for value in conn.cursor().execute("SELECT * FROM XFINITY_2024_WINNERS").fetchall()]
@@ -72,7 +74,7 @@ class RaceData:
         self.driver_caridx_map = None
         self.pre_race_penalties = []
         self.pole_winner = ""
-        self.player_car_num = None
+        self.player_car_num = 0
 
 
 class RaceSettings:
