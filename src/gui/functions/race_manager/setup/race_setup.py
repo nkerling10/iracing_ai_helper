@@ -126,6 +126,7 @@ class RaceManager:
         self.qualifying_done = False
         self.race_session_num = None
         self.race_done = False
+        self.test_file_active = True if test_file else False
         self.ir = irsdk.IRSDK()
         if test_file:
             self.ir.startup("C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_finished.bin")

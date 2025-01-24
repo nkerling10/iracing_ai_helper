@@ -128,28 +128,28 @@ def loop(race_manager, cars_to_dq):
 
 def main():
     race_manager = RaceManager(test_file=True)
-    race_manager.race_weekend.race_results = race_manager.ir["SessionInfo"]["Sessions"][0]["ResultsPositions"]
-    
-    race_manager.race_weekend.stage_results[0].stage_results = ["Austin Hill",
-                                                                "Justin Allgaier",
-                                                                "Harrison Burton",
-                                                                "Sammy Smith",
-                                                                "Brandon Jones",
-                                                                "Daniel Dye",
-                                                                "William Sawalich",
-                                                                "Jesse Love",
-                                                                "Sheldon Creed",
-                                                                "Christian Eckes"]
-    race_manager.race_weekend.stage_results[1].stage_results = ["Austin Hill",
-                                                                "Justin Allgaier",
-                                                                "Sammy Smith",
-                                                                "Brandon Jones",
-                                                                "Sheldon Creed",
-                                                                "Harrison Burton",
-                                                                "Daniel Dye",
-                                                                "William Sawalich",
-                                                                "Jesse Love",
-                                                                "Christian Eckes"]
+    if race_manager.test_file_active:
+        race_manager.race_weekend.race_results = race_manager.ir["SessionInfo"]["Sessions"][0]["ResultsPositions"]
+        race_manager.race_weekend.stage_results[0].stage_results = ["Austin Hill",
+                                                                    "Justin Allgaier",
+                                                                    "Harrison Burton",
+                                                                    "Sammy Smith",
+                                                                    "Brandon Jones",
+                                                                    "Daniel Dye",
+                                                                    "William Sawalich",
+                                                                    "Jesse Love",
+                                                                    "Sheldon Creed",
+                                                                    "Christian Eckes"]
+        race_manager.race_weekend.stage_results[1].stage_results = ["Austin Hill",
+                                                                    "Justin Allgaier",
+                                                                    "Sammy Smith",
+                                                                    "Brandon Jones",
+                                                                    "Sheldon Creed",
+                                                                    "Harrison Burton",
+                                                                    "Daniel Dye",
+                                                                    "William Sawalich",
+                                                                    "Jesse Love",
+                                                                    "Christian Eckes"]
     cars_to_dq = set_drivers(race_manager)
     """
     loop(race_manager, cars_to_dq)
