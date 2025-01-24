@@ -70,6 +70,17 @@ def _update_season_next_race_data(season_settings, db) -> None:
     window["-TRACKBOX-"].update(value=next_race.week)
 
 
+def _update_season_standings_tables(season_settings, db):
+    season_series = season_settings.get("season_series")
+    season_name = season_settings.get("season_name").upper().replace(" ", "_")
+    window["-DRIVERPOINTSTABLE-"].update(
+        values=db.execute_query(
+            f"{season_series}_{season_name}_POINTS_DRIVER", order_by="POINTS")[:-1][0])
+    window["-OWNERPOINTSTABLE-"].update(
+        values=db.execute_query(
+            f"{season_series}_{season_name}_POINTS_OWNER", order_by="POINTS")[:-1][0])
+
+
 def _open_saved_season(loaded_season: str) -> dict:
     try:
         with open(loaded_season, "r") as file:
@@ -201,6 +212,7 @@ def main_window(prev_table: str) -> None:
                     _load_roster_file(season_settings)
                     _update_season_next_race_data(season_settings, db)
                     _update_season_player_stats_data()
+                    _update_season_standings_tables(season_settings, db)
                     window["-seasontab-"].select()
             except UnboundLocalError:
                 continue

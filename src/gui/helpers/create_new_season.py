@@ -135,7 +135,7 @@ def _copy_season_base_file(config: object, season_settings: dict) -> bool:
 
 def _create_season_database_tables(config: object, season_settings: dict) -> None:
     season_series = season_settings.get("season_series")
-    season_name = season_settings.get("season_name").upper()
+    season_name = season_settings.get("season_name").upper().replace(" ", "_")
     conn = sqlite3.connect(config.database_path)
     with conn:
         conn.execute(

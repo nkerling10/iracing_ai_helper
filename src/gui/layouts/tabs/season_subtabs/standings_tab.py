@@ -1,10 +1,74 @@
 import PySimpleGUI as sg
+import sqlite3
 
 
 class StandingsTabLayout:
     @staticmethod
-    def _build_standings_layout() -> list[list]:
-        return [[]]
+    def _driver_points_headers() -> list:
+        return ["DRIVER", "POINTS", "STG PTS", "PLY PTS",
+                "STARTS", "WINS", "TOP 5s", "TOP 10s",
+                "DNFs", "LAPS LED", "STG WINS", "POLES"]
+
+    @staticmethod
+    def _owner_points_headers() -> list:
+        return ["CAR", "TEAM", "ATTEMPTS", "POINTS", "WINS", "STAGE WINS"]
+
+    @classmethod
+    def _build_driver_points_table(cls, driver_points: list = []) -> list[list]:
+        return [
+            [
+                sg.Table(
+                    values=driver_points,
+                    headings=cls._driver_points_headers(),
+                    justification="center",
+                    key="-DRIVERPOINTSTABLE-",
+                    num_rows=20,
+                    expand_x=True,
+                    expand_y=True,
+                    auto_size_columns=False,
+                    col_widths=[15],
+                    starting_row_number=1,
+                )
+            ]
+        ]
+    
+    @classmethod
+    def _build_owner_points_table(cls, owner_points: list = []) -> list[list]:
+        return [
+            [
+                sg.Table(
+                    values=owner_points,
+                    headings=cls._owner_points_headers(),
+                    justification="center",
+                    key="-OWNERPOINTSTABLE-",
+                    num_rows=20,
+                    expand_x=True,
+                    expand_y=True,
+                    auto_size_columns=True,
+                    starting_row_number=1,
+                )
+            ]
+        ]
+
+
+    @classmethod
+    def _build_standings_layout(cls) -> list[list]:
+        return [
+            [
+                sg.TabGroup(
+                    [
+                        [
+                            sg.Tab("Driver", cls._build_driver_points_table(), key="-driverpointsetab-"),
+                            sg.Tab("Owner", cls._build_owner_points_table(), key="-ownerpointstab-")
+                        ]
+                    ],
+                    key="-tabgroup1-",
+                    tab_location="topleft",
+                    expand_x=True,
+                    expand_y=True
+                )
+            ]
+        ]
 
     @staticmethod
     def _build_player_stats_layout() -> list[list]:
@@ -230,13 +294,13 @@ class StandingsTabLayout:
                 sg.Frame(
                     title="Next Race",
                     layout=cls._build_next_race_layout(),
-                    size=(None, 215),
+                    size=(None, 175),
                     expand_x=True,
                 ),
                 sg.Frame(
                     title="Player Stats",
                     layout=cls._build_player_stats_layout(),
-                    size=(None, 215),
+                    size=(None, 175),
                     expand_x=True,
                 ),
             ],

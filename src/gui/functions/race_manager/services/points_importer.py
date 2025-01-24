@@ -3,8 +3,8 @@ import sqlite3
 class PointsImporter:
     def __init__(self, race_manager):
         self.conn = sqlite3.connect("C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db")
-        self.driver_points_table = "XFINITY_2025_POINTS_DRIVER"
-        self.owner_points_table = "XFINITY_2025_POINTS_OWNER"
+        self.driver_points_table = "XFINITY_XFINITY_TEST_1_POINTS_DRIVER"
+        self.owner_points_table = "XFINITY_XFINITY_TEST_1_POINTS_OWNER"
         self.main(race_manager)
 
     def update_driver_points(self, result, driver):
@@ -146,14 +146,12 @@ class PointsImporter:
         for driver in race_manager.race_weekend.drivers:
             if driver.made_race:
                 ## Process driver points
-                '''
                 if driver.points_eligible:
                     try:
                         result = self.conn.execute(f"SELECT * FROM {self.driver_points_table} WHERE NAME is ?", (driver.name,)).fetchall()[0]
                         self.update_driver_points(result, driver)
-                    except sqlite3.OperationalError:
+                    except (sqlite3.OperationalError, IndexError):
                         self.add_driver_points_entry(driver)
-                '''
                 ## Process owner points
                 try:
                     result = self.conn.execute(f"SELECT * FROM {self.owner_points_table} WHERE CAR is ?", (driver.car,)).fetchall()[0]

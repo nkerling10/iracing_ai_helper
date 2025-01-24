@@ -32,10 +32,13 @@ class DatabaseManager:
             print(e)
             return
 
-    def execute_query(self, table: str):
+    def execute_query(self, table: str, order_by: str = ""):
         results_return = []
         try:
-            results = self.cursor.execute(f"SELECT * FROM {table}")
+            if order_by != "":
+                results = self.cursor.execute(f"SELECT * FROM {table} ORDER BY {order_by} DESC")
+            else:
+                results = self.cursor.execute(f"SELECT * FROM {table}")
             for row in results.fetchall():
                 results_return.append(list(row))
             return results_return, self._get_db_table_columns(table)
