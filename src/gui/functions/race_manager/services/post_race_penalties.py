@@ -1,0 +1,3 @@
+
+class PostRacePenalties:
+    pass

@@ -11,6 +11,12 @@ class SplashTabLayout:
                     layout=[
                         [
                             sg.Button(
+                                "Create a Season",
+                                key="-CREATESEASONBUTTON-",
+                                size=(25, 5),
+                                font=50,
+                            ),
+                            sg.Button(
                                 "Load a Season",
                                 key="-LOADSAVEDSEASONBUTTON-",
                                 size=(25, 5),
@@ -20,13 +26,7 @@ class SplashTabLayout:
                                     if os.path.exists(Path.cwd() / "ai_seasons")
                                     else True
                                 ),
-                            ),
-                            sg.Button(
-                                "Create a Season",
-                                key="-CREATESEASONBUTTON-",
-                                size=(25, 5),
-                                font=50,
-                            ),
+                            )
                         ]
                     ],
                     justification="center",

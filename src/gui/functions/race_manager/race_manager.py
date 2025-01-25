@@ -16,6 +16,7 @@ from services.qualifying_service import QualifyingService
 from services.race_service import RaceService
 from services.points_calculator import PointsCalculator
 from services.points_importer import PointsImporter
+from services.post_race_penalties import PostRacePenalties
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -154,6 +155,8 @@ def main():
     """
     loop(race_manager, cars_to_dq)
     """
+    if race_manager.race_weekend.race_settings.post_race_penalty_chance > 0:
+        PostRacePenalties
     PointsCalculator.main(race_manager)
     PointsImporter(race_manager)
 

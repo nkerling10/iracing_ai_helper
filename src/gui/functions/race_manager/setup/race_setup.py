@@ -86,6 +86,7 @@ class RaceSettings:
         self.inspection_fail_chance_three = 6
         self.debris_caution_chance = 0
         self.unapproved_adjustments_chance = 1
+        self.post_race_penalty_chance = 0
         self.penalties_player = [
             "Crew members over the wall too soon",
             "Too many men over the wall",
