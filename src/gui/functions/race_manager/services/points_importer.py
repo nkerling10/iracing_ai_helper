@@ -1,4 +1,8 @@
+import logging
 import sqlite3
+
+logger = logging.getLogger(__name__)
+
 
 class PointsImporter:
     def __init__(self, race_manager):
@@ -44,9 +48,9 @@ class PointsImporter:
                                     starts, wins, top5s, top10s, dnfs, laps_led,
                                     stage_wins, poles, name))
             self.conn.commit()
-            print(f"Update of {driver.name} was successful")
+            logger.debug(f"Update of {driver.name} was successful")
         except Exception as e:
-            print(e)
+            logger.critical(e)
             self.conn.close()
             quit()
 
@@ -88,9 +92,11 @@ class PointsImporter:
                                     driver.laps_led, driver.stage_wins,
                                     1 if driver.pole_winner else 0))
             self.conn.commit()
-            print(f"Insert of {driver.name} was successful")
+            logger.debug(f"Insert of {driver.name} was successful")
         except Exception as e:
-            print(e)
+            logger.critical(e)
+            self.conn.close()
+            quit()
 
     def update_owner_points(self, result, driver):
         win = True if driver.finish_pos == 1 else False
@@ -111,9 +117,9 @@ class PointsImporter:
                                 """, (car, attempts, points,
                                       wins, stage_wins, car))
             self.conn.commit()
-            print(f"Update of {driver.car} was successful")
+            logger.debug(f"Update of {driver.car} was successful")
         except Exception as e:
-            print(e)
+            logger.critical(e)
             self.conn.close()
             quit()
 
@@ -137,9 +143,11 @@ class PointsImporter:
                                     driver.owner_points, 1 if win else 0,
                                     driver.stage_wins))
             self.conn.commit()
-            print(f"Insert of {driver.car} car was successful")
+            logger.debug(f"Insert of {driver.car} car was successful")
         except Exception as e:
-            print(e)
+            logger.critical(e)
+            self.conn.close()
+            quit()
 
 
     def main(self, race_manager):

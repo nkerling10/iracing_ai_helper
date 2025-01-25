@@ -1,5 +1,4 @@
 import PySimpleGUI as sg
-import sqlite3
 
 
 class StandingsTabLayout:

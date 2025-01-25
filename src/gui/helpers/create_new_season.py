@@ -335,6 +335,19 @@ def _create_new_season(config) -> dict:
                 ],
                 title="Select series type",
                 expand_x=True,
+            ),
+            sg.Frame(
+                layout=[
+                    [
+                        sg.Spin(
+                            values=[i for i in range(1, 50)],
+                            initial_value=38,
+                            expand_x=True
+                        )
+                    ]
+                ],
+                title="Field size",
+                expand_y=True,
             )
         ],
         [
@@ -437,6 +450,125 @@ def _create_new_season(config) -> dict:
                 expand_x=True,
                 expand_y=True,
             ),
+        ],
+        [
+            sg.Frame(
+                layout=[
+                    [
+                        sg.Column(
+                            layout=[
+                                [
+                                    sg.Frame(
+                                        layout=[
+                                            [
+                                                sg.Column(
+                                                    layout=[
+                                                        [
+                                                            sg.Checkbox(
+                                                                "Pre-race penalties",
+                                                                key="__PRERACEPENALTIESCHECKBOX__",
+                                                                expand_x=True,
+                                                                expand_y=True,
+                                                                default=True
+                                                            )
+                                                        ],
+                                                        [
+                                                            sg.Text("% chance"),
+                                                            sg.Spin(
+                                                                values=[i for i in range(1, 100)],
+                                                                key="__PRERACEPENALTIESCHANCE__",
+                                                                initial_value=2,
+                                                                expand_x=True
+                                                            ),
+                                                        ]
+                                                    ]
+                                                ),
+                                                sg.Column(
+                                                    layout=[
+                                                        [
+                                                            sg.Checkbox(
+                                                                "AI pit penalties",
+                                                                key="__AIPENALTIESCHECKBOX__",
+                                                                expand_x=True,
+                                                                expand_y=True,
+                                                                default=True
+                                                            ),
+                                                        ],
+                                                        [
+                                                            sg.Text("% chance"),
+                                                            sg.Spin(
+                                                                values=[i for i in range(1, 100)],
+                                                                key="__AIPENALTIESCHANCEVALUE__",
+                                                                initial_value=8,
+                                                                expand_x=True
+                                                            ),
+                                                        ]
+                                                    ]
+                                                ),
+                                                sg.Column(
+                                                    layout=[
+                                                        [
+                                                            sg.Checkbox(
+                                                                "Player pit penalties",
+                                                                key="__PLAYERPENALTIESCHECKBOX__",
+                                                                expand_x=True,
+                                                                expand_y=True,
+                                                                default=True
+                                                            ),
+                                                        ],
+                                                        [
+                                                            sg.Text("% chance"),
+                                                            sg.Spin(
+                                                                values=[i for i in range(1, 100)],
+                                                                key="__PLAYERPENALTIESCHANCEVALUE__",
+                                                                initial_value=8,
+                                                                expand_x=True
+                                                            )
+                                                        ]
+                                                    ]
+                                                )
+                                            ]
+                                        ],
+                                        title="Penalties"
+                                    ),
+                                    sg.Frame(
+                                        layout=[
+                                            [
+                                                sg.Column(
+                                                    layout=[
+                                                        [
+                                                            sg.Checkbox(
+                                                                "Debris Cautions",
+                                                                key="__DEBRISCAUTIONCHECKBOX__",
+                                                                expand_x=True,
+                                                                expand_y=True,
+                                                                default=True
+                                                            )
+                                                        ],
+                                                        [
+                                                            sg.Text("% chance"),
+                                                            sg.Spin(
+                                                                values=[i for i in range(1, 3)],
+                                                                key="__DEBRISCAUTIONCHANCEVALUE__",
+                                                                initial_value=1,
+                                                                expand_x=True
+                                                            )
+                                                        ]
+                                                    ]
+                                                )   
+                                            ]
+                                        ],
+                                        title="Cautions"
+                                    )
+                                ]
+                            ]
+                        )
+                    ]
+                ],
+                title="Race Settings",
+                expand_x=True,
+                expand_y=True
+            )
         ],
         [sg.Button("Create"), sg.Button("Cancel")],
     ]
