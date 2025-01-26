@@ -74,18 +74,18 @@ class RaceData:
         self.driver_caridx_map = None
         self.pre_race_penalties = []
         self.pole_winner = ""
-        self.player_car_num = 0
+        self.player_car_num = ""
 
 
 class RaceSettings:
     def __init__(self):
-        self.field_size = 10
-        self.penalty_chance = 8
-        self.inspection_fail_chance_one = 2
-        self.inspection_fail_chance_two = 4
-        self.inspection_fail_chance_three = 6
+        self.field_size = 0
+        self.penalty_chance = 0
+        self.inspection_fail_chance_one = 0
+        self.inspection_fail_chance_two = 0
+        self.inspection_fail_chance_three = 0
         self.debris_caution_chance = 0
-        self.unapproved_adjustments_chance = 1
+        self.unapproved_adjustments_chance = 0
         self.post_race_penalty_chance = 0
         self.penalties_player = [
             "Crew members over the wall too soon",
@@ -219,7 +219,7 @@ class RaceManager:
     def _set_weekend_data(self) -> None:
         self._define_sessions()
         self.race_weekend.track.track_short_name=self.ir["WeekendInfo"]["TrackDisplayShortName"]
-        self.race_weekend.track.track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"],
-        self.race_weekend.race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"],
-        self.race_weekend.race_data.player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"],
+        self.race_weekend.track.track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"]
+        self.race_weekend.race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"]
+        self.race_weekend.race_data.player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"]
         self.race_weekend.race_data.driver_caridx_map=[{"name": driver["UserName"], "car": driver["CarNumber"]} for driver in self.ir["DriverInfo"]["Drivers"] if driver["UserName"] != "Pace Car"]

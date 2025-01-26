@@ -91,7 +91,7 @@ def set_drivers(race_manager):
                     Driver(
                         name=driver["UserName"],
                         car=driver["CarNumber"],
-                        team="Kerling Motorsports" if driver["CarNumber"] == race_manager.race_weekend.race_data.player_car_num[0] else
+                        team="Kerling Motorsports" if driver["CarNumber"] == race_manager.race_weekend.race_data.player_car_num else
                             [car[1] for car in race_manager.season_data.cars_teams if car[0] == driver["CarNumber"]][0],
                         points_eligibile=(
                             True
@@ -129,6 +129,14 @@ def loop(race_manager, cars_to_dq):
 
 def main():
     race_manager = RaceManager(test_file=True)
+    race_manager.race_weekend.race_settings.field_size = 10
+    race_manager.race_weekend.race_settings.penalty_chance = 8
+    race_manager.race_weekend.race_settings.inspection_fail_chance_one = 2
+    race_manager.race_weekend.race_settings.inspection_fail_chance_two = 4
+    race_manager.race_weekend.race_settings.inspection_fail_chance_three = 6
+    race_manager.race_weekend.race_settings.debris_caution_chance = 0
+    race_manager.race_weekend.race_settings.unapproved_adjustments_chance = 1
+    race_manager.race_weekend.race_settings.post_race_penalty_chance = 0
     if race_manager.test_file_active:
         race_manager.race_weekend.race_results = race_manager.ir["SessionInfo"]["Sessions"][0]["ResultsPositions"]
         race_manager.race_weekend.stage_results[0].stage_results = ["Austin Hill",

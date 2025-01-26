@@ -67,3 +67,11 @@ class DatabaseManager:
         except Exception as e:
             print(e)
             return
+
+    def delete_tables(self, tables: list):
+        for table in tables:
+            try:
+                self.cursor.execute(f"DROP TABLE {table}")
+            except Exception as e:
+                print(e)
+                return

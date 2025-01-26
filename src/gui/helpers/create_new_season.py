@@ -222,6 +222,8 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
     user selected settings as well as the iRacing AI Season file & Roster file that will be linked when utilizing
     the app. File is stored in a folder called "ai_seasons" in the same directory that the app exists in.
     """
+    print(json.dumps(values, indent=2))
+    quit()
     if not os.path.exists(ai_seasons_file_path):
         logger.info(f"Folder {ai_seasons_file_path} does not exist, creating")
         os.makedirs(ai_seasons_file_path)
@@ -237,11 +239,16 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
         "season_series": _season_type(values),
         "roster_name": values["__ROSTERNAME__"],
         "fuel_capacity": int(values["__FUELCAPACITY__"]),
-        "tire_sets": (
-            "UNLIMITED" if values["__TIRESETSUNLIMITED__"] is True else custom_tireset
-        ),
+        "tire_sets": ("UNLIMITED" if values["__TIRESETSUNLIMITED__"] is True else custom_tireset),
         "race_distance_percent": int(values["__RACEDISTANCEPERCENT__"]),
         "points_format": _points_format(values),
+        "field_size": values["__FIELDSIZE__"],
+        "pre_race_penalties_enabled": True if values["__PRERACEPENALTIESCHECKBOX__"] is True else False,
+        "pre_race_penalties_chance": values["__PRERACEPENALTIESCHANCEVALUE__"],
+        "pit_penalties_enabled": True if values["__PITPENALTIESCHECKBOX__"] is True else False,
+        "pit_penalties_chance": values["__PITPENALTIESCHANCEVALUE__"],
+        "debris_cautions_enabled": True if values["__DEBRISCAUTIONCHECKBOX__"] is True else False,
+        "debris_cautions_chance": values["__DEBRISCAUTIONCHANCEVALUE__"]
     }
     try:
         with open(
@@ -301,6 +308,11 @@ def _create_new_season(config) -> dict:
                 layout=[[sg.InputText(key="__SEASONNAME__")]],
                 title="Enter a name for the season",
                 expand_x=True,
+            ),
+            sg.Frame(
+                layout=[[sg.InputText(key="__ROSTERNAME__")]],
+                title="Enter a name for the roster",
+                expand_x=True,
             )
         ],
         [
@@ -342,19 +354,22 @@ def _create_new_season(config) -> dict:
                         sg.Spin(
                             values=[i for i in range(1, 50)],
                             initial_value=38,
-                            expand_x=True
+                            expand_x=True,
+                            key="__FIELDSIZE__"
                         )
                     ]
                 ],
                 title="Field size",
                 expand_y=True,
-            )
-        ],
-        [
+            ),
             sg.Frame(
-                layout=[[sg.InputText(key="__ROSTERNAME__")]],
-                title="Enter a name for the roster",
-                expand_x=True,
+                layout=[
+                    [
+                        sg.Input(key="__PLAYERTEAMNAME__")
+                    ]
+                ],
+                title="Team name",
+                expand_y=True
             )
         ],
         [
@@ -473,11 +488,11 @@ def _create_new_season(config) -> dict:
                                                             )
                                                         ],
                                                         [
-                                                            sg.Text("% chance"),
+                                                            sg.Text("Likelihood"),
                                                             sg.Spin(
-                                                                values=[i for i in range(1, 100)],
+                                                                values=[f"{i}%" for i in range(1, 100)],
                                                                 key="__PRERACEPENALTIESCHANCE__",
-                                                                initial_value=2,
+                                                                initial_value="2%",
                                                                 expand_x=True
                                                             ),
                                                         ]
@@ -487,41 +502,19 @@ def _create_new_season(config) -> dict:
                                                     layout=[
                                                         [
                                                             sg.Checkbox(
-                                                                "AI pit penalties",
-                                                                key="__AIPENALTIESCHECKBOX__",
+                                                                "Pit penalties",
+                                                                key="__PITPENALTIESCHECKBOX__",
                                                                 expand_x=True,
                                                                 expand_y=True,
                                                                 default=True
                                                             ),
                                                         ],
                                                         [
-                                                            sg.Text("% chance"),
+                                                            sg.Text("Likelihood"),
                                                             sg.Spin(
-                                                                values=[i for i in range(1, 100)],
-                                                                key="__AIPENALTIESCHANCEVALUE__",
-                                                                initial_value=8,
-                                                                expand_x=True
-                                                            ),
-                                                        ]
-                                                    ]
-                                                ),
-                                                sg.Column(
-                                                    layout=[
-                                                        [
-                                                            sg.Checkbox(
-                                                                "Player pit penalties",
-                                                                key="__PLAYERPENALTIESCHECKBOX__",
-                                                                expand_x=True,
-                                                                expand_y=True,
-                                                                default=True
-                                                            ),
-                                                        ],
-                                                        [
-                                                            sg.Text("% chance"),
-                                                            sg.Spin(
-                                                                values=[i for i in range(1, 100)],
-                                                                key="__PLAYERPENALTIESCHANCEVALUE__",
-                                                                initial_value=8,
+                                                                values=[f"{i}%" for i in range(1, 100)],
+                                                                key="__PITPENALTIESCHANCEVALUE__",
+                                                                initial_value="8%",
                                                                 expand_x=True
                                                             )
                                                         ]
@@ -546,9 +539,9 @@ def _create_new_season(config) -> dict:
                                                             )
                                                         ],
                                                         [
-                                                            sg.Text("% chance"),
+                                                            sg.Text("Likelihood"),
                                                             sg.Spin(
-                                                                values=[i for i in range(1, 3)],
+                                                                values=[i for i in range(1, 5)],
                                                                 key="__DEBRISCAUTIONCHANCEVALUE__",
                                                                 initial_value=1,
                                                                 expand_x=True
