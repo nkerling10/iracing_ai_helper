@@ -78,24 +78,26 @@ def _update_season_player_stats_data() -> None:
 
 
 def _update_season_next_race_data(season_settings, db) -> None:
-    next_race = NextRaceData._load_next_race_data(config, season_settings, db)
-    window["_-WEEK-_"].update(value=next_race.week)
-    window["_-TRACK-_"].update(value=next_race.track)
-    window["_-STAGE1-_"].update(value=next_race.stage_1)
-    window["_-STAGE2-_"].update(value=next_race.stage_2)
-    window["_-STAGE3-_"].update(value=next_race.race_laps)
-    window["-TRACKBOX-"].update(value=next_race.week)
+    if season_settings and db:
+        next_race = NextRaceData._load_next_race_data(config, season_settings, db)
+    window["_-WEEK-_"].update(value=next_race.week if season_settings and db else "")
+    window["_-TRACK-_"].update(value=next_race.track if season_settings and db else "")
+    window["_-STAGE1-_"].update(value=next_race.stage_1 if season_settings and db else "")
+    window["_-STAGE2-_"].update(value=next_race.stage_2 if season_settings and db else "")
+    window["_-STAGE3-_"].update(value=next_race.race_laps if season_settings and db else "")
+    window["-TRACKBOX-"].update(value=next_race.week if season_settings and db else "")
 
 
 def _update_season_standings_tables(season_settings, db):
-    season_series = season_settings.get("season_series")
-    season_name = season_settings.get("season_name").upper().replace(" ", "_")
+    if season_settings and db:
+        season_series = season_settings.get("season_series")
+        season_name = season_settings.get("season_name").upper().replace(" ", "_")
     window["-DRIVERPOINTSTABLE-"].update(
         values=db.execute_query(
-            f"{season_series}_{season_name}_POINTS_DRIVER", order_by="POINTS")[:-1][0])
+            f"{season_series}_{season_name}_POINTS_DRIVER", order_by="POINTS")[:-1][0] if season_settings and db else [])
     window["-OWNERPOINTSTABLE-"].update(
         values=db.execute_query(
-            f"{season_series}_{season_name}_POINTS_OWNER", order_by="POINTS")[:-1][0])
+            f"{season_series}_{season_name}_POINTS_OWNER", order_by="POINTS")[:-1][0] if season_settings and db else [])
 
 
 def _open_saved_season(loaded_season: str) -> dict:
@@ -253,6 +255,10 @@ def main_window(prev_table: str) -> None:
                     db.delete_tables([f"{table_base}DRIVER", f"{table_base}OWNER"])
                     if all([del_roster_result, del_season_result, del_settings_result]):
                         sg.popup("Season delete was successful!")
+                    _update_season_standings_tables(None,None)
+                    _update_season_next_race_data(None,None)
+                    #TODO update roster table
+                    #TODO update schedule table
         if event == "-DBTABCONNECTBUTTON-":
             _connect_to_local_db()
         if event == "-DBTABCONNECTCOMBO-":

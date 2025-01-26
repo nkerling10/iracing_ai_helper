@@ -222,8 +222,6 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
     user selected settings as well as the iRacing AI Season file & Roster file that will be linked when utilizing
     the app. File is stored in a folder called "ai_seasons" in the same directory that the app exists in.
     """
-    print(json.dumps(values, indent=2))
-    quit()
     if not os.path.exists(ai_seasons_file_path):
         logger.info(f"Folder {ai_seasons_file_path} does not exist, creating")
         os.makedirs(ai_seasons_file_path)
@@ -491,7 +489,7 @@ def _create_new_season(config) -> dict:
                                                             sg.Text("Likelihood"),
                                                             sg.Spin(
                                                                 values=[f"{i}%" for i in range(1, 100)],
-                                                                key="__PRERACEPENALTIESCHANCE__",
+                                                                key="__PRERACEPENALTIESCHANCEVALUE__",
                                                                 initial_value="2%",
                                                                 expand_x=True
                                                             ),
