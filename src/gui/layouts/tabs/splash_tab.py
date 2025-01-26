@@ -26,6 +26,17 @@ class SplashTabLayout:
                                     if os.path.exists(Path.cwd() / "ai_seasons")
                                     else True
                                 ),
+                            ),
+                            sg.Button(
+                                "Delete a Season",
+                                key="-DELETESAVEDSEASONBUTTON-",
+                                size=(25, 5),
+                                font=50,
+                                disabled=(
+                                    False
+                                    if os.path.exists(Path.cwd() / "ai_seasons")
+                                    else True
+                                ),
                             )
                         ]
                     ],

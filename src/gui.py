@@ -7,6 +7,7 @@ import json
 import logging
 import os
 import PySimpleGUI as sg
+import shutil
 from pathlib import Path
 
 ## Third party imports
@@ -30,6 +31,22 @@ from gui.layouts.tabs.logging_tab import LoggingTabLayout
 
 
 logging.basicConfig()
+
+def _delete_file(file_path, dir=False):
+    try:
+        if dir:
+            shutil.rmtree(file_path)
+        else:
+            os.remove(file_path)
+        logger.info(f"{file_path} deleted successfully.")
+        return True
+    except FileNotFoundError:
+        logger.warning(f"{file_path} not found.")
+    except PermissionError:
+        logger.critical(f"You don't have permission to delete this {file_path}.")
+    except Exception as e:
+        logger.critical("An error occurred:", e)
+    return False
 
 
 def _connect_to_local_db() -> object:
@@ -216,6 +233,24 @@ def main_window(prev_table: str) -> None:
                     window["-seasontab-"].select()
             except UnboundLocalError:
                 continue
+        if event == "-DELETESAVEDSEASONBUTTON-":
+            select_season_settings_file = sg.popup_get_file(
+                    "Delete a Season",
+                    initial_folder=Path.cwd() / "ai_seasons",
+                    no_window=True,
+                )
+            if select_season_settings_file:
+                if sg.popup_yes_no(
+                    f"Confirm deletion of:\n{select_season_settings_file}"
+                ) == "Yes":
+                    # read the season file
+                    with open(select_season_settings_file, "r") as file:
+                        season_delete_info = json.loads(file.read())
+                    del_roster_result = _delete_file(config.iracing_folder / "airosters" / season_delete_info.get("roster_name"), True)
+                    del_season_result = _delete_file(season_delete_info.get("season_file"))
+                    del_settings_result = _delete_file(select_season_settings_file)
+                    if all([del_roster_result, del_season_result, del_settings_result]):
+                        sg.popup("Season delete was successful!")
         if event == "-DBTABCONNECTBUTTON-":
             _connect_to_local_db()
         if event == "-DBTABCONNECTCOMBO-":
