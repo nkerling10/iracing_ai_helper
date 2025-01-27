@@ -39,7 +39,7 @@ def _update_season_settings(config: object, season_settings: dict) -> None:
         )
         car_index += 1
 
-    modified_season_file["rosterName"] = season_settings.get("roster_name")
+    modified_season_file["rosterName"] = season_settings.get("season_name")
 
     race_index = 0
     while race_index < len(modified_season_file["events"]):
@@ -186,7 +186,7 @@ def _copy_roster_folder(config: object, season_settings: dict) -> None:
     folder. It will exist in a folder titled what the user provided as roster.json.
     """
     roster_path_dest = (
-        config.iracing_folder / "airosters" / season_settings.get("roster_name")
+        config.iracing_folder / "airosters" / season_settings.get("season_name")
     )
 
     if season_settings.get("season_series") == "CUP":
@@ -208,7 +208,7 @@ def _copy_roster_folder(config: object, season_settings: dict) -> None:
             folder,
             config.iracing_folder
             / "airosters"
-            / season_settings.get("roster_name"),
+            / season_settings.get("season_name"),
             dirs_exist_ok=True
         )
         logger.info("Folder copied successfully")
@@ -235,7 +235,6 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
         "settings_version": "1.0",
         "season_name": values["__SEASONNAME__"],
         "season_series": _season_type(values),
-        "roster_name": values["__ROSTERNAME__"],
         "fuel_capacity": int(values["__FUELCAPACITY__"]),
         "tire_sets": ("UNLIMITED" if values["__TIRESETSUNLIMITED__"] is True else custom_tireset),
         "race_distance_percent": int(values["__RACEDISTANCEPERCENT__"]),
@@ -305,11 +304,6 @@ def _create_new_season(config) -> dict:
             sg.Frame(
                 layout=[[sg.InputText(key="__SEASONNAME__")]],
                 title="Enter a name for the season",
-                expand_x=True,
-            ),
-            sg.Frame(
-                layout=[[sg.InputText(key="__ROSTERNAME__")]],
-                title="Enter a name for the roster",
                 expand_x=True,
             )
         ],
@@ -574,9 +568,7 @@ def _create_new_season(config) -> dict:
             window.close()
             return
         if event == "Create":
-            if not any(
-                [values["__SEASONNAME__"], values["__ROSTERNAME__"]]
-            ) and not all(
+            if not values["__SEASONNAME__"] and not any(
                 [
                     values["__SEASONTYPECUP__"],
                     values["__SEASONTYPEXFINITY__"],

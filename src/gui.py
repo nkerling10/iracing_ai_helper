@@ -111,7 +111,7 @@ def _open_saved_season(loaded_season: str) -> dict:
 def _load_roster_file(season_settings: dict) -> None:
     logger.info("Loading roster file")
     active_driver_data, inactive_driver_data = roster_data.build_driver_display_info(
-        config.iracing_folder / "airosters" / season_settings.get("roster_name")
+        config.iracing_folder / "airosters" / season_settings.get("season_name")
     )
     logger.info("Updating roster table values")
     window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
@@ -248,7 +248,7 @@ def main_window(prev_table: str) -> None:
                     # read the season file
                     with open(select_season_settings_file, "r") as file:
                         season_delete_info = json.loads(file.read())
-                    del_roster_result = _delete_file(config.iracing_folder / "airosters" / season_delete_info.get("roster_name"), True)
+                    del_roster_result = _delete_file(config.iracing_folder / "airosters" / season_delete_info.get("season_name"), True)
                     del_season_result = _delete_file(season_delete_info.get("season_file"))
                     del_settings_result = _delete_file(select_season_settings_file)
                     table_base = f"{season_settings.get("season_series")}_{season_settings.get("season_name").upper().replace(" ", "_")}_POINTS_"
@@ -257,8 +257,9 @@ def main_window(prev_table: str) -> None:
                         sg.popup("Season delete was successful!")
                     _update_season_standings_tables(None,None)
                     _update_season_next_race_data(None,None)
-                    #TODO update roster table
-                    #TODO update schedule table
+                    window["-ACTIVEDRIVERS-"].update(values=[])
+                    window["-INACTIVEDRIVERS-"].update(values=[])
+                    window["-SCHEDULETABLE-"].update(values=[])
         if event == "-DBTABCONNECTBUTTON-":
             _connect_to_local_db()
         if event == "-DBTABCONNECTCOMBO-":
@@ -295,7 +296,7 @@ def main_window(prev_table: str) -> None:
                 roster_data.build_driver_display_info(
                     config.iracing_folder
                     / "airosters"
-                    / season_settings.get("roster_name")
+                    / season_settings.get("season_name")
                 )
             )
             window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
