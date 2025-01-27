@@ -7,6 +7,9 @@ Massive credit to kutu for the pyirsdk linked below:
 import logging
 import time
 
+## Third party imports
+import irsdk
+
 ## Local imports
 from setup.race_setup import RaceManager
 from setup.driver import Driver
@@ -42,8 +45,16 @@ def current_session_practice(race_manager, cars_to_dq):
         ]["ResultsOfficial"]
         == 0
     ):
+        irsdk.IRSDK.parse_to(
+            race_manager.ir,
+            to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/practice_logic_start.bin",
+        )
         PracticeService.practice(race_manager, cars_to_dq)
         race_manager.practice_done = True
+        irsdk.IRSDK.parse_to(
+            race_manager.ir,
+            to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/practice_logic_complete.bin",
+        )
         logger.info("Practice operations are complete!")
     else:
         logger.debug("Practice stage does not need to be executed, skipping")
@@ -62,7 +73,15 @@ def current_session_qualify(race_manager):
         ]
         == 0
     ):
+        irsdk.IRSDK.parse_to(
+            race_manager.ir,
+            to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/qualify_logic_start.bin",
+        )
         QualifyingService.qualifying(race_manager)
+        irsdk.IRSDK.parse_to(
+            race_manager.ir,
+            to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/qualify_logic_complete.bin",
+        )
         race_manager.qualifying_done = True
         logger.info("Qualifying operations are complete!")
     else:
@@ -127,18 +146,20 @@ def loop(race_manager, cars_to_dq):
             time.sleep(1)
 
 
-def main():
+def main(db_path, driver_points_table, owner_points_table, field_size = None, penalty_chance = None,
+         inspection_fail_chance_one = None, inspection_fail_chance_two = None, inspection_fail_chance_three = None,
+         debris_caution_chance = None, unapproved_adjustments_chance = None, post_race_penalty_chance = None):
     race_manager = RaceManager(test_file=True)
-    race_manager.race_weekend.race_settings.field_size = 10
-    race_manager.race_weekend.race_settings.penalty_chance = 8
-    race_manager.race_weekend.race_settings.inspection_fail_chance_one = 2
-    race_manager.race_weekend.race_settings.inspection_fail_chance_two = 4
-    race_manager.race_weekend.race_settings.inspection_fail_chance_three = 6
-    race_manager.race_weekend.race_settings.debris_caution_chance = 0
-    race_manager.race_weekend.race_settings.unapproved_adjustments_chance = 1
-    race_manager.race_weekend.race_settings.post_race_penalty_chance = 0
+    race_manager.race_weekend.race_settings.field_size = field_size
+    race_manager.race_weekend.race_settings.penalty_chance = penalty_chance
+    race_manager.race_weekend.race_settings.inspection_fail_chance_one = inspection_fail_chance_one
+    race_manager.race_weekend.race_settings.inspection_fail_chance_two = inspection_fail_chance_two
+    race_manager.race_weekend.race_settings.inspection_fail_chance_three = inspection_fail_chance_three
+    race_manager.race_weekend.race_settings.debris_caution_chance = debris_caution_chance
+    race_manager.race_weekend.race_settings.unapproved_adjustments_chance = unapproved_adjustments_chance
+    race_manager.race_weekend.race_settings.post_race_penalty_chance = post_race_penalty_chance
+    
     if race_manager.test_file_active:
-        race_manager.race_weekend.race_results = race_manager.ir["SessionInfo"]["Sessions"][0]["ResultsPositions"]
         race_manager.race_weekend.stage_results[0].stage_results = ["Austin Hill",
                                                                     "Justin Allgaier",
                                                                     "Harrison Burton",
@@ -159,6 +180,7 @@ def main():
                                                                     "William Sawalich",
                                                                     "Jesse Love",
                                                                     "Christian Eckes"]
+        race_manager.race_weekend.stage_results[2].stage_results = race_manager.ir["SessionInfo"]["Sessions"][0]["ResultsPositions"]
     cars_to_dq = set_drivers(race_manager)
     """
     loop(race_manager, cars_to_dq)
@@ -166,8 +188,21 @@ def main():
     if race_manager.race_weekend.race_settings.post_race_penalty_chance > 0:
         PostRacePenalties
     PointsCalculator.main(race_manager)
-    PointsImporter(race_manager)
+    PointsImporter(race_manager, db_path, driver_points_table, owner_points_table)
 
 
 if __name__ == "__main__":
-    main()
+    field_size = 10
+    penalty_chance = 8
+    inspection_fail_chance_one = 2
+    inspection_fail_chance_two = 4
+    inspection_fail_chance_three = 6
+    debris_caution_chance = 0
+    unapproved_adjustments_chance = 1
+    post_race_penalty_chance = 0
+    db_path = "C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db"
+    driver_points_table = "XFINITY_XFINITY_TEST_SEASON1_POINTS_DRIVER"
+    owner_points_table = "XFINITY_XFINITY_TEST_SEASON1_POINTS_OWNER"
+    main(db_path, driver_points_table, owner_points_table, field_size, penalty_chance,
+         inspection_fail_chance_one, inspection_fail_chance_two, inspection_fail_chance_three,
+         debris_caution_chance, unapproved_adjustments_chance, post_race_penalty_chance)

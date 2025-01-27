@@ -111,8 +111,7 @@ class RaceWeekend:
         self.race_settings = RaceSettings()
         self.race_data = RaceData()
         self.drivers = []
-        self.stage_results = [Stage(1), Stage(2)]
-        self.race_results = []
+        self.stage_results = [Stage(1), Stage(2), Stage(3)]
         self.weekend_points = []
 
 

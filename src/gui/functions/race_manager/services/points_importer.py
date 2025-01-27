@@ -5,10 +5,10 @@ logger = logging.getLogger(__name__)
 
 
 class PointsImporter:
-    def __init__(self, race_manager):
-        self.conn = sqlite3.connect("C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db")
-        self.driver_points_table = "XFINITY_XFINITY_TEST_1_POINTS_DRIVER"
-        self.owner_points_table = "XFINITY_XFINITY_TEST_1_POINTS_OWNER"
+    def __init__(self, race_manager, db_path, driver_points_table, owner_points_table):
+        self.conn = sqlite3.connect(db_path)
+        self.driver_points_table = driver_points_table
+        self.owner_points_table = owner_points_table
         self.main(race_manager)
 
     def update_driver_points(self, result, driver):
@@ -48,7 +48,7 @@ class PointsImporter:
                                     starts, wins, top5s, top10s, dnfs, laps_led,
                                     stage_wins, poles, name))
             self.conn.commit()
-            logger.debug(f"Update of {driver.name} was successful")
+            logger.debug(f"Update of {driver.name} in {self.driver_points_table} was successful")
         except Exception as e:
             logger.critical(e)
             self.conn.close()
@@ -92,7 +92,7 @@ class PointsImporter:
                                     driver.laps_led, driver.stage_wins,
                                     1 if driver.pole_winner else 0))
             self.conn.commit()
-            logger.debug(f"Insert of {driver.name} was successful")
+            logger.debug(f"Insert of {driver.name} in {self.driver_points_table} was successful")
         except Exception as e:
             logger.critical(e)
             self.conn.close()
@@ -117,7 +117,7 @@ class PointsImporter:
                                 """, (car, attempts, points,
                                       wins, stage_wins, car))
             self.conn.commit()
-            logger.debug(f"Update of {driver.car} was successful")
+            logger.debug(f"Update of {driver.car} car in {self.owner_points_table} was successful")
         except Exception as e:
             logger.critical(e)
             self.conn.close()
@@ -143,7 +143,7 @@ class PointsImporter:
                                     driver.owner_points, 1 if win else 0,
                                     driver.stage_wins))
             self.conn.commit()
-            logger.debug(f"Insert of {driver.car} car was successful")
+            logger.debug(f"Insert of {driver.car} car in {self.owner_points_table} was successful")
         except Exception as e:
             logger.critical(e)
             self.conn.close()

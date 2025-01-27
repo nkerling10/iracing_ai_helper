@@ -313,7 +313,6 @@ def main_window(prev_table: str) -> None:
 if __name__ == "__main__":
     sg.theme("Python")
     config = Settings()
-    # TODO: build copy or download feature to take base provided files with the tool
     window = sg.Window(
         "NSK AI Roster Randomizer - Alpha v0.1",
         _build_main_layout(),

@@ -149,7 +149,7 @@ class Randomizer:
         self.roster_path = (
             self.config.iracing_folder
             / "airosters"
-            / self.season_settings.get("roster_name")
+            / self.season_settings.get("season_name")
         )
         self.roster = {}
         self.roster_prev = {}

@@ -63,7 +63,7 @@ def _get_flag(flag):
 
 class RaceService:
     @staticmethod
-    def _pit_penalty(race_manager, car_num, lap, stage_info):
+    def _pit_penalty(race_manager, car_num, lap, current_stage):
         """
         Select and issue a pit penalty to designated car number
         """
@@ -85,10 +85,9 @@ class RaceService:
             race_manager.send_iracing_command(f"!eol {car_num}")
             penalty_message = f"EOL PENALTY #{car_num}: {penalty}"
 
-        stage_info.pit_penalties.append({"car": car_num, "penalty": penalty, "lap": lap})
+        current_stage.pit_penalties.append({"car": car_num, "penalty": penalty, "lap": lap})
         race_manager.send_iracing_command(penalty_message)
 
-        return stage_info
 
     @staticmethod
     def _issue_pre_race_penalty(race_manager):
@@ -162,18 +161,18 @@ class RaceService:
         )
 
     @classmethod
-    def _penalty_tracker(cls, race_manager, pit_tracking, stage_info):
+    def _penalty_tracker(cls, race_manager, pit_tracking, current_stage):
         race_manager.ir.freeze_var_buffer_latest()
         ## Quit tracking penalties once the checkered flag comes out
         if race_manager.ir["SessionState"] == 5:
             logger.debug("Sessionstate is now 5")
-            return pit_tracking, stage_info
+            return pit_tracking
         try:
             leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
                 race_manager.race_session_num
             ]["ResultsPositions"][0]["LapsComplete"]
         except TypeError:
-            return pit_tracking, stage_info
+            return pit_tracking
         if (
             leader_laps_complete > 0
             and leader_laps_complete < race_manager.race_weekend.race_length
@@ -221,20 +220,20 @@ class RaceService:
                             car_on_lap = race_manager.ir["SessionInfo"]["Sessions"][
                                 race_manager.race_session_num
                             ]["ResultsPositions"][car_pos]["LapsComplete"]
-                            stage_info = cls._pit_penalty(race_manager, car_num, car_on_lap, stage_info)
+                            cls._pit_penalty(race_manager, car_num, car_on_lap, current_stage)
                         pit_tracking.remove(car)
 
-        return pit_tracking, stage_info
+        return pit_tracking
 
     @staticmethod
-    def _process_stage_results(race_manager, stage_info):
+    def _process_stage_results(race_manager, current_stage):
         ## Grab the results for top 10
         race_manager.ir.freeze_var_buffer_latest()
         stage_top_ten_raw = race_manager.ir["SessionInfo"]["Sessions"][
             race_manager.race_session_num
         ]["ResultsPositions"][:10]
         for position in stage_top_ten_raw:
-            stage_info.stage_results.append(
+            current_stage.stage_results.append(
                 [
                     driver["UserName"]
                     for driver in race_manager.ir["DriverInfo"]["Drivers"]
@@ -242,16 +241,15 @@ class RaceService:
                 ][0]
             )
         ## Announce stage winner via chat
-        logging.info(f"{stage_info.stage_results[0]} is the winner of Stage {stage_info.stage}!")
+        logging.info(f"{current_stage.stage_results[0]} is the winner of Stage {current_stage.stage}!")
         race_manager.send_iracing_command(
-            f"{stage_info.stage_results[0]} is the winner of Stage {stage_info.stage}!"
+            f"{current_stage.stage_results[0]} is the winner of Stage {current_stage.stage}!"
         )
-        logging.info(f"Results: {stage_info.stage_results}")
+        logging.info(f"Results: {current_stage.stage_results}")
 
-        return stage_info
 
     @classmethod
-    def _stage_logic_tree(cls, race_manager, stage_info):
+    def _stage_logic_tree(cls, race_manager, current_stage):
         race_manager.ir.freeze_var_buffer_latest()
         try:
             leader_laps_complete = race_manager.ir["SessionInfo"]["Sessions"][
@@ -259,84 +257,71 @@ class RaceService:
             ]["ResultsPositions"][0]["LapsComplete"]
         except Exception as e:
             logger.error(f"{type(e).__name__}: {e}")
-            return stage_info
+            return
 
         current_flag = _get_flag(race_manager.ir["SessionFlags"])
-        if current_flag == "yellow" and leader_laps_complete <= stage_info.stage_end_lap - 3 and stage_info.stage_ending_early is False:
+        if current_flag == "yellow" and leader_laps_complete <= current_stage.stage_end_lap - 3 and current_stage.stage_ending_early is False:
             logger.warning("Early caution feature is not yet implemented")
-            #race_manager.send_iracing_command(f"Stage {stage_info.stage} will end early under caution")
-            #stage_info.stage_ending_early = True
+            #race_manager.send_iracing_command(f"Stage {current_stage.stage} will end early under caution")
+            #current_stage.stage_ending_early = True
 
-        if not stage_info.stage_ending_early:
+        if not current_stage.stage_ending_early:
             ## when leader reaches 2 laps before end of stage, close the pits
             if (
-                leader_laps_complete == stage_info.stage_end_lap - 2
-                and stage_info.stage_ending_early is False
-                and stage_info.pits_are_closed is False
+                leader_laps_complete == current_stage.stage_end_lap - 2
+                and current_stage.stage_ending_early is False
+                and current_stage.pits_are_closed is False
             ):
                 logging.info("Closing pits - 2 laps to go in stage")
                 race_manager.send_iracing_command("!pitclose")
-                stage_info.pits_are_closed = True
+                current_stage.pits_are_closed = True
             
             ## Announce when there is 1 lap left in the stage
             elif (
-                leader_laps_complete == stage_info.stage_end_lap - 1
-                and stage_info.stage_ending_early is False
-                and stage_info.last_lap_notice is False
+                leader_laps_complete == current_stage.stage_end_lap - 1
+                and current_stage.stage_ending_early is False
+                and current_stage.last_lap_notice is False
             ):
-                logging.info(f"Final lap of stage {stage_info.stage}")
-                race_manager.send_iracing_command(f"Final lap of stage {stage_info.stage}")
-                stage_info.last_lap_notice = True
+                logging.info(f"Final lap of stage {current_stage.stage}")
+                race_manager.send_iracing_command(f"Final lap of stage {current_stage.stage}")
+                current_stage.last_lap_notice = True
 
             ## When the current lap equals the stage end
-            elif leader_laps_complete == stage_info.stage_end_lap and stage_info.stage_complete is False:
+            elif leader_laps_complete == current_stage.stage_end_lap and current_stage.stage_complete is False:
                 ## Throw the caution once the leader crosses the line because it's not possible to re-order cars
                 ## if they pass each other after crossing the line at end of stage
                 logging.info("Stage end has been reached")
                 ## Throw the caution flag if necessary
                 if _get_flag(race_manager.ir["SessionFlags"]) == "green":
-                    race_manager.send_iracing_command(f"!yellow End of Stage {stage_info.stage}")
-                stage_info = cls._process_stage_results(race_manager, stage_info)
-                stage_info.stage_complete = True
+                    race_manager.send_iracing_command(f"!yellow End of Stage {current_stage.stage}")
+                cls._process_stage_results(race_manager, current_stage)
+                current_stage.stage_complete = True
             
-            elif stage_info.stage_complete is True:
+            elif current_stage.stage_complete is True:
                 if _get_flag(race_manager.ir["SessionFlags"]) == "yellow":
                     pass
                 elif _get_flag(race_manager.ir["SessionFlags"]) == "green":
                     logger.debug("Advancing to next stage")
-                    stage_info.advance_to_next_stage = True
+                    current_stage.advance_to_next_stage = True
 
-        return stage_info
-
-    @classmethod
-    def _stage_handler(cls, race_manager, stage_info):
-        race_manager.send_iracing_command(f"Stage {stage_info.stage} end: lap {stage_info.stage_end_lap}")
-        pit_tracking = []
-        while True:
-            pit_tracking, stage_info = cls._penalty_tracker(race_manager, pit_tracking, stage_info)
-            # stages 1 and 2 run through logic processing
-            # stage 3 only needs penalty tracker
-            if stage_info.stage != 3:
-                stage_info = cls._stage_logic_tree(race_manager, stage_info)
-                if stage_info.advance_to_next_stage:
-                    race_manager.race_weekend.stage_results.append(stage_info)
-                    return
-            if race_manager.ir["SessionState"] == 5:
-                return
 
     @classmethod
     def _process_race(cls, race_manager):
         logging.info("Race has started!")
-        for current_stage in [1, 2, 3]:
+        for current_stage in race_manager.race_weekend.stage_results:
             logging.info(f"Starting to process stage {current_stage}")
-            if current_stage == 1:
-                stage_end = race_manager.race_weekend.stage1_end
-            elif current_stage == 2:
-                stage_end = race_manager.race_weekend.stage2_end
-            elif current_stage == 3:
-                stage_end = race_manager.race_weekend.race_length
-            stage_info = Stage(current_stage, stage_end)
-            cls._stage_handler(race_manager, stage_info)
+            race_manager.send_iracing_command(f"Stage {current_stage.stage} end: lap {current_stage.stage_end_lap}")
+            pit_tracking = []
+            while True:
+                pit_tracking = cls._penalty_tracker(race_manager, pit_tracking, current_stage)
+                # stages 1 and 2 run through logic processing
+                # stage 3 only needs penalty tracker
+                if current_stage.stage in [1,2]:
+                    cls._stage_logic_tree(race_manager, current_stage)
+                    if current_stage.advance_to_next_stage:
+                        break
+                if race_manager.ir["SessionState"] == 5:
+                    break
             logging.info(f"Handling of stage {current_stage} is complete")
         logging.info("Race processing is complete!")
 
@@ -367,7 +352,7 @@ class RaceService:
                 # will be later converted into post-race processing logic
                 logger.debug("SessionState is now 6, dumping results data")
                 race_manager.ir.freeze_var_buffer_latest()
-                race_manager.race_weekend.race_results = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["ResultsPositions"]
+                race_manager.race_weekend.stage_results[2].stage_results = race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["ResultsPositions"]
                 break
 
         return
