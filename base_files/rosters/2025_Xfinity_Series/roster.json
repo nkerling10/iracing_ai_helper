@@ -668,7 +668,9 @@
             "driverAge": 35,
             "id": "1bf2f908-c440-61ee-0dc7-d8b8ea782596",
             "rowIndex": 27,
-            "carClassId": 0
+            "carClassId": 0,
+            "disableCarDecals": true,
+            "carTgaName": "car_33.tga"
         },
         {
             "driverName": "Greg Van Alst",
@@ -715,7 +717,8 @@
             "id": "5420fe67-0123-9dd1-c72f-4f7b886b783b",
             "rowIndex": 29,
             "carClassId": 0,
-            "disableCarDecals": true
+            "disableCarDecals": true,
+            "carTgaName": "car_36.tga"
         },
         {
             "driverName": "Ryan Sieg",
@@ -1049,7 +1052,9 @@
             "driverAge": 57,
             "id": "cbda2f01-aff6-e937-ce8b-cf3ecbe0963b",
             "rowIndex": 43,
-            "carClassId": 0
+            "carClassId": 0,
+            "disableCarDecals": true,
+            "carTgaName": "car_74.tga"
         },
         {
             "driverName": "BJ McLeod",
@@ -1071,7 +1076,9 @@
             "driverAge": 41,
             "id": "48533e44-dbd1-ebb8-5bea-685ad1ecec2c",
             "rowIndex": 44,
-            "carClassId": 0
+            "carClassId": 0,
+            "disableCarDecals": true,
+            "carTgaName": "car_78.tga"
         },
         {
             "driverName": "Connor Zilisch",
