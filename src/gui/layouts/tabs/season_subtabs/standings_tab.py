@@ -296,6 +296,12 @@ class StandingsTabLayout:
                     size=(None, 175),
                     expand_x=True,
                 ),
+                sg.Button(
+                    button_text="RACE",
+                    key="-STARTRACEBUTTON-",
+                    size=(None, 30),
+                    disabled=True
+                ),
                 sg.Frame(
                     title="Player Stats",
                     layout=cls._build_player_stats_layout(),

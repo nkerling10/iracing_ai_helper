@@ -236,6 +236,7 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
     season_settings = {
         "settings_version": __version__,
         "season_name": values["__SEASONNAME__"],
+        "player_team_name": values["__PLAYERTEAMNAME__"],
         "season_series": _season_type(values),
         "fuel_capacity": int(values["__FUELCAPACITY__"]),
         "tire_sets": ("UNLIMITED" if values["__TIRESETSUNLIMITED__"] is True else custom_tireset),

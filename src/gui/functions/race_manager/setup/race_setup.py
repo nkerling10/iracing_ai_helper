@@ -82,12 +82,14 @@ class RaceSettings:
     def __init__(self):
         self.field_size = 0
         self.penalty_chance = 0
-        self.inspection_fail_chance_one = 0
-        self.inspection_fail_chance_two = 0
-        self.inspection_fail_chance_three = 0
-        self.debris_caution_chance = 0
+        self.pre_race_penalties_enabled = True
+        self.pre_race_penalties_chance = 2
+        self.inspection_fail_chance_modifier = 2
+        self.debris_cautions_enabled = False
+        self.debris_cautions_chance = 0
         self.unapproved_adjustments_chance = 0
-        self.post_race_penalty_chance = 0
+        self.post_race_penalties_enabled = True
+        self.post_race_penalties_chance = 2
         self.penalties_player = [
             "Crew members over the wall too soon",
             "Too many men over the wall",

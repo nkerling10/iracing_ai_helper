@@ -14,7 +14,7 @@ from pathlib import Path
 
 ## Local imports
 from gui.config.settings import Settings
-#from gui.functions.race_manager.race_manager import main as race_manager
+from gui.functions.race_manager.race_manager import main as race_manager
 from gui.layouts.tables import roster_data
 from gui.functions.randomizer.randomizer import Randomizer
 from gui.functions.database.db_manager import DatabaseManager
@@ -188,6 +188,8 @@ def main_window(prev_table: str) -> None:
                 logger.debug("Database disconnect unnecessary, skipping operation")
                 pass
             break
+        if event == "-STARTRACEBUTTON-":
+            race_manager(season_settings, config.database_path)
         if event == "-SAVECONFIGBUTTON-":
             if not any(
                 [
@@ -232,6 +234,7 @@ def main_window(prev_table: str) -> None:
                     _update_season_next_race_data(season_settings, db)
                     _update_season_player_stats_data()
                     _update_season_standings_tables(season_settings, db)
+                    window["-STARTRACEBUTTON-"].update(disabled=False)
                     window["-seasontab-"].select()
             except UnboundLocalError:
                 continue

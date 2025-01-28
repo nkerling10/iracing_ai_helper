@@ -5,10 +5,10 @@ logger = logging.getLogger(__name__)
 
 
 class PointsImporter:
-    def __init__(self, race_manager, db_path, driver_points_table, owner_points_table):
+    def __init__(self, race_manager, table_prefix, db_path):
         self.conn = sqlite3.connect(db_path)
-        self.driver_points_table = driver_points_table
-        self.owner_points_table = owner_points_table
+        self.driver_points_table = f"{table_prefix}_POINTS_DRIVER"
+        self.owner_points_table = f"{table_prefix}_POINTS_OWNER"
         self.main(race_manager)
 
     def update_driver_points(self, result, driver):

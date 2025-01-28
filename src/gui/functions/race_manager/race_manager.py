@@ -5,21 +5,24 @@ Massive credit to kutu for the pyirsdk linked below:
 
 ## Standard library imports
 import logging
+import sys
 import time
+from pathlib import Path
 
 ## Third party imports
 import irsdk
 
 ## Local imports
-from setup.race_setup import RaceManager
-from setup.driver import Driver
+sys.path.append(f"{str(Path.cwd())}\\src")
+from gui.functions.race_manager.setup.race_setup import RaceManager
+from gui.functions.race_manager.setup.driver import Driver
 
-from services.practice_service import PracticeService
-from services.qualifying_service import QualifyingService
-from services.race_service import RaceService
-from services.points_calculator import PointsCalculator
-from services.points_importer import PointsImporter
-from services.post_race_penalties import PostRacePenalties
+from gui.functions.race_manager.services.practice_service import PracticeService
+from gui.functions.race_manager.services.qualifying_service import QualifyingService
+from gui.functions.race_manager.services.race_service import RaceService
+from gui.functions.race_manager.services.points_calculator import PointsCalculator
+from gui.functions.race_manager.services.points_importer import PointsImporter
+from gui.functions.race_manager.services.post_race_penalties import PostRacePenalties
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -145,21 +148,19 @@ def loop(race_manager, cars_to_dq):
         else:
             time.sleep(1)
 
-
-def main(db_path, driver_points_table, owner_points_table, player_team_name, field_size = None, penalty_chance = None,
-         inspection_fail_chance_one = None, inspection_fail_chance_two = None, inspection_fail_chance_three = None,
-         debris_caution_chance = None, unapproved_adjustments_chance = None, post_race_penalty_chance = None):
+def main(season_settings: dict = {},
+         db_path: str = "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\database\\iracing_ai_helper.db"):
     race_manager = RaceManager(test_file=True)
-    race_manager.race_weekend.race_data.player_team_name = player_team_name
-    race_manager.race_weekend.race_settings.field_size = field_size
-    race_manager.race_weekend.race_settings.penalty_chance = penalty_chance
-    race_manager.race_weekend.race_settings.inspection_fail_chance_one = inspection_fail_chance_one
-    race_manager.race_weekend.race_settings.inspection_fail_chance_two = inspection_fail_chance_two
-    race_manager.race_weekend.race_settings.inspection_fail_chance_three = inspection_fail_chance_three
-    race_manager.race_weekend.race_settings.debris_caution_chance = debris_caution_chance
-    race_manager.race_weekend.race_settings.unapproved_adjustments_chance = unapproved_adjustments_chance
-    race_manager.race_weekend.race_settings.post_race_penalty_chance = post_race_penalty_chance
-    
+    race_manager.race_weekend.race_data.player_team_name = season_settings.get("player_team_name")
+    race_manager.race_weekend.race_settings.field_size = season_settings.get("field_size", 10)
+    race_manager.race_weekend.race_settings.pre_race_penalties_enabled = season_settings.get("pre_race_penalties_enabled", True)
+    race_manager.race_weekend.race_settings.pre_race_penalties_chance = season_settings.get("pre_race_penalties_chance", 2)
+    race_manager.race_weekend.race_settings.inspection_fail_chance_modifier = season_settings.get("inspection_fail_chance_modifier", 2)
+    race_manager.race_weekend.race_settings.debris_cautions_enabled = season_settings.get("debris_cautions_enabled", False)
+    race_manager.race_weekend.race_settings.debris_cautions_chance = season_settings.get("debris_cautions_chance", 0)
+    race_manager.race_weekend.race_settings.post_race_penalties_enabled = season_settings.get("post_race_penalties_enabled", True)
+    race_manager.race_weekend.race_settings.post_race_penalties_chance = season_settings.get("post_race_penalties_chance", 2)
+
     if race_manager.test_file_active:
         race_manager.race_weekend.stage_results[0].stage_results = ["Austin Hill",
                                                                     "Justin Allgaier",
@@ -183,26 +184,15 @@ def main(db_path, driver_points_table, owner_points_table, player_team_name, fie
                                                                     "Christian Eckes"]
         race_manager.race_weekend.stage_results[2].stage_results = race_manager.ir["SessionInfo"]["Sessions"][0]["ResultsPositions"]
     cars_to_dq = set_drivers(race_manager)
-    """
-    loop(race_manager, cars_to_dq)
-    """
-    if race_manager.race_weekend.race_settings.post_race_penalty_chance > 0:
+    if not race_manager.test_file_active:
+        loop(race_manager, cars_to_dq)
+
+    if race_manager.race_weekend.race_settings.post_race_penalties_enabled:
         PostRacePenalties
     PointsCalculator.main(race_manager)
-    PointsImporter(race_manager, db_path, driver_points_table, owner_points_table)
-
+    PointsImporter(race_manager,
+                   f"{season_settings.get("season_name", "series")}_{season_settings.get("season_name", "season")}".upper(),
+                   db_path)
 
 if __name__ == "__main__":
-    field_size = 10
-    penalty_chance = 8
-    pre_race_penalty_chance = 2
-    inspection_fail_chance_modifier = 2
-    debris_caution_chance = 0
-    post_race_penalty_chance = 0
-    player_team_name = "Team1"
-    db_path = "C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db"
-    driver_points_table = "XFINITY_XFINITY_TEST_SEASON1_POINTS_DRIVER"
-    owner_points_table = "XFINITY_XFINITY_TEST_SEASON1_POINTS_OWNER"
-    main(db_path, driver_points_table, owner_points_table, field_size, penalty_chance,
-         pre_race_penalty_chance, inspection_fail_chance_modifier,
-         debris_caution_chance, post_race_penalty_chance, player_team_name)
+    main()
