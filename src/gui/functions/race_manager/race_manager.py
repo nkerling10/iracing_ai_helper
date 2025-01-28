@@ -113,8 +113,16 @@ def set_drivers(race_manager):
                     Driver(
                         name=driver["UserName"],
                         car=driver["CarNumber"],
-                        team=race_manager.race_weekend.race_data.player_team_name if driver["CarNumber"] == race_manager.race_weekend.race_data.player_car_num else
-                            [car[1] for car in race_manager.season_data.cars_teams if car[0] == driver["CarNumber"]][0],
+                        team=(
+                            race_manager.race_weekend.race_data.player_team_name
+                            if driver["CarNumber"]
+                            == race_manager.race_weekend.race_data.player_car_num
+                            else [
+                                car[1]
+                                for car in race_manager.season_data.cars_teams
+                                if car[0] == driver["CarNumber"]
+                            ][0]
+                        ),
                         points_eligibile=(
                             True
                             if driver["UserName"]
@@ -148,41 +156,68 @@ def loop(race_manager, cars_to_dq):
         else:
             time.sleep(1)
 
-def main(season_settings: dict = {},
-         db_path: str = "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\database\\iracing_ai_helper.db"):
+
+def main(
+    season_settings: dict = {},
+    db_path: str = "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\database\\iracing_ai_helper.db",
+):
     race_manager = RaceManager(test_file=True)
-    race_manager.race_weekend.race_data.player_team_name = season_settings.get("player_team_name")
-    race_manager.race_weekend.race_settings.field_size = season_settings.get("field_size", 10)
-    race_manager.race_weekend.race_settings.pre_race_penalties_enabled = season_settings.get("pre_race_penalties_enabled", True)
-    race_manager.race_weekend.race_settings.pre_race_penalties_chance = season_settings.get("pre_race_penalties_chance", 2)
-    race_manager.race_weekend.race_settings.inspection_fail_chance_modifier = season_settings.get("inspection_fail_chance_modifier", 2)
-    race_manager.race_weekend.race_settings.debris_cautions_enabled = season_settings.get("debris_cautions_enabled", False)
-    race_manager.race_weekend.race_settings.debris_cautions_chance = season_settings.get("debris_cautions_chance", 0)
-    race_manager.race_weekend.race_settings.post_race_penalties_enabled = season_settings.get("post_race_penalties_enabled", True)
-    race_manager.race_weekend.race_settings.post_race_penalties_chance = season_settings.get("post_race_penalties_chance", 2)
+    race_manager.race_weekend.race_data.player_team_name = season_settings.get(
+        "player_team_name"
+    )
+    race_manager.race_weekend.race_settings.field_size = season_settings.get(
+        "field_size", 10
+    )
+    race_manager.race_weekend.race_settings.pre_race_penalties_enabled = (
+        season_settings.get("pre_race_penalties_enabled", True)
+    )
+    race_manager.race_weekend.race_settings.pre_race_penalties_chance = (
+        season_settings.get("pre_race_penalties_chance", 2)
+    )
+    race_manager.race_weekend.race_settings.inspection_fail_chance_modifier = (
+        season_settings.get("inspection_fail_chance_modifier", 2)
+    )
+    race_manager.race_weekend.race_settings.debris_cautions_enabled = (
+        season_settings.get("debris_cautions_enabled", False)
+    )
+    race_manager.race_weekend.race_settings.debris_cautions_chance = (
+        season_settings.get("debris_cautions_chance", 0)
+    )
+    race_manager.race_weekend.race_settings.post_race_penalties_enabled = (
+        season_settings.get("post_race_penalties_enabled", True)
+    )
+    race_manager.race_weekend.race_settings.post_race_penalties_chance = (
+        season_settings.get("post_race_penalties_chance", 2)
+    )
 
     if race_manager.test_file_active:
-        race_manager.race_weekend.stage_results[0].stage_results = ["Austin Hill",
-                                                                    "Justin Allgaier",
-                                                                    "Harrison Burton",
-                                                                    "Sammy Smith",
-                                                                    "Brandon Jones",
-                                                                    "Daniel Dye",
-                                                                    "William Sawalich",
-                                                                    "Jesse Love",
-                                                                    "Sheldon Creed",
-                                                                    "Christian Eckes"]
-        race_manager.race_weekend.stage_results[1].stage_results = ["Austin Hill",
-                                                                    "Justin Allgaier",
-                                                                    "Sammy Smith",
-                                                                    "Brandon Jones",
-                                                                    "Sheldon Creed",
-                                                                    "Harrison Burton",
-                                                                    "Daniel Dye",
-                                                                    "William Sawalich",
-                                                                    "Jesse Love",
-                                                                    "Christian Eckes"]
-        race_manager.race_weekend.stage_results[2].stage_results = race_manager.ir["SessionInfo"]["Sessions"][0]["ResultsPositions"]
+        race_manager.race_weekend.stage_results[0].stage_results = [
+            "Austin Hill",
+            "Justin Allgaier",
+            "Harrison Burton",
+            "Sammy Smith",
+            "Brandon Jones",
+            "Daniel Dye",
+            "William Sawalich",
+            "Jesse Love",
+            "Sheldon Creed",
+            "Christian Eckes",
+        ]
+        race_manager.race_weekend.stage_results[1].stage_results = [
+            "Austin Hill",
+            "Justin Allgaier",
+            "Sammy Smith",
+            "Brandon Jones",
+            "Sheldon Creed",
+            "Harrison Burton",
+            "Daniel Dye",
+            "William Sawalich",
+            "Jesse Love",
+            "Christian Eckes",
+        ]
+        race_manager.race_weekend.stage_results[2].stage_results = race_manager.ir[
+            "SessionInfo"
+        ]["Sessions"][0]["ResultsPositions"]
     cars_to_dq = set_drivers(race_manager)
     if not race_manager.test_file_active:
         loop(race_manager, cars_to_dq)
@@ -190,9 +225,12 @@ def main(season_settings: dict = {},
     if race_manager.race_weekend.race_settings.post_race_penalties_enabled:
         PostRacePenalties
     PointsCalculator.main(race_manager)
-    PointsImporter(race_manager,
-                   f"{season_settings.get("season_name", "series")}_{season_settings.get("season_name", "season")}".upper(),
-                   db_path)
+    PointsImporter(
+        race_manager,
+        f"{season_settings.get("season_name", "series")}_{season_settings.get("season_name", "season")}".upper(),
+        db_path,
+    )
+
 
 if __name__ == "__main__":
     main()

@@ -36,7 +36,9 @@ class DatabaseManager:
         results_return = []
         try:
             if order_by != "":
-                results = self.cursor.execute(f"SELECT * FROM {table} ORDER BY {order_by} DESC")
+                results = self.cursor.execute(
+                    f"SELECT * FROM {table} ORDER BY {order_by} DESC"
+                )
             else:
                 results = self.cursor.execute(f"SELECT * FROM {table}")
             for row in results.fetchall():

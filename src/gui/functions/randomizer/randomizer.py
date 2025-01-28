@@ -282,8 +282,14 @@ class Randomizer:
                 f"No alternate schemes found for {roster_driver_updated.car.number}"
             )
             if not exists(self.roster_path / f"{roster_driver_updated.car.number}.tga"):
-                logger.debug(f"{roster_driver_updated.car.number}.tga doesn't exist, creating")
-                new_paint_file = self.roster_path / roster_driver_updated.car.number / [file for file in paint_files][0]
+                logger.debug(
+                    f"{roster_driver_updated.car.number}.tga doesn't exist, creating"
+                )
+                new_paint_file = (
+                    self.roster_path
+                    / roster_driver_updated.car.number
+                    / [file for file in paint_files][0]
+                )
             else:
                 return
         else:

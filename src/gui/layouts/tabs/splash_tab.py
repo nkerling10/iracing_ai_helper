@@ -37,7 +37,7 @@ class SplashTabLayout:
                                     if os.path.exists(Path.cwd() / "ai_seasons")
                                     else True
                                 ),
-                            )
+                            ),
                         ]
                     ],
                     justification="center",

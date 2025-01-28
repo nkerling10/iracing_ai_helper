@@ -11,6 +11,7 @@ from pygetwindow import PyGetWindowException
 
 logger = logging.getLogger(__name__)
 
+
 class State:
     ir_connected = False
 
@@ -24,23 +25,57 @@ class SeasonData:
         self.owner_points = None
         self.point_values = None
         self._pull_and_set_season_data()
-    
+
     def _pull_and_set_season_data(self) -> None:
         """
-            Pulls required season data from the database and self assigns it
+        Pulls required season data from the database and self assigns it
         """
         ## TODO: rework these queries to be dynamic
         ## TODO: utilize the global db manager passed in from gui
-        conn = sqlite3.connect("C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db")
-        self.drivers_list=conn.cursor().execute("SELECT * FROM DRIVER WHERE DECLARED_POINTS == 'XFINITY'").fetchall()
-        self.cars_teams = conn.cursor().execute("SELECT NUMBER, TEAM FROM CAR_XFINITY").fetchall()
-        points_eligible=[driver[0] for driver in conn.cursor().execute("SELECT NAME FROM DRIVER WHERE DECLARED_POINTS == 'XFINITY'").fetchall()]
+        conn = sqlite3.connect(
+            "C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db"
+        )
+        self.drivers_list = (
+            conn.cursor()
+            .execute("SELECT * FROM DRIVER WHERE DECLARED_POINTS == 'XFINITY'")
+            .fetchall()
+        )
+        self.cars_teams = (
+            conn.cursor().execute("SELECT NUMBER, TEAM FROM CAR_XFINITY").fetchall()
+        )
+        points_eligible = [
+            driver[0]
+            for driver in conn.cursor()
+            .execute("SELECT NAME FROM DRIVER WHERE DECLARED_POINTS == 'XFINITY'")
+            .fetchall()
+        ]
         self.declared_points = points_eligible
-        prev_season_winners=[value for value in conn.cursor().execute("SELECT * FROM XFINITY_2024_WINNERS").fetchall()]
+        prev_season_winners = [
+            value
+            for value in conn.cursor()
+            .execute("SELECT * FROM XFINITY_2024_WINNERS")
+            .fetchall()
+        ]
         self.past_season_winners = prev_season_winners[0]
-        self.current_season_winners=[value[0] for value in conn.cursor().execute("SELECT NAME, WINS FROM XFINITY_2025_POINTS_DRIVER WHERE WINS != 0 or NULL").fetchall()],
-        self.owner_points=conn.cursor().execute("SELECT * FROM XFINITY_2025_POINTS_OWNER").fetchall()
-        self.point_values=[value[0] for value in conn.cursor().execute("SELECT POINTS FROM POINTS_AWARDED_TABLE").fetchall()]
+        self.current_season_winners = (
+            [
+                value[0]
+                for value in conn.cursor()
+                .execute(
+                    "SELECT NAME, WINS FROM XFINITY_2025_POINTS_DRIVER WHERE WINS != 0 or NULL"
+                )
+                .fetchall()
+            ],
+        )
+        self.owner_points = (
+            conn.cursor().execute("SELECT * FROM XFINITY_2025_POINTS_OWNER").fetchall()
+        )
+        self.point_values = [
+            value[0]
+            for value in conn.cursor()
+            .execute("SELECT POINTS FROM POINTS_AWARDED_TABLE")
+            .fetchall()
+        ]
         conn.close()
 
 
@@ -132,7 +167,9 @@ class RaceManager:
         self.test_file_active = True if test_file else False
         self.ir = irsdk.IRSDK()
         if test_file:
-            self.ir.startup("C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_finished.bin")
+            self.ir.startup(
+                "C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_finished.bin"
+            )
         else:
             self._connect()
         self._set_weekend_data()
@@ -189,7 +226,8 @@ class RaceManager:
         current_session_name = [
             session["SessionName"]
             for session in self.ir["SessionInfo"]["Sessions"]
-            if session["SessionNum"] == current_session_num][0]
+            if session["SessionNum"] == current_session_num
+        ][0]
 
         return current_session_num, current_session_name
 
@@ -220,8 +258,20 @@ class RaceManager:
 
     def _set_weekend_data(self) -> None:
         self._define_sessions()
-        self.race_weekend.track.track_short_name=self.ir["WeekendInfo"]["TrackDisplayShortName"]
-        self.race_weekend.track.track_long_name=self.ir["WeekendInfo"]["TrackDisplayName"]
-        self.race_weekend.race_length=self.ir["SessionInfo"]["Sessions"][self.race_session_num]["SessionLaps"]
-        self.race_weekend.race_data.player_car_num=self.ir["DriverInfo"]["Drivers"][0]["CarNumber"]
-        self.race_weekend.race_data.driver_caridx_map=[{"name": driver["UserName"], "car": driver["CarNumber"]} for driver in self.ir["DriverInfo"]["Drivers"] if driver["UserName"] != "Pace Car"]
+        self.race_weekend.track.track_short_name = self.ir["WeekendInfo"][
+            "TrackDisplayShortName"
+        ]
+        self.race_weekend.track.track_long_name = self.ir["WeekendInfo"][
+            "TrackDisplayName"
+        ]
+        self.race_weekend.race_length = self.ir["SessionInfo"]["Sessions"][
+            self.race_session_num
+        ]["SessionLaps"]
+        self.race_weekend.race_data.player_car_num = self.ir["DriverInfo"]["Drivers"][
+            0
+        ]["CarNumber"]
+        self.race_weekend.race_data.driver_caridx_map = [
+            {"name": driver["UserName"], "car": driver["CarNumber"]}
+            for driver in self.ir["DriverInfo"]["Drivers"]
+            if driver["UserName"] != "Pace Car"
+        ]

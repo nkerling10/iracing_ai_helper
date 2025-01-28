@@ -101,7 +101,7 @@ class PracticeService:
         if disable is True:
             logging.info("Disabling chat")
             cls._disable_chat(race_manager, global_=False)
-        #logging.info("Disqualifying driverless cars")
-        #cls._disqualify_drivers(race_manager, cars_to_dq)
+        # logging.info("Disqualifying driverless cars")
+        # cls._disqualify_drivers(race_manager, cars_to_dq)
         logging.info("Issuing pre-race penalties")
         cls._calculate_pre_race_penalties(race_manager)

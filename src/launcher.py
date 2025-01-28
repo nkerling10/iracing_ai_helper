@@ -32,6 +32,7 @@ from gui.layouts.tabs.logging_tab import LoggingTabLayout
 
 logging.basicConfig()
 
+
 def _delete_file(file_path, dir=False):
     try:
         if dir:
@@ -82,9 +83,15 @@ def _update_season_next_race_data(season_settings, db) -> None:
         next_race = NextRaceData._load_next_race_data(config, season_settings, db)
     window["_-WEEK-_"].update(value=next_race.week if season_settings and db else "")
     window["_-TRACK-_"].update(value=next_race.track if season_settings and db else "")
-    window["_-STAGE1-_"].update(value=next_race.stage_1 if season_settings and db else "")
-    window["_-STAGE2-_"].update(value=next_race.stage_2 if season_settings and db else "")
-    window["_-STAGE3-_"].update(value=next_race.race_laps if season_settings and db else "")
+    window["_-STAGE1-_"].update(
+        value=next_race.stage_1 if season_settings and db else ""
+    )
+    window["_-STAGE2-_"].update(
+        value=next_race.stage_2 if season_settings and db else ""
+    )
+    window["_-STAGE3-_"].update(
+        value=next_race.race_laps if season_settings and db else ""
+    )
     window["-TRACKBOX-"].update(value=next_race.week if season_settings and db else "")
 
 
@@ -93,11 +100,23 @@ def _update_season_standings_tables(season_settings, db):
         season_series = season_settings.get("season_series")
         season_name = season_settings.get("season_name").upper().replace(" ", "_")
     window["-DRIVERPOINTSTABLE-"].update(
-        values=db.execute_query(
-            f"{season_series}_{season_name}_POINTS_DRIVER", order_by="POINTS")[:-1][0] if season_settings and db else [])
+        values=(
+            db.execute_query(
+                f"{season_series}_{season_name}_POINTS_DRIVER", order_by="POINTS"
+            )[:-1][0]
+            if season_settings and db
+            else []
+        )
+    )
     window["-OWNERPOINTSTABLE-"].update(
-        values=db.execute_query(
-            f"{season_series}_{season_name}_POINTS_OWNER", order_by="POINTS")[:-1][0] if season_settings and db else [])
+        values=(
+            db.execute_query(
+                f"{season_series}_{season_name}_POINTS_OWNER", order_by="POINTS"
+            )[:-1][0]
+            if season_settings and db
+            else []
+        )
+    )
 
 
 def _open_saved_season(loaded_season: str) -> dict:
@@ -240,26 +259,36 @@ def main_window(prev_table: str) -> None:
                 continue
         if event == "-DELETESAVEDSEASONBUTTON-":
             select_season_settings_file = sg.popup_get_file(
-                    "Delete a Season",
-                    initial_folder=Path.cwd() / "ai_seasons",
-                    no_window=True,
-                )
+                "Delete a Season",
+                initial_folder=Path.cwd() / "ai_seasons",
+                no_window=True,
+            )
             if select_season_settings_file:
-                if sg.popup_yes_no(
-                    f"Confirm deletion of:\n{select_season_settings_file}"
-                ) == "Yes":
+                if (
+                    sg.popup_yes_no(
+                        f"Confirm deletion of:\n{select_season_settings_file}"
+                    )
+                    == "Yes"
+                ):
                     # read the season file
                     with open(select_season_settings_file, "r") as file:
                         season_delete_info = json.loads(file.read())
-                    del_roster_result = _delete_file(config.iracing_folder / "airosters" / season_delete_info.get("season_name"), True)
-                    del_season_result = _delete_file(season_delete_info.get("season_file"))
+                    del_roster_result = _delete_file(
+                        config.iracing_folder
+                        / "airosters"
+                        / season_delete_info.get("season_name"),
+                        True,
+                    )
+                    del_season_result = _delete_file(
+                        season_delete_info.get("season_file")
+                    )
                     del_settings_result = _delete_file(select_season_settings_file)
                     table_base = f"{season_delete_info.get("season_series")}_{season_delete_info.get("season_name").upper().replace(" ", "_")}_POINTS_"
                     db.delete_tables([f"{table_base}DRIVER", f"{table_base}OWNER"])
                     if all([del_roster_result, del_season_result, del_settings_result]):
                         sg.popup("Season delete was successful!")
-                    _update_season_standings_tables(None,None)
-                    _update_season_next_race_data(None,None)
+                    _update_season_standings_tables(None, None)
+                    _update_season_next_race_data(None, None)
                     window["-ACTIVEDRIVERS-"].update(values=[])
                     window["-INACTIVEDRIVERS-"].update(values=[])
                     window["-SCHEDULETABLE-"].update(values=[])

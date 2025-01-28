@@ -4,9 +4,20 @@ import PySimpleGUI as sg
 class StandingsTabLayout:
     @staticmethod
     def _driver_points_headers() -> list:
-        return ["DRIVER", "POINTS", "STG PTS", "PLY PTS",
-                "STARTS", "WINS", "TOP 5s", "TOP 10s",
-                "DNFs", "LAPS LED", "STG WINS", "POLES"]
+        return [
+            "DRIVER",
+            "POINTS",
+            "STG PTS",
+            "PLY PTS",
+            "STARTS",
+            "WINS",
+            "TOP 5s",
+            "TOP 10s",
+            "DNFs",
+            "LAPS LED",
+            "STG WINS",
+            "POLES",
+        ]
 
     @staticmethod
     def _owner_points_headers() -> list:
@@ -30,7 +41,7 @@ class StandingsTabLayout:
                 )
             ]
         ]
-    
+
     @classmethod
     def _build_owner_points_table(cls, owner_points: list = []) -> list[list]:
         return [
@@ -49,7 +60,6 @@ class StandingsTabLayout:
             ]
         ]
 
-
     @classmethod
     def _build_standings_layout(cls) -> list[list]:
         return [
@@ -57,14 +67,22 @@ class StandingsTabLayout:
                 sg.TabGroup(
                     [
                         [
-                            sg.Tab("Driver", cls._build_driver_points_table(), key="-driverpointsetab-"),
-                            sg.Tab("Owner", cls._build_owner_points_table(), key="-ownerpointstab-")
+                            sg.Tab(
+                                "Driver",
+                                cls._build_driver_points_table(),
+                                key="-driverpointsetab-",
+                            ),
+                            sg.Tab(
+                                "Owner",
+                                cls._build_owner_points_table(),
+                                key="-ownerpointstab-",
+                            ),
                         ]
                     ],
                     key="-tabgroup1-",
                     tab_location="topleft",
                     expand_x=True,
-                    expand_y=True
+                    expand_y=True,
                 )
             ]
         ]
@@ -300,7 +318,7 @@ class StandingsTabLayout:
                     button_text="RACE",
                     key="-STARTRACEBUTTON-",
                     size=(None, 30),
-                    disabled=True
+                    disabled=True,
                 ),
                 sg.Frame(
                     title="Player Stats",
