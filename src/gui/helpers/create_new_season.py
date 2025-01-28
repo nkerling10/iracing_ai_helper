@@ -11,6 +11,7 @@ logger = logging.getLogger(__name__)
 ai_seasons_file_path = Path.cwd() / "ai_seasons"
 base_files_roster_path = Path.cwd() / "base_files" / "rosters"
 
+__version__ = "1.0"
 
 def _update_season_settings(config: object, season_settings: dict) -> None:
     """
@@ -136,7 +137,7 @@ def _copy_season_base_file(config: object, season_settings: dict) -> bool:
 
 def _create_season_database_tables(config: object, season_settings: dict) -> None:
     season_series = season_settings.get("season_series")
-    season_name = season_settings.get("season_name").upper().replace(" ", "_")
+    season_name = season_settings.get("season_name").upper().replace(" ", "")
     conn = sqlite3.connect(config.database_path)
     with conn:
         conn.execute(
@@ -233,7 +234,7 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
         )
         return False
     season_settings = {
-        "settings_version": "1.0",
+        "settings_version": __version__,
         "season_name": values["__SEASONNAME__"],
         "season_series": _season_type(values),
         "fuel_capacity": int(values["__FUELCAPACITY__"]),
@@ -242,11 +243,14 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
         "points_format": _points_format(values),
         "field_size": values["__FIELDSIZE__"],
         "pre_race_penalties_enabled": True if values["__PRERACEPENALTIESCHECKBOX__"] is True else False,
-        "pre_race_penalties_chance": values["__PRERACEPENALTIESCHANCEVALUE__"],
+        "pre_race_penalties_chance": int(values["__PRERACEPENALTIESCHANCEVALUE__"]) if values["__PRERACEPENALTIESCHECKBOX__"] is True else 0,
+        "inspection_fail_chance_modifier": int(values["__INSPECTIONFAILCHANCEMODIFIERVALUE__"]) if values["__PRERACEPENALTIESCHECKBOX__"] is True else 0,
         "pit_penalties_enabled": True if values["__PITPENALTIESCHECKBOX__"] is True else False,
-        "pit_penalties_chance": values["__PITPENALTIESCHANCEVALUE__"],
+        "pit_penalties_chance": int(values["__PITPENALTIESCHANCEVALUE__"]),
+        "post_race_penalties_enabled": True if values["__POSTRACEPENALTIESCHECKBOX__"] is True else False,
+        "post_race_penalties_chance": int(values["__POSTRACEPENALTIESCHANCEVALUE__"]) if values["__PRERACEPENALTIESCHECKBOX__"] is True else 0,
         "debris_cautions_enabled": True if values["__DEBRISCAUTIONCHECKBOX__"] is True else False,
-        "debris_cautions_chance": values["__DEBRISCAUTIONCHANCEVALUE__"]
+        "debris_cautions_chance": int(values["__DEBRISCAUTIONCHANCEVALUE__"]) if values["__DEBRISCAUTIONCHECKBOX__"] is True else 0
     }
     try:
         with open(
@@ -358,7 +362,7 @@ def _create_new_season(config) -> dict:
             sg.Frame(
                 layout=[
                     [
-                        sg.Input(key="__PLAYERTEAMNAME__")
+                        sg.InputText(key="__PLAYERTEAMNAME__")
                     ]
                 ],
                 title="Team name",
@@ -477,17 +481,29 @@ def _create_new_season(config) -> dict:
                                                                 key="__PRERACEPENALTIESCHECKBOX__",
                                                                 expand_x=True,
                                                                 expand_y=True,
-                                                                default=True
-                                                            )
+                                                                default=True,
+                                                                tooltip="Enables/Disables the generation and assignment of pre-race penalties"
+                                                            ),
                                                         ],
                                                         [
-                                                            sg.Text("Likelihood"),
+                                                            sg.Text("% Likelihood", justification="c", tooltip="Percentage chance that each car will have a pre-race penalty"),
+                                                            sg.Text("Inspection\nmodifier", justification="c", tooltip="Multiplicative percentage chance that each additional inspection attempt will fail\n\nIf value of pre-race penalities and Inspection modifier are 2%:\n2% fail chance of first inspection -> 4% fail chance of second inspection -> 8% fail chance of third inspection")
+                                                        ],
+                                                        [
                                                             sg.Spin(
-                                                                values=[f"{i}%" for i in range(1, 100)],
+                                                                values=[i for i in range(1, 100)],
                                                                 key="__PRERACEPENALTIESCHANCEVALUE__",
-                                                                initial_value="2%",
-                                                                expand_x=True
+                                                                initial_value=2,
+                                                                expand_x=True,
+                                                                tooltip="Percentage chance that each car will have a pre-race penalty"
                                                             ),
+                                                            sg.Spin(
+                                                                values=[i for i in range(1, 100)],
+                                                                key="__INSPECTIONFAILCHANCEMODIFIERVALUE__",
+                                                                initial_value=2,
+                                                                expand_x=True,
+                                                                tooltip="Multiplicative percentage chance that each additional inspection attempt will fail"
+                                                            )
                                                         ]
                                                     ]
                                                 ),
@@ -499,16 +515,46 @@ def _create_new_season(config) -> dict:
                                                                 key="__PITPENALTIESCHECKBOX__",
                                                                 expand_x=True,
                                                                 expand_y=True,
-                                                                default=True
+                                                                default=True,
+                                                                tooltip="Enables/Disables the generation and assignment of pit-penalties for all drivers"
                                                             ),
                                                         ],
                                                         [
-                                                            sg.Text("Likelihood"),
+                                                            sg.Text("% Likelihood", justification="c")
+                                                        ],
+                                                        [
                                                             sg.Spin(
-                                                                values=[f"{i}%" for i in range(1, 100)],
+                                                                values=[i for i in range(1, 100)],
                                                                 key="__PITPENALTIESCHANCEVALUE__",
-                                                                initial_value="8%",
-                                                                expand_x=True
+                                                                initial_value=8,
+                                                                expand_x=True,
+                                                                tooltip="Percentage chance for a car to have a pit-penalty assigned"
+                                                            )
+                                                        ]
+                                                    ]
+                                                ),
+                                                sg.Column(
+                                                    layout=[
+                                                        [
+                                                            sg.Checkbox(
+                                                                "Post-race penalties",
+                                                                key="__POSTRACEPENALTIESCHECKBOX__",
+                                                                expand_x=True,
+                                                                expand_y=True,
+                                                                default=True,
+                                                                tooltip="Enables/Disables the generation and assignment of post-race penalties for all drivers"
+                                                            )
+                                                        ],
+                                                        [
+                                                            sg.Text("% Likelihood", justification="c")
+                                                        ],
+                                                        [
+                                                            sg.Spin(
+                                                                values=[i for i in range(1, 100)],
+                                                                key="__POSTRACEPENALTIESCHANCEVALUE__",
+                                                                initial_value=2,
+                                                                expand_x=True,
+                                                                tooltip="Percentage chance for a car to have a post-race penalty assigned"
                                                             )
                                                         ]
                                                     ]
@@ -528,23 +574,29 @@ def _create_new_season(config) -> dict:
                                                                 key="__DEBRISCAUTIONCHECKBOX__",
                                                                 expand_x=True,
                                                                 expand_y=True,
-                                                                default=True
+                                                                default=True,
+                                                                tooltip="Enables/Disables the generation of debris caution events"
                                                             )
                                                         ],
                                                         [
-                                                            sg.Text("Likelihood"),
+                                                            sg.Text("% Likelihood", justification="c")
+                                                        ],
+                                                        [
                                                             sg.Spin(
                                                                 values=[i for i in range(1, 5)],
                                                                 key="__DEBRISCAUTIONCHANCEVALUE__",
                                                                 initial_value=1,
-                                                                expand_x=True
+                                                                expand_x=True,
+                                                                tooltip="Percentage chance a debris caution will be thrown during each tick"
                                                             )
                                                         ]
                                                     ]
                                                 )   
                                             ]
                                         ],
-                                        title="Cautions"
+                                        title="Cautions",
+                                        expand_x=True,
+                                        expand_y=True
                                     )
                                 ]
                             ]
@@ -569,7 +621,7 @@ def _create_new_season(config) -> dict:
             window.close()
             return
         if event == "Create":
-            if not values["__SEASONNAME__"] and not any(
+            if not all([values["__SEASONNAME__"], values["__PLAYERTEAMNAME__"]]) or not any(
                 [
                     values["__SEASONTYPECUP__"],
                     values["__SEASONTYPEXFINITY__"],

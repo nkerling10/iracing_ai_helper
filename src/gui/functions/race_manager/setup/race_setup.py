@@ -75,6 +75,7 @@ class RaceData:
         self.pre_race_penalties = []
         self.pole_winner = ""
         self.player_car_num = ""
+        self.player_team_name = ""
 
 
 class RaceSettings:

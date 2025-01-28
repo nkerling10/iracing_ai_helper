@@ -110,7 +110,7 @@ def set_drivers(race_manager):
                     Driver(
                         name=driver["UserName"],
                         car=driver["CarNumber"],
-                        team="Kerling Motorsports" if driver["CarNumber"] == race_manager.race_weekend.race_data.player_car_num else
+                        team=race_manager.race_weekend.race_data.player_team_name if driver["CarNumber"] == race_manager.race_weekend.race_data.player_car_num else
                             [car[1] for car in race_manager.season_data.cars_teams if car[0] == driver["CarNumber"]][0],
                         points_eligibile=(
                             True
@@ -146,10 +146,11 @@ def loop(race_manager, cars_to_dq):
             time.sleep(1)
 
 
-def main(db_path, driver_points_table, owner_points_table, field_size = None, penalty_chance = None,
+def main(db_path, driver_points_table, owner_points_table, player_team_name, field_size = None, penalty_chance = None,
          inspection_fail_chance_one = None, inspection_fail_chance_two = None, inspection_fail_chance_three = None,
          debris_caution_chance = None, unapproved_adjustments_chance = None, post_race_penalty_chance = None):
     race_manager = RaceManager(test_file=True)
+    race_manager.race_weekend.race_data.player_team_name = player_team_name
     race_manager.race_weekend.race_settings.field_size = field_size
     race_manager.race_weekend.race_settings.penalty_chance = penalty_chance
     race_manager.race_weekend.race_settings.inspection_fail_chance_one = inspection_fail_chance_one
@@ -194,15 +195,14 @@ def main(db_path, driver_points_table, owner_points_table, field_size = None, pe
 if __name__ == "__main__":
     field_size = 10
     penalty_chance = 8
-    inspection_fail_chance_one = 2
-    inspection_fail_chance_two = 4
-    inspection_fail_chance_three = 6
+    pre_race_penalty_chance = 2
+    inspection_fail_chance_modifier = 2
     debris_caution_chance = 0
-    unapproved_adjustments_chance = 1
     post_race_penalty_chance = 0
+    player_team_name = "Team1"
     db_path = "C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db"
     driver_points_table = "XFINITY_XFINITY_TEST_SEASON1_POINTS_DRIVER"
     owner_points_table = "XFINITY_XFINITY_TEST_SEASON1_POINTS_OWNER"
     main(db_path, driver_points_table, owner_points_table, field_size, penalty_chance,
-         inspection_fail_chance_one, inspection_fail_chance_two, inspection_fail_chance_three,
-         debris_caution_chance, unapproved_adjustments_chance, post_race_penalty_chance)
+         pre_race_penalty_chance, inspection_fail_chance_modifier,
+         debris_caution_chance, post_race_penalty_chance, player_team_name)

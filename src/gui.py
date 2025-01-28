@@ -251,7 +251,7 @@ def main_window(prev_table: str) -> None:
                     del_roster_result = _delete_file(config.iracing_folder / "airosters" / season_delete_info.get("season_name"), True)
                     del_season_result = _delete_file(season_delete_info.get("season_file"))
                     del_settings_result = _delete_file(select_season_settings_file)
-                    table_base = f"{season_settings.get("season_series")}_{season_settings.get("season_name").upper().replace(" ", "_")}_POINTS_"
+                    table_base = f"{season_delete_info.get("season_series")}_{season_delete_info.get("season_name").upper().replace(" ", "_")}_POINTS_"
                     db.delete_tables([f"{table_base}DRIVER", f"{table_base}OWNER"])
                     if all([del_roster_result, del_season_result, del_settings_result]):
                         sg.popup("Season delete was successful!")
