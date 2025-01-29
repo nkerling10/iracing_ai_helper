@@ -139,7 +139,7 @@ class RaceService:
         ## Play start engine command
         while True:
             race_manager.ir.freeze_var_buffer_latest()
-            if race_manager.ir["PlayerTrackSurface"] != -1:
+            if race_manager.ir["PlayerTrackSurface"] != -1 or race_manager.observe:
                 break
             logging.debug("Waiting for player to enter car")
             time.sleep(1)
@@ -153,14 +153,14 @@ class RaceService:
         race_manager.send_iracing_command("!gridstart")
         time.sleep(10)
         ## Wait for cars to get rolling, then issue any pre-race penalties
-        if len(race_manager.race_weekend.pre_race_penalties) > 0:
+        if len(race_manager.race_weekend.race_data.pre_race_penalties) > 0:
             logging.debug("Issuing pre-race penalties")
             cls._issue_pre_race_penalty(race_manager)
         else:
             logging.debug("No pre-race penalties to issue")
         logging.info("Pre-race actions are complete")
         race_manager.send_iracing_command(
-            f"Stage lengths: {race_manager.race_weekend.stage1_end}/{race_manager.race_weekend.stage2_end}/{race_manager.race_weekend.race_length}"
+            f"Stage lengths: {race_manager.race_weekend.stage_results[0].stage_end_lap}/{race_manager.race_weekend.stage_results[1].stage_end_lap}/{race_manager.race_weekend.stage_results[2].stage_end_lap}"
         )
 
     @classmethod
@@ -325,7 +325,7 @@ class RaceService:
     def _process_race(cls, race_manager):
         logging.info("Race has started!")
         for current_stage in race_manager.race_weekend.stage_results:
-            logging.info(f"Starting to process stage {current_stage}")
+            logging.info(f"Starting to process stage {current_stage.stage}")
             race_manager.send_iracing_command(
                 f"Stage {current_stage.stage} end: lap {current_stage.stage_end_lap}"
             )
@@ -342,36 +342,31 @@ class RaceService:
                         break
                 if race_manager.ir["SessionState"] == 5:
                     break
-            logging.info(f"Handling of stage {current_stage} is complete")
+            logging.info(f"Handling of stage {current_stage.stage} is complete")
         logging.info("Race processing is complete!")
 
     @classmethod
     def race(cls, race_manager):
         while True:
             race_manager.ir.freeze_var_buffer_latest()
-            ## This Enum is useful to map session state id to its name if desired
-            """logging.debug(f"Session state is {SessionName(race_manager.ir['SessionState']).name}")"""
             ## Session state GET_IN_CAR (1) (garage/settings menu)
-            ## Session state WARMUP (2) AND PARADE_LAPS (3) are handled in this logic
             if race_manager.ir["SessionState"] == 1:
                 logging.debug("Sessionstate 1 detected")
-                ## Perform pre-race actions
                 cls._pre_race_actions(race_manager)
             ## Session state RACING
             elif race_manager.ir["SessionState"] == 4:
                 logging.debug("Race has started!")
                 cls._process_race(race_manager)
-            ## Session state CHECKERED
-            ## Checkered flag has been displayed to the leader
-            elif race_manager.ir["SessionState"] == 5:
-                pass
             ## Session state COOLDOWN
-            ## All cars have taken the checkered, time remaining counter has expired
             elif race_manager.ir["SessionState"] == 6:
                 # do a dump of the buffer as soon as sessionstate hits 6
                 # will be later converted into post-race processing logic
                 logger.debug("SessionState is now 6, dumping results data")
                 race_manager.ir.freeze_var_buffer_latest()
+                irsdk.IRSDK.parse_to(
+                    race_manager.ir,
+                    to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_logic_complete.bin",
+                )
                 race_manager.race_weekend.stage_results[2].stage_results = (
                     race_manager.ir["SessionInfo"]["Sessions"][
                         race_manager.race_session_num

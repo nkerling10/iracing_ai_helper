@@ -326,7 +326,7 @@ class Randomizer:
                 self.roster_path / f"car_{roster_driver_updated.car.number}.tga",
             )
             logger.info(
-                f"Sucessfully copied to {self.roster_path}\car_{roster_driver_updated.car.number}.tga"
+                f"Sucessfully copied to {self.roster_path}\\car_{roster_driver_updated.car.number}.tga"
             )
         except:
             logger.warning("Uncategorized error, skipping copy operation")

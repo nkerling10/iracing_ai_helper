@@ -43,6 +43,7 @@ def _update_season_settings(config: object, season_settings: dict) -> None:
 
     modified_season_file["rosterName"] = season_settings.get("season_name")
     modified_season_file["name"] = season_settings.get("season_name")
+    modified_season_file["max_drivers"] = 100
 
     race_index = 0
     while race_index < len(modified_season_file["events"]):

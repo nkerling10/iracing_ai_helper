@@ -88,13 +88,13 @@ class Track:
 
 
 class Stage:
-    def __new__(cls, stage_num):
+    def __new__(cls, stage_num, stage_end_lap):
         instance = super().__new__(cls)
         return instance
 
-    def __init__(self, stage_num):
+    def __init__(self, stage_num: int, stage_end_lap: int):
         self.stage = stage_num
-        self.stage_end_lap = 0
+        self.stage_end_lap = stage_end_lap
         self.stage_results = []
         self.pit_penalties = []
         self.stage_ending_early = False
@@ -143,21 +143,28 @@ class RaceSettings:
 
 
 class RaceWeekend:
-    def __init__(self):
-        self.race_length = 0
+    def __init__(self, stage_1_end: int, stage_2_end: int, race_end: int):
+        self.race_length = race_end
         self.track = Track()
         self.race_settings = RaceSettings()
         self.race_data = RaceData()
         self.drivers = []
-        self.stage_results = [Stage(1), Stage(2), Stage(3)]
+        self.stage_results = [
+            Stage(1, stage_1_end),
+            Stage(2, stage_2_end),
+            Stage(3, race_end),
+        ]
         self.weekend_points = []
 
 
 class RaceManager:
-    def __init__(self, test_file: bool = False):
+    def __init__(
+        self, stage_1_end: int, stage_2_end: int, race_end: int, test_file: bool = False
+    ):
         self.state = State()
         self.season_data = SeasonData()
-        self.race_weekend = RaceWeekend()
+        self.race_weekend = RaceWeekend(stage_1_end, stage_2_end, race_end)
+        self.observe = True
         self.practice_session_num = None
         self.practice_done = False
         self.qualifying_session_num = None
@@ -179,14 +186,14 @@ class RaceManager:
         Issue a command to iRacing via pyautogui.typewrite library
         """
         while True:
+            window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
             try:
-                window = gw.getWindowsWithTitle("iRacing.com Simulator")[0]
                 window.activate()
                 logger.debug("Activated window")
+                break
             except PyGetWindowException:
                 logger.error("PyGetWindowException error!")
                 time.sleep(0.5)
-            break
         logger.debug(f"Sending chat command: {command}")
         self.ir.chat_command(1)
         time.sleep(0.5)

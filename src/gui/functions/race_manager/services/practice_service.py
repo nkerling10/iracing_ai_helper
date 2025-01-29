@@ -49,14 +49,14 @@ class PracticeService:
 
             if (
                 random.randint(1, 100)
-                < race_manager.race_weekend.race_settings.inspection_fail_chance_one
+                < race_manager.race_weekend.race_settings.pre_race_penalties_chance
             ):
                 logger.debug(f"Car #{driver.car} has failed inspection once")
                 failed_one = True
             else:
                 if (
                     random.randint(1, 100)
-                    == race_manager.race_weekend.race_settings.unapproved_adjustments_chance
+                    == race_manager.race_weekend.race_settings.pre_race_penalties_chance
                 ):
                     logger.debug(
                         f"Car #{driver.car} is penalized for unapproved adjustments"
@@ -70,7 +70,8 @@ class PracticeService:
             if failed_one:
                 if (
                     random.randint(1, 100)
-                    < race_manager.race_weekend.race_settings.inspection_fail_chance_two
+                    < race_manager.race_weekend.race_settings.pre_race_penalties_chance
+                    * race_manager.race_weekend.race_settings.inspection_fail_chance_modifier
                 ):
                     logger.debug(f"Car #{driver.car} has failed inspection twice")
                     failed_two = True
@@ -80,7 +81,9 @@ class PracticeService:
             if failed_two:
                 if (
                     random.randint(1, 100)
-                    < race_manager.race_weekend.race_settings.inspection_fail_chance_three
+                    < race_manager.race_weekend.race_settings.pre_race_penalties_chance
+                    * race_manager.race_weekend.race_settings.inspection_fail_chance_modifier
+                    * race_manager.race_weekend.race_settings.inspection_fail_chance_modifier
                 ):
                     logger.debug(f"Car #{driver.car} has failed inspection three times")
                     race_manager.race_weekend.race_data.pre_race_penalties.append(
@@ -101,7 +104,7 @@ class PracticeService:
         if disable is True:
             logging.info("Disabling chat")
             cls._disable_chat(race_manager, global_=False)
-        # logging.info("Disqualifying driverless cars")
-        # cls._disqualify_drivers(race_manager, cars_to_dq)
+        logging.info("Disqualifying driverless cars")
+        cls._disqualify_drivers(race_manager, cars_to_dq)
         logging.info("Issuing pre-race penalties")
         cls._calculate_pre_race_penalties(race_manager)

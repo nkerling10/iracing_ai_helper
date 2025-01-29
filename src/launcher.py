@@ -151,6 +151,17 @@ def _load_iracing_season_file(season_settings: dict) -> None:
     )
 
 
+def _randomize_drivers(season_settings, race_week, db):
+    Randomizer(config, season_settings, race_week, db)
+    window["-TRACKSTATUS-"].update("Success!")
+    active_driver_data, inactive_driver_data = roster_data.build_driver_display_info(
+        config.iracing_folder / "airosters" / season_settings.get("season_name")
+    )
+    window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
+    window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
+    window["-TRACKSTATUS-"].update("")
+
+
 def _set_tab_visibility(tab_status: bool) -> None:
     window["-hometab-"].update(visible=tab_status)
     window["-databasetab-"].update(visible=tab_status)
@@ -208,7 +219,19 @@ def main_window(prev_table: str) -> None:
                 pass
             break
         if event == "-STARTRACEBUTTON-":
-            race_manager(season_settings, config.database_path)
+            # run the randomizer
+            _randomize_drivers(
+                season_settings, race_week=window["_-WEEK-_"].get(), db=db
+            )
+            # start tbe race manager
+            race_manager(
+                season_settings,
+                config.database_path,
+                stage_1_end=window["_-STAGE1-_"].get(),
+                stage_2_end=window["_-STAGE2-_"].get(),
+                race_end=window["_-STAGE3-_"].get(),
+                launcher=True,
+            )
         if event == "-SAVECONFIGBUTTON-":
             if not any(
                 [
@@ -322,18 +345,7 @@ def main_window(prev_table: str) -> None:
             except Exception as e:
                 logger.error(e)
         if event == "Randomize":
-            Randomizer(config, season_settings, values["-TRACKBOX-"], db)
-            window["-TRACKSTATUS-"].update("Success!")
-            active_driver_data, inactive_driver_data = (
-                roster_data.build_driver_display_info(
-                    config.iracing_folder
-                    / "airosters"
-                    / season_settings.get("season_name")
-                )
-            )
-            window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
-            window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
-            window["-TRACKSTATUS-"].update("")
+            _randomize_drivers(season_settings, race_week=values["-TRACKBOX-"], db=db)
         if event == "Copy":
             Randomizer.perform_copy(config.local_roster_file)
         if event == "-CLEARLOGBOX-":

@@ -5,6 +5,7 @@ Massive credit to kutu for the pyirsdk linked below:
 
 ## Standard library imports
 import logging
+import random
 import sys
 import time
 from pathlib import Path
@@ -159,9 +160,15 @@ def loop(race_manager, cars_to_dq):
 
 def main(
     season_settings: dict = {},
-    db_path: str = "C:\\Users\\Nick\\Documents\\iracing_ai_helper\\database\\iracing_ai_helper.db",
+    db_path: str = "",
+    stage_1_end: int = 0,
+    stage_2_end: int = 0,
+    race_end: int = 0,
+    launcher: bool = False,
 ):
-    race_manager = RaceManager(test_file=True)
+    race_manager = RaceManager(
+        stage_1_end, stage_2_end, race_end, test_file=False if launcher else True
+    )
     race_manager.race_weekend.race_data.player_team_name = season_settings.get(
         "player_team_name"
     )
@@ -191,7 +198,7 @@ def main(
     )
 
     if race_manager.test_file_active:
-        race_manager.race_weekend.stage_results[0].stage_results = [
+        race_manager.race_weekend.stage_results[0].stage_results = random.shuffle([
             "Austin Hill",
             "Justin Allgaier",
             "Harrison Burton",
@@ -202,8 +209,8 @@ def main(
             "Jesse Love",
             "Sheldon Creed",
             "Christian Eckes",
-        ]
-        race_manager.race_weekend.stage_results[1].stage_results = [
+        ])
+        race_manager.race_weekend.stage_results[1].stage_results = random.shuffle([
             "Austin Hill",
             "Justin Allgaier",
             "Sammy Smith",
@@ -214,7 +221,7 @@ def main(
             "William Sawalich",
             "Jesse Love",
             "Christian Eckes",
-        ]
+        ])
         race_manager.race_weekend.stage_results[2].stage_results = race_manager.ir[
             "SessionInfo"
         ]["Sessions"][0]["ResultsPositions"]
@@ -222,13 +229,12 @@ def main(
     if not race_manager.test_file_active:
         loop(race_manager, cars_to_dq)
 
-    if race_manager.race_weekend.race_settings.post_race_penalties_enabled:
-        PostRacePenalties
+    PostRacePenalties.main(race_manager)
     PointsCalculator.main(race_manager)
     PointsImporter(
         race_manager,
-        f"{season_settings.get("season_name", "series")}_{season_settings.get("season_name", "season")}".upper(),
-        db_path,
+        f"{season_settings.get("season_series", "series")}_{season_settings.get("season_name", "season")}".upper(),
+        db_path
     )
 
 
