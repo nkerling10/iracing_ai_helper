@@ -227,9 +227,9 @@ def main_window(prev_table: str) -> None:
             race_manager(
                 season_settings,
                 config.database_path,
-                stage_1_end=window["_-STAGE1-_"].get(),
-                stage_2_end=window["_-STAGE2-_"].get(),
-                race_end=window["_-STAGE3-_"].get(),
+                stage_1_end=int(window["_-STAGE1-_"].get()),
+                stage_2_end=int(window["_-STAGE2-_"].get()),
+                race_end=int(window["_-STAGE3-_"].get()),
                 launcher=True,
             )
         if event == "-SAVECONFIGBUTTON-":

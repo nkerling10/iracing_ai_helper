@@ -141,7 +141,6 @@ def set_drivers(race_manager):
 def loop(race_manager, cars_to_dq):
     while True:
         ## Figure out what session is currently active
-        ## This will prove useful if the app crashes during any session
         _current_session_num, current_session_name = (
             race_manager._get_current_sessions()
         )
@@ -153,6 +152,8 @@ def loop(race_manager, cars_to_dq):
         ):
             current_session_qualify(race_manager)
         elif current_session_name == "RACE":
+            if race_manager.ir["SessionState"] == 6:
+                return
             current_session_race(race_manager)
         else:
             time.sleep(1)

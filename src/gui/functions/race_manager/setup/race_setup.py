@@ -116,6 +116,7 @@ class RaceData:
 class RaceSettings:
     def __init__(self):
         self.field_size = 0
+        self.stage_cautions = True
         self.penalty_chance = 0
         self.pre_race_penalties_enabled = True
         self.pre_race_penalties_chance = 2
@@ -175,7 +176,7 @@ class RaceManager:
         self.ir = irsdk.IRSDK()
         if test_file:
             self.ir.startup(
-                "C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_finished.bin"
+                "C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_logic_complete.bin"
             )
         else:
             self._connect()

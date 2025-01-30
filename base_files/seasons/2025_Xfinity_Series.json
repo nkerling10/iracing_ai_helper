@@ -2821,7 +2821,7 @@
 				"warmup_grip_compound": null,
 				"race_grip_compound": null
 			},
-			"practice_length": 1,
+			"practice_length": 5,
 			"startZone": true
 		},
 		{
@@ -13124,7 +13124,7 @@
 				]
 			},
 			"time_of_day": 4,
-			"practice_length": 1,
+			"practice_length": 5,
 			"startZone": true
 		},
 		{
@@ -18713,7 +18713,7 @@
 				"warmup_grip_compound": null,
 				"race_grip_compound": null
 			},
-			"practice_length": 1,
+			"practice_length": 5,
 			"startZone": true
 		},
 		{
@@ -24649,7 +24649,7 @@
 				]
 			},
 			"time_of_day": 4,
-			"practice_length": 1,
+			"practice_length": 5,
 			"startZone": true
 		},
 		{
@@ -30437,7 +30437,7 @@
 				]
 			},
 			"time_of_day": 4,
-			"practice_length": 1,
+			"practice_length": 5,
 			"startZone": true
 		},
 		{

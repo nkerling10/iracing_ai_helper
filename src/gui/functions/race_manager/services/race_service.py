@@ -187,19 +187,14 @@ class RaceService:
                 if race_manager.ir["CarIdxOnPitRoad"][driver["CarIdx"]]
                 and driver["UserName"] != "Pace Car"
             ]
-            # if there is at least 1 car on pit road
             if len(cars_on_pit_road) > 0:
-                # for each car in this pulled instance
                 for car_num in cars_on_pit_road:
-                    # if the car has not been processed this cycle
                     if car_num not in pit_tracking:
-                        # track the car number
                         logging.info(f"Tracking pitstop for {car_num}")
                         pit_tracking.append(car_num)
                     # if the car has already been processed, skip it
                     else:
                         continue
-                # track for when a car leaves pit road
                 for car in pit_tracking:
                     if car not in cars_on_pit_road:
                         logging.debug(f"{car} left pit road, penalty check")
@@ -232,7 +227,6 @@ class RaceService:
 
     @staticmethod
     def _process_stage_results(race_manager, current_stage):
-        ## Grab the results for top 10
         race_manager.ir.freeze_var_buffer_latest()
         stage_top_ten_raw = race_manager.ir["SessionInfo"]["Sessions"][
             race_manager.race_session_num
@@ -245,7 +239,6 @@ class RaceService:
                     if position["CarIdx"] == driver["CarIdx"]
                 ][0]
             )
-        ## Announce stage winner via chat
         logging.info(
             f"{current_stage.stage_results[0]} is the winner of Stage {current_stage.stage}!"
         )
@@ -307,10 +300,11 @@ class RaceService:
                 ## if they pass each other after crossing the line at end of stage
                 logging.info("Stage end has been reached")
                 ## Throw the caution flag if necessary
-                if _get_flag(race_manager.ir["SessionFlags"]) == "green":
+                if race_manager.race_settings.stage_cautions and _get_flag(race_manager.ir["SessionFlags"]) == "green":
                     race_manager.send_iracing_command(
                         f"!yellow End of Stage {current_stage.stage}"
                     )
+
                 cls._process_stage_results(race_manager, current_stage)
                 current_stage.stage_complete = True
 
@@ -334,7 +328,7 @@ class RaceService:
                 pit_tracking = cls._penalty_tracker(
                     race_manager, pit_tracking, current_stage
                 )
-                # stages 1 and 2 run through logic processing
+                # stages 1 and 2 run through stage logic processing
                 # stage 3 only needs penalty tracker
                 if current_stage.stage in [1, 2]:
                     cls._stage_logic_tree(race_manager, current_stage)
@@ -349,7 +343,7 @@ class RaceService:
     def race(cls, race_manager):
         while True:
             race_manager.ir.freeze_var_buffer_latest()
-            ## Session state GET_IN_CAR (1) (garage/settings menu)
+            ## Session state GET_IN_CAR
             if race_manager.ir["SessionState"] == 1:
                 logging.debug("Sessionstate 1 detected")
                 cls._pre_race_actions(race_manager)
@@ -359,8 +353,6 @@ class RaceService:
                 cls._process_race(race_manager)
             ## Session state COOLDOWN
             elif race_manager.ir["SessionState"] == 6:
-                # do a dump of the buffer as soon as sessionstate hits 6
-                # will be later converted into post-race processing logic
                 logger.debug("SessionState is now 6, dumping results data")
                 race_manager.ir.freeze_var_buffer_latest()
                 irsdk.IRSDK.parse_to(
@@ -372,6 +364,4 @@ class RaceService:
                         race_manager.race_session_num
                     ]["ResultsPositions"]
                 )
-                break
-
-        return
+                return
