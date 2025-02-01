@@ -17,7 +17,8 @@ class State:
 
 
 class SeasonData:
-    def __init__(self):
+    def __init__(self, table_prefix):
+        self.table_prefix = table_prefix
         self.drivers_list = None
         self.cars_teams = None
         self.past_season_winners = None
@@ -62,13 +63,13 @@ class SeasonData:
                 value[0]
                 for value in conn.cursor()
                 .execute(
-                    "SELECT NAME, WINS FROM XFINITY_2025_POINTS_DRIVER WHERE WINS != 0 or NULL"
+                    f"SELECT NAME, WINS FROM {self.table_prefix}_POINTS_DRIVER WHERE WINS != 0 or NULL"
                 )
                 .fetchall()
             ],
         )
         self.owner_points = (
-            conn.cursor().execute("SELECT * FROM XFINITY_2025_POINTS_OWNER").fetchall()
+            conn.cursor().execute(f"SELECT * FROM {self.table_prefix}_POINTS_OWNER").fetchall()
         )
         self.point_values = [
             value[0]
@@ -160,10 +161,10 @@ class RaceWeekend:
 
 class RaceManager:
     def __init__(
-        self, stage_1_end: int, stage_2_end: int, race_end: int, test_file: bool = False
+        self, stage_1_end: int, stage_2_end: int, race_end: int, table_prefix: str, test_file: bool = False
     ):
         self.state = State()
-        self.season_data = SeasonData()
+        self.season_data = SeasonData(table_prefix)
         self.race_weekend = RaceWeekend(stage_1_end, stage_2_end, race_end)
         self.observe = True
         self.practice_session_num = None

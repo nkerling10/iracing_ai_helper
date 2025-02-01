@@ -70,9 +70,9 @@ class RaceService:
         Select and issue a pit penalty to designated car number
         """
         penalty = random.choice(
-            race_manager.race_settings.penalties_player
+            race_manager.race_weekend.race_settings.penalties_player
             if car_num == race_manager.race_weekend.player_car_num[0]
-            else race_manager.race_settings.penalties
+            else race_manager.race_weekend.race_settings.penalties
         )
 
         race_manager.ir.freeze_var_buffer_latest()
@@ -97,7 +97,7 @@ class RaceService:
         """
         Issue a pre-race penalty to each defined car
         """
-        for car_num, penalty in race_manager.race_weekend.pre_race_penalties:
+        for car_num, penalty in race_manager.race_weekend.race_data.pre_race_penalties:
             if penalty in ["Failed Inspection x2", "Unapproved Adjustments"]:
                 logging.info(f"#{car_num} to the rear: {penalty}")
                 race_manager.send_iracing_command(f"!eol {car_num}")
@@ -201,7 +201,7 @@ class RaceService:
                         # calculate penalty chance once car leaves pit road
                         if (
                             random.randint(1, 100)
-                            < race_manager.race_settings.penalty_chance
+                            < race_manager.race_weekend.race_settings.penalty_chance
                         ):
                             caridx = [
                                 driver["CarIdx"]
@@ -255,7 +255,7 @@ class RaceService:
                 race_manager.race_session_num
             ]["ResultsPositions"][0]["LapsComplete"]
         except Exception as e:
-            logger.error(f"{type(e).__name__}: {e}")
+            #logger.error(f"{type(e).__name__}: {e}")
             return
 
         current_flag = _get_flag(race_manager.ir["SessionFlags"])
@@ -300,7 +300,7 @@ class RaceService:
                 ## if they pass each other after crossing the line at end of stage
                 logging.info("Stage end has been reached")
                 ## Throw the caution flag if necessary
-                if race_manager.race_settings.stage_cautions and _get_flag(race_manager.ir["SessionFlags"]) == "green":
+                if race_manager.race_weekend.race_settings.stage_cautions and _get_flag(race_manager.ir["SessionFlags"]) == "green":
                     race_manager.send_iracing_command(
                         f"!yellow End of Stage {current_stage.stage}"
                     )

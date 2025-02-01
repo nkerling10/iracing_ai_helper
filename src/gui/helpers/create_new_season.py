@@ -279,6 +279,9 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
             if values["__DEBRISCAUTIONCHECKBOX__"] is True
             else 0
         ),
+        "stage_cautions_enabled": (
+            True if values["__STAGECAUTIONSCHECKBOX__"] is True else False
+        )
     }
     try:
         with open(
@@ -398,7 +401,7 @@ def _create_new_season(config) -> dict:
                 layout=[
                     [
                         sg.Slider(
-                            range=(10, 100),
+                            range=(5, 100),
                             default_value=100,
                             orientation="horizontal",
                             key="__RACEDISTANCEPERCENT__",
@@ -654,6 +657,20 @@ def _create_new_season(config) -> dict:
                                                                 tooltip="Percentage chance a debris caution will be thrown during each tick",
                                                             )
                                                         ],
+                                                    ]
+                                                ),
+                                                sg.Column(
+                                                    layout=[
+                                                        [
+                                                            sg.Checkbox(
+                                                                "Stage Cautions",
+                                                                key="__STAGECAUTIONSCHECKBOX__",
+                                                                expand_x=True,
+                                                                expand_y=False,
+                                                                default=True,
+                                                                tooltip="Enables/Disables stage caution flags"
+                                                            )
+                                                        ]
                                                     ]
                                                 )
                                             ]

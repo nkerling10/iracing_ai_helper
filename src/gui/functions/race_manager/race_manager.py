@@ -167,8 +167,9 @@ def main(
     race_end: int = 0,
     launcher: bool = False,
 ):
+    table_prefix = f"{season_settings.get("season_series", "series")}_{season_settings.get("season_name", "season")}".upper()
     race_manager = RaceManager(
-        stage_1_end, stage_2_end, race_end, test_file=False if launcher else True
+        stage_1_end, stage_2_end, race_end, table_prefix, test_file=False if launcher else True
     )
     race_manager.race_weekend.race_data.player_team_name = season_settings.get(
         "player_team_name"
@@ -196,6 +197,9 @@ def main(
     )
     race_manager.race_weekend.race_settings.post_race_penalties_chance = (
         season_settings.get("post_race_penalties_chance", 2)
+    )
+    race_manager.race_weekend.race_settings.stage_cautions = (
+        season_settings.get("stage_cautions_enabled", True)
     )
 
     if race_manager.test_file_active:
@@ -234,7 +238,7 @@ def main(
     PointsCalculator.main(race_manager)
     PointsImporter(
         race_manager,
-        f"{season_settings.get("season_series", "series")}_{season_settings.get("season_name", "season")}".upper(),
+        table_prefix,
         db_path
     )
 
