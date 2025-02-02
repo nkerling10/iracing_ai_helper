@@ -31,8 +31,6 @@ class SeasonData:
         """
         Pulls required season data from the database and self assigns it
         """
-        ## TODO: rework these queries to be dynamic
-        ## TODO: utilize the global db manager passed in from gui
         conn = sqlite3.connect(
             "C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db"
         )
@@ -177,7 +175,7 @@ class RaceManager:
         self.ir = irsdk.IRSDK()
         if test_file:
             self.ir.startup(
-                "C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_logic_complete.bin"
+                "C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_finished.bin"
             )
         else:
             self._connect()

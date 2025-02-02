@@ -1,7 +1,7 @@
 class PointsCalculator:
     @staticmethod
     def calculate_stage_points(race_manager):
-        for stage in race_manager.race_weekend.stage_results[0:1]:
+        for stage in race_manager.race_weekend.stage_results[:2]:
             for driver_name in stage.stage_results:
                 driver_obj = [
                     driver

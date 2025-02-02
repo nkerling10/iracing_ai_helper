@@ -203,20 +203,21 @@ def main(
     )
 
     if race_manager.test_file_active:
-        race_manager.race_weekend.stage_results[0].stage_results = random.shuffle([
+        race_manager.race_weekend.stage_results[0].stage_results = [
+            "William Byron",
             "Austin Hill",
             "Justin Allgaier",
             "Harrison Burton",
             "Sammy Smith",
             "Brandon Jones",
             "Daniel Dye",
-            "William Sawalich",
             "Jesse Love",
             "Sheldon Creed",
             "Christian Eckes",
-        ])
-        race_manager.race_weekend.stage_results[1].stage_results = random.shuffle([
+        ]
+        race_manager.race_weekend.stage_results[1].stage_results = [
             "Austin Hill",
+            "William Byron",
             "Justin Allgaier",
             "Sammy Smith",
             "Brandon Jones",
@@ -224,9 +225,8 @@ def main(
             "Harrison Burton",
             "Daniel Dye",
             "William Sawalich",
-            "Jesse Love",
-            "Christian Eckes",
-        ])
+            "Jesse Love"
+        ]
         race_manager.race_weekend.stage_results[2].stage_results = race_manager.ir[
             "SessionInfo"
         ]["Sessions"][0]["ResultsPositions"]
@@ -242,6 +242,7 @@ def main(
         db_path
     )
 
+    return
 
 if __name__ == "__main__":
     main()
