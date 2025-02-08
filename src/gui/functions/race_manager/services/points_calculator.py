@@ -31,6 +31,14 @@ class PointsCalculator:
             except IndexError:
                 continue
             if not position["ReasonOutStr"] == "DQInv":
+                driver_obj.fastest_lap = (
+                    True
+                    if race_manager.ir["SessionInfo"]["Sessions"][
+                        race_manager.race_session_num
+                    ]["ResultsPositions"]["ResultsFastestLap"]["CarIdx"]
+                    == driver_obj.car_idx
+                    else False
+                )
                 driver_obj.laps_led = position.get("LapsLed")
                 driver_obj.finish_pos = position.get("Position")
                 driver_obj.dnf = (
@@ -53,14 +61,9 @@ class PointsCalculator:
                     and driver_obj.points_eligible
                     else 0
                 )
-                driver_obj.fastest_lap = (
-                    True
-                    if race_manager.ir["SessionInfo"]["Sessions"][
-                        race_manager.race_session_num
-                    ]["ResultsPositions"]["ResultsFastestLap"]["CarIdx"]
-                    == driver_obj.car_idx
-                    else False
-                )
+                if driver_obj.fastest_lap:
+                    driver_obj.owner_points += 1
+                    driver_obj.driver_points += 1
             else:
                 driver_obj.made_race = False
 
