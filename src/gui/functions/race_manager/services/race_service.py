@@ -255,7 +255,7 @@ class RaceService:
                 race_manager.race_session_num
             ]["ResultsPositions"][0]["LapsComplete"]
         except Exception as e:
-            #logger.error(f"{type(e).__name__}: {e}")
+            # logger.error(f"{type(e).__name__}: {e}")
             return
 
         current_flag = _get_flag(race_manager.ir["SessionFlags"])
@@ -300,7 +300,10 @@ class RaceService:
                 ## if they pass each other after crossing the line at end of stage
                 logging.info("Stage end has been reached")
                 ## Throw the caution flag if necessary
-                if race_manager.race_weekend.race_settings.stage_cautions and _get_flag(race_manager.ir["SessionFlags"]) == "green":
+                if (
+                    race_manager.race_weekend.race_settings.stage_cautions
+                    and _get_flag(race_manager.ir["SessionFlags"]) == "green"
+                ):
                     race_manager.send_iracing_command(
                         f"!yellow End of Stage {current_stage.stage}"
                     )

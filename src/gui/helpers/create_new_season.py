@@ -281,7 +281,7 @@ def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) ->
         ),
         "stage_cautions_enabled": (
             True if values["__STAGECAUTIONSCHECKBOX__"] is True else False
-        )
+        ),
     }
     try:
         with open(
@@ -668,11 +668,11 @@ def _create_new_season(config) -> dict:
                                                                 expand_x=True,
                                                                 expand_y=False,
                                                                 default=True,
-                                                                tooltip="Enables/Disables stage caution flags"
+                                                                tooltip="Enables/Disables stage caution flags",
                                                             )
                                                         ]
                                                     ]
-                                                )
+                                                ),
                                             ]
                                         ],
                                         title="Cautions",

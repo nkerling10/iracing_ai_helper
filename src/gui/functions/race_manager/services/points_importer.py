@@ -71,7 +71,7 @@ class PointsImporter:
                     stage_wins,
                     poles,
                     name,
-                )
+                ),
             )
             self.conn.commit()
             logger.debug(
@@ -126,7 +126,7 @@ class PointsImporter:
                     driver.laps_led,
                     driver.stage_wins,
                     1 if driver.pole_winner else 0,
-                )
+                ),
             )
             self.conn.commit()
             logger.debug(
@@ -155,7 +155,7 @@ class PointsImporter:
                                 STAGE_WINS = ?
                                 WHERE CAR = ?
                                 """,
-                (car, attempts, points, wins, stage_wins, car)
+                (car, attempts, points, wins, stage_wins, car),
             )
             self.conn.commit()
             logger.debug(
@@ -210,7 +210,7 @@ class PointsImporter:
                     try:
                         result = self.conn.execute(
                             f"SELECT * FROM {self.driver_points_table} WHERE NAME is ?",
-                            (driver.name,)
+                            (driver.name,),
                         ).fetchall()[0]
                         self.update_driver_points(result, driver)
                     except (sqlite3.OperationalError, IndexError):
@@ -219,7 +219,7 @@ class PointsImporter:
                 try:
                     result = self.conn.execute(
                         f"SELECT * FROM {self.owner_points_table} WHERE CAR is ?",
-                        (driver.car,)
+                        (driver.car,),
                     ).fetchall()[0]
                     self.update_owner_points(result, driver)
                 except (sqlite3.OperationalError, IndexError):

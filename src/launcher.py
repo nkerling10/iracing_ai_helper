@@ -167,12 +167,14 @@ def _set_tab_visibility(tab_status: bool) -> None:
     window["-databasetab-"].update(visible=tab_status)
     window["-seasontab-"].update(visible=tab_status)
 
+
 def _update_season_data(season_settings, db):
     _load_iracing_season_file(season_settings)
     _load_roster_file(season_settings)
     _update_season_next_race_data(season_settings, db)
     _update_season_player_stats_data()
     _update_season_standings_tables(season_settings, db)
+
 
 def _build_main_layout() -> list[list]:
     splash_tab_layout = SplashTabLayout.build_splash_tab_layout()

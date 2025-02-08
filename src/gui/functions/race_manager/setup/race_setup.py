@@ -67,7 +67,9 @@ class SeasonData:
             ],
         )
         self.owner_points = (
-            conn.cursor().execute(f"SELECT * FROM {self.table_prefix}_POINTS_OWNER").fetchall()
+            conn.cursor()
+            .execute(f"SELECT * FROM {self.table_prefix}_POINTS_OWNER")
+            .fetchall()
         )
         self.point_values = [
             value[0]
@@ -159,7 +161,12 @@ class RaceWeekend:
 
 class RaceManager:
     def __init__(
-        self, stage_1_end: int, stage_2_end: int, race_end: int, table_prefix: str, test_file: bool = False
+        self,
+        stage_1_end: int,
+        stage_2_end: int,
+        race_end: int,
+        table_prefix: str,
+        test_file: bool = False,
     ):
         self.state = State()
         self.season_data = SeasonData(table_prefix)

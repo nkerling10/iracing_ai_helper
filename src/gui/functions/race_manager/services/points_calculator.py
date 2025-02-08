@@ -53,7 +53,14 @@ class PointsCalculator:
                     and driver_obj.points_eligible
                     else 0
                 )
-                driver_obj.fastest_lap = True if race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["ResultsPositions"]["ResultsFastestLap"]["CarIdx"] == driver_obj.car_idx else False
+                driver_obj.fastest_lap = (
+                    True
+                    if race_manager.ir["SessionInfo"]["Sessions"][
+                        race_manager.race_session_num
+                    ]["ResultsPositions"]["ResultsFastestLap"]["CarIdx"]
+                    == driver_obj.car_idx
+                    else False
+                )
             else:
                 driver_obj.made_race = False
 
