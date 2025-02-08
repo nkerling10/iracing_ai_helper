@@ -23,13 +23,10 @@ class PointsCalculator:
     def calculate_race_points(race_manager):
         for position in race_manager.race_weekend.stage_results[2].stage_results:
             try:
-                driver_name = race_manager.race_weekend.race_data.driver_caridx_map[
-                    position.get("CarIdx")
-                ].get("name")
                 driver_obj = [
                     driver
                     for driver in race_manager.race_weekend.drivers
-                    if driver.name == driver_name
+                    if driver.car_idx == position.get("CarIdx")
                 ][0]
             except IndexError:
                 continue
@@ -56,6 +53,7 @@ class PointsCalculator:
                     and driver_obj.points_eligible
                     else 0
                 )
+                driver_obj.fastest_lap = True if race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]["ResultsPositions"]["ResultsFastestLap"]["CarIdx"] == driver_obj.car_idx else False
             else:
                 driver_obj.made_race = False
 

@@ -3,7 +3,8 @@ class Driver:
         instance = super().__new__(cls)
         return instance
 
-    def __init__(self, name: str, car: any, team: str, points_eligibile: bool):
+    def __init__(self, car_idx: int, name: str, car: any, team: str, points_eligibile: bool):
+        self.car_idx = car_idx
         self.name = name
         self.car = str(car)
         self.team = team
@@ -12,6 +13,7 @@ class Driver:
         self.pole_winner = False
         self.finish_pos = None
         self.dnf = False
+        self.fastest_lap = False
         self.laps_led = 0
         self.stage_wins = 0
         self.stage_points = 0

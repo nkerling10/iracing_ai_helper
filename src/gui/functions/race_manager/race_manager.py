@@ -112,6 +112,7 @@ def set_drivers(race_manager):
             if "NODRIVER" not in driver["UserName"]:
                 race_manager.race_weekend.drivers.append(
                     Driver(
+                        car_idx=driver["CarIdx"],
                         name=driver["UserName"],
                         car=driver["CarNumber"],
                         team=(

@@ -29,7 +29,7 @@
 	"incident_warn_param1": 0,
 	"incident_warn_param2": 0,
 	"lucky_dog": true,
-	"max_drivers": 40,
+	"max_drivers": 100,
 	"maxSkill": 105,
 	"minSkill": 60,
 	"max_visor_tearoffs": -1,
