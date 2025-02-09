@@ -47,9 +47,9 @@ def _update_season_settings(config: object, season_settings: dict) -> None:
 
     race_index = 0
     while race_index < len(modified_season_file["events"]):
-        full_disance = modified_season_file["events"][race_index]["race_laps"]
+        full_distance = modified_season_file["events"][race_index]["race_laps"]
         modified_season_file["events"][race_index]["race_laps"] = round(
-            full_disance * (season_settings.get("race_distance_percent") / 100)
+            full_distance * (season_settings.get("race_distance_percent") / 100)
         )
         race_index += 1
 
@@ -77,6 +77,8 @@ def _copy_season_base_file(config: object, season_settings: dict) -> bool:
         base_file = "2025_Truck_Series"
     elif season_settings.get("season_series") == "ARCA":
         base_file = "2025_ARCA_Series"
+    elif season_settings.get("season_series") == "XFINITYTEST":
+        base_file = "2025_Xfinity_Series_Testing"
     try:
         logger.info(f"Copying official file {base_file}.json")
         copyfile(
@@ -319,6 +321,8 @@ def _season_type(values: dict) -> str:
         return "TRUCKS"
     elif values["__SEASONTYPEARCA__"]:
         return "ARCA"
+    elif values["__SEASONTYPEXFINITYTEST__"]:
+        return "XFINITYTEST"
 
 
 def _block_focus(window) -> None:
@@ -357,6 +361,12 @@ def _create_new_season(config) -> dict:
                             "Xfinity",
                             group_id=1,
                             key="__SEASONTYPEXFINITY__",
+                            enable_events=True,
+                        ),
+                        sg.Radio(
+                            "XfinityTest",
+                            group_id=1,
+                            key="__SEASONTYPEXFINITYTEST__",
                             enable_events=True,
                         ),
                         sg.Radio(
@@ -710,6 +720,7 @@ def _create_new_season(config) -> dict:
                     values["__SEASONTYPEXFINITY__"],
                     values["__SEASONTYPETRUCKS__"],
                     values["__SEASONTYPEARCA__"],
+                    values["__SEASONTYPEXFINITYTEST__"]
                 ]
             ):
                 sg.popup("Missing a required entry!", no_titlebar=True)

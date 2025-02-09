@@ -1,0 +1,332 @@
+{
+	"aiCarClassId": 1455,
+	"avoidUser": false,
+	"carId": 115,
+	"carSettings": [
+		{
+			"car_id": 114,
+			"max_pct_fuel_fill": 100,
+			"max_dry_tire_sets": 0
+		},
+		{
+			"car_id": 115,
+			"max_pct_fuel_fill": 100,
+			"max_dry_tire_sets": 0
+		},
+		{
+			"car_id": 116,
+			"max_pct_fuel_fill": 100,
+			"max_dry_tire_sets": 0
+		}
+	],
+	"category_id": 1,
+	"damage_model": 0,
+	"do_not_count_caution_laps": false,
+	"full_course_cautions": true,
+	"gridPosition": 1,
+	"incident_limit": 0,
+	"incident_warn_mode": 0,
+	"incident_warn_param1": 0,
+	"incident_warn_param2": 0,
+	"lucky_dog": true,
+	"max_drivers": 20,
+	"maxSkill": 100,
+	"minSkill": 50,
+	"max_visor_tearoffs": -1,
+	"must_use_diff_tire_types_in_race": false,
+	"no_lapper_wave_arounds": false,
+	"num_fast_tows": 0,
+	"practice_length": 15,
+	"qualify_laps": 2,
+	"qualify_length": 10,
+	"race_laps": 50,
+	"race_length_type": 3,
+	"race_length": 15,
+	"restarts": 2,
+	"rolling_starts": true,
+	"short_parade_lap": false,
+	"start_on_qual_tire": true,
+	"startZone": true,
+	"subsessions": [
+		3,
+		4,
+		6
+	],
+	"time_of_day": 0,
+	"track_state": {
+		"leave_marbles": true,
+		"practice_rubber": -1,
+		"qualify_rubber": -1,
+		"race_rubber": -1,
+		"warmup_rubber": -1
+	},
+	"unsport_conduct_rule_mode": 0,
+	"weather": {
+		"type": 3,
+		"temp_units": 0,
+		"temp_value": 78,
+		"rel_humidity": 45,
+		"fog": 0,
+		"wind_dir": 0,
+		"wind_units": 0,
+		"wind_value": 2,
+		"skies": 1,
+		"simulated_start_time": "2025-05-15T14:35:15",
+		"simulated_time_multiplier": 1,
+		"simulated_time_offsets": [
+			25,
+			45
+		],
+		"version": 2,
+		"weather_var_initial": 0,
+		"weather_var_ongoing": 0,
+		"time_of_day": 0,
+		"track_water": 0
+	},
+	"events": [
+		{
+			"trackId": 162,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "2234634d-df7a-7575-dae0-f47bbdfd389e"
+		},
+		{
+			"trackId": 115,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "531f8cbb-a145-2d79-3cb8-195df736c713"
+		},
+		{
+			"trackId": 169,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "3da0a2eb-9dec-68c5-235a-5e16115133be"
+		},
+		{
+			"trackId": 20,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "b25122b6-6217-6a49-36ad-acec265c42db"
+		},
+		{
+			"trackId": 366,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "5efe37a5-5005-e475-d455-d78f0fd1666c"
+		},
+		{
+			"trackId": 400,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "738a5c03-605c-f42e-3d20-19bb7a8cb037"
+		},
+		{
+			"trackId": 203,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "6c1bf651-9ec6-bed1-4b4d-9b2edadec89e"
+		},
+		{
+			"trackId": 357,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "e28ac0a8-d325-e072-7e65-b81c23ad803d"
+		},
+		{
+			"trackId": 339,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "7a21bc48-9c16-e7d9-b4cc-a9c66068f51c"
+		},
+		{
+			"trackId": 101,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "79777a29-5108-9aa7-f3c3-e9651e1132c8"
+		},
+		{
+			"trackId": 419,
+			"num_opt_laps": 0,
+			"rolling_starts": true,
+			"paceCar": {
+				"category_id": 1,
+				"car_id": 90,
+				"is_oval": true,
+				"is_dirt": false,
+				"car_name": "Pace Car - Truck",
+				"car_class_id": 11,
+				"order": 3
+			},
+			"short_parade_lap": false,
+			"must_use_diff_tire_types_in_race": false,
+			"subsessions": [
+				3,
+				4,
+				6
+			],
+			"eventId": "406cf747-7fdf-6b72-83d5-ab14f3162191"
+		}
+	],
+	"points_system_id": 3,
+	"name": "2025 Xfinity Series Testing"
+}
