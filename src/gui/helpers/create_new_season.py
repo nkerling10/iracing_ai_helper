@@ -47,7 +47,11 @@ def _update_season_settings(config: object, season_settings: dict) -> None:
 
     race_index = 0
     while race_index < len(modified_season_file["events"]):
-        full_distance = modified_season_file["events"][race_index]["race_laps"]
+        try:
+            full_distance = modified_season_file["events"][race_index]["race_laps"]
+        except KeyError:
+            modified_season_file["events"][race_index]["race_laps"] = modified_season_file["race_laps"]
+            full_distance = modified_season_file["events"][race_index]["race_laps"]
         modified_season_file["events"][race_index]["race_laps"] = round(
             full_distance * (season_settings.get("race_distance_percent") / 100)
         )
@@ -198,13 +202,12 @@ def _copy_roster_folder(config: object, season_settings: dict) -> None:
 
     if season_settings.get("season_series") == "CUP":
         folder = base_files_roster_path / "2025_Cup_Series"
-    elif season_settings.get("season_series") == "XFINITY":
+    elif season_settings.get("season_series") in ("XFINITY", "XFINITYTEST"):
         folder = base_files_roster_path / "2025_Xfinity_Series"
     elif season_settings.get("season_series") == "TRUCKS":
         folder = base_files_roster_path / "2025_Truck_Series"
     elif season_settings.get("season_series") == "ARCA":
         folder = base_files_roster_path / "2025_ARCA_Series"
-
     if not os.path.exists(roster_path_dest):
         logger.info(f"Folder {roster_path_dest} does not exist, creating")
         os.makedirs(roster_path_dest)

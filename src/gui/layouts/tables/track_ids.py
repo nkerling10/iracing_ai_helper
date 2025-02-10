@@ -32,6 +32,7 @@ class Track(Enum):
     WWTRaceway = 237
     Kansas = 214
     CharlotteRoval = 350
+    NorthWilkesboro = 366
 
 
 def _convert_track(track_enum: str):

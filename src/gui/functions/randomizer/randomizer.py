@@ -83,7 +83,7 @@ class Driver:
             else [
                 driver[
                     randomizer.driver_table_columns.index(
-                        f"{randomizer.season_settings.get('season_series')}_TIER"
+                        f"{randomizer.season_settings.get('season_series')}_TIER".replace("TEST", "")
                     )
                 ]
                 for driver in randomizer.drivers
@@ -176,10 +176,10 @@ class Randomizer:
         self.drivers = self.db.execute_select_columns_query("DRIVER")
         self.driver_table_columns = self.db._get_db_table_columns("DRIVER")
         self.cars = self.db.execute_select_columns_query(
-            f"CAR_{self.season_settings.get('season_series')}"
+            f"CAR_{self.season_settings.get('season_series')}".replace("TEST", "")
         )
         self.car_assigns = self.db.execute_select_columns_query(
-            table=f"{self.season_settings.get('season_series')}_DRIVER_CAR_MAPPING",
+            table=f"{self.season_settings.get('season_series')}_DRIVER_CAR_MAPPING".replace("TEST", ""),
             columns=f"CAR, FULLTIME_DRIVER, WEEK_{self.week}",
         )
 
@@ -230,7 +230,7 @@ class Randomizer:
         # randomize aggression*** this is static set for testing
         roster_driver.aggression = 999
         # randomize optimism*** this is static set for testing
-        roster_driver.optimism = 500
+        roster_driver.optimism = -500
         # randomize smoothness
         # iracing scale of 0-100 (loose -> tight), midpoint of 50
         if roster_driver.car.car_tier == 1:
