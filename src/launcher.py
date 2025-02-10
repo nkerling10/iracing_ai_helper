@@ -352,8 +352,6 @@ def main_window(prev_table: str) -> None:
                 logger.error(e)
         if event == "Randomize":
             _randomize_drivers(season_settings, race_week=values["-TRACKBOX-"], db=db)
-        if event == "Copy":
-            Randomizer.perform_copy(config.local_roster_file)
         if event == "-CLEARLOGBOX-":
             window["-LOGGINGBOX-"].update("")
         if event == "-SCHEDULETABLE-":

@@ -35,7 +35,7 @@ class PointsCalculator:
                     True
                     if race_manager.ir["SessionInfo"]["Sessions"][
                         race_manager.race_session_num
-                    ]["ResultsPositions"]["ResultsFastestLap"]["CarIdx"]
+                    ]["ResultsFastestLap"][0]["CarIdx"]
                     == driver_obj.car_idx
                     else False
                 )

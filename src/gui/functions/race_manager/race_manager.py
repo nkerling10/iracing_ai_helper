@@ -168,7 +168,7 @@ def main(
     race_end: int = 0,
     launcher: bool = False,
 ):
-    table_prefix = f"{season_settings.get("season_series", "series")}_{season_settings.get("season_name", "season")}".upper()
+    table_prefix = f"{season_settings.get("season_series", "XFINITYTEST")}_{season_settings.get("season_name", "RIGXFINITYTEST1")}".upper()
     race_manager = RaceManager(
         stage_1_end,
         stage_2_end,
