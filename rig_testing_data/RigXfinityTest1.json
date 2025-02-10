@@ -1,0 +1,22 @@
+{
+    "settings_version": "1.0",
+    "season_name": "RigXfinityTest1",
+    "player_team_name": "Kerling Motorsports",
+    "season_series": "XFINITYTEST",
+    "fuel_capacity": 50,
+    "tire_sets": "3",
+    "race_distance_percent": 100,
+    "points_format": "CURRENT",
+    "field_size": 41,
+    "pre_race_penalties_enabled": true,
+    "pre_race_penalties_chance": 2,
+    "inspection_fail_chance_modifier": 2,
+    "pit_penalties_enabled": true,
+    "pit_penalties_chance": 8,
+    "post_race_penalties_enabled": true,
+    "post_race_penalties_chance": 2,
+    "debris_cautions_enabled": true,
+    "debris_cautions_chance": 1,
+    "stage_cautions_enabled": true,
+    "season_file": "C:/Users/Nick/Documents/iRacing/aiseasons/RigXfinityTest1.json"
+}

@@ -1,35 +1,35 @@
 ---
 WeekendInfo:
- TrackName: daytona 2011 oval
- TrackID: 191
- TrackLength: 3.99 km
- TrackLengthOfficial: 4.02 km
- TrackDisplayName: Daytona International Speedway
- TrackDisplayShortName: Daytona
- TrackConfigName: Oval
- TrackCity: Daytona Beach
+ TrackName: dover
+ TrackID: 162
+ TrackLength: 1.64 km
+ TrackLengthOfficial: 1.61 km
+ TrackDisplayName: Dover International Speedway
+ TrackDisplayShortName: Dover
+ TrackConfigName: 
+ TrackCity: Dover
  TrackCountry: USA
- TrackAltitude: 11.13 m
- TrackLatitude: 29.187712 m
- TrackLongitude: -81.072798 m
- TrackNorthOffset: 3.7742 rad
+ TrackAltitude: 12.00 m
+ TrackLatitude: 39.189805 m
+ TrackLongitude: -75.528534 m
+ TrackNorthOffset: 6.1141 rad
  TrackNumTurns: 4
- TrackPitSpeedLimit: 96.56 kph
- TrackType: super speedway
+ TrackPitSpeedLimit: 56.34 kph
+ TrackType: mile oval
  TrackDirection: left
- TrackWeatherType: Realistic
- TrackSkies: Dynamic
- TrackSurfaceTemp: 31.20 C
- TrackAirTemp: 25.20 C
- TrackAirPressure: 30.16 Hg
- TrackWindVel: 2.86 m/s
- TrackWindDir: 6.68 rad
- TrackRelativeHumidity: 34 %
+ TrackWeatherType: Static
+ TrackSkies: Partly Cloudy
+ TrackSurfaceTemp: 39.81 C
+ TrackAirTemp: 25.56 C
+ TrackAirPressure: 29.88 Hg
+ TrackWindVel: 0.89 m/s
+ TrackWindDir: 0.00 rad
+ TrackRelativeHumidity: 45 %
  TrackFogLevel: 0 %
  TrackPrecipitation: 0 %
  TrackCleanup: 0
  TrackDynamicTrack: 1
- TrackVersion: 2025.01.06.02
+ TrackVersion: 2024.11.26.01
  SeriesID: 0
  SeasonID: 0
  SessionID: 0
@@ -47,11 +47,11 @@ WeekendInfo:
  QualifierMustStartRace: 0
  NumCarClasses: 1
  NumCarTypes: 4
- AIRosterName: "test1"
+ AIRosterName: "RigXfinityTest1"
  HeatRacing: 0
  BuildType: Release
  BuildTarget: Members
- BuildVersion: 2025.01.08.01
+ BuildVersion: 2025.02.03.02
  RaceFarm: 
  WeekendOptions:
   NumStarters: 49
@@ -61,16 +61,16 @@ WeekendInfo:
   StandingStart: 0
   ShortParadeLap: 0
   Restarts: double file lapped cars behind
-  WeatherType: Realistic
-  Skies: Dynamic
+  WeatherType: Static
+  Skies: Partly Cloudy
   WindDirection: N
   WindSpeed: 3.22 km/h
   WeatherTemp: 25.56 C
   RelativeHumidity: 45 %
   FogLevel: 0 %
-  TimeOfDay: 4:35 pm
-  Date: 2025-02-14
-  EarthRotationSpeedupFactor: 2
+  TimeOfDay: 2:35 pm
+  Date: 2025-05-15
+  EarthRotationSpeedupFactor: 1
   Unofficial: 1
   CommercialMode: consumer
   NightMode: variable
@@ -89,10 +89,10 @@ SessionInfo:
  Sessions:
  - SessionNum: 0
    SessionLaps: unlimited
-   SessionTime: 1200.0000 sec
+   SessionTime: 900.0000 sec
    SessionNumLapsToAvg: 0
    SessionType: Practice
-   SessionTrackRubberState: moderate usage
+   SessionTrackRubberState: moderately high usage
    SessionName: PRACTICE
    SessionSubType: 
    SessionSkipped: 0
@@ -101,37 +101,37 @@ SessionInfo:
    ResultsPositions:
    - Position: 1
      ClassPosition: 0
-     CarIdx: 23
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
+     CarIdx: 47
+     Lap: 1
+     Time: 24.2881
+     FastestLap: 1
+     FastestTime: 24.2881
+     LastTime: 24.2881
      LapsLed: 0
-     LapsComplete: 0
+     LapsComplete: 1
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 2.829
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 2
      ClassPosition: 1
-     CarIdx: 13
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
+     CarIdx: 31
+     Lap: 2
+     Time: 24.4111
+     FastestLap: 2
+     FastestTime: 24.4111
+     LastTime: 24.4111
      LapsLed: 0
-     LapsComplete: 0
+     LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 2.387
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 3
      ClassPosition: 2
-     CarIdx: 5
+     CarIdx: 32
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -146,7 +146,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 4
      ClassPosition: 3
-     CarIdx: 8
+     CarIdx: 45
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -161,7 +161,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 5
      ClassPosition: 4
-     CarIdx: 10
+     CarIdx: 17
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -176,7 +176,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 6
      ClassPosition: 5
-     CarIdx: 32
+     CarIdx: 21
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -185,13 +185,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.291
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 7
      ClassPosition: 6
-     CarIdx: 45
+     CarIdx: 34
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -200,13 +200,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.289
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 8
      ClassPosition: 7
-     CarIdx: 17
+     CarIdx: 18
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -215,13 +215,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.501
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 9
      ClassPosition: 8
-     CarIdx: 39
+     CarIdx: 27
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -236,7 +236,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 10
      ClassPosition: 9
-     CarIdx: 2
+     CarIdx: 6
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -251,7 +251,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 11
      ClassPosition: 10
-     CarIdx: 43
+     CarIdx: 33
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -260,13 +260,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.005
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 12
      ClassPosition: 11
-     CarIdx: 28
+     CarIdx: 37
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -281,7 +281,7 @@ SessionInfo:
      ReasonOutStr: DQInv
    - Position: 13
      ClassPosition: 12
-     CarIdx: 30
+     CarIdx: 1
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -290,13 +290,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 1.183
      Incidents: 0
-     ReasonOutId: 34
-     ReasonOutStr: DQInv
+     ReasonOutId: 0
+     ReasonOutStr: Running
    - Position: 14
      ClassPosition: 13
-     CarIdx: 27
+     CarIdx: 36
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -311,7 +311,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 15
      ClassPosition: 14
-     CarIdx: 29
+     CarIdx: 40
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -320,13 +320,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.239
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 16
      ClassPosition: 15
-     CarIdx: 1
+     CarIdx: 7
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -335,13 +335,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.002
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 17
      ClassPosition: 16
-     CarIdx: 42
+     CarIdx: 16
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -350,13 +350,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.535
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 18
      ClassPosition: 17
-     CarIdx: 18
+     CarIdx: 44
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -365,13 +365,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.001
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 19
      ClassPosition: 18
-     CarIdx: 48
+     CarIdx: 43
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -380,13 +380,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.004
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 20
      ClassPosition: 19
-     CarIdx: 20
+     CarIdx: 10
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -395,13 +395,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 1.752
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 21
      ClassPosition: 20
-     CarIdx: 19
+     CarIdx: 42
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -416,7 +416,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 22
      ClassPosition: 21
-     CarIdx: 16
+     CarIdx: 14
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -427,11 +427,11 @@ SessionInfo:
      JokerLapsComplete: 0
      LapsDriven: 0.000
      Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
+     ReasonOutId: 34
+     ReasonOutStr: DQInv
    - Position: 23
      ClassPosition: 22
-     CarIdx: 11
+     CarIdx: 2
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -440,13 +440,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 1.286
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 24
      ClassPosition: 23
-     CarIdx: 26
+     CarIdx: 9
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -461,7 +461,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 25
      ClassPosition: 24
-     CarIdx: 21
+     CarIdx: 15
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -470,13 +470,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.005
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 26
      ClassPosition: 25
-     CarIdx: 31
+     CarIdx: 39
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -491,7 +491,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 27
      ClassPosition: 26
-     CarIdx: 37
+     CarIdx: 23
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -502,11 +502,11 @@ SessionInfo:
      JokerLapsComplete: 0
      LapsDriven: 0.000
      Incidents: 0
-     ReasonOutId: 34
-     ReasonOutStr: DQInv
+     ReasonOutId: 0
+     ReasonOutStr: Running
    - Position: 28
      ClassPosition: 27
-     CarIdx: 41
+     CarIdx: 24
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -515,13 +515,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.005
      Incidents: 0
      ReasonOutId: 34
      ReasonOutStr: DQInv
    - Position: 29
      ClassPosition: 28
-     CarIdx: 34
+     CarIdx: 30
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -532,11 +532,11 @@ SessionInfo:
      JokerLapsComplete: 0
      LapsDriven: 0.000
      Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
+     ReasonOutId: 34
+     ReasonOutStr: DQInv
    - Position: 30
      ClassPosition: 29
-     CarIdx: 38
+     CarIdx: 8
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -545,13 +545,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 1.503
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 31
      ClassPosition: 30
-     CarIdx: 44
+     CarIdx: 25
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -560,13 +560,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.117
      Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
+     ReasonOutId: 34
+     ReasonOutStr: DQInv
    - Position: 32
      ClassPosition: 31
-     CarIdx: 36
+     CarIdx: 13
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -575,13 +575,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.239
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 33
      ClassPosition: 32
-     CarIdx: 4
+     CarIdx: 22
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -596,7 +596,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 34
      ClassPosition: 33
-     CarIdx: 47
+     CarIdx: 48
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -611,7 +611,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 35
      ClassPosition: 34
-     CarIdx: 7
+     CarIdx: 4
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -620,13 +620,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.346
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 36
      ClassPosition: 35
-     CarIdx: 46
+     CarIdx: 5
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -635,13 +635,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 1.360
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 37
      ClassPosition: 36
-     CarIdx: 14
+     CarIdx: 19
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -650,13 +650,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.008
      Incidents: 0
-     ReasonOutId: 34
-     ReasonOutStr: DQInv
+     ReasonOutId: 0
+     ReasonOutStr: Running
    - Position: 38
      ClassPosition: 37
-     CarIdx: 15
+     CarIdx: 0
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -671,6 +671,81 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 39
      ClassPosition: 38
+     CarIdx: 46
+     Lap: 0
+     Time: -1.0000
+     FastestLap: -1
+     FastestTime: -1.0000
+     LastTime: -1.0000
+     LapsLed: 0
+     LapsComplete: 0
+     JokerLapsComplete: 0
+     LapsDriven: 0.002
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 40
+     ClassPosition: 39
+     CarIdx: 26
+     Lap: 0
+     Time: -1.0000
+     FastestLap: -1
+     FastestTime: -1.0000
+     LastTime: -1.0000
+     LapsLed: 0
+     LapsComplete: 0
+     JokerLapsComplete: 0
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 41
+     ClassPosition: 40
+     CarIdx: 41
+     Lap: 0
+     Time: -1.0000
+     FastestLap: -1
+     FastestTime: -1.0000
+     LastTime: -1.0000
+     LapsLed: 0
+     LapsComplete: 0
+     JokerLapsComplete: 0
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 34
+     ReasonOutStr: DQInv
+   - Position: 42
+     ClassPosition: 41
+     CarIdx: 11
+     Lap: 0
+     Time: -1.0000
+     FastestLap: -1
+     FastestTime: -1.0000
+     LastTime: -1.0000
+     LapsLed: 0
+     LapsComplete: 0
+     JokerLapsComplete: 0
+     LapsDriven: 0.000
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 43
+     ClassPosition: 42
+     CarIdx: 29
+     Lap: 0
+     Time: -1.0000
+     FastestLap: -1
+     FastestTime: -1.0000
+     LastTime: -1.0000
+     LapsLed: 0
+     LapsComplete: 1
+     JokerLapsComplete: 0
+     LapsDriven: 1.634
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 44
+     ClassPosition: 43
      CarIdx: 3
      Lap: 0
      Time: -1.0000
@@ -680,88 +755,13 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
-     Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
-   - Position: 40
-     ClassPosition: 39
-     CarIdx: 12
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
-     LapsLed: 0
-     LapsComplete: 0
-     JokerLapsComplete: 0
-     LapsDriven: 0.000
-     Incidents: 0
-     ReasonOutId: 34
-     ReasonOutStr: DQInv
-   - Position: 41
-     ClassPosition: 40
-     CarIdx: 0
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
-     LapsLed: 0
-     LapsComplete: 0
-     JokerLapsComplete: 0
-     LapsDriven: 0.000
-     Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
-   - Position: 42
-     ClassPosition: 41
-     CarIdx: 24
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
-     LapsLed: 0
-     LapsComplete: 0
-     JokerLapsComplete: 0
-     LapsDriven: 0.000
-     Incidents: 0
-     ReasonOutId: 34
-     ReasonOutStr: DQInv
-   - Position: 43
-     ClassPosition: 42
-     CarIdx: 6
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
-     LapsLed: 0
-     LapsComplete: 0
-     JokerLapsComplete: 0
-     LapsDriven: 0.000
-     Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
-   - Position: 44
-     ClassPosition: 43
-     CarIdx: 35
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
-     LapsLed: 0
-     LapsComplete: 0
-     JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.005
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 45
      ClassPosition: 44
-     CarIdx: 9
+     CarIdx: 35
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -776,37 +776,7 @@ SessionInfo:
      ReasonOutStr: Running
    - Position: 46
      ClassPosition: 45
-     CarIdx: 22
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
-     LapsLed: 0
-     LapsComplete: 0
-     JokerLapsComplete: 0
-     LapsDriven: 0.000
-     Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
-   - Position: 47
-     ClassPosition: 46
-     CarIdx: 40
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
-     LapsLed: 0
-     LapsComplete: 0
-     JokerLapsComplete: 0
-     LapsDriven: 0.000
-     Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
-   - Position: 48
-     ClassPosition: 47
-     CarIdx: 25
+     CarIdx: 28
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -819,9 +789,9 @@ SessionInfo:
      Incidents: 0
      ReasonOutId: 34
      ReasonOutStr: DQInv
-   - Position: 49
-     ClassPosition: 48
-     CarIdx: 33
+   - Position: 47
+     ClassPosition: 46
+     CarIdx: 38
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -830,14 +800,44 @@ SessionInfo:
      LapsLed: 0
      LapsComplete: 0
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 0.337
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
-   ResultsFastestLap:
-   - CarIdx: 255
-     FastestLap: 0
+   - Position: 48
+     ClassPosition: 47
+     CarIdx: 20
+     Lap: 0
+     Time: -1.0000
+     FastestLap: -1
      FastestTime: -1.0000
+     LastTime: -1.0000
+     LapsLed: 0
+     LapsComplete: 1
+     JokerLapsComplete: 0
+     LapsDriven: 1.867
+     Incidents: 0
+     ReasonOutId: 0
+     ReasonOutStr: Running
+   - Position: 49
+     ClassPosition: 48
+     CarIdx: 12
+     Lap: 0
+     Time: -1.0000
+     FastestLap: -1
+     FastestTime: -1.0000
+     LastTime: -1.0000
+     LapsLed: 0
+     LapsComplete: 0
+     JokerLapsComplete: 0
+     LapsDriven: 0.007
+     Incidents: 0
+     ReasonOutId: 34
+     ReasonOutStr: DQInv
+   ResultsFastestLap:
+   - CarIdx: 47
+     FastestLap: 1
+     FastestTime: 24.2881
    ResultsAverageLapTime: -1.0000
    ResultsNumCautionFlags: 0
    ResultsNumCautionLaps: 0
@@ -858,346 +858,346 @@ SessionInfo:
    ResultsPositions:
    - Position: 1
      ClassPosition: 0
-     CarIdx: 16
-     Lap: 2
-     Time: 50.1399
-     FastestLap: 2
-     FastestTime: 50.1399
-     LastTime: 50.1399
+     CarIdx: 33
+     Lap: 1
+     Time: 23.7838
+     FastestLap: 1
+     FastestTime: 23.7838
+     LastTime: 24.0039
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.299
+     LapsDriven: 3.721
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 2
      ClassPosition: 1
-     CarIdx: 18
-     Lap: 2
-     Time: 50.1937
-     FastestLap: 2
-     FastestTime: 50.1937
-     LastTime: 50.1937
+     CarIdx: 2
+     Lap: 1
+     Time: 23.8248
+     FastestLap: 1
+     FastestTime: 23.8248
+     LastTime: 23.8522
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.287
+     LapsDriven: 3.766
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 3
      ClassPosition: 2
      CarIdx: 32
-     Lap: 2
-     Time: 50.2205
-     FastestLap: 2
-     FastestTime: 50.2205
-     LastTime: 50.2205
+     Lap: 1
+     Time: 23.8249
+     FastestLap: 1
+     FastestTime: 23.8249
+     LastTime: 24.0084
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.230
+     LapsDriven: 3.721
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 4
      ClassPosition: 3
-     CarIdx: 19
-     Lap: 2
-     Time: 50.2489
-     FastestLap: 2
-     FastestTime: 50.2489
-     LastTime: 50.2489
+     CarIdx: 8
+     Lap: 1
+     Time: 23.8314
+     FastestLap: 1
+     FastestTime: 23.8314
+     LastTime: 23.8687
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.282
+     LapsDriven: 3.757
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 5
      ClassPosition: 4
-     CarIdx: 7
-     Lap: 2
-     Time: 50.2704
-     FastestLap: 2
-     FastestTime: 50.2704
-     LastTime: 50.2704
+     CarIdx: 3
+     Lap: 1
+     Time: 23.8390
+     FastestLap: 1
+     FastestTime: 23.8390
+     LastTime: 24.1654
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.314
+     LapsDriven: 3.774
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 6
      ClassPosition: 5
-     CarIdx: 46
+     CarIdx: 10
      Lap: 2
-     Time: 50.2716
+     Time: 23.8552
      FastestLap: 2
-     FastestTime: 50.2716
-     LastTime: 50.2716
+     FastestTime: 23.8552
+     LastTime: 23.8552
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.187
+     LapsDriven: 3.753
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 7
      ClassPosition: 6
-     CarIdx: 1
-     Lap: 2
-     Time: 50.2940
-     FastestLap: 2
-     FastestTime: 50.2940
-     LastTime: 50.2940
+     CarIdx: 31
+     Lap: 1
+     Time: 23.8556
+     FastestLap: 1
+     FastestTime: 23.8556
+     LastTime: 23.8562
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.341
+     LapsDriven: 3.727
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 8
      ClassPosition: 7
-     CarIdx: 20
-     Lap: 2
-     Time: 50.2962
-     FastestLap: 2
-     FastestTime: 50.2962
-     LastTime: 50.2962
+     CarIdx: 1
+     Lap: 1
+     Time: 23.8596
+     FastestLap: 1
+     FastestTime: 23.8596
+     LastTime: 24.1019
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.274
+     LapsDriven: 3.761
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 9
      ClassPosition: 8
-     CarIdx: 8
-     Lap: 2
-     Time: 50.3084
-     FastestLap: 2
-     FastestTime: 50.3084
-     LastTime: 50.3084
+     CarIdx: 18
+     Lap: 1
+     Time: 23.8624
+     FastestLap: 1
+     FastestTime: 23.8624
+     LastTime: 23.9185
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.308
+     LapsDriven: 3.745
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 10
      ClassPosition: 9
-     CarIdx: 40
-     Lap: 2
-     Time: 50.3151
-     FastestLap: 2
-     FastestTime: 50.3151
-     LastTime: 50.3151
+     CarIdx: 13
+     Lap: 1
+     Time: 23.8636
+     FastestLap: 1
+     FastestTime: 23.8636
+     LastTime: 24.0120
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.199
+     LapsDriven: 3.746
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 11
      ClassPosition: 10
-     CarIdx: 15
+     CarIdx: 17
      Lap: 2
-     Time: 50.3213
+     Time: 23.8931
      FastestLap: 2
-     FastestTime: 50.3213
-     LastTime: 50.3213
+     FastestTime: 23.8931
+     LastTime: 23.8931
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.290
+     LapsDriven: 3.742
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 12
      ClassPosition: 11
-     CarIdx: 17
-     Lap: 2
-     Time: 50.3228
-     FastestLap: 2
-     FastestTime: 50.3228
-     LastTime: 50.3228
+     CarIdx: 43
+     Lap: 1
+     Time: 23.9078
+     FastestLap: 1
+     FastestTime: 23.9078
+     LastTime: 24.1710
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.279
+     LapsDriven: 3.698
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 13
      ClassPosition: 12
-     CarIdx: 31
-     Lap: 2
-     Time: 50.3460
-     FastestLap: 2
-     FastestTime: 50.3460
-     LastTime: 50.3460
+     CarIdx: 9
+     Lap: 1
+     Time: 23.9144
+     FastestLap: 1
+     FastestTime: 23.9144
+     LastTime: 24.2145
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.223
+     LapsDriven: 3.752
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 14
      ClassPosition: 13
-     CarIdx: 3
+     CarIdx: 5
      Lap: 2
-     Time: 50.3547
+     Time: 23.9207
      FastestLap: 2
-     FastestTime: 50.3547
-     LastTime: 50.3547
+     FastestTime: 23.9207
+     LastTime: 23.9207
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.318
+     LapsDriven: 3.752
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 15
      ClassPosition: 14
-     CarIdx: 33
+     CarIdx: 36
      Lap: 2
-     Time: 50.3602
+     Time: 23.9219
      FastestLap: 2
-     FastestTime: 50.3602
-     LastTime: 50.3602
+     FastestTime: 23.9219
+     LastTime: 23.9219
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.224
+     LapsDriven: 3.715
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 16
      ClassPosition: 15
-     CarIdx: 36
-     Lap: 2
-     Time: 50.3896
-     FastestLap: 2
-     FastestTime: 50.3896
-     LastTime: 50.3896
+     CarIdx: 48
+     Lap: 1
+     Time: 23.9224
+     FastestLap: 1
+     FastestTime: 23.9224
+     LastTime: 23.9634
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.210
+     LapsDriven: 3.698
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 17
      ClassPosition: 16
-     CarIdx: 22
-     Lap: 2
-     Time: 50.4126
-     FastestLap: 2
-     FastestTime: 50.4126
-     LastTime: 50.4126
+     CarIdx: 15
+     Lap: 1
+     Time: 23.9587
+     FastestLap: 1
+     FastestTime: 23.9587
+     LastTime: 24.0563
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.249
+     LapsDriven: 3.743
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 18
      ClassPosition: 17
-     CarIdx: 13
-     Lap: 2
-     Time: 50.4260
-     FastestLap: 2
-     FastestTime: 50.4260
-     LastTime: 50.4260
+     CarIdx: 46
+     Lap: 1
+     Time: 23.9592
+     FastestLap: 1
+     FastestTime: 23.9592
+     LastTime: 23.9871
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.287
+     LapsDriven: 3.697
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 19
      ClassPosition: 18
-     CarIdx: 2
+     CarIdx: 21
      Lap: 2
-     Time: 50.4763
+     Time: 23.9652
      FastestLap: 2
-     FastestTime: 50.4763
-     LastTime: 50.4763
+     FastestTime: 23.9652
+     LastTime: 23.9652
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.316
+     LapsDriven: 3.726
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 20
      ClassPosition: 19
-     CarIdx: 34
-     Lap: 2
-     Time: 50.4862
-     FastestLap: 2
-     FastestTime: 50.4862
-     LastTime: 50.4862
+     CarIdx: 11
+     Lap: 1
+     Time: 23.9683
+     FastestLap: 1
+     FastestTime: 23.9683
+     LastTime: 24.0394
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.209
+     LapsDriven: 3.746
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 21
      ClassPosition: 20
-     CarIdx: 43
-     Lap: 2
-     Time: 50.4953
-     FastestLap: 2
-     FastestTime: 50.4953
-     LastTime: 50.4953
+     CarIdx: 7
+     Lap: 1
+     Time: 23.9884
+     FastestLap: 1
+     FastestTime: 23.9884
+     LastTime: 24.0236
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.182
+     LapsDriven: 3.758
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 22
      ClassPosition: 21
-     CarIdx: 47
+     CarIdx: 22
      Lap: 2
-     Time: 50.4959
+     Time: 23.9901
      FastestLap: 2
-     FastestTime: 50.4959
-     LastTime: 50.4959
+     FastestTime: 23.9901
+     LastTime: 23.9901
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.169
+     LapsDriven: 3.737
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 23
      ClassPosition: 22
-     CarIdx: 10
+     CarIdx: 34
      Lap: 2
-     Time: 50.5102
+     Time: 24.0004
      FastestLap: 2
-     FastestTime: 50.5102
-     LastTime: 50.5102
+     FastestTime: 24.0004
+     LastTime: 24.0004
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.284
+     LapsDriven: 3.714
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
@@ -1205,209 +1205,209 @@ SessionInfo:
      ClassPosition: 23
      CarIdx: 38
      Lap: 2
-     Time: 50.5202
+     Time: 24.0160
      FastestLap: 2
-     FastestTime: 50.5202
-     LastTime: 50.5202
+     FastestTime: 24.0160
+     LastTime: 24.0160
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.191
+     LapsDriven: 3.701
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 25
      ClassPosition: 24
-     CarIdx: 48
+     CarIdx: 27
      Lap: 2
-     Time: 50.5208
+     Time: 24.0227
      FastestLap: 2
-     FastestTime: 50.5208
-     LastTime: 50.5208
+     FastestTime: 24.0227
+     LastTime: 24.0227
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.154
+     LapsDriven: 3.722
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 26
      ClassPosition: 25
-     CarIdx: 27
+     CarIdx: 4
      Lap: 2
-     Time: 50.5219
+     Time: 24.0303
      FastestLap: 2
-     FastestTime: 50.5219
-     LastTime: 50.5219
+     FastestTime: 24.0303
+     LastTime: 24.0303
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.235
+     LapsDriven: 3.754
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 27
      ClassPosition: 26
-     CarIdx: 9
+     CarIdx: 23
      Lap: 2
-     Time: 50.5404
+     Time: 24.0498
      FastestLap: 2
-     FastestTime: 50.5404
-     LastTime: 50.5404
+     FastestTime: 24.0498
+     LastTime: 24.0498
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.296
+     LapsDriven: 3.727
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 28
      ClassPosition: 27
-     CarIdx: 23
+     CarIdx: 16
      Lap: 2
-     Time: 50.5511
+     Time: 24.0635
      FastestLap: 2
-     FastestTime: 50.5511
-     LastTime: 50.5511
+     FastestTime: 24.0635
+     LastTime: 24.0635
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.239
+     LapsDriven: 3.738
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 29
      ClassPosition: 28
-     CarIdx: 26
+     CarIdx: 20
      Lap: 2
-     Time: 50.6065
+     Time: 24.0737
      FastestLap: 2
-     FastestTime: 50.6065
-     LastTime: 50.6065
+     FastestTime: 24.0737
+     LastTime: 24.0737
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.228
+     LapsDriven: 3.738
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 30
      ClassPosition: 29
-     CarIdx: 29
+     CarIdx: 26
      Lap: 2
-     Time: 50.6506
+     Time: 24.0922
      FastestLap: 2
-     FastestTime: 50.6506
-     LastTime: 50.6506
+     FastestTime: 24.0922
+     LastTime: 24.0922
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.214
+     LapsDriven: 3.716
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 31
      ClassPosition: 30
-     CarIdx: 11
-     Lap: 2
-     Time: 50.6761
-     FastestLap: 2
-     FastestTime: 50.6761
-     LastTime: 50.6761
+     CarIdx: 47
+     Lap: 1
+     Time: 24.0950
+     FastestLap: 1
+     FastestTime: 24.0950
+     LastTime: 24.3270
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.271
+     LapsDriven: 3.686
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 32
      ClassPosition: 31
-     CarIdx: 42
-     Lap: 2
-     Time: 50.7143
-     FastestLap: 2
-     FastestTime: 50.7143
-     LastTime: 50.7143
+     CarIdx: 29
+     Lap: 1
+     Time: 24.1114
+     FastestLap: 1
+     FastestTime: 24.1114
+     LastTime: 24.1777
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.169
+     LapsDriven: 3.716
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 33
      ClassPosition: 32
-     CarIdx: 21
+     CarIdx: 19
      Lap: 2
-     Time: 50.7249
+     Time: 24.1308
      FastestLap: 2
-     FastestTime: 50.7249
-     LastTime: 50.7249
+     FastestTime: 24.1308
+     LastTime: 24.1308
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.234
+     LapsDriven: 3.729
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 34
      ClassPosition: 33
-     CarIdx: 4
+     CarIdx: 40
      Lap: 2
-     Time: 50.7257
+     Time: 24.1407
      FastestLap: 2
-     FastestTime: 50.7257
-     LastTime: 50.7257
+     FastestTime: 24.1407
+     LastTime: 24.1407
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.299
+     LapsDriven: 3.693
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 35
      ClassPosition: 34
-     CarIdx: 5
+     CarIdx: 6
      Lap: 2
-     Time: 50.7596
+     Time: 24.1523
      FastestLap: 2
-     FastestTime: 50.7596
-     LastTime: 50.7596
+     FastestTime: 24.1523
+     LastTime: 24.1523
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.283
+     LapsDriven: 3.749
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 36
      ClassPosition: 35
-     CarIdx: 6
+     CarIdx: 39
      Lap: 2
-     Time: 50.7964
+     Time: 24.1524
      FastestLap: 2
-     FastestTime: 50.7964
-     LastTime: 50.7964
+     FastestTime: 24.1524
+     LastTime: 24.1524
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.291
+     LapsDriven: 3.694
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 37
      ClassPosition: 36
-     CarIdx: 44
-     Lap: 2
-     Time: 50.8169
-     FastestLap: 2
-     FastestTime: 50.8169
-     LastTime: 50.8169
+     CarIdx: 42
+     Lap: 1
+     Time: 24.2394
+     FastestLap: 1
+     FastestTime: 24.2394
+     LastTime: 24.3344
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.151
+     LapsDriven: 3.680
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
@@ -1415,65 +1415,65 @@ SessionInfo:
      ClassPosition: 37
      CarIdx: 45
      Lap: 2
-     Time: 50.8185
+     Time: 24.2414
      FastestLap: 2
-     FastestTime: 50.8185
-     LastTime: 50.8185
+     FastestTime: 24.2414
+     LastTime: 24.2414
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.157
+     LapsDriven: 3.691
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 39
      ClassPosition: 38
-     CarIdx: 39
+     CarIdx: 35
      Lap: 2
-     Time: 50.8402
+     Time: 24.2608
      FastestLap: 2
-     FastestTime: 50.8402
-     LastTime: 50.8402
+     FastestTime: 24.2608
+     LastTime: 24.2608
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.166
+     LapsDriven: 3.697
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 40
      ClassPosition: 39
-     CarIdx: 35
+     CarIdx: 0
      Lap: 2
-     Time: 50.8710
+     Time: 24.2977
      FastestLap: 2
-     FastestTime: 50.8710
-     LastTime: 50.8710
+     FastestTime: 24.2977
+     LastTime: 24.2977
      LapsLed: 0
      LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 3.183
+     LapsDriven: 3.303
      Incidents: 0
      ReasonOutId: 0
      ReasonOutStr: Running
    - Position: 41
      ClassPosition: 40
-     CarIdx: 30
-     Lap: 0
-     Time: -1.0000
-     FastestLap: -1
-     FastestTime: -1.0000
-     LastTime: -1.0000
+     CarIdx: 44
+     Lap: 1
+     Time: 24.3134
+     FastestLap: 1
+     FastestTime: 24.3134
+     LastTime: 24.3984
      LapsLed: 0
-     LapsComplete: 0
+     LapsComplete: 2
      JokerLapsComplete: 0
-     LapsDriven: 0.000
+     LapsDriven: 3.688
      Incidents: 0
-     ReasonOutId: 34
-     ReasonOutStr: DQInv
+     ReasonOutId: 0
+     ReasonOutStr: Running
    - Position: 42
      ClassPosition: 41
-     CarIdx: 41
+     CarIdx: 30
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -1488,7 +1488,7 @@ SessionInfo:
      ReasonOutStr: DQInv
    - Position: 43
      ClassPosition: 42
-     CarIdx: 25
+     CarIdx: 28
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -1503,7 +1503,7 @@ SessionInfo:
      ReasonOutStr: DQInv
    - Position: 44
      ClassPosition: 43
-     CarIdx: 24
+     CarIdx: 37
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -1518,7 +1518,7 @@ SessionInfo:
      ReasonOutStr: DQInv
    - Position: 45
      ClassPosition: 44
-     CarIdx: 28
+     CarIdx: 14
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -1548,7 +1548,7 @@ SessionInfo:
      ReasonOutStr: DQInv
    - Position: 47
      ClassPosition: 46
-     CarIdx: 14
+     CarIdx: 25
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -1563,7 +1563,7 @@ SessionInfo:
      ReasonOutStr: DQInv
    - Position: 48
      ClassPosition: 47
-     CarIdx: 37
+     CarIdx: 24
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -1578,7 +1578,7 @@ SessionInfo:
      ReasonOutStr: DQInv
    - Position: 49
      ClassPosition: 48
-     CarIdx: 0
+     CarIdx: 41
      Lap: 0
      Time: -1.0000
      FastestLap: -1
@@ -1589,12 +1589,12 @@ SessionInfo:
      JokerLapsComplete: 0
      LapsDriven: 0.000
      Incidents: 0
-     ReasonOutId: 0
-     ReasonOutStr: Running
+     ReasonOutId: 34
+     ReasonOutStr: DQInv
    ResultsFastestLap:
-   - CarIdx: 16
-     FastestLap: 2
-     FastestTime: 50.1399
+   - CarIdx: 33
+     FastestLap: 1
+     FastestTime: 23.7838
    ResultsAverageLapTime: -1.0000
    ResultsNumCautionFlags: 0
    ResultsNumCautionLaps: 0
@@ -1602,7 +1602,7 @@ SessionInfo:
    ResultsLapsComplete: -1
    ResultsOfficial: 1
  - SessionNum: 2
-   SessionLaps: 6
+   SessionLaps: 50
    SessionTime: 86400.0000 sec
    SessionNumLapsToAvg: 0
    SessionType: Race
@@ -1628,217 +1628,217 @@ QualifyResultsInfo:
  Results:
  - Position: 0
    ClassPosition: 0
-   CarIdx: 16
-   FastestLap: 2
-   FastestTime: 50.1399
+   CarIdx: 33
+   FastestLap: 1
+   FastestTime: 23.7838
  - Position: 1
    ClassPosition: 1
-   CarIdx: 18
-   FastestLap: 2
-   FastestTime: 50.1937
+   CarIdx: 2
+   FastestLap: 1
+   FastestTime: 23.8248
  - Position: 2
    ClassPosition: 2
    CarIdx: 32
-   FastestLap: 2
-   FastestTime: 50.2205
+   FastestLap: 1
+   FastestTime: 23.8249
  - Position: 3
    ClassPosition: 3
-   CarIdx: 19
-   FastestLap: 2
-   FastestTime: 50.2489
+   CarIdx: 8
+   FastestLap: 1
+   FastestTime: 23.8314
  - Position: 4
    ClassPosition: 4
-   CarIdx: 7
-   FastestLap: 2
-   FastestTime: 50.2704
+   CarIdx: 3
+   FastestLap: 1
+   FastestTime: 23.8390
  - Position: 5
    ClassPosition: 5
-   CarIdx: 46
-   FastestLap: 2
-   FastestTime: 50.2716
- - Position: 6
-   ClassPosition: 6
-   CarIdx: 1
-   FastestLap: 2
-   FastestTime: 50.2940
- - Position: 7
-   ClassPosition: 7
-   CarIdx: 20
-   FastestLap: 2
-   FastestTime: 50.2962
- - Position: 8
-   ClassPosition: 8
-   CarIdx: 8
-   FastestLap: 2
-   FastestTime: 50.3084
- - Position: 9
-   ClassPosition: 9
-   CarIdx: 40
-   FastestLap: 2
-   FastestTime: 50.3151
- - Position: 10
-   ClassPosition: 10
-   CarIdx: 15
-   FastestLap: 2
-   FastestTime: 50.3213
- - Position: 11
-   ClassPosition: 11
-   CarIdx: 17
-   FastestLap: 2
-   FastestTime: 50.3228
- - Position: 12
-   ClassPosition: 12
-   CarIdx: 31
-   FastestLap: 2
-   FastestTime: 50.3460
- - Position: 13
-   ClassPosition: 13
-   CarIdx: 3
-   FastestLap: 2
-   FastestTime: 50.3547
- - Position: 14
-   ClassPosition: 14
-   CarIdx: 33
-   FastestLap: 2
-   FastestTime: 50.3602
- - Position: 15
-   ClassPosition: 15
-   CarIdx: 36
-   FastestLap: 2
-   FastestTime: 50.3896
- - Position: 16
-   ClassPosition: 16
-   CarIdx: 22
-   FastestLap: 2
-   FastestTime: 50.4126
- - Position: 17
-   ClassPosition: 17
-   CarIdx: 13
-   FastestLap: 2
-   FastestTime: 50.4260
- - Position: 18
-   ClassPosition: 18
-   CarIdx: 2
-   FastestLap: 2
-   FastestTime: 50.4763
- - Position: 19
-   ClassPosition: 19
-   CarIdx: 34
-   FastestLap: 2
-   FastestTime: 50.4862
- - Position: 20
-   ClassPosition: 20
-   CarIdx: 43
-   FastestLap: 2
-   FastestTime: 50.4953
- - Position: 21
-   ClassPosition: 21
-   CarIdx: 47
-   FastestLap: 2
-   FastestTime: 50.4959
- - Position: 22
-   ClassPosition: 22
    CarIdx: 10
    FastestLap: 2
-   FastestTime: 50.5102
+   FastestTime: 23.8552
+ - Position: 6
+   ClassPosition: 6
+   CarIdx: 31
+   FastestLap: 1
+   FastestTime: 23.8556
+ - Position: 7
+   ClassPosition: 7
+   CarIdx: 1
+   FastestLap: 1
+   FastestTime: 23.8596
+ - Position: 8
+   ClassPosition: 8
+   CarIdx: 18
+   FastestLap: 1
+   FastestTime: 23.8624
+ - Position: 9
+   ClassPosition: 9
+   CarIdx: 13
+   FastestLap: 1
+   FastestTime: 23.8636
+ - Position: 10
+   ClassPosition: 10
+   CarIdx: 17
+   FastestLap: 2
+   FastestTime: 23.8931
+ - Position: 11
+   ClassPosition: 11
+   CarIdx: 43
+   FastestLap: 1
+   FastestTime: 23.9078
+ - Position: 12
+   ClassPosition: 12
+   CarIdx: 9
+   FastestLap: 1
+   FastestTime: 23.9144
+ - Position: 13
+   ClassPosition: 13
+   CarIdx: 5
+   FastestLap: 2
+   FastestTime: 23.9207
+ - Position: 14
+   ClassPosition: 14
+   CarIdx: 36
+   FastestLap: 2
+   FastestTime: 23.9219
+ - Position: 15
+   ClassPosition: 15
+   CarIdx: 48
+   FastestLap: 1
+   FastestTime: 23.9224
+ - Position: 16
+   ClassPosition: 16
+   CarIdx: 15
+   FastestLap: 1
+   FastestTime: 23.9587
+ - Position: 17
+   ClassPosition: 17
+   CarIdx: 46
+   FastestLap: 1
+   FastestTime: 23.9592
+ - Position: 18
+   ClassPosition: 18
+   CarIdx: 21
+   FastestLap: 2
+   FastestTime: 23.9652
+ - Position: 19
+   ClassPosition: 19
+   CarIdx: 11
+   FastestLap: 1
+   FastestTime: 23.9683
+ - Position: 20
+   ClassPosition: 20
+   CarIdx: 7
+   FastestLap: 1
+   FastestTime: 23.9884
+ - Position: 21
+   ClassPosition: 21
+   CarIdx: 22
+   FastestLap: 2
+   FastestTime: 23.9901
+ - Position: 22
+   ClassPosition: 22
+   CarIdx: 34
+   FastestLap: 2
+   FastestTime: 24.0004
  - Position: 23
    ClassPosition: 23
    CarIdx: 38
    FastestLap: 2
-   FastestTime: 50.5202
+   FastestTime: 24.0160
  - Position: 24
    ClassPosition: 24
-   CarIdx: 48
-   FastestLap: 2
-   FastestTime: 50.5208
- - Position: 25
-   ClassPosition: 25
    CarIdx: 27
    FastestLap: 2
-   FastestTime: 50.5219
- - Position: 26
-   ClassPosition: 26
-   CarIdx: 9
-   FastestLap: 2
-   FastestTime: 50.5404
- - Position: 27
-   ClassPosition: 27
-   CarIdx: 23
-   FastestLap: 2
-   FastestTime: 50.5511
- - Position: 28
-   ClassPosition: 28
-   CarIdx: 26
-   FastestLap: 2
-   FastestTime: 50.6065
- - Position: 29
-   ClassPosition: 29
-   CarIdx: 29
-   FastestLap: 2
-   FastestTime: 50.6506
- - Position: 30
-   ClassPosition: 30
-   CarIdx: 11
-   FastestLap: 2
-   FastestTime: 50.6761
- - Position: 31
-   ClassPosition: 31
-   CarIdx: 42
-   FastestLap: 2
-   FastestTime: 50.7143
- - Position: 32
-   ClassPosition: 32
-   CarIdx: 21
-   FastestLap: 2
-   FastestTime: 50.7249
- - Position: 33
-   ClassPosition: 33
+   FastestTime: 24.0227
+ - Position: 25
+   ClassPosition: 25
    CarIdx: 4
    FastestLap: 2
-   FastestTime: 50.7257
+   FastestTime: 24.0303
+ - Position: 26
+   ClassPosition: 26
+   CarIdx: 23
+   FastestLap: 2
+   FastestTime: 24.0498
+ - Position: 27
+   ClassPosition: 27
+   CarIdx: 16
+   FastestLap: 2
+   FastestTime: 24.0635
+ - Position: 28
+   ClassPosition: 28
+   CarIdx: 20
+   FastestLap: 2
+   FastestTime: 24.0737
+ - Position: 29
+   ClassPosition: 29
+   CarIdx: 26
+   FastestLap: 2
+   FastestTime: 24.0922
+ - Position: 30
+   ClassPosition: 30
+   CarIdx: 47
+   FastestLap: 1
+   FastestTime: 24.0950
+ - Position: 31
+   ClassPosition: 31
+   CarIdx: 29
+   FastestLap: 1
+   FastestTime: 24.1114
+ - Position: 32
+   ClassPosition: 32
+   CarIdx: 19
+   FastestLap: 2
+   FastestTime: 24.1308
+ - Position: 33
+   ClassPosition: 33
+   CarIdx: 40
+   FastestLap: 2
+   FastestTime: 24.1407
  - Position: 34
    ClassPosition: 34
-   CarIdx: 5
-   FastestLap: 2
-   FastestTime: 50.7596
- - Position: 35
-   ClassPosition: 35
    CarIdx: 6
    FastestLap: 2
-   FastestTime: 50.7964
+   FastestTime: 24.1523
+ - Position: 35
+   ClassPosition: 35
+   CarIdx: 39
+   FastestLap: 2
+   FastestTime: 24.1524
  - Position: 36
    ClassPosition: 36
-   CarIdx: 44
-   FastestLap: 2
-   FastestTime: 50.8169
+   CarIdx: 42
+   FastestLap: 1
+   FastestTime: 24.2394
  - Position: 37
    ClassPosition: 37
    CarIdx: 45
    FastestLap: 2
-   FastestTime: 50.8185
+   FastestTime: 24.2414
  - Position: 38
    ClassPosition: 38
-   CarIdx: 39
-   FastestLap: 2
-   FastestTime: 50.8402
- - Position: 39
-   ClassPosition: 39
    CarIdx: 35
    FastestLap: 2
-   FastestTime: 50.8710
+   FastestTime: 24.2608
+ - Position: 39
+   ClassPosition: 39
+   CarIdx: 0
+   FastestLap: 2
+   FastestTime: 24.2977
  - Position: 40
    ClassPosition: 40
-   CarIdx: 0
-   FastestLap: 0
-   FastestTime: -1.0000
+   CarIdx: 44
+   FastestLap: 1
+   FastestTime: 24.3134
  - Position: 41
    ClassPosition: 41
-   CarIdx: 30
+   CarIdx: 14
    FastestLap: 0
    FastestTime: -1.0000
  - Position: 42
    ClassPosition: 42
-   CarIdx: 14
+   CarIdx: 30
    FastestLap: 0
    FastestTime: -1.0000
  - Position: 43
@@ -1858,12 +1858,12 @@ QualifyResultsInfo:
    FastestTime: -1.0000
  - Position: 46
    ClassPosition: 46
-   CarIdx: 25
+   CarIdx: 41
    FastestLap: 0
    FastestTime: -1.0000
  - Position: 47
    ClassPosition: 47
-   CarIdx: 41
+   CarIdx: 25
    FastestLap: 0
    FastestTime: -1.0000
  - Position: 48
@@ -1926,237 +1926,74 @@ CameraInfo:
    - CameraNum: 1
      CameraName: Scenic_00
    - CameraNum: 2
-     CameraName: Scenic_08
-   - CameraNum: 3
-     CameraName: Scenic_09
-   - CameraNum: 4
-     CameraName: Scenic_07
-   - CameraNum: 5
-     CameraName: Scenic_01
-   - CameraNum: 6
-     CameraName: Scenic_06
-   - CameraNum: 7
-     CameraName: Scenic_02
-   - CameraNum: 8
      CameraName: Scenic_03
-   - CameraNum: 9
-     CameraName: Scenic_10
-   - CameraNum: 10
-     CameraName: Scenic_11
-   - CameraNum: 11
-     CameraName: Scenic_04
-   - CameraNum: 12
+   - CameraNum: 3
      CameraName: Scenic_05
  - GroupNum: 11
-   GroupName: Spotter
-   Cameras:
-   - CameraNum: 1
-     CameraName: CamSpotter
- - GroupNum: 12
    GroupName: TV1
    Cameras:
    - CameraNum: 1
-     CameraName: CamTV1_02b
+     CameraName: CamTV1_00
    - CameraNum: 2
      CameraName: CamTV1_01
    - CameraNum: 3
-     CameraName: CamTV1_00b
+     CameraName: CamTV1_02
    - CameraNum: 4
-     CameraName: CamTV1_05
-   - CameraNum: 5
-     CameraName: CamTV1_05b
-   - CameraNum: 6
-     CameraName: CamTV1_04
-   - CameraNum: 7
      CameraName: CamTV1_03
-   - CameraNum: 8
-     CameraName: CamTV1_00
-   - CameraNum: 9
-     CameraName: CamTV1_06b
-   - CameraNum: 10
-     CameraName: CamTV1_06
- - GroupNum: 13
+   - CameraNum: 5
+     CameraName: CamTV1_04
+ - GroupNum: 12
    GroupName: TV2
    Cameras:
    - CameraNum: 1
-     CameraName: CamTV2_00
-   - CameraNum: 2
-     CameraName: CamTV2_07
-   - CameraNum: 3
-     CameraName: CamTV2_07b
-   - CameraNum: 4
-     CameraName: CamTV2_00b
-   - CameraNum: 5
-     CameraName: CamTV2_01b
-   - CameraNum: 6
-     CameraName: CamTV2_01
-   - CameraNum: 7
-     CameraName: CamTV2_03
-   - CameraNum: 8
-     CameraName: CamTV2_03c
-   - CameraNum: 9
-     CameraName: CamTV2_02
-   - CameraNum: 10
-     CameraName: CamTV2_05
-   - CameraNum: 11
      CameraName: CamTV2_04
-   - CameraNum: 12
-     CameraName: CamTV2_05b
-   - CameraNum: 13
-     CameraName: CamTV2_06
- - GroupNum: 14
+   - CameraNum: 2
+     CameraName: CamTV2_03
+   - CameraNum: 3
+     CameraName: CamTV2_02
+   - CameraNum: 4
+     CameraName: CamTV2_01
+   - CameraNum: 5
+     CameraName: CamTV2_00
+ - GroupNum: 13
    GroupName: TV3
    Cameras:
    - CameraNum: 1
      CameraName: CamTV3_00
    - CameraNum: 2
-     CameraName: CamTV3_00b
-   - CameraNum: 3
-     CameraName: CamTV3_02
-   - CameraNum: 4
      CameraName: CamTV3_01
-   - CameraNum: 5
-     CameraName: CamTV3_04b
-   - CameraNum: 6
-     CameraName: CamTV3_03
-   - CameraNum: 7
-     CameraName: CamTV3_04
-   - CameraNum: 8
-     CameraName: CamTV3_05
-   - CameraNum: 9
-     CameraName: CamTV3_01b
- - GroupNum: 15
-   GroupName: TV Static
-   Cameras:
-   - CameraNum: 1
-     CameraName: CamTV4_01
-   - CameraNum: 2
-     CameraName: CamTV4_00
-   - CameraNum: 3
-     CameraName: CamTV4_00b
-   - CameraNum: 4
-     CameraName: CamTV4_02
-   - CameraNum: 5
-     CameraName: CamTV4_03
-   - CameraNum: 6
-     CameraName: CamTV4_06
-   - CameraNum: 7
-     CameraName: CamTV4_04
-   - CameraNum: 8
-     CameraName: CamTV4_07b
-   - CameraNum: 9
-     CameraName: CamTV4_08
-   - CameraNum: 10
-     CameraName: CamTV4_09
-   - CameraNum: 11
-     CameraName: CamTV4_07
-   - CameraNum: 12
-     CameraName: CamTV4_05
- - GroupNum: 16
-   GroupName: TV Mixed
-   Cameras:
-   - CameraNum: 1
-     CameraName: CamTV3_00b
-   - CameraNum: 2
-     CameraName: CamTV1_00
-   - CameraNum: 3
-     CameraName: CamTV1_00b
-   - CameraNum: 4
-     CameraName: CamTV1_01
-   - CameraNum: 5
-     CameraName: CamTV1_02b
-   - CameraNum: 6
-     CameraName: CamTV1_03
-   - CameraNum: 7
-     CameraName: CamTV1_04
-   - CameraNum: 8
-     CameraName: CamTV1_05
-   - CameraNum: 9
-     CameraName: CamTV1_05b
-   - CameraNum: 10
-     CameraName: CamTV1_06
-   - CameraNum: 11
-     CameraName: CamTV1_06b
-   - CameraNum: 12
-     CameraName: CamTV1_15
-   - CameraNum: 13
-     CameraName: CamTV2_00
-   - CameraNum: 14
-     CameraName: CamTV2_00b
-   - CameraNum: 15
-     CameraName: CamTV2_02
-   - CameraNum: 16
-     CameraName: CamTV2_03
-   - CameraNum: 17
-     CameraName: CamTV2_03c
-   - CameraNum: 18
-     CameraName: CamTV2_04
-   - CameraNum: 19
-     CameraName: CamTV2_05
-   - CameraNum: 20
-     CameraName: CamTV2_05b
-   - CameraNum: 21
-     CameraName: CamTV2_06
-   - CameraNum: 22
-     CameraName: CamTV2_07
-   - CameraNum: 23
-     CameraName: CamTV2_07b
-   - CameraNum: 24
-     CameraName: CamTV3_00
-   - CameraNum: 25
-     CameraName: CamTV3_01
-   - CameraNum: 26
-     CameraName: CamTV3_01b
-   - CameraNum: 27
-     CameraName: CamTV3_02
-   - CameraNum: 28
-     CameraName: CamTV3_03
-   - CameraNum: 29
-     CameraName: CamTV3_04
-   - CameraNum: 30
-     CameraName: CamTV3_04b
-   - CameraNum: 31
-     CameraName: CamTV3_05
-   - CameraNum: 32
-     CameraName: CamTV4_08
-   - CameraNum: 33
-     CameraName: CamRoll Bar
- - GroupNum: 17
+ - GroupNum: 14
    GroupName: Pit Lane
    Cameras:
    - CameraNum: 1
-     CameraName: CamPit Lane 2
-   - CameraNum: 2
      CameraName: CamPit Lane
-   - CameraNum: 3
-     CameraName: CamPit_Entry
- - GroupNum: 18
-   GroupName: Pit Lane2
+ - GroupNum: 15
+   GroupName: Pit Lane 2
    Cameras:
    - CameraNum: 1
-     CameraName: CamPit Lane 3
- - GroupNum: 19
+     CameraName: CamPit Lane 2
+ - GroupNum: 16
    GroupName: Chopper
    Cameras:
    - CameraNum: 1
      CameraName: CamChopper
- - GroupNum: 20
+ - GroupNum: 17
    GroupName: Blimp
    Cameras:
    - CameraNum: 1
      CameraName: CamBlimp
- - GroupNum: 21
+ - GroupNum: 18
    GroupName: Chase
    Cameras:
    - CameraNum: 1
      CameraName: CamChase
- - GroupNum: 22
+ - GroupNum: 19
    GroupName: Far Chase
    Cameras:
    - CameraNum: 1
      CameraName: CamFar Chase
- - GroupNum: 23
-   GroupName: Scr Shot 2
+ - GroupNum: 20
+   GroupName: Rear Chase
    Cameras:
    - CameraNum: 1
      CameraName: CamRear Chase
@@ -2167,7 +2004,7 @@ RadioInfo:
  - RadioNum: 0
    HopCount: 2
    NumFrequencies: 7
-   TunedToFrequencyNum: 0
+   TunedToFrequencyNum: 1
    ScanningIsOn: 1
    Frequencies:
    - FrequencyNum: 0
@@ -2261,7 +2098,7 @@ DriverInfo:
  DriverCarEngCylinderCount: 8
  DriverCarFuelKgPerLtr: 0.750
  DriverCarFuelMaxLtr: 70.753
- DriverCarMaxFuelPct: 1.000
+ DriverCarMaxFuelPct: 0.500
  DriverCarGearNumForward: 4
  DriverCarGearNeutral: 1
  DriverCarGearReverse: 1
@@ -2270,9 +2107,9 @@ DriverInfo:
  DriverCarSLLastRPM: 8300.000
  DriverCarSLBlinkRPM: 9000.000
  DriverCarVersion: 2024.12.11.01
- DriverPitTrkPct: 0.058335
- DriverCarEstLapTime: 51.1129
- DriverSetupName: daytona_2011_oval.sto
+ DriverPitTrkPct: 0.106083
+ DriverCarEstLapTime: 22.5466
+ DriverSetupName: dover.sto
  DriverSetupIsModified: 0
  DriverSetupLoadTypeName: user
  DriverSetupPassedTech: 1
@@ -2298,12 +2135,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 1
    LicLevel: 1
    LicSubLevel: 1
@@ -2341,12 +2178,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2384,12 +2221,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2427,12 +2264,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2470,12 +2307,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2513,12 +2350,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2556,12 +2393,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2599,12 +2436,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2642,12 +2479,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2685,12 +2522,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2728,12 +2565,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2771,12 +2608,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2814,12 +2651,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2857,12 +2694,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2900,12 +2737,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2943,12 +2780,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -2967,12 +2804,12 @@ DriverInfo:
    CurDriverIncidentCount: 0
    TeamIncidentCount: 0
  - CarIdx: 16
-   UserName: John Hunter Nemechek
+   UserName: Justin Bonsignore
    AbbrevName: 
    Initials: 
    UserID: 9715
    TeamID: 17
-   TeamName: John Hunter Nemechek
+   TeamName: Justin Bonsignore
    CarNumber: "19"
    CarNumberRaw: 19
    CarPath: stockcars2 supra2019
@@ -2986,12 +2823,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3029,12 +2866,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3072,12 +2909,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3115,12 +2952,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3158,12 +2995,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3201,12 +3038,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3244,12 +3081,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3287,12 +3124,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3330,12 +3167,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3373,12 +3210,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3416,12 +3253,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3459,12 +3296,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3502,12 +3339,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3545,12 +3382,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3588,12 +3425,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3631,12 +3468,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3674,12 +3511,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3717,12 +3554,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3760,12 +3597,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3803,12 +3640,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3846,12 +3683,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3889,12 +3726,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3932,12 +3769,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -3956,12 +3793,12 @@ DriverInfo:
    CurDriverIncidentCount: 0
    TeamIncidentCount: 0
  - CarIdx: 39
-   UserName: Mason Maggio
+   UserName: Joey Gase
    AbbrevName: 
    Initials: 
    UserID: 9738
    TeamID: 40
-   TeamName: Mason Maggio
+   TeamName: Joey Gase
    CarNumber: "53"
    CarNumberRaw: 53
    CarPath: stockcars2 camaro2019
@@ -3975,12 +3812,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4018,12 +3855,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4061,12 +3898,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4104,12 +3941,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4147,12 +3984,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4190,12 +4027,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4233,12 +4070,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4276,12 +4113,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4319,12 +4156,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4362,12 +4199,12 @@ DriverInfo:
    CarClassShortName: 
    CarClassRelSpeed: 100
    CarClassLicenseLevel: 0
-   CarClassMaxFuelPct: 1.000 %
+   CarClassMaxFuelPct: 0.500 %
    CarClassWeightPenalty: 0.000 kg
    CarClassPowerAdjust: 0.000 %
-   CarClassDryTireSetLimit: 255 %
+   CarClassDryTireSetLimit: 3 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.1129
+   CarClassEstLapTime: 22.5466
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4410,7 +4247,7 @@ DriverInfo:
    CarClassPowerAdjust: 0.000 %
    CarClassDryTireSetLimit: 0 %
    CarClassColor: 0xffffff
-   CarClassEstLapTime: 51.4434
+   CarClassEstLapTime: 23.9035
    IRating: 0
    LicLevel: 1
    LicSubLevel: 0
@@ -4437,154 +4274,154 @@ SplitTimeInfo:
    SectorStartPct: 0.500000
 
 CarSetup:
- UpdateCount: 4
+ UpdateCount: 2
  Tires:
   LeftFront:
    ColdPressure: 152 kPa
    LastHotPressure: 152 kPa
-   LastTempsOMI: 31C, 31C, 31C
+   LastTempsOMI: 39C, 39C, 39C
    TreadRemaining: 100%, 100%, 100%
   LeftRear:
-   ColdPressure: 152 kPa
-   LastHotPressure: 152 kPa
-   LastTempsOMI: 31C, 31C, 31C
+   ColdPressure: 148 kPa
+   LastHotPressure: 148 kPa
+   LastTempsOMI: 39C, 39C, 39C
    TreadRemaining: 100%, 100%, 100%
   RightFront:
-   ColdPressure: 310 kPa
-   LastHotPressure: 310 kPa
-   LastTempsIMO: 31C, 31C, 31C
+   ColdPressure: 317 kPa
+   LastHotPressure: 317 kPa
+   LastTempsIMO: 40C, 40C, 40C
    TreadRemaining: 100%, 100%, 100%
   RightRear:
    ColdPressure: 310 kPa
    LastHotPressure: 310 kPa
-   LastTempsIMO: 31C, 31C, 31C
+   LastTempsIMO: 40C, 40C, 40C
    TreadRemaining: 100%, 100%, 100%
  Chassis:
   Front:
-   BallastForward: 914 mm
-   NoseWeight: 51.4%
-   CrossWeight: 48.1%
+   BallastForward: 1638 mm
+   NoseWeight: 52.5%
+   CrossWeight: 56.8%
    SteeringRatio: 12:1
    SteeringOffset: +6 deg
    FrontBrakeBias: 65.0%
    TapeConfiguration: Race
   LeftFront:
-   CornerWeight: 4403 N
-   RideHeight: 116 mm
-   SpringPerchOffset: -113 mm
-   ShockSpringRate: 1575 N/mm
-   Packer: 19.1 mm shim
+   CornerWeight: 3710 N
+   RideHeight: 126 mm
+   SpringPerchOffset: -93 mm
+   ShockSpringRate: 1050 N/mm
+   Packer: 34.9 mm shim
    LsCompression: 3 clicks
    HsCompression: 3 clicks
-   HsCompSlope: 2 clicks
-   LsRebound: 8 clicks
+   HsCompSlope: 7 clicks
+   LsRebound: 4 clicks
    HsReboundSlope: 7 clicks
-   Camber: +4.2 deg
-   Caster: +10.7 deg
-   ToeIn: +0 mm
+   Camber: +4.7 deg
+   Caster: +11.3 deg
+   ToeIn: -1 mm
   LeftRear:
-   CornerWeight: 3868 N
-   RideHeight: 173 mm
-   SpringPerchOffset: -161 mm
-   SpringRate: 79 N/mm
+   CornerWeight: 4386 N
+   RideHeight: 165 mm
+   SpringPerchOffset: -106 mm
+   SpringRate: 61 N/mm
    LsCompression: 7 clicks
    HsCompression: 6 clicks
    HsCompSlope: 3 clicks
    LsRebound: 7 clicks
    HsReboundSlope: 6 clicks
-   Camber: +0.9 deg
-   ToeIn: +2 mm
-   TrackBarHeight: +184 mm
+   Camber: +2.0 deg
+   ToeIn: +4 mm
+   TrackBarHeight: +178 mm
    TruckArmMount: bottom
   FrontArb:
    Diameter: 44 mm
-   ArmAsymmetry: Min
+   ArmAsymmetry: 3
    LinkSlack: -0 mm
-   Preload: -9.0 Nm
+   Preload: -26.2 Nm
    Attach: 1
   RightFront:
-   CornerWeight: 3891 N
-   RideHeight: 123 mm
-   SpringPerchOffset: -83 mm
-   ShockSpringRate: 1575 N/mm
-   Packer: 25.4 mm shim
+   CornerWeight: 4699 N
+   RideHeight: 130 mm
+   SpringPerchOffset: -121 mm
+   ShockSpringRate: 1138 N/mm
+   Packer: 39.7 mm shim
    LsCompression: 7 clicks
    HsCompression: 5 clicks
-   HsCompSlope: 2 clicks
+   HsCompSlope: 7 clicks
    LsRebound: 7 clicks
    HsReboundSlope: 7 clicks
-   Camber: -4.9 deg
-   Caster: +12.5 deg
-   ToeIn: -0 mm
+   Camber: -4.7 deg
+   Caster: +13.0 deg
+   ToeIn: -1 mm
   RightRear:
-   CornerWeight: 3985 N
-   RideHeight: 180 mm
-   SpringPerchOffset: -163 mm
-   SpringRate: 79 N/mm
+   CornerWeight: 3208 N
+   RideHeight: 169 mm
+   SpringPerchOffset: -162 mm
+   SpringRate: 280 N/mm
    TravelToCoilBind: OFF
    LsCompression: 5 clicks
    HsCompression: 6 clicks
    HsCompSlope: 3 clicks
    LsRebound: 8 clicks
    HsReboundSlope: 3 clicks
-   Camber: -0.8 deg
-   ToeIn: -2 mm
-   TrackBarHeight: +254 mm
+   Camber: -2.0 deg
+   ToeIn: -4 mm
+   TrackBarHeight: +292 mm
    TruckArmMount: bottom
-   TruckArmPreload: -0.9 Nm
+   TruckArmPreload: -0.0 Nm
   Rear:
-   RearEndRatio: 3.50
+   RearEndRatio: 4.11
 
 ...
-AirDensity                      1.1983486413955688
-AirPressure                     102305.515625
-AirTemp                         23.331768035888672
-Brake                           1.0
+AirDensity                      1.1736360788345337
+AirPressure                     101186.0390625
+AirTemp                         25.555557250976562
+Brake                           0.8093088865280151
 BrakeABSactive                  False
 BrakeRaw                        0.0
-CamCameraNumber                 4
-CamCameraState                  83
+CamCameraNumber                 3
+CamCameraState                  81
 CamCarIdx                       0
-CamGroupNumber                  10
-CarDistAhead                    500000.0
-CarDistBehind                   500000.0
-CarIdxBestLapNum                [-1, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, 2, 2, 2, -1, -1, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, -1, 2, 2, 2, -1, 2, 2, 2, 2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-CarIdxBestLapTime               [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 50.30839920043945, 50.540401458740234, 50.51020050048828, 50.67610168457031, -1.0, 50.42599868774414, -1.0, 50.3213005065918, 50.13990020751953, 50.32279968261719, 50.19369888305664, 50.2489013671875, 50.296199798583984, 50.72489929199219, 50.412601470947266, 50.55110168457031, -1.0, -1.0, 50.60649871826172, 50.52190017700195, -1.0, 50.65060043334961, -1.0, 50.34600067138672, 50.22050094604492, 50.360198974609375, 50.48619842529297, 50.87099838256836, 50.38959884643555, -1.0, 50.520198822021484, 50.8401985168457, 50.315101623535156, -1.0, 50.714298248291016, 50.49530029296875, 50.816898345947266, 50.81850051879883, 50.27159881591797, 50.49589920043945, 50.52080154418945, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0]
+CamGroupNumber                  11
+CarDistAhead                    56.56170654296875
+CarDistBehind                   1101.765380859375
+CarIdxBestLapNum                [-1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 2, 1, -1, 1, -1, 1, 2, 2, 1, 2, 2, 2, 2, 2, -1, -1, 2, 2, -1, 1, -1, 1, 1, 1, 2, 2, 2, -1, 2, 2, 2, -1, 1, 1, 1, 2, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+CarIdxBestLapTime               [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 23.988399505615234, 23.83139991760254, 23.914400100708008, 23.855199813842773, 23.968299865722656, -1.0, 23.86359977722168, -1.0, 23.95870018005371, 24.063499450683594, 23.89310073852539, 23.86240005493164, 24.130800247192383, 24.073699951171875, 23.965200424194336, 23.990100860595703, 24.049800872802734, -1.0, -1.0, 24.092199325561523, 24.0226993560791, -1.0, 24.111400604248047, -1.0, 23.855600357055664, 23.824899673461914, 23.78380012512207, 24.00040054321289, 24.260799407958984, 23.921899795532227, -1.0, 24.016000747680664, 24.15239906311035, 24.14069938659668, -1.0, 24.23940086364746, 23.907800674438477, 24.313400268554688, 24.24139976501465, 23.959199905395508, 24.094999313354492, 23.922399520874023, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0]
 CarIdxClass                     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 11, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 0]
-CarIdxClassPosition             [49, 7, 19, 14, 34, 35, 36, 5, 9, 27, 23, 31, 46, 18, 47, 11, 1, 12, 2, 4, 8, 33, 17, 28, 44, 43, 29, 26, 45, 30, 41, 13, 3, 15, 20, 40, 16, 48, 24, 39, 10, 42, 32, 21, 37, 38, 6, 22, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-CarIdxEstTime                   [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 19.04871940612793, 18.386741638183594, 17.784523010253906, 17.0794620513916, 0.0, 17.92049789428711, 0.0, 18.071138381958008, 18.54436683654785, 17.500335693359375, 17.94126319885254, 17.663637161254883, 17.274452209472656, 15.17018985748291, 15.949228286743164, 15.407430648803711, 0.0, 0.0, 14.869094848632812, 15.250396728515625, 0.0, 14.160465240478516, 0.0, 14.605698585510254, 14.962371826171875, 14.663328170776367, 13.89185905456543, 12.491440773010254, 13.9353666305542, 0.0, 12.951634407043457, 11.662260055541992, 13.360559463500977, 0.0, 11.812171936035156, 12.469365119934082, 10.886553764343262, 11.21799087524414, 12.747727394104004, 11.8289213180542, 11.05158805847168, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-CarIdxF2Time                    [-2.0, 50.29399871826172, 50.47629928588867, 50.354698181152344, 50.72570037841797, 50.75960159301758, 50.7963981628418, 50.27040100097656, 50.30839920043945, 50.540401458740234, 50.51020050048828, 50.67610168457031, -2.0, 50.42599868774414, -2.0, 50.3213005065918, 50.13990020751953, 50.32279968261719, 50.19369888305664, 50.2489013671875, 50.296199798583984, 50.72489929199219, 50.412601470947266, 50.55110168457031, -2.0, -2.0, 50.60649871826172, 50.52190017700195, -2.0, 50.65060043334961, -2.0, 50.34600067138672, 50.22050094604492, 50.360198974609375, 50.48619842529297, 50.87099838256836, 50.38959884643555, -2.0, 50.520198822021484, 50.8401985168457, 50.315101623535156, -2.0, 50.714298248291016, 50.49530029296875, 50.816898345947266, 50.81850051879883, 50.27159881591797, 50.49589920043945, 50.52080154418945, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+CarIdxClassPosition             [40, 8, 2, 5, 26, 14, 35, 21, 4, 13, 6, 20, 46, 10, 45, 17, 28, 11, 9, 33, 29, 19, 22, 27, 48, 47, 30, 25, 43, 32, 42, 7, 3, 1, 23, 39, 15, 44, 24, 36, 34, 49, 37, 12, 41, 38, 18, 31, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+CarIdxEstTime                   [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 20.475080490112305, 20.454343795776367, 20.229938507080078, 20.323287963867188, 20.0733585357666, 0.0, 20.207794189453125, 0.0, 20.139827728271484, 19.934900283813477, 20.084917068481445, 20.156267166137695, 19.781288146972656, 19.853031158447266, 19.61277198791504, 19.76182746887207, 19.689661026000977, 0.0, 0.0, 19.463621139526367, 19.603513717651367, 0.0, 19.377649307250977, 0.0, 19.585174560546875, 19.5531005859375, 19.450712203979492, 19.185745239257812, 18.946521759033203, 19.195056915283203, 0.0, 18.979372024536133, 18.708032608032227, 18.79963493347168, 0.0, 18.33485984802246, 18.95356559753418, 18.651668548583984, 18.501285552978516, 18.934091567993164, 18.683088302612305, 18.79644203186035, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+CarIdxF2Time                    [24.297700881958008, 23.859600067138672, 23.824800491333008, 23.839000701904297, 24.03030014038086, 23.920700073242188, 24.152299880981445, 23.988399505615234, 23.83139991760254, 23.914400100708008, 23.855199813842773, 23.968299865722656, -2.0, 23.86359977722168, -2.0, 23.95870018005371, 24.063499450683594, 23.89310073852539, 23.86240005493164, 24.130800247192383, 24.073699951171875, 23.965200424194336, 23.990100860595703, 24.049800872802734, -2.0, -2.0, 24.092199325561523, 24.0226993560791, -2.0, 24.111400604248047, -2.0, 23.855600357055664, 23.824899673461914, 23.78380012512207, 24.00040054321289, 24.260799407958984, 23.921899795532227, -2.0, 24.016000747680664, 24.15239906311035, 24.14069938659668, -2.0, 24.23940086364746, 23.907800674438477, 24.313400268554688, 24.24139976501465, 23.959199905395508, 24.094999313354492, 23.922399520874023, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 CarIdxFastRepairsUsed           [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-CarIdxGear                      [-1, -1, -1, -1, -1, -1, -1, -1, 4, 4, 4, 4, -1, 4, -1, 4, 4, 4, 4, 4, 4, 4, 4, 4, -1, -1, 4, 4, -1, 4, -1, 4, 4, 4, 4, 4, 4, -1, 4, 4, 4, -1, 4, 4, 4, 4, 4, 4, 4, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-CarIdxLap                       [-1, -1, -1, -1, -1, -1, -1, -1, 3, 3, 3, 3, -1, 3, -1, 3, 3, 3, 3, 3, 3, 3, 3, 3, -1, -1, 3, 3, -1, 3, -1, 3, 3, 3, 3, 3, 3, -1, 3, 3, 3, -1, 3, 3, 3, 3, 3, 3, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-CarIdxLapCompleted              [-1, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, 2, 2, 2, -1, -1, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, -1, 2, 2, 2, -1, 2, 2, 2, 2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-CarIdxLapDistPct                [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.3726389706134796, 0.35980743169784546, 0.3481355309486389, 0.3344492018222809, -1.0, 0.35077279806137085, -1.0, 0.35369381308555603, 0.3628603518009186, 0.3426254987716675, 0.35117560625076294, 0.34579190611839294, 0.3382405638694763, 0.29729995131492615, 0.31246310472488403, 0.30192190408706665, -1.0, -1.0, 0.291437029838562, 0.2988635301589966, -1.0, 0.27760347723960876, -1.0, 0.2862984240055084, 0.2932535409927368, 0.28742411732673645, 0.27237603068351746, 0.24507954716682434, 0.2732226848602295, -1.0, 0.2540748119354248, 0.22882914543151855, 0.26204243302345276, -1.0, 0.23177358508110046, 0.2446465939283371, 0.21362821757793427, 0.22012200951576233, 0.2500956058502197, 0.2321023941040039, 0.21686042845249176, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0]
-CarIdxLastLapTime               [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 50.30839920043945, 50.540401458740234, 50.51020050048828, 50.67610168457031, -1.0, 50.42599868774414, -1.0, 50.3213005065918, 50.13990020751953, 50.32279968261719, 50.19369888305664, 50.2489013671875, 50.296199798583984, 50.72489929199219, 50.412601470947266, 50.55110168457031, -1.0, -1.0, 50.60649871826172, 50.52190017700195, -1.0, 50.65060043334961, -1.0, 50.34600067138672, 50.22050094604492, 50.360198974609375, 50.48619842529297, 50.87099838256836, 50.38959884643555, -1.0, 50.520198822021484, 50.8401985168457, 50.315101623535156, -1.0, 50.714298248291016, 50.49530029296875, 50.816898345947266, 50.81850051879883, 50.27159881591797, 50.49589920043945, 50.52080154418945, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0]
-CarIdxOnPitRoad                 [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
+CarIdxGear                      [-1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 1, -1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+CarIdxLap                       [-1, -1, -1, -1, -1, -1, -1, 3, 3, 3, 3, 3, -1, 3, -1, 3, 3, 3, 3, 3, 3, 3, 3, 3, -1, -1, 3, 3, -1, 3, -1, 3, 3, 3, 3, 3, 3, -1, 3, 3, 3, -1, 3, 3, 3, 3, 3, 3, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+CarIdxLapCompleted              [-1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, 2, 2, 2, -1, -1, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, -1, 2, 2, 2, -1, 2, 2, 2, 2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+CarIdxLapDistPct                [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 0.9071494936943054, 0.9062445163726807, 0.8964914083480835, 0.9005408883094788, 0.889706552028656, -1.0, 0.8955317139625549, -1.0, 0.8925867676734924, 0.8837019801139832, 0.8902075290679932, 0.8932989835739136, 0.8770267367362976, 0.8801460862159729, 0.8696914315223694, 0.8761803507804871, 0.8730406165122986, -1.0, -1.0, 0.8632203936576843, 0.8692883849143982, -1.0, 0.8595098853111267, -1.0, 0.8684905171394348, 0.8670969009399414, 0.8626627326011658, 0.8512648940086365, 0.8410089015960693, 0.8516640663146973, -1.0, 0.8424211740493774, 0.8306323289871216, 0.8346447348594666, -1.0, 0.8144416809082031, 0.8413123488426208, 0.8281667828559875, 0.8216275572776794, 0.8404734134674072, 0.829540491104126, 0.8345054388046265, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0]
+CarIdxLastLapTime               [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 24.02359962463379, 23.86870002746582, 24.214500427246094, 23.855199813842773, 24.039400100708008, -1.0, 24.011999130249023, -1.0, 24.056299209594727, 24.063499450683594, 23.89310073852539, 23.918500900268555, 24.130800247192383, 24.073699951171875, 23.965200424194336, 23.990100860595703, 24.049800872802734, -1.0, -1.0, 24.092199325561523, 24.0226993560791, -1.0, 24.17770004272461, -1.0, 23.856199264526367, 24.008399963378906, 24.0039005279541, 24.00040054321289, 24.260799407958984, 23.921899795532227, -1.0, 24.016000747680664, 24.15239906311035, 24.14069938659668, -1.0, 24.334400177001953, 24.17099952697754, 24.398399353027344, 24.24139976501465, 23.98710060119629, 24.32699966430664, 23.96339988708496, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0]
+CarIdxOnPitRoad                 [False, False, False, False, False, False, False, True, True, True, True, True, False, True, False, True, True, True, True, True, True, True, True, True, False, False, True, True, False, True, False, True, True, True, True, True, True, False, True, True, True, False, False, True, True, True, True, True, True, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
 CarIdxP2P_Count                 [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 CarIdxP2P_Status                [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
 CarIdxPaceFlags                 [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 CarIdxPaceLine                  [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 CarIdxPaceRow                   [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-CarIdxPosition                  [49, 7, 19, 14, 34, 35, 36, 5, 9, 27, 23, 31, 46, 18, 47, 11, 1, 12, 2, 4, 8, 33, 17, 28, 44, 43, 29, 26, 45, 30, 41, 13, 3, 15, 20, 40, 16, 48, 24, 39, 10, 42, 32, 21, 37, 38, 6, 22, 25, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-CarIdxQualTireCompound          [-1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+CarIdxPosition                  [40, 8, 2, 5, 26, 14, 35, 21, 4, 13, 6, 20, 46, 10, 45, 17, 28, 11, 9, 33, 29, 19, 22, 27, 48, 47, 30, 25, 43, 32, 42, 7, 3, 1, 23, 39, 15, 44, 24, 36, 34, 49, 37, 12, 41, 38, 18, 31, 16, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+CarIdxQualTireCompound          [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
 CarIdxQualTireCompoundLocked    [False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False, False]
-CarIdxRPM                       [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 7514.29150390625, 7465.12060546875, 7449.1767578125, 7423.416015625, -1.0, 7463.52099609375, -1.0, 7481.11572265625, 7521.62646484375, 7477.22607421875, 7497.724609375, 7483.271484375, 7476.45361328125, 7416.5625, 7460.69873046875, 7440.1591796875, -1.0, -1.0, 7437.30859375, 7446.59765625, -1.0, 7429.56005859375, -1.0, 7476.041015625, 7494.6357421875, 7474.125, 7454.89501953125, 7415.78564453125, 7470.15771484375, -1.0, 7463.5029296875, 7428.462890625, 7491.2763671875, -1.0, 7448.552734375, 7472.80517578125, 7436.62060546875, 7434.4443359375, 7502.93359375, 7484.69970703125, 7482.2265625, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0]
-CarIdxSessionFlags              [0, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 2228224, 262144, 2228224, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 2228224, 2228224, 262144, 262144, 2228224, 262144, 2228224, 262144, 262144, 262144, 262144, 262144, 262144, 2228224, 262144, 262144, 262144, 2228224, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-CarIdxSteer                     [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.18515068292617798, 0.06863780319690704, 0.09924398362636566, 0.10861915349960327, 0.0, 0.1655517816543579, 0.0, 0.0637194812297821, 0.11283490061759949, 0.07520352303981781, 0.14980755746364594, 0.08673819154500961, 0.13276654481887817, 0.11247818917036057, 0.08748768270015717, 0.12575198709964752, 0.0, 0.0, 0.11867615580558777, 0.10435321927070618, 0.0, 0.09600267559289932, 0.0, 0.07283195108175278, 0.1296769678592682, 0.0884285420179367, 0.11106540262699127, 0.15162381529808044, 0.10678336024284363, 0.0, 0.07956607639789581, 0.06988725066184998, 0.133414626121521, 0.0, 0.10066507011651993, 0.1361139565706253, 0.11120790243148804, 0.09956972301006317, 0.09678374230861664, 0.10453826189041138, 0.10926798731088638, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-CarIdxTireCompound              [-1, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-CarIdxTrackSurface              [-1, -1, -1, -1, -1, -1, -1, -1, 3, 3, 3, 3, -1, 3, -1, 3, 3, 3, 3, 3, 3, 3, 3, 3, -1, -1, 3, 3, -1, 3, -1, 3, 3, 3, 3, 3, 3, -1, 3, 3, 3, -1, 3, 3, 3, 3, 3, 3, 3, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-CarIdxTrackSurfaceMaterial      [-1, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, 2, 2, 2, -1, -1, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, -1, 2, 2, 2, -1, 2, 2, 2, 2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
-CarLeftRight                    0
-ChanAvgLatency                  0.033333588391542435
-ChanClockSkew                   0.01666666753590107
+CarIdxRPM                       [-1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 4479.34814453125, 4476.234375, 4476.73876953125, 4503.63330078125, 4473.8349609375, -1.0, 4474.302734375, -1.0, 4478.62841796875, 4477.93115234375, 4473.64208984375, 4480.00390625, 4480.34912109375, 4475.392578125, 4476.01171875, 4476.76806640625, 4474.36669921875, -1.0, -1.0, 4482.9375, 4476.98779296875, -1.0, 4484.86474609375, -1.0, 4480.91943359375, 4474.396484375, 4227.60986328125, 4481.06201171875, 4488.6591796875, 2951.86279296875, -1.0, 2332.859375, 3296.890380859375, 2000.0, -1.0, 2153.961669921875, 4487.68212890625, 4478.77490234375, 4405.97216796875, 4490.93505859375, 4479.6845703125, 4482.9072265625, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0]
+CarIdxSessionFlags              [262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 2228224, 262144, 2228224, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 2228224, 2228224, 262144, 262144, 2228224, 262144, 2228224, 262144, 262144, 262144, 262144, 262144, 262144, 2228224, 262144, 262144, 262144, 2228224, 262144, 262144, 262144, 262144, 262144, 262144, 262144, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+CarIdxSteer                     [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, -0.059294141829013824, -0.03471504524350166, 0.06363659352064133, 0.004059776663780212, 0.10671398043632507, 0.0, 0.08348478376865387, 0.0, 0.09211745858192444, 0.13530924916267395, 0.10192141681909561, 0.0933801680803299, 0.12432139366865158, 0.1506906896829605, 0.16893908381462097, 0.13107489049434662, 0.13403981924057007, 0.0, 0.0, 0.1656276285648346, 0.17628899216651917, 0.0, 0.17911463975906372, 0.0, 0.3449845016002655, 0.39602410793304443, 0.3401070237159729, 0.43574631214141846, 0.35283416509628296, -2.502290725708008, 0.0, 2.763232469558716, -0.5333812832832336, -0.34921494126319885, 0.0, 0.05942695587873459, 0.13761425018310547, 0.10591007769107819, 0.0749671533703804, 0.11886698007583618, 0.11315125226974487, 0.1287548542022705, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+CarIdxTireCompound              [-1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1, -1, 0, 0, -1, 0, -1, 0, 0, 0, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0, 0, 0, 0, 0, 0, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+CarIdxTrackSurface              [-1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, 2, 2, 2, -1, -1, 2, 2, -1, 2, -1, 2, 2, 2, 2, 2, 2, -1, 2, 2, 2, -1, 2, 2, 2, 2, 2, 2, 2, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+CarIdxTrackSurfaceMaterial      [-1, -1, -1, -1, -1, -1, -1, 1, 1, 1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, 1, 1, 1, -1, -1, 1, 1, -1, 1, -1, 1, 1, 1, 1, 1, 1, -1, 1, 1, 5, -1, 1, 1, 1, 1, 1, 1, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+CarLeftRight                    1
+ChanAvgLatency                  0.033333078026771545
+ChanClockSkew                   0.0
 ChanLatency                     0.03333333507180214
 ChanPartnerQuality              1.0
-ChanQuality                     1.0004150867462158
-Clutch                          0.0
+ChanQuality                     1.0003423690795898
+Clutch                          1.0
 ClutchRaw                       0.0
-CpuUsageBG                      0.8349997997283936
-CpuUsageFG                      1.5472872257232666
+CpuUsageBG                      0.48700129985809326
+CpuUsageFG                      0.1973835527896881
 dcBrakeBias                     0.0
 DCDriversSoFar                  1
 DCLapStatus                     2
@@ -4606,36 +4443,36 @@ dpWeightJackerLeft              0.0
 dpWeightJackerRight             0.0
 dpWindshieldTearoff             0.0
 DriverMarker                    False
-Engine0_RPM                     0.0
+Engine0_RPM                     1977.6536865234375
 EngineWarnings                  0
 EnterExitReset                  0
 FastRepairAvailable             0
 FastRepairUsed                  0
 FogLevel                        0.0
-FrameRate                       38.83576965332031
+FrameRate                       139.96302795410156
 FrontTireSetsAvailable          0
 FrontTireSetsUsed               0
 FuelLevel                       0.0
 FuelLevelPct                    0.0
-FuelPress                       7.1073564811285905e-09
-FuelUsePerHour                  0.0
+FuelPress                       0.5442000031471252
+FuelUsePerHour                  3.7558939456939697
 Gear                            0
-GpuUsage                        1.169290542602539
+GpuUsage                        0.2519412040710449
 HandbrakeRaw                    0.0
 IsDiskLoggingActive             False
-IsDiskLoggingEnabled            False
+IsDiskLoggingEnabled            True
 IsGarageVisible                 False
 IsInGarage                      False
 IsOnTrack                       False
 IsOnTrackCar                    False
 IsReplayPlaying                 True
 Lap                             0
-LapBestLap                      0
-LapBestLapTime                  0.0
+LapBestLap                      2
+LapBestLapTime                  24.297700881958008
 LapBestNLapLap                  0
 LapBestNLapTime                 0.0
 LapCompleted                    0
-LapCurrentLapTime               0.0
+LapCurrentLapTime               32.86333465576172
 LapDeltaToBestLap               0.0
 LapDeltaToBestLap_DD            0.0
 LapDeltaToBestLap_OK            False
@@ -4654,57 +4491,57 @@ LapDeltaToSessionOptimalLap_OK  False
 LapDist                         0.0
 LapDistPct                      0.0
 LapLasNLapSeq                   0
-LapLastLapTime                  0.0
+LapLastLapTime                  24.297700881958008
 LapLastNLapTime                 0.0
-LatAccel                        0.0
-LatAccel_ST                     [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+LatAccel                        -2.6599860191345215
+LatAccel_ST                     [-2.6599860191345215, -2.6599860191345215, -2.6599860191345215, -2.6599860191345215, -2.6599860191345215, -2.6599860191345215]
 LeftTireSetsAvailable           0
 LeftTireSetsUsed                0
 LFcoldPressure                  151.60552978515625
-LFSHshockDefl                   0.05888800695538521
-LFSHshockDefl_ST                [0.05888800695538521, 0.05888800695538521, 0.05888800695538521, 0.05888800695538521, 0.05888800695538521, 0.05888800695538521]
-LFSHshockVel                    0.38270607590675354
-LFSHshockVel_ST                 [0.38270607590675354, 0.38270607590675354, 0.38270607590675354, 0.38270607590675354, 0.38270607590675354, 0.38270607590675354]
-LFtempCL                        31.04095458984375
-LFtempCM                        31.04095458984375
-LFtempCR                        31.04095458984375
+LFSHshockDefl                   0.11896548420190811
+LFSHshockDefl_ST                [0.11896548420190811, 0.11896548420190811, 0.11896548420190811, 0.11896548420190811, 0.11896548420190811, 0.11896548420190811]
+LFSHshockVel                    -0.009263990446925163
+LFSHshockVel_ST                 [-0.009263990446925163, -0.009263990446925163, -0.009263990446925163, -0.009263990446925163, -0.009263990446925163, -0.009263990446925163]
+LFtempCL                        70.2677001953125
+LFtempCM                        67.69598388671875
+LFtempCR                        59.01214599609375
 LFTiresAvailable                0
 LFTiresUsed                     0
-LFwearL                         1.0
-LFwearM                         1.0
-LFwearR                         1.0
+LFwearL                         0.9937770366668701
+LFwearM                         0.9938080310821533
+LFwearR                         0.9964908957481384
 LoadNumTextures                 True
-LongAccel                       0.0
-LongAccel_ST                    [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-LRcoldPressure                  151.60552978515625
-LRSHshockDefl                   0.11300989985466003
-LRSHshockDefl_ST                [0.11300989985466003, 0.11300989985466003, 0.11300989985466003, 0.11300989985466003, 0.11300989985466003, 0.11300989985466003]
-LRSHshockVel                    0.6056514978408813
-LRSHshockVel_ST                 [0.6056514978408813, 0.6056514978408813, 0.6056514978408813, 0.6056514978408813, 0.6056514978408813, 0.6056514978408813]
-LRtempCL                        31.0487060546875
-LRtempCM                        31.0487060546875
-LRtempCR                        31.0487060546875
+LongAccel                       -0.4964011013507843
+LongAccel_ST                    [-0.4964011013507843, -0.4964011013507843, -0.4964011013507843, -0.4964011013507843, -0.4964011013507843, -0.4964011013507843]
+LRcoldPressure                  148.15994262695312
+LRSHshockDefl                   0.1764831840991974
+LRSHshockDefl_ST                [0.1764831840991974, 0.1764831840991974, 0.1764831840991974, 0.1764831840991974, 0.1764831840991974, 0.1764831840991974]
+LRSHshockVel                    0.0028241074178367853
+LRSHshockVel_ST                 [0.0028241074178367853, 0.0028241074178367853, 0.0028241074178367853, 0.0028241074178367853, 0.0028241074178367853, 0.0028241074178367853]
+LRtempCL                        74.74615478515625
+LRtempCM                        73.322998046875
+LRtempCR                        70.2420654296875
 LRTiresAvailable                0
 LRTiresUsed                     0
-LRwearL                         1.0
-LRwearM                         1.0
-LRwearR                         1.0
-ManifoldPress                   1.0
+LRwearL                         0.9937204122543335
+LRwearM                         0.993685781955719
+LRwearR                         0.9945346713066101
+ManifoldPress                   0.4461219608783722
 ManualBoost                     False
 ManualNoBoost                   False
 MemPageFaultSec                 0.0
-MemSoftPageFaultSec             5488.0
+MemSoftPageFaultSec             6623.0
 OilLevel                        9.5
-OilPress                        0.0
-OilTemp                         77.0
+OilPress                        3.3745784759521484
+OilTemp                         101.96488189697266
 OkToReloadTextures              True
 OnPitRoad                       False
 P2P_Count                       0
 P2P_Status                      False
 PaceMode                        4
 Pitch                           0.0
-PitchRate                       0.0
-PitchRate_ST                    [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+PitchRate                       -0.00198737857863307
+PitchRate_ST                    [-0.00198737857863307, -0.00198737857863307, -0.00198737857863307, -0.00198737857863307, -0.00198737857863307, -0.00198737857863307]
 PitOptRepairLeft                0.0
 PitRepairLeft                   0.0
 PitsOpen                        True
@@ -4717,14 +4554,14 @@ PitSvRFP                        0.0
 PitSvRRP                        0.0
 PitSvTireCompound               0
 PlayerCarClass                  0
-PlayerCarClassPosition          49
+PlayerCarClassPosition          40
 PlayerCarDriverIncidentCount    0
-PlayerCarDryTireSetLimit        255
+PlayerCarDryTireSetLimit        3
 PlayerCarIdx                    0
 PlayerCarInPitStall             False
 PlayerCarMyIncidentCount        0
 PlayerCarPitSvStatus            0
-PlayerCarPosition               49
+PlayerCarPosition               40
 PlayerCarPowerAdjust            0.0
 PlayerCarSLBlinkRPM             9000.0
 PlayerCarSLFirstRPM             7500.0
@@ -4742,50 +4579,50 @@ PushToPass                      False
 PushToTalk                      False
 RaceLaps                        3
 RadioTransmitCarIdx             -1
-RadioTransmitFrequencyIdx       0
+RadioTransmitFrequencyIdx       1
 RadioTransmitRadioIdx           0
 RearTireSetsAvailable           0
 RearTireSetsUsed                0
-RelativeHumidity                0.29761260747909546
-ReplayFrameNum                  13190
-ReplayFrameNumEnd               1
+RelativeHumidity                0.45000001788139343
+ReplayFrameNum                  14642
+ReplayFrameNumEnd               1201
 ReplayPlaySlowMotion            False
 ReplayPlaySpeed                 1
 ReplaySessionNum                1
-ReplaySessionTime               194.8466654459636
-RFcoldPressure                  310.1022033691406
-RFSHshockDefl                   0.03192055597901344
-RFSHshockDefl_ST                [0.03192055597901344, 0.03192055597901344, 0.03192055597901344, 0.03192055597901344, 0.03192055597901344, 0.03192055597901344]
-RFSHshockVel                    0.975737452507019
-RFSHshockVel_ST                 [0.975737452507019, 0.975737452507019, 0.975737452507019, 0.975737452507019, 0.975737452507019, 0.975737452507019]
-RFtempCL                        31.0487060546875
-RFtempCM                        31.0487060546875
-RFtempCR                        31.0487060546875
+ReplaySessionTime               106.5766611735026
+RFcoldPressure                  316.99334716796875
+RFSHshockDefl                   0.06188458949327469
+RFSHshockDefl_ST                [0.06188458949327469, 0.06188458949327469, 0.06188458949327469, 0.06188458949327469, 0.06188458949327469, 0.06188458949327469]
+RFSHshockVel                    0.005702778697013855
+RFSHshockVel_ST                 [0.005702778697013855, 0.005702778697013855, 0.005702778697013855, 0.005702778697013855, 0.005702778697013855, 0.005702778697013855]
+RFtempCL                        86.41769409179688
+RFtempCM                        82.028564453125
+RFtempCR                        75.41818237304688
 RFTiresAvailable                0
 RFTiresUsed                     0
-RFwearL                         1.0
-RFwearM                         1.0
-RFwearR                         1.0
+RFwearL                         0.991742730140686
+RFwearM                         0.9919276833534241
+RFwearR                         0.9931367635726929
 RightTireSetsAvailable          0
 RightTireSetsUsed               0
 Roll                            0.0
-RollRate                        0.0
-RollRate_ST                     [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-RPM                             300.0
+RollRate                        0.004981702659279108
+RollRate_ST                     [0.004981702659279108, 0.004981702659279108, 0.004981702659279108, 0.004981702659279108, 0.004981702659279108, 0.004981702659279108]
+RPM                             1977.6529541015625
 RRcoldPressure                  310.1022033691406
-RRSHshockDefl                   0.11623120307922363
-RRSHshockDefl_ST                [0.11623120307922363, 0.11623120307922363, 0.11623120307922363, 0.11623120307922363, 0.11623120307922363, 0.11623120307922363]
-RRSHshockVel                    1.1519062519073486
-RRSHshockVel_ST                 [1.1519062519073486, 1.1519062519073486, 1.1519062519073486, 1.1519062519073486, 1.1519062519073486, 1.1519062519073486]
-RRtempCL                        31.04095458984375
-RRtempCM                        31.04095458984375
-RRtempCR                        31.04095458984375
+RRSHshockDefl                   0.1778775155544281
+RRSHshockDefl_ST                [0.1778775155544281, 0.1778775155544281, 0.1778775155544281, 0.1778775155544281, 0.1778775155544281, 0.1778775155544281]
+RRSHshockVel                    0.0012373855570331216
+RRSHshockVel_ST                 [0.0012373855570331216, 0.0012373855570331216, 0.0012373855570331216, 0.0012373855570331216, 0.0012373855570331216, 0.0012373855570331216]
+RRtempCL                        80.41989135742188
+RRtempCM                        79.77377319335938
+RRtempCR                        77.22760009765625
 RRTiresAvailable                0
 RRTiresUsed                     0
-RRwearL                         1.0
-RRwearM                         1.0
-RRwearR                         1.0
-SessionFlags                    268435968
+RRwearL                         0.98824143409729
+RRwearM                         0.9882988333702087
+RRwearR                         0.9906116127967834
+SessionFlags                    268698113
 SessionJokerLapsRemain          0
 SessionLapsRemain               -1
 SessionLapsRemainEx             2
@@ -4793,33 +4630,33 @@ SessionLapsTotal                2
 SessionNum                      1
 SessionOnJokerLap               False
 SessionState                    6
-SessionTick                     19606
-SessionTime                     195.8333333351196
-SessionTimeOfDay                36691.0
-SessionTimeRemain               8.799999998213735
+SessionTick                     21222
+SessionTime                     127.58333333506584
+SessionTimeOfDay                54000.0
+SessionTimeRemain               9.03333333160083
 SessionTimeTotal                86400.0
 SessionUniqueID                 2
 ShiftGrindRPM                   0.0
 ShiftIndicatorPct               0.0
 ShiftPowerPct                   0.0
 Skies                           1
-SolarAltitude                   0.6020637154579163
-SolarAzimuth                    2.3586270809173584
+SolarAltitude                   1.0599496364593506
+SolarAzimuth                    4.057382583618164
 Speed                           0.0
-SteeringWheelAngle              0.0
+SteeringWheelAngle              0.04438042640686035
 SteeringWheelAngleMax           15.225735664367676
 SteeringWheelLimiter            0.0
-SteeringWheelMaxForceNm         28.33333396911621
+SteeringWheelMaxForceNm         47.10272216796875
 SteeringWheelPctDamper          0.0
 SteeringWheelPctIntensity       0.0
 SteeringWheelPctSmoothing       0.0
 SteeringWheelPctTorque          0.0
 SteeringWheelPctTorqueSign      0.0
 SteeringWheelPctTorqueSignStops 0.0
-SteeringWheelPeakForceNm        -1.0
-SteeringWheelTorque             -6.546181678771973
-SteeringWheelTorque_ST          [-6.546181678771973, -6.546181678771973, -6.546181678771973, -6.546181678771973, -6.546181678771973, -6.546181678771973]
-SteeringWheelUseLinear          True
+SteeringWheelPeakForceNm        -1.52587890625e-05
+SteeringWheelTorque             -0.3251948058605194
+SteeringWheelTorque_ST          [-0.3251948058605194, -0.3251948058605194, -0.3251948058605194, -0.3251948058605194, -0.3251948058605194, -0.3251948058605194]
+SteeringWheelUseLinear          False
 Throttle                        0.0
 ThrottleRaw                     0.0
 TireLF_RumblePitch              0.0
@@ -4828,26 +4665,26 @@ TireRF_RumblePitch              0.0
 TireRR_RumblePitch              0.0
 TireSetsAvailable               0
 TireSetsUsed                    0
-TrackTemp                       25.555572509765625
-TrackTempCrew                   25.555572509765625
+TrackTemp                       48.333343505859375
+TrackTempCrew                   48.333343505859375
 TrackWetness                    1
-VelocityX                       0.0
-VelocityX_ST                    [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-VelocityY                       0.0
-VelocityY_ST                    [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-VelocityZ                       0.0
-VelocityZ_ST                    [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-VertAccel                       0.0
-VertAccel_ST                    [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+VelocityX                       -0.003296543611213565
+VelocityX_ST                    [-0.003296543611213565, -0.003296543611213565, -0.003296543611213565, -0.003296543611213565, -0.003296543611213565, -0.003296543611213565]
+VelocityY                       -0.00047224131412804127
+VelocityY_ST                    [-0.00047224131412804127, -0.00047224131412804127, -0.00047224131412804127, -0.00047224131412804127, -0.00047224131412804127, -0.00047224131412804127]
+VelocityZ                       0.005719691514968872
+VelocityZ_ST                    [0.005719691514968872, 0.005719691514968872, 0.005719691514968872, 0.005719691514968872, 0.005719691514968872, 0.005719691514968872]
+VertAccel                       9.409396171569824
+VertAccel_ST                    [9.409396171569824, 9.409396171569824, 9.409396171569824, 9.409396171569824, 9.409396171569824, 9.409396171569824]
 VidCapActive                    False
 VidCapEnabled                   False
 Voltage                         13.40000057220459
 WaterLevel                      9.5
-WaterTemp                       77.0
+WaterTemp                       94.826416015625
 WeatherDeclaredWet              False
-WindDir                         4.181919097900391
-WindVel                         3.0191619396209717
+WindDir                         0.0
+WindVel                         0.8940799832344055
 Yaw                             0.0
 YawNorth                        0.0
-YawRate                         0.0
-YawRate_ST                      [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+YawRate                         -0.002671298338100314
+YawRate_ST                      [-0.002671298338100314, -0.002671298338100314, -0.002671298338100314, -0.002671298338100314, -0.002671298338100314, -0.002671298338100314]

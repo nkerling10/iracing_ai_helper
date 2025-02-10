@@ -1,5 +1,5 @@
 class Driver:
-    def __new__(cls, name: str, car: any, team: str, points_eligibile: bool):
+    def __new__(cls, car_idx: int, name: str, car: any, team: str, points_eligibile: bool):
         instance = super().__new__(cls)
         return instance
 
