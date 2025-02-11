@@ -751,5 +751,3 @@ def _create_new_season(config) -> dict:
                 window["__TIRESETSCUSTOM__"].update(value=True)
                 window["__TIRESETSUNLIMITED__"].update(value=False)
                 window["__TIRESETS__"].update(tire_sets)
-        else:
-            logger.debug(f"{event}: {values}")

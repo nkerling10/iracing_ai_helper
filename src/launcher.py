@@ -28,6 +28,7 @@ from gui.layouts.tabs.season_subtabs.roster_tab import RosterTabLayout
 from gui.layouts.tabs.season_subtabs.schedule_tab import ScheduleTabLayout
 from gui.layouts.tabs.config_tab import ConfigTabLayout
 from gui.layouts.tabs.logging_tab import LoggingTabLayout
+from gui.windows import race_manager_window
 
 
 logging.basicConfig()
@@ -227,6 +228,8 @@ def main_window(prev_table: str) -> None:
                 pass
             break
         if event == "-STARTRACEBUTTON-":
+            race_manager_window.main()
+            '''
             # run the randomizer
             _randomize_drivers(
                 season_settings, race_week=window["_-WEEK-_"].get(), db=db
@@ -242,6 +245,7 @@ def main_window(prev_table: str) -> None:
             )
             # Update tables
             _update_season_data(season_settings, db)
+            '''
         if event == "-SAVECONFIGBUTTON-":
             if not any(
                 [
