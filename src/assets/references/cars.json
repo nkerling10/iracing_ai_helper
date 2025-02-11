@@ -1,0 +1,46 @@
+{
+    "114": {
+        "iracing_name": "stockcars2\\camaro2019",
+        "real_name": "NASCAR Xfinity Series Chevrolet Camaro"
+    },
+    "115": {
+        "iracing_name": "stockcars2\\mustang2019",
+        "real_name": "NASCAR Xfinity Series Ford Mustang"
+    },
+    "116": {
+        "iracing_name": "stockcars2\\supra2019",
+        "real_name": "NASCAR Xfinity Series Toyota Supra"
+    },
+    "111": {
+        "iracing_name": "trucks\\silverado2019",
+        "real_name": "NASCAR Craftsman Truck Series Chevrolet Silverado"
+    },
+    "123": {
+        "iracing_name": "trucks\\fordf150",
+        "real_name": "NASCAR Craftsman Truck Series Ford F150"
+    },
+    "155": {
+        "iracing_name": "trucks\\toyotatundra2022",
+        "real_name": "NASCAR Craftsman Truck Series Toyota Tundra"
+    },
+    "139": {
+        "iracing_name": "stockcars\\chevycamarozl12022",
+        "real_name": "NASCAR Cup Series Chevrolet Camaro"
+    },
+    "140": {
+        "iracing_name": "stockcars\\fordmustang2022",
+        "real_name": "NASCAR Cup Series Ford Mustang"
+    },
+    "141": {
+        "iracing_name": "stockcars\\toyotacamry2022",
+        "real_name": "NASCAR Cup Series Toyota Camry"
+    },
+    "179": {
+        "iracing_name": "srx",
+        "real_name": "SRX"
+    },
+    "164": {
+        "iracing_name": "latemodel2023",
+        "real_name": "Late Model Stock"
+    }
+}

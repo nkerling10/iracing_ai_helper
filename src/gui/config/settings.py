@@ -9,6 +9,7 @@ class Settings:
         self.path = Path.cwd() / "src" / "gui" / "config"
         self.config_file = "config.ini"
         self.first_time_setup = None
+        self.player_name = None
         self.database_path = None
         self.iracing_folder = None
         self._load_settings()
@@ -36,13 +37,15 @@ class Settings:
             use_config_file=True,
             convert_bools_and_none=True,
         )
-        self.database_path = settings["SYSTEM"]["DATABASE_PATH"]
+        self.player_name = settings["USER"]["PLAYER_NAME"]
+        self.database_path = Path(settings["PATHS"]["DATABASE_PATH"])
         self.iracing_folder = Path(settings["PATHS"]["IRACING_FOLDER"])
 
-    def _write_settings(self, local_db_file: Path, iracing_folder: Path) -> None:
+    def _write_settings(self, player_name: str, local_db_file: str, iracing_folder: Path) -> None:
         config = configparser.ConfigParser()
         config.read(self.path / self.config_file)
-        config["SYSTEM"]["DATABASE_PATH"] = local_db_file
+        config["USER"]["PLAYER_NAME"] = player_name
+        config["PATHS"]["DATABASE_PATH"] = local_db_file
         config["PATHS"]["IRACING_FOLDER"] = iracing_folder
 
         with open(self.path / self.config_file, "w") as configfile:

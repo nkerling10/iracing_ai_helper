@@ -67,14 +67,14 @@ def _connect_to_local_db() -> object:
     return db
 
 
-def _update_season_player_stats_data(season_settings, db) -> None:
+def _update_season_player_stats_data(config, season_settings, db) -> None:
     if not season_settings and db:
         return
     season_series = season_settings.get("season_series")
     season_name = season_settings.get("season_name").upper().replace(" ", "_")
     player_stats = db.execute_select_query(
         table = f"{season_series}_{season_name}_POINTS_DRIVER",
-        condition = "NAME is 'Nick Kerling'"
+        condition = f"NAME is '{config.player_name}'"
     )[0]
 
     window["_-POINTS-_"].update(value=f"{player_stats[1]} ({player_stats[2]})")
@@ -179,11 +179,11 @@ def _set_tab_visibility(tab_status: bool) -> None:
     window["-seasontab-"].update(visible=tab_status)
 
 
-def _update_season_data(season_settings, db):
+def _update_season_data(config, season_settings, db):
     _load_iracing_season_file(season_settings)
     _load_roster_file(season_settings)
     _update_season_next_race_data(season_settings, db)
-    _update_season_player_stats_data(season_settings, db)
+    _update_season_player_stats_data(config, season_settings, db)
     _update_season_standings_tables(season_settings, db)
 
 
@@ -192,7 +192,7 @@ def _build_main_layout() -> list[list]:
     season_tab_layout = SeasonTab._build_season_tab()
     db_tab_layout = DatabaseTabLayout.build_db_tab_layout()
     config_tab_layout = ConfigTabLayout.build_config_tab_layout(
-        config.database_path, config.iracing_folder
+        config.player_name, config.database_path, config.iracing_folder
     )
     logging_tab_layout = LoggingTabLayout._build_logging_tab_layout()
 
@@ -253,15 +253,13 @@ def main_window(prev_table: str) -> None:
                 launcher=True,
             )
             # Update tables
-            _update_season_data(season_settings, db)
+            _update_season_data(config, season_settings, db)
         if event == "-SAVECONFIGBUTTON-":
             if not any(
                 [
+                    values["-PLAYERNAME-"],
                     values["-LOCALDATABASEFILE-"],
-                    values["-LOCALROSTERFOLDER-"],
-                    values["-LOCALSEASONFILE-"],
-                    values["-IRACINGAIROSTERFOLDER-"],
-                    values["-IRACINGAISEASONFOLDER-"],
+                    values["-LOCALIRACINGFOLDER-"]
                 ]
             ):
                 config_fail = sg.popup(
@@ -271,11 +269,9 @@ def main_window(prev_table: str) -> None:
                 )
             if not config_fail:
                 config._write_settings(
+                    values["-PLAYERNAME-"],
                     values["-LOCALDATABASEFILE-"],
-                    values["-LOCALROSTERFOLDER-"],
-                    values["-LOCALSEASONFILE-"],
-                    values["-IRACINGAIROSTERFOLDER-"],
-                    values["-IRACINGAISEASONFOLDER-"],
+                    values["-LOCALIRACINGFOLDER-"]
                 )
                 _set_tab_visibility(True)
         if event in ["-LOADSAVEDSEASONBUTTON-", "-CREATESEASONBUTTON-"]:
@@ -293,7 +289,7 @@ def main_window(prev_table: str) -> None:
                     window["-LOADSAVEDSEASONBUTTON-"].update(disabled=False)
             try:
                 if season_settings:
-                    _update_season_data(season_settings, db)
+                    _update_season_data(config, season_settings, db)
                     window["-STARTRACEBUTTON-"].update(disabled=False)
                     window["-seasontab-"].select()
             except UnboundLocalError:
@@ -375,7 +371,7 @@ def test_main():
     quit()
 
 if __name__ == "__main__":
-    sg.theme("Python")
+    sg.theme("DarkTeal12")
     config = Settings()
     window = sg.Window(
         "NSK AI Roster Randomizer - Alpha v0.1",

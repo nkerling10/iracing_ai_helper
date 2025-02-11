@@ -23,6 +23,10 @@ class StandingsTabLayout:
     def _owner_points_headers() -> list:
         return ["CAR", "TEAM", "ATTEMPTS", "POINTS", "WINS", "STAGE WINS"]
 
+    @staticmethod
+    def _playoff_standings_headers() -> list:
+        return ["CAR", "DRIVER", "WINS", "PLAYOFF PTS"]
+
     @classmethod
     def _build_driver_points_table(cls, driver_points: list = []) -> list[list]:
         return [
@@ -59,6 +63,24 @@ class StandingsTabLayout:
                 )
             ]
         ]
+    
+    @classmethod
+    def _build_playoffs_table(cls, playoff_standings: list = []) -> list[list]:
+        return [
+            [
+                sg.Table(
+                    values=playoff_standings,
+                    headings=cls._playoff_standings_headers(),
+                    justification="center",
+                    key="-PLAYOFFSTANDINGSTABLE-",
+                    num_rows=16,
+                    expand_x=True,
+                    expand_y=True,
+                    auto_size_columns=True,
+                    starting_row_number=1,
+                )
+            ]
+        ]
 
     @classmethod
     def _build_standings_layout(cls) -> list[list]:
@@ -76,6 +98,11 @@ class StandingsTabLayout:
                                 "Owner",
                                 cls._build_owner_points_table(),
                                 key="-ownerpointstab-",
+                            ),
+                            sg.Tab(
+                                "Playoffs",
+                                cls._build_playoffs_table(),
+                                key="-playoffstandingstab-",
                             ),
                         ]
                     ],

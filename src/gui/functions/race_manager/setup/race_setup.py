@@ -1,4 +1,5 @@
 ## Standard library imports
+import json
 import logging
 import time
 
@@ -171,7 +172,7 @@ class RaceManager:
         self.state = State()
         self.season_data = SeasonData(table_prefix)
         self.race_weekend = RaceWeekend(stage_1_end, stage_2_end, race_end)
-        self.observe = True
+        self.observe = False
         self.practice_session_num = None
         self.practice_done = False
         self.qualifying_session_num = None
@@ -272,6 +273,22 @@ class RaceManager:
 
     def _set_weekend_data(self) -> None:
         self._define_sessions()
+        with open("C:/Users/Nick/Documents/iracing_ai_helper/src/assets/references/tracks.json", "r") as track_file:
+            tracks = json.loads(track_file.read())
+        
+        if self.ir["WeekendInfo"]["TrackID"] not in tracks:
+            tracks[self.ir["WeekendInfo"]["TrackID"]] = {
+                "iracing_name": self.ir["WeekendInfo"]["TrackName"],
+                "long_name": self.ir["WeekendInfo"]["TrackDisplayName"],
+                "short_name": self.ir["WeekendInfo"]["TrackDisplayShortName"]
+            }
+        else:
+            if self.ir["WeekendInfo"]["TrackID"]["iracing_name"] == "":
+                tracks[self.ir["WeekendInfo"]["TrackID"]].update(iracing_name=self.ir["WeekendInfo"]["TrackName"])
+
+        with open("C:/Users/Nick/Documents/iracing_ai_helper/src/assets/references/tracks.json", "w") as track_file:
+             json.dump(tracks, track_file, ensure_ascii=False, indent=4)
+
         self.race_weekend.track.track_short_name = self.ir["WeekendInfo"][
             "TrackDisplayShortName"
         ]

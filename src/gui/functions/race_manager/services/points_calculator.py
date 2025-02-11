@@ -64,6 +64,8 @@ class PointsCalculator:
                 if driver_obj.fastest_lap:
                     driver_obj.owner_points += 1
                     driver_obj.driver_points += 1
+                if driver_obj.name == race_manager.season_data.pole_winner:
+                    driver_obj.poles += 1
             else:
                 driver_obj.made_race = False
 
