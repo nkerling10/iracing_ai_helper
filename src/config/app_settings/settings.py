@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 class Settings:
     def __init__(self) -> None:
-        self.path = Path.cwd() / "src" / "config"
+        self.path = Path.cwd() / "src" / "config" / "app_settings"
         self.config_file = "config.ini"
         self.first_time_setup = None
         self.database_path = None

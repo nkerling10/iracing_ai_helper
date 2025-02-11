@@ -6,23 +6,20 @@ import logging
 
 ## Local imports
 from config.app_settings.settings import Settings
+import launcher
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
+    force=True
+)
 
 def main():
-    pass
+    launcher
 
 
 if __name__ == "__main__":
-    # create logger with 'spam_application'
-    logging.basicConfig(
-        level=logging.DEBUG,
-        format="%(asctime)s %(module)s [%(levelname)s] %(message)s",
-        force=True
-    )
     logger = logging.getLogger()
     coloredlogs.install(level='DEBUG', logger=logger)
-
-    logger.critical("test!")
-
-
     config = Settings()
     main()

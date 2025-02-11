@@ -228,8 +228,7 @@ def main_window(prev_table: str) -> None:
                 pass
             break
         if event == "-STARTRACEBUTTON-":
-            race_manager_window.main()
-            '''
+            #race_manager_window.main()
             # run the randomizer
             _randomize_drivers(
                 season_settings, race_week=window["_-WEEK-_"].get(), db=db
@@ -245,7 +244,6 @@ def main_window(prev_table: str) -> None:
             )
             # Update tables
             _update_season_data(season_settings, db)
-            '''
         if event == "-SAVECONFIGBUTTON-":
             if not any(
                 [
@@ -361,6 +359,10 @@ def main_window(prev_table: str) -> None:
         if event == "-SCHEDULETABLE-":
             window["-TRACKBOX-"].update(value=values["-SCHEDULETABLE-"][0] + 1)
 
+def test_main():
+    logger = logging.getLogger(__name__)
+    logger.error("Here!!")
+    quit()
 
 if __name__ == "__main__":
     sg.theme("Python")
