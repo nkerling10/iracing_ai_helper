@@ -311,7 +311,7 @@ class StandingsTabLayout:
                 sg.Frame(
                     title="Next Race",
                     layout=cls._build_next_race_layout(),
-                    size=(None, 175),
+                    size=(None, 215),
                     expand_x=True,
                 ),
                 sg.Button(
@@ -323,7 +323,7 @@ class StandingsTabLayout:
                 sg.Frame(
                     title="Player Stats",
                     layout=cls._build_player_stats_layout(),
-                    size=(None, 175),
+                    size=(None, 215),
                     expand_x=True,
                 ),
             ],

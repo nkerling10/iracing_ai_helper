@@ -67,21 +67,31 @@ def _connect_to_local_db() -> object:
     return db
 
 
-def _update_season_player_stats_data() -> None:
-    window["_-POINTS-_"].update(value="")
-    window["_-STARTS-_"].update(value="")
-    window["_-WINS-_"].update(value="")
-    window["_-TOP5-_"].update(value="")
-    window["_-TOP10-_"].update(value="")
-    window["_-DNF-_"].update(value="")
-    window["_-LAPSLED-_"].update(value="")
-    window["_-STAGEWINS-_"].update(value="")
-    window["_-POLES-_"].update(value="")
+def _update_season_player_stats_data(season_settings, db) -> None:
+    if not season_settings and db:
+        return
+    season_series = season_settings.get("season_series")
+    season_name = season_settings.get("season_name").upper().replace(" ", "_")
+    player_stats = db.execute_select_query(
+        table = f"{season_series}_{season_name}_POINTS_DRIVER",
+        condition = "NAME is 'Nick Kerling'"
+    )[0]
+
+    window["_-POINTS-_"].update(value=f"{player_stats[1]} ({player_stats[2]})")
+    window["_-STARTS-_"].update(value=player_stats[4])
+    window["_-WINS-_"].update(value=player_stats[5])
+    window["_-TOP5-_"].update(value=player_stats[6])
+    window["_-TOP10-_"].update(value=player_stats[7])
+    window["_-DNF-_"].update(value=player_stats[8])
+    window["_-LAPSLED-_"].update(value=player_stats[9])
+    window["_-STAGEWINS-_"].update(value=player_stats[10])
+    window["_-POLES-_"].update(value=player_stats[11])
 
 
 def _update_season_next_race_data(season_settings, db) -> None:
-    if season_settings and db:
-        next_race = NextRaceData._load_next_race_data(config, season_settings, db)
+    if not season_settings and db:
+        return
+    next_race = NextRaceData._load_next_race_data(config, season_settings, db)
     window["_-WEEK-_"].update(value=next_race.week if season_settings and db else "")
     window["_-TRACK-_"].update(value=next_race.track if season_settings and db else "")
     window["_-STAGE1-_"].update(
@@ -173,7 +183,7 @@ def _update_season_data(season_settings, db):
     _load_iracing_season_file(season_settings)
     _load_roster_file(season_settings)
     _update_season_next_race_data(season_settings, db)
-    _update_season_player_stats_data()
+    _update_season_player_stats_data(season_settings, db)
     _update_season_standings_tables(season_settings, db)
 
 

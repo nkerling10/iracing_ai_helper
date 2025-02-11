@@ -46,9 +46,9 @@ class PointsCalculator:
                 )
                 driver_obj.owner_points += race_manager.season_data.point_values[
                     position.get("Position") - 1
-                ]
+                ] + driver_obj.stage_points
                 driver_obj.driver_points += (
-                    race_manager.season_data.point_values[position.get("Position") - 1]
+                    race_manager.season_data.point_values[position.get("Position") - 1] + driver_obj.stage_points
                     if driver_obj.points_eligible
                     else 0
                 )

@@ -17,7 +17,8 @@ class RaceData:
 
 
 def _convert_race_data(values: dict, db: object) -> dict:
-    track_data = db.execute_select_query("TRACK", f"ID = {values.get("track_id")}")[0]
+    track_data_raw = db.execute_select_query("TRACK", f"ID is {values.get("track_id")}")
+    track_data = track_data_raw[0]
     values["track_name"] = track_data[0]
     values["track_short_name"] = track_data[1]
     del values["track_id"]
