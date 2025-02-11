@@ -2,7 +2,7 @@
 name: Database Update
 about: Database Update card
 title: "[DB] "
-labels: ''
+labels: database
 assignees: nkerling10
 
 ---
