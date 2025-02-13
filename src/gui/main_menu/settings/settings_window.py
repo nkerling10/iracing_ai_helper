@@ -1,17 +1,5 @@
 import PySimpleGUI as sg
 
-def main_layout():
-    return [
-        [
-            sg.Frame(
-                layout=[[]],
-                title="Race Active",
-                expand_x=True,
-                expand_y=True
-            )
-        ]
-    ]
-
 
 def _block_focus(window) -> None:
     """
@@ -23,9 +11,22 @@ def _block_focus(window) -> None:
             element.block_focus()
 
 
+def _settings_layout():
+    return [
+        [
+            sg.Exit()
+        ]
+    ]
+
+
 def main():
     window = sg.Window(
-        "Create New Season", main_layout(), use_default_focus=False, finalize=True, modal=True
+        "Settings",
+        _settings_layout(),
+        no_titlebar=True,
+        finalize=True,
+        size=(450,250),
+        keep_on_top=True
     )
     _block_focus(window)
     while True:
@@ -33,3 +34,7 @@ def main():
         if event in (sg.WIN_CLOSED, "Exit", "Cancel"):
             window.close()
             return
+
+
+if __name__ == "__main__":
+    main()

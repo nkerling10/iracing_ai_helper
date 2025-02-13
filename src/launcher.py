@@ -28,7 +28,6 @@ from gui.layouts.tabs.season_subtabs.roster_tab import RosterTabLayout
 from gui.layouts.tabs.season_subtabs.schedule_tab import ScheduleTabLayout
 from gui.layouts.tabs.config_tab import ConfigTabLayout
 from gui.layouts.tabs.logging_tab import LoggingTabLayout
-from gui.windows import race_manager_window
 
 
 logging.basicConfig()
