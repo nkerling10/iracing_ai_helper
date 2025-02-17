@@ -75,7 +75,7 @@ class Driver:
         self.age = (
             0
             if f"NODRIVER{self.car.number}" == self.name
-            else self._calc_driver_age(randomizer)
+            else self._calc_driver_age(randomizer) * 3
         )
         self.tier = (
             None

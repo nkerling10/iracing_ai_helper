@@ -5,8 +5,12 @@ import PySimpleGUI as sg
 import shutil
 from pathlib import Path
 
-from create_new_season import _create_new_season
-from check_season_type import _load_iracing_season
+try:
+    from gui.main_menu.season.create_new_season import _create_new_season
+    from gui.main_menu.season.check_season_type import _load_iracing_season
+except ModuleNotFoundError:
+    from create_new_season import _create_new_season
+    from check_season_type import _load_iracing_season
 
 
 logger = logging.getLogger(__name__)

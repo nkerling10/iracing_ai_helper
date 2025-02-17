@@ -749,10 +749,11 @@ def _create_new_season(config, season_series: str = "") -> dict:
         "Create New Season", layout, use_default_focus=False, finalize=True, modal=True
     )
     _block_focus(window)
-    window[f"__SEASONTYPERADIO{season_series}__"].update(value=True)
-    for key, _element in window.AllKeysDict.items():
-        if "SEASONTYPERADIO" in key and season_series not in key:
-            window[key].update(disabled=True)
+    if season_series:
+        window[f"__SEASONTYPERADIO{season_series}__"].update(value=True)
+        for key, _element in window.AllKeysDict.items():
+            if "SEASONTYPERADIO" in key and season_series not in key:
+                window[key].update(disabled=True)
     tire_sets = 0
     while True:
         event, values = window.read()

@@ -181,7 +181,7 @@ def _set_tab_visibility(tab_status: bool) -> None:
 def _update_season_data(config, season_settings, db):
     _load_iracing_season_file(season_settings)
     _load_roster_file(season_settings)
-    _update_season_next_race_data(season_settings, db)
+    #_update_season_next_race_data(season_settings, db)
     _update_season_player_stats_data(config, season_settings, db)
     _update_season_standings_tables(season_settings, db)
 
