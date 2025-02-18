@@ -6,18 +6,48 @@ import shutil
 from pathlib import Path
 
 try:
-    from gui.main_menu.season.create_new_season import _create_new_season
-    from gui.main_menu.season.check_season_type import _load_iracing_season
+    from gui.main_menu.season.create_new_season import create_new_season
+    from gui.main_menu.season.season_info.season_info_window import season_window
 except ModuleNotFoundError:
-    from create_new_season import _create_new_season
-    from check_season_type import _load_iracing_season
+    from create_new_season import create_new_season
+    from season_info.season_info_window import season_window
 
 
 logger = logging.getLogger(__name__)
 
 ai_seasons_file_path = Path.cwd() / "ai_seasons"
-base_files_roster_path = Path.cwd() / "base_files" / "rosters"
+base_files_roster_path = Path.cwd() / "base_files"
 
+CUP_SERIES = [139, 140, 141]
+XFINITY_SERIES = [114, 115, 116]
+TRUCK_SERIES = [111, 123, 155]
+ARCA_SERIES = [24]
+INDYCAR_SERIES = [99]
+SRX_SERIES = [179]
+LATEMODEL_SERIES = [164]
+
+
+def _load_iracing_season(season_file: str):
+    with open(season_file, "r") as file:
+        iracing_season = json.loads(file.read())
+    cars_selected = [car.get("car_id") for car in iracing_season.get("carSettings")]
+    if cars_selected == CUP_SERIES:
+        return "CUP"
+    elif cars_selected == XFINITY_SERIES:
+        return "XFINITY"
+    elif cars_selected == TRUCK_SERIES:
+        return "TRUCK"
+    elif cars_selected == ARCA_SERIES:
+        return "ARCA"
+    elif cars_selected == INDYCAR_SERIES:
+        return "INDYCAR"
+    elif cars_selected == SRX_SERIES:
+        return "SRX"
+    elif cars_selected == LATEMODEL_SERIES:
+        return "LATEMODEL"
+    else:
+        logger.debug(f"Car IDs for loaded season: {cars_selected}")
+        return "CUSTOM"
 
 def _block_focus(window) -> None:
     """
@@ -76,7 +106,10 @@ def _load_season_file() -> None | str:
         no_window=True,
         file_types=(("JSON Files", "*.json"),)
     )
-    return None if not select_season_settings_file else select_season_settings_file
+    if select_season_settings_file:
+        with open(select_season_settings_file, "r") as file:
+            return json.loads(file.read())
+    return None
 
 
 def _create_season_file(season_name: str, season_type: str) -> dict:
@@ -140,8 +173,9 @@ def main():
             return
         if event == "--NEWREALSEASONBUTTON--":
             window.Hide()
-            new_created_season = _create_new_season(None)
+            new_created_season = create_new_season()
             if new_created_season:
+                season_window(new_created_season)
                 window.close()
             else:
                 window.UnHide()
@@ -156,12 +190,14 @@ def main():
             if iracing_season_file:
                 season_settings_data = _create_season_file(season_name="test1",
                                                            season_type=_load_iracing_season(iracing_season_file))
-            if season_settings_data:
-                _create_new_season(None, season_settings_data.get("season_series"))
+                if season_settings_data:
+                    return_val = create_new_season(season_settings_data.get("season_series"))
+                    print(return_val)
         if event == "--LOADSEASONBUTTON--":
             window.Hide()
             season_file = _load_season_file()
             if season_file:
+                season_window(season_file)
                 window.UnHide()
             else:
                 window.UnHide()

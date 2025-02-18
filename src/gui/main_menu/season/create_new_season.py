@@ -14,310 +14,6 @@ base_files_roster_path = Path.cwd() / "base_files" / "rosters"
 __version__ = "1.0"
 
 
-def _update_season_settings(config: object, season_settings: dict) -> None:
-    """
-    Modifies settings within the season json file to what the user provided  during creation.
-    """
-    try:
-        logger.info("Attempting to open season settings file")
-        with open(
-            config.iracing_folder / "aiseasons" / season_settings.get("season_file"),
-            "r",
-        ) as file:
-            modified_season_file = json.loads(file.read())
-    except Exception as e:
-        logger.error(f"Failed to read season settings file: {e}")
-        return
-
-    car_index = 0
-    while car_index < len(modified_season_file["carSettings"]):
-        modified_season_file["carSettings"][car_index]["max_pct_fuel_fill"] = (
-            season_settings.get("fuel_capacity")
-        )
-        modified_season_file["carSettings"][car_index]["max_dry_tire_sets"] = (
-            -1
-            if season_settings.get("tire_sets") == "UNLIMITED"
-            else int(season_settings.get("tire_sets"))
-        )
-        car_index += 1
-
-    modified_season_file["rosterName"] = season_settings.get("season_name")
-    modified_season_file["name"] = season_settings.get("season_name")
-    modified_season_file["max_drivers"] = 100
-
-    race_index = 0
-    while race_index < len(modified_season_file["events"]):
-        try:
-            full_distance = modified_season_file["events"][race_index]["race_laps"]
-        except KeyError:
-            modified_season_file["events"][race_index]["race_laps"] = modified_season_file["race_laps"]
-            full_distance = modified_season_file["events"][race_index]["race_laps"]
-        modified_season_file["events"][race_index]["race_laps"] = round(
-            full_distance * (season_settings.get("race_distance_percent") / 100)
-        )
-        race_index += 1
-
-    try:
-        logger.info("Attempting to write updates to season_settings file")
-        with open(
-            config.iracing_folder / "aiseasons" / season_settings.get("season_file"),
-            "w",
-        ) as file:
-            json.dump(modified_season_file, file, ensure_ascii=False, indent=4)
-    except Exception as e:
-        logger.error(f"Failed to write file: {e}")
-
-
-def _copy_season_base_file(config: object, season_settings: dict) -> bool:
-    """
-    Performs a copy of selected series' base season file into the iRacing aiseasons
-    folder. It will be named what the user provided.
-    """
-    if season_settings.get("season_series") == "CUP":
-        base_file = "2025_Cup_Series"
-    elif season_settings.get("season_series") == "XFINITY":
-        base_file = "2025_Xfinity_Series"
-    elif season_settings.get("season_series") == "TRUCKS":
-        base_file = "2025_Truck_Series"
-    elif season_settings.get("season_series") == "ARCA":
-        base_file = "2025_ARCA_Series"
-    elif season_settings.get("season_series") == "INDYCAR":
-        base_file = "2025_Indycar_Series"
-    elif season_settings.get("season_series") == "SRX":
-        base_file = "SRX_Series"
-    try:
-        logger.info(f"Copying official file {base_file}.json")
-        copyfile(
-            Path(Path.cwd() / "base_files" / "seasons" / f"{base_file}.json"),
-            Path(
-                config.iracing_folder
-                / "aiseasons"
-                / f"{season_settings.get('season_name')}.json"
-            ),
-        )
-        logger.info(
-            "File copied successfully, updating file path in season_settings file"
-        )
-        try:
-            with open(
-                Path.cwd()
-                / "ai_seasons"
-                / f"{season_settings.get('season_name')}.json",
-                "r",
-            ) as file:
-                season_file = json.loads(file.read())
-                logger.debug("File read successful")
-        except Exception as e:
-            logger.error(
-                f"Could not read file {Path.cwd()}"
-                / "ai_seasons"
-                / f"{season_settings.get('season_name')}.json"
-            )
-            return False
-        season_file["season_file"] = str(
-            config.iracing_folder
-            / "aiseasons"
-            / f"{season_settings.get('season_name')}.json"
-        ).replace("\\", "/")
-        season_settings["season_file"] = str(
-            config.iracing_folder
-            / "aiseasons"
-            / f"{season_settings.get('season_name')}.json"
-        ).replace("\\", "/")
-        try:
-            with open(
-                Path.cwd()
-                / "ai_seasons"
-                / f"{season_settings.get('season_name')}.json",
-                "w",
-            ) as file:
-                file.write(json.dumps(season_file, indent=4))
-            logger.debug("File write successful")
-        except Exception as e:
-            logger.error(
-                f"Could not write to file {Path.cwd()}"
-                / "ai_seasons"
-                / f"{season_settings.get('season_name')}.json"
-            )
-            return False
-        return True
-    except Exception as e:
-        logger.critical(e)
-        return False
-
-
-def _create_season_database_tables(config: object, season_settings: dict) -> None:
-    season_series = season_settings.get("season_series")
-    season_name = season_settings.get("season_name").upper().replace(" ", "")
-    conn = sqlite3.connect(config.database_path)
-    with conn:
-        conn.execute(
-            f"""CREATE TABLE IF NOT EXISTS {season_series}_{season_name}_POINTS_DRIVER (
-                NAME TEXT PRIMARY KEY,
-                POINTS INTEGER,
-                STAGE_POINTS INTEGER,
-                PLAYOFF_POINTS INTEGER,
-                STARTS INTEGER,
-                WINS INTEGER,
-                TOP_5s INTEGER,
-                TOP_10s INTEGER,
-                DNFs INTEGER,
-                LAPS_LED INTEGER,
-                STAGE_WINS INTEGER,
-                POLES INTEGER
-            )"""
-        )
-
-        conn.execute(
-            f"""CREATE TABLE IF NOT EXISTS {season_series}_{season_name}_POINTS_OWNER (
-                CAR TEXT PRIMARY KEY,
-                TEAM TEXT,
-                ATTEMPTS INTEGER,
-                POINTS INTEGER,
-                WINS INTEGER,
-                STAGE_WINS INTEGER
-            )"""
-        )
-    conn.close()
-
-
-def _create_iracing_season(config: object, season_settings: dict) -> None:
-    """
-    Exists as a helper to create the season. If the season base file cannot be copied,
-    it will return with no further action.
-    """
-    season_copied_bool = _copy_season_base_file(config, season_settings)
-    if not season_copied_bool:
-        return
-    _create_season_database_tables(config, season_settings)
-    _update_season_settings(config, season_settings)
-
-
-def _copy_roster_folder(config: object, season_settings: dict) -> None:
-    """
-    Performs a copy of selected series' base roster file into the iRacing airosters
-    folder. It will exist in a folder titled what the user provided as roster.json.
-    """
-    roster_path_dest = (
-        config.iracing_folder / "airosters" / season_settings.get("season_name")
-    )
-
-    if season_settings.get("season_series") == "CUP":
-        folder = base_files_roster_path / "2025_Cup_Series"
-    elif season_settings.get("season_series") in "XFINITY":
-        folder = base_files_roster_path / "2025_Xfinity_Series"
-    elif season_settings.get("season_series") == "TRUCKS":
-        folder = base_files_roster_path / "2025_Truck_Series"
-    elif season_settings.get("season_series") == "ARCA":
-        folder = base_files_roster_path / "2025_ARCA_Series"
-    elif season_settings.get("season_series") == "INDYCAR":
-        folder = base_files_roster_path / "2025_Indycar_Series"
-    elif season_settings.get("season_series") == "SRX":
-        folder = base_files_roster_path / "SRX_Series"
-    if not os.path.exists(roster_path_dest):
-        logger.info(f"Folder {roster_path_dest} does not exist, creating")
-        os.makedirs(roster_path_dest)
-
-    try:
-        logger.info(f"Copying roster folder {folder}")
-        copytree(
-            folder,
-            config.iracing_folder / "airosters" / season_settings.get("season_name"),
-            dirs_exist_ok=True,
-        )
-        logger.info("Folder copied successfully")
-    except Exception as e:
-        logger.error(f"Error copying file: {e}")
-
-
-def _create_local_season_settings_file(values: dict, custom_tireset: int = 0) -> dict:
-    """
-    Creates the local "season settings" file that is stored as json. This file contains references to
-    user selected settings as well as the iRacing AI Season file & Roster file that will be linked when utilizing
-    the app. File is stored in a folder called "ai_seasons" in the same directory that the app exists in.
-    """
-    if not os.path.exists(ai_seasons_file_path):
-        logger.info(f"Folder {ai_seasons_file_path} does not exist, creating")
-        os.makedirs(ai_seasons_file_path)
-    if os.path.exists(ai_seasons_file_path / f"{values['__SEASONNAME__']}.json"):
-        sg.Popup(
-            "Warning! A season_settings file with that name already exists",
-            no_titlebar=True,
-        )
-        return False
-    season_settings = {
-        "settings_version": __version__,
-        "season_name": values["__SEASONNAME__"],
-        "player_team_name": values["__PLAYERTEAMNAME__"],
-        "season_series": _season_type(values),
-        "fuel_capacity": int(values["__FUELCAPACITY__"]),
-        "tire_sets": (
-            "UNLIMITED" if values["__TIRESETSUNLIMITED__"] is True else custom_tireset
-        ),
-        "race_distance_percent": int(values["__RACEDISTANCEPERCENT__"]),
-        "points_format": _points_format(values),
-        "field_size": values["__FIELDSIZE__"],
-        "pre_race_penalties_enabled": (
-            True if values["__PRERACEPENALTIESCHECKBOX__"] is True else False
-        ),
-        "pre_race_penalties_chance": (
-            int(values["__PRERACEPENALTIESCHANCEVALUE__"])
-            if values["__PRERACEPENALTIESCHECKBOX__"] is True
-            else 0
-        ),
-        "inspection_fail_chance_modifier": (
-            int(values["__INSPECTIONFAILCHANCEMODIFIERVALUE__"])
-            if values["__PRERACEPENALTIESCHECKBOX__"] is True
-            else 0
-        ),
-        "pit_penalties_enabled": (
-            True if values["__PITPENALTIESCHECKBOX__"] is True else False
-        ),
-        "pit_penalties_chance": int(values["__PITPENALTIESCHANCEVALUE__"]),
-        "post_race_penalties_enabled": (
-            True if values["__POSTRACEPENALTIESCHECKBOX__"] is True else False
-        ),
-        "post_race_penalties_chance": (
-            int(values["__POSTRACEPENALTIESCHANCEVALUE__"])
-            if values["__PRERACEPENALTIESCHECKBOX__"] is True
-            else 0
-        ),
-        "debris_cautions_enabled": (
-            True if values["__DEBRISCAUTIONCHECKBOX__"] is True else False
-        ),
-        "debris_cautions_chance": (
-            int(values["__DEBRISCAUTIONCHANCEVALUE__"])
-            if values["__DEBRISCAUTIONCHECKBOX__"] is True
-            else 0
-        ),
-        "stage_cautions_enabled": (
-            True if values["__STAGECAUTIONSCHECKBOX__"] is True else False
-        ),
-    }
-    try:
-        with open(
-            ai_seasons_file_path / f"{values['__SEASONNAME__']}.json", "w"
-        ) as new_season_file:
-            new_season_file.write(json.dumps(season_settings, indent=4))
-    except Exception as e:
-        logger.error("Unable to write file")
-        return {}
-
-    return season_settings
-
-
-def _points_format(values: dict) -> str:
-    """
-    Returns points format when called by _create_local_season_settings_file
-    """
-    if values["__CURRENTPOINTSFORMAT__"]:
-        return "CURRENT"
-    elif values["__CHASEPOINTSFORMAT__"]:
-        return "CHASE"
-    elif values["__WINSTONCUPPOINTSFORMAT__"]:
-        return "WINSTON"
-
-
 def _season_type(values: dict) -> str:
     """
     Returns season type when called by _create_local_season_settings_file
@@ -346,7 +42,175 @@ def _block_focus(window) -> None:
             element.block_focus()
 
 
-def _create_new_season_layout():
+def _update_season_settings(season_settings: dict) -> None:
+    """
+    Modifies settings within the season json file to what the user provided  during creation.
+    """
+    try:
+        logger.info("Attempting to open season settings file")
+        with open(season_settings.get("iracing_season_file"), "r") as file:
+            modified_season_file = json.loads(file.read())
+    except Exception as e:
+        logger.error(f"Failed to read season settings file: {e}")
+        return False
+
+    car_index = 0
+    while car_index < len(modified_season_file["carSettings"]):
+        modified_season_file["carSettings"][car_index]["max_pct_fuel_fill"] = (
+            season_settings.get("user_settings").get("fuel_capacity")
+        )
+        modified_season_file["carSettings"][car_index]["max_dry_tire_sets"] = (
+            -1
+            if season_settings.get("user_settings").get("tire_sets") == "UNLIMITED"
+            else int(season_settings.get("user_settings").get("tire_sets"))
+        )
+        car_index += 1
+
+    modified_season_file["rosterName"] = season_settings.get("season_name")
+    modified_season_file["name"] = season_settings.get("season_name")
+    modified_season_file["max_drivers"] = 100
+
+    race_index = 0
+    while race_index < len(modified_season_file["events"]):
+        try:
+            full_distance = modified_season_file["events"][race_index]["race_laps"]
+        except KeyError:
+            modified_season_file["events"][race_index]["race_laps"] = modified_season_file["race_laps"]
+            full_distance = modified_season_file["events"][race_index]["race_laps"]
+        modified_season_file["events"][race_index]["race_laps"] = round(
+            full_distance * (season_settings.get("user_settings").get("race_distance_percent") / 100)
+        )
+        race_index += 1
+
+    try:
+        logger.info("Attempting to write updates to season_settings file")
+        with open(season_settings.get("iracing_season_file"), "w") as file:
+            json.dump(modified_season_file, file, ensure_ascii=False, indent=4)
+        return True
+    except Exception as e:
+        logger.error(f"Failed to write file: {e}")
+        return False
+
+
+def _copy_roster_folder(season_series: str, season_name: str) -> None:
+    """
+    Performs a copy of selected series' base roster file into the iRacing airosters
+    folder. It will exist in a folder titled what the user provided as roster.json.
+    """
+    base_roster_folder = Path.cwd() / "base_files" / f"2025_{season_series}"
+    roster_path_dest = f"C:/Users/Nick/Documents/iRacing/airosters/{season_name}"
+
+    if not os.path.exists(roster_path_dest):
+        logger.info(f"Folder {roster_path_dest} does not exist, creating")
+        os.makedirs(roster_path_dest)
+
+    try:
+        logger.info(f"Copying roster folder {base_roster_folder / f"2025_{season_series}_ROSTER"}")
+        copytree(
+            base_roster_folder / f"2025_{season_series}_ROSTER",
+            f"C:/Users/Nick/Documents/iRacing/airosters/{season_name}",
+            dirs_exist_ok=True,
+        )
+        logger.info("Folder copied successfully")
+        return f"C:/Users/Nick/Documents/iRacing/airosters/{season_name}"
+    except Exception as e:
+        logger.error(f"Error copying folder: {e}")
+        return None
+
+
+def _copy_season_file(season_series: str, season_name: str):
+    base_season_folder = Path.cwd() / "base_files" / f"2025_{season_series}"
+    season_path_dest = f"C:/Users/Nick/Documents/iRacing/aiseasons/"
+
+    try:
+        logger.info(f"Copying season file {base_season_folder}/2025_{season_series}.json")
+        copyfile(
+            Path(f"{base_season_folder}\\2025_{season_series}.json"),
+            Path(f"{season_path_dest}/{season_name}.json")
+        )
+        logger.info("File copied successfully")
+        return f"{season_path_dest}/{season_name}.json"
+    except Exception as e:
+        logger.error(f"Error copying file: {e}")
+        return None
+
+
+def _create_local_season_settings_file(values: dict, tire_sets: int) -> dict:
+    """
+    Creates the local "season settings" file that is stored as json. This file contains references to
+    user selected settings as well as the iRacing AI Season file & Roster file that will be linked when utilizing
+    the app. File is stored in a folder called "ai_seasons" in the same directory that the app exists in.
+    """
+    if not os.path.exists(ai_seasons_file_path):
+        logger.info(f"Folder {ai_seasons_file_path} does not exist, creating")
+        os.makedirs(ai_seasons_file_path)
+    if os.path.exists(ai_seasons_file_path / f"{values['__SEASONNAME__']}.json"):
+        sg.Popup(
+            "A season_settings file with that name already exists, use a different name",
+            no_titlebar=True,
+        )
+        return {}
+
+    season_settings = {
+        "season_name": values["__SEASONNAME__"],
+        "player_team_name": values["__PLAYERTEAMNAME__"],
+        "season_series": _season_type(values),
+        "iracing_roster_file": _copy_roster_folder(season_series=_season_type(values), season_name=values["__SEASONNAME__"]),
+        "iracing_season_file": _copy_season_file(season_series=_season_type(values), season_name=values["__SEASONNAME__"]),
+        "user_settings": {
+            "stages_enabled": True if values["__STAGECAUTIONSCHECKBOX__"] is True else False,
+            "field_size": values["__FIELDSIZE__"],
+            "race_distance_percent": int(values["__RACEDISTANCEPERCENT__"]),
+            "fuel_capacity": int(values["__FUELCAPACITY__"]),
+            "tire_sets": "UNLIMITED" if values["__TIRESETSUNLIMITED__"] is True else tire_sets,
+            "pre_race_penalties": {
+                "enabled": True if values["__PRERACEPENALTIESCHECKBOX__"] is True else False,
+                "chance": (
+                        int(values["__PRERACEPENALTIESCHANCEVALUE__"])
+                        if values["__PRERACEPENALTIESCHECKBOX__"] is True
+                        else 0
+                    ),
+                "inspection_fail_chance_modifier": (
+                    int(values["__INSPECTIONFAILCHANCEMODIFIERVALUE__"])
+                    if values["__PRERACEPENALTIESCHECKBOX__"] is True
+                    else 0
+                ),
+            },
+            "pit_penalties": {
+                "enabled": True if values["__PITPENALTIESCHECKBOX__"] is True else False,
+                "chance": int(values["__PITPENALTIESCHANCEVALUE__"])
+            },
+            "post_race_penalties": {
+                "enabled": True if values["__POSTRACEPENALTIESCHECKBOX__"] is True else False,
+                "chance": (
+                    int(values["__POSTRACEPENALTIESCHANCEVALUE__"])
+                    if values["__PRERACEPENALTIESCHECKBOX__"] is True
+                    else 0
+                )
+            },
+            "debris_cautions": {
+                "enabled": True if values["__DEBRISCAUTIONCHECKBOX__"] is True else False,
+                "chance": (
+                    int(values["__DEBRISCAUTIONCHANCEVALUE__"])
+                    if values["__DEBRISCAUTIONCHECKBOX__"] is True
+                    else 0
+                )
+            }
+        }
+    }
+
+    try:
+        with open(
+            ai_seasons_file_path / f"{values['__SEASONNAME__']}.json", "w"
+        ) as new_season_file:
+            new_season_file.write(json.dumps(season_settings, indent=4))
+            return season_settings
+    except Exception as e:
+        logger.error("Unable to write file")
+        return {}
+
+
+def WIP_create_new_season_layout():
     return [
         [
             sg.Button("NASCAR Cup Series"),
@@ -362,7 +226,7 @@ def _create_new_season_layout():
     ]
 
 
-def _create_new_season_wip():
+def WIP_create_new_season():
     window = sg.Window(
         "Create New Season", _create_new_season_layout(), use_default_focus=False, finalize=True, modal=True
     )
@@ -373,7 +237,8 @@ def _create_new_season_wip():
             window.close()
             return
 
-def _create_new_season(config, season_series: str = "") -> dict:
+
+def create_new_season(season_series: str = "") -> dict:
     """
     Handles the popup window for creating a new season
     """
@@ -394,36 +259,42 @@ def _create_new_season(config, season_series: str = "") -> dict:
                             group_id=1,
                             key="__SEASONTYPERADIOCUP__",
                             enable_events=True,
+                            disabled=True,
                         ),
                         sg.Radio(
                             "Xfinity",
                             group_id=1,
                             key="__SEASONTYPERADIOXFINITY__",
                             enable_events=True,
+                            default=True
                         ),
                         sg.Radio(
                             "Truck",
                             group_id=1,
                             key="__SEASONTYPERADIOTRUCKS__",
                             enable_events=True,
+                            disabled=True,
                         ),
                         sg.Radio(
                             "ARCA",
                             group_id=1,
                             key="__SEASONTYPERADIOARCA__",
                             enable_events=True,
+                            disabled=True,
                         ),
                         sg.Radio(
                             "Indycar",
                             group_id=1,
                             key="__SEASONTYPERADIOINDYCAR__",
                             enable_events=True,
+                            disabled=True,
                         ),
                         sg.Radio(
                             "Indycar",
                             group_id=1,
                             key="__SEASONTYPERADIOSRX__",
                             enable_events=True,
+                            disabled=True,
                         )
                     ]
                 ],
@@ -475,22 +346,6 @@ def _create_new_season(config, season_series: str = "") -> dict:
                             group_id=2,
                             key="__CURRENTPOINTSFORMAT__",
                             default=True,
-                        )
-                    ],
-                    [
-                        sg.Radio(
-                            "The Chase",
-                            group_id=2,
-                            key="__CHASEPOINTSFORMAT__",
-                            disabled=True,
-                        )
-                    ],
-                    [
-                        sg.Radio(
-                            "Winston Cup",
-                            group_id=2,
-                            key="__WINSTONCUPPOINTSFORMAT__",
-                            disabled=True,
                         )
                     ],
                 ],
@@ -745,6 +600,7 @@ def _create_new_season(config, season_series: str = "") -> dict:
         ],
         [sg.Button("Create"), sg.Button("Cancel")],
     ]
+
     window = sg.Window(
         "Create New Season", layout, use_default_focus=False, finalize=True, modal=True
     )
@@ -769,20 +625,18 @@ def _create_new_season(config, season_series: str = "") -> dict:
                     values["__SEASONTYPERADIOXFINITY__"],
                     values["__SEASONTYPERADIOTRUCKS__"],
                     values["__SEASONTYPERADIOARCA__"],
-                    values["__SEASONTYPERADIOINDYCAR"],
-                    values["__SEASONTYPERADIOSRX"]
+                    values["__SEASONTYPERADIOINDYCAR__"],
+                    values["__SEASONTYPERADIOSRX__"]
                 ]
             ):
-                sg.popup("Missing a required entry!", no_titlebar=True)
+                sg.popup("ERROR: Missing a required entry!", no_titlebar=True)
             else:
-                season_settings = _create_local_season_settings_file(
-                    values, window["__TIRESETS__"].get()
-                )
+                season_settings = _create_local_season_settings_file(values, window["__TIRESETS__"].get())
                 if season_settings:
-                    _copy_roster_folder(config, season_settings)
-                    _create_iracing_season(config, season_settings)
-                    window.close()
-                    return season_settings
+                    success = _update_season_settings(season_settings)
+                    if success:
+                        window.close()
+                        return season_settings
         if event == "__TIRESETSCUSTOM__":
             window["__TIRESETSUNLIMITED__"].update(value=False)
         if event == "__TIRESETSUNLIMITED__":
@@ -798,3 +652,7 @@ def _create_new_season(config, season_series: str = "") -> dict:
                 window["__TIRESETSCUSTOM__"].update(value=True)
                 window["__TIRESETSUNLIMITED__"].update(value=False)
                 window["__TIRESETS__"].update(tire_sets)
+
+
+if __name__ == "__main__":
+    create_new_season()

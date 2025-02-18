@@ -9,7 +9,7 @@ import PySimpleGUI as sg
 
 ## Local imports
 from config.app_settings.settings import Settings
-from gui.main_menu.season import season_window
+from gui.main_menu.season import season_menu_window
 from gui.main_menu.single_race import singlerace_window
 from gui.main_menu.settings import settings_window
 
@@ -20,17 +20,18 @@ logging.basicConfig(
     force=True
 )
 
+
 class IracingData:
     def __init__(self):
-        self.cars = self._load_data("cars.json")
-        self.tracks = self._load_data("tracks.json")
+        self.cars = self._load_data("iracing_cars.json")
+        self.tracks = self._load_data("iracing_tracks.json")
 
     def _load_data(self, file: str):
         with open(Path.cwd() / "src" / "assets" / "references" / file) as data_file:
             return json.loads(data_file.read())
 
 
-def _menu_column_layout():
+def _menu_column_layout() -> list[list]:
     return [
         [
             sg.pin(sg.Button("Season",
@@ -55,7 +56,7 @@ def _menu_column_layout():
     ]
 
 
-def _splash_column_layout():
+def _splash_area_layout() -> list[list]:
     return [
         [
             sg.Image(
@@ -67,7 +68,7 @@ def _splash_column_layout():
     ]
 
 
-def _race_selection_layout() -> list[list]:
+def _main_menu_layout() -> list[list]:
     return [
         [
             sg.pin(sg.Text("iRacing AI Integrator", expand_x=True))
@@ -79,7 +80,7 @@ def _race_selection_layout() -> list[list]:
             sg.HorizontalSeparator()
         ],
         [
-            sg.Column(layout=_splash_column_layout(), expand_x=True, expand_y=True, key="__SPLASHLAYOUT__")
+            sg.Column(layout=_splash_area_layout(), expand_x=True, expand_y=True, key="__SPLASHLAYOUT__")
         ]
     ]
 
@@ -88,7 +89,7 @@ def main():
     iracing_data = IracingData()
     window = sg.Window(
         "Race Type Selection",
-        _race_selection_layout(),
+        _main_menu_layout(),
         no_titlebar=False,
         finalize=True,
         size=(650,350)
@@ -98,7 +99,7 @@ def main():
         if event in (sg.WIN_CLOSED, "Exit"):
             return
         if event == "--SEASONRACEMENUBUTTON--":
-            season_window.main()
+            season_menu_window.main()
         if event == "--SINGLERACEMENUBUTTON--":
             singlerace_window.main()
         if event == "--SETTINGSMENUBUTTON--":

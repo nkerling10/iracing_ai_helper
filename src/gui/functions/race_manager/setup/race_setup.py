@@ -273,7 +273,7 @@ class RaceManager:
 
     def _set_weekend_data(self) -> None:
         self._define_sessions()
-        with open("C:/Users/Nick/Documents/iracing_ai_helper/src/assets/references/tracks.json", "r") as track_file:
+        with open("C:/Users/Nick/Documents/iracing_ai_helper/src/assets/references/iracing_tracks.json", "r") as track_file:
             tracks = json.loads(track_file.read())
         
         if self.ir["WeekendInfo"]["TrackID"] not in tracks:
@@ -286,7 +286,7 @@ class RaceManager:
             if self.ir["WeekendInfo"]["TrackID"]["iracing_name"] == "":
                 tracks[self.ir["WeekendInfo"]["TrackID"]].update(iracing_name=self.ir["WeekendInfo"]["TrackName"])
 
-        with open("C:/Users/Nick/Documents/iracing_ai_helper/src/assets/references/tracks.json", "w") as track_file:
+        with open("C:/Users/Nick/Documents/iracing_ai_helper/src/assets/references/iracing_tracks.json", "w") as track_file:
              json.dump(tracks, track_file, ensure_ascii=False, indent=4)
 
         self.race_weekend.track.track_short_name = self.ir["WeekendInfo"][
