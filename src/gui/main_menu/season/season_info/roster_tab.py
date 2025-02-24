@@ -91,26 +91,22 @@ class RosterTabLayout:
                                 layout=cls._tier_settings_tab_layout(),
                                 expand_x=True,
                                 expand_y=True,
-                            ),
+                            )
                         ]
                     ],
                     key="-ROSTERTABLETABS-",
                     tab_location="topleft",
                     expand_x=True,
-                    expand_y=True,
-                ),
+                    expand_y=True
+                )
             ],
             [
                 sg.Text(text="Raceweek:", key="-TRACKBOXLABEL-", visible=False),
-                sg.Combo(
-                    cls._roster_file_track_choices(), key="-TRACKBOX-", visible=True
-                ),
-                sg.Text(key="-TRACKSTATUS-"),
-            ],
-            [
+                sg.Combo(cls._roster_file_track_choices(), key="-TRACKBOX-"),
                 sg.Button(
                     "Randomize",
                     tooltip="Randomizes all attributes for all drivers, then saves to roster file",
-                )
+                ),
+                sg.Text(key="-TRACKSTATUS-")
             ]
         ]

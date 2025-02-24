@@ -5,7 +5,7 @@ Massive credit to kutu for the pyirsdk linked below:
 
 ## Standard library imports
 import logging
-import random
+import json
 import sys
 import time
 from pathlib import Path
@@ -14,16 +14,17 @@ from pathlib import Path
 import irsdk
 
 ## Local imports
-sys.path.append(f"{str(Path.cwd())}\\src")
-from gui.functions.race_manager.setup.race_setup import RaceManager
-from gui.functions.race_manager.setup.driver import Driver
+sys.path.append(f"{str(Path.cwd())}/src")
+from functions.race_manager.setup.race_setup import RaceManager
+from functions.race_manager.setup.driver import Driver
 
-from gui.functions.race_manager.services.practice_service import PracticeService
-from gui.functions.race_manager.services.qualifying_service import QualifyingService
-from gui.functions.race_manager.services.race_service import RaceService
-from gui.functions.race_manager.services.points_calculator import PointsCalculator
-from gui.functions.race_manager.services.points_importer import PointsImporter
-from gui.functions.race_manager.services.post_race_penalties import PostRacePenalties
+from functions.race_manager.services.practice_service import PracticeService
+from functions.race_manager.services.qualifying_service import QualifyingService
+from functions.race_manager.services.race_service import RaceService
+from functions.race_manager.services.points_calculator import PointsCalculator
+from functions.race_manager.services.points_importer import PointsImporter
+from functions.race_manager.services.post_race_penalties import PostRacePenalties
+from assets.misc.data_converter import convert_car_driver_mapping, convert_drivers
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -49,16 +50,8 @@ def current_session_practice(race_manager, cars_to_dq):
         ]["ResultsOfficial"]
         == 0
     ):
-        irsdk.IRSDK.parse_to(
-            race_manager.ir,
-            to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/practice_logic_start.bin",
-        )
         PracticeService.practice(race_manager, cars_to_dq)
         race_manager.practice_done = True
-        irsdk.IRSDK.parse_to(
-            race_manager.ir,
-            to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/practice_logic_complete.bin",
-        )
         logger.info("Practice operations are complete!")
     else:
         logger.debug("Practice stage does not need to be executed, skipping")
@@ -77,15 +70,7 @@ def current_session_qualify(race_manager):
         ]
         == 0
     ):
-        irsdk.IRSDK.parse_to(
-            race_manager.ir,
-            to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/qualify_logic_start.bin",
-        )
         QualifyingService.qualifying(race_manager)
-        irsdk.IRSDK.parse_to(
-            race_manager.ir,
-            to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/qualify_logic_complete.bin",
-        )
         race_manager.qualifying_done = True
         logger.info("Qualifying operations are complete!")
     else:
@@ -115,16 +100,9 @@ def set_drivers(race_manager):
                         car_idx=driver["CarIdx"],
                         name=driver["UserName"],
                         car=driver["CarNumber"],
-                        team=(
-                            race_manager.race_weekend.race_data.player_team_name
-                            if driver["CarNumber"]
-                            == race_manager.race_weekend.race_data.player_car_num
-                            else [
-                                car[1]
-                                for car in race_manager.season_data.cars_teams
-                                if car[0] == driver["CarNumber"]
-                            ][0]
-                        ),
+                        team=race_manager.race_weekend.race_data.player_car_num
+                            if driver["CarIsAI"] == 0
+                            else race_manager.season_data.car_driver_map[driver["CarNumber"]]["team"],
                         points_eligibile=(
                             True
                             if driver["UserName"]
@@ -160,14 +138,18 @@ def loop(race_manager, cars_to_dq):
             time.sleep(1)
 
 
-def main(
+def start_race_manager(
+    car_driver_map: dict,
+    driver_data: dict,
     season_data: dict = {},
-    stages: list = [],
+    race_stage_lengths: list = [],
     launcher: bool = False,
 ):
     race_manager = RaceManager(
         season_data,
-        stages,
+        car_driver_map,
+        driver_data,
+        race_stage_lengths,
         test_file=False if launcher else True,
     )
 
@@ -182,4 +164,8 @@ def main(
 
 
 if __name__ == "__main__":
-    main()
+    example_season_data = {'season_name': 'xfinity4', 'player_team_name': 'cac', 'season_series': 'XFINITY', 'iracing_roster_file': 'C:/Users/Nick/Documents/iRacing/airosters/xfinity4', 'iracing_season_file': 'C:/Users/Nick/Documents/iRacing/aiseasons/xfinity4.json', 'user_settings': {'stages_enabled': True, 'field_size': 38, 'race_distance_percent': 100, 'fuel_capacity': 100, 'tire_sets': 'UNLIMITED', 'pre_race_penalties': {'enabled': True, 'chance': 2, 'inspection_fail_chance_modifier': 2}, 'pit_penalties': {'enabled': True, 'chance': 8}, 'post_race_penalties': {'enabled': True, 'chance': 2}, 'debris_cautions': {'enabled': True, 'chance': 1}}}
+    race_stage_lengths = [30, 60, 120]
+    car_driver_map = convert_car_driver_mapping(example_season_data.get("season_series"))
+    driver_data = convert_drivers(example_season_data.get("season_series"))
+    start_race_manager(car_driver_map, driver_data, example_season_data, race_stage_lengths)

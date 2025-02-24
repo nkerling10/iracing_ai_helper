@@ -1,3 +1,4 @@
+import json
 import logging
 import PySimpleGUI as sg
 import sys
@@ -12,9 +13,11 @@ from gui.main_menu.season.season_info.roster_data_table import build_driver_disp
 from gui.main_menu.season.season_info.schedule_tab import ScheduleTabLayout
 from gui.main_menu.season.season_info.schedule_data_table import build_season_display_info
 from functions.randomizer import Randomizer
+from functions.race_manager.race_manager import start_race_manager
+from assets.misc.data_converter import convert_car_driver_mapping, convert_drivers
 
 
-example_season_data = {'season_name': 'xfinity4', 'player_team_name': 'cac', 'season_series': 'XFINITY', 'iracing_roster_file': 'C:/Users/Nick/Documents/iRacing/airosters/xfinity4', 'iracing_season_file': 'C:/Users/Nick/Documents/iRacing/aiseasons//xfinity4.json', 'user_settings': {'stages_enabled': True, 'field_size': 38, 'race_distance_percent': 100, 'fuel_capacity': 100, 'tire_sets': 'UNLIMITED', 'pre_race_penalties': {'enabled': True, 'chance': 2, 'inspection_fail_chance_modifier': 2}, 'pit_penalties': {'enabled': True, 'chance': 8}, 'post_race_penalties': {'enabled': True, 'chance': 2}, 'debris_cautions': {'enabled': True, 'chance': 1}}}
+example_season_data = {'season_name': 'xfinity4', 'player_team_name': 'cac', 'season_series': 'XFINITY', 'iracing_roster_file': 'C:/Users/Nick/Documents/iRacing/airosters/xfinity4', 'iracing_season_file': 'C:/Users/Nick/Documents/iRacing/aiseasons/xfinity4.json', 'user_settings': {'stages_enabled': True, 'field_size': 38, 'race_distance_percent': 100, 'fuel_capacity': 100, 'tire_sets': 'UNLIMITED', 'pre_race_penalties': {'enabled': True, 'chance': 2, 'inspection_fail_chance_modifier': 2}, 'pit_penalties': {'enabled': True, 'chance': 8}, 'post_race_penalties': {'enabled': True, 'chance': 2}, 'debris_cautions': {'enabled': True, 'chance': 1}}}
 
 logger = logging.getLogger(__name__)
 
@@ -27,14 +30,22 @@ def _block_focus(window) -> None:
         if isinstance(element, sg.Button):
             element.block_focus()
 
+def _get_real_schedule_stages(week, season_data):
+    with open(Path.cwd() / "src" / "assets" / "references" / f"2025_{season_data.get("season_series").lower()}_schedule.json", "r") as stage_file:
+        all_race_stages = json.loads(stage_file.read())
+    race_stage_lengths = all_race_stages[str(week)].get("stages")
+    if season_data.get("user_settings").get("race_distance_percent") != 100:
+        for stage in race_stage_lengths:
+            stage = round(stage * season_data.get("user_settings").get("race_distance_percent") / 100)
+
+    return race_stage_lengths
 
 def _get_season_length(season_data):
     return build_season_display_info(season_data.get("iracing_season_file"))
 
 
-def _season_info_layout(season_data: dict) -> list[list]:
+def _season_info_layout(season_data: dict, schedule_data: list) -> list[list]:
     active_driver_data, inactive_driver_data = build_driver_display_info(season_data.get("iracing_roster_file"))
-    race_data = _get_season_length(season_data)
 
     return [
         [
@@ -61,7 +72,7 @@ def _season_info_layout(season_data: dict) -> list[list]:
                         ),
                         sg.Tab(
                             "Schedule",
-                            layout=ScheduleTabLayout.build_schedule_tab_layout(race_data),
+                            layout=ScheduleTabLayout.build_schedule_tab_layout(schedule_data),
                             expand_x=True,
                             expand_y=True,
                         ),
@@ -77,18 +88,29 @@ def _season_info_layout(season_data: dict) -> list[list]:
 
 
 def season_window(season_data: dict):
+    schedule_data = _get_season_length(season_data)
+    car_driver_map = convert_car_driver_mapping(season_data.get("season_series"))
+    driver_data = convert_drivers(season_data.get("season_series"))
     window = sg.Window(
         f"Loaded season: {season_data.get("season_name")}",
-        _season_info_layout(season_data),
+        _season_info_layout(season_data, schedule_data),
         no_titlebar=False,
         finalize=True,
-        size=(1000,650),
+        #size=(1000,600),
         keep_on_top=True
     )
-    window["-TRACKBOX-"].update(
-        values=RosterTabLayout._roster_file_track_choices(len(_get_season_length(season_data)))
+    next_race = next((x for x in schedule_data if x[3] is False), None)
+    race_week = schedule_data.index(next_race)+1
+    race_stage_lengths = _get_real_schedule_stages(race_week, season_data)
+    window["-TRACKBOX-"].update(value=race_week,
+        values=RosterTabLayout._roster_file_track_choices(len(schedule_data))
     )
-    
+    window["_-WEEK-_"].update(value=race_week)
+    window["_-TRACK-_"].update(value=next_race[1])
+    if season_data.get("user_settings").get("stages_enabled"):
+        window["_-STAGE1-_"].update(value=race_stage_lengths[0])
+        window["_-STAGE2-_"].update(value=race_stage_lengths[1])
+    window["_-STAGE3-_"].update(value=race_stage_lengths[2])
     _block_focus(window)
     while True:
         event, values = window.read()
@@ -96,7 +118,7 @@ def season_window(season_data: dict):
             window.close()
             return
         if event == "Randomize":
-            Randomizer(season_data, week=1)
+            Randomizer(season_data, week=window["-TRACKBOX-"].get())
             active_driver_data, inactive_driver_data = build_driver_display_info(
                 season_data.get("iracing_roster_file")
             )
@@ -104,6 +126,16 @@ def season_window(season_data: dict):
             window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
         if event == "-SCHEDULETABLE-":
             window["-TRACKBOX-"].update(value=values["-SCHEDULETABLE-"][0] + 1)
+        if event == "-STARTRACEBUTTON-":
+            randomize_check = sg.PopupYesNo("Randomize?", keep_on_top=True)
+            if randomize_check == "Yes":
+                Randomizer(season_data, week=window["-TRACKBOX-"].get())
+                active_driver_data, inactive_driver_data = build_driver_display_info(
+                    season_data.get("iracing_roster_file")
+                )
+                window["-ACTIVEDRIVERS-"].update(values=active_driver_data)
+                window["-INACTIVEDRIVERS-"].update(values=inactive_driver_data)
+            start_race_manager(car_driver_map, driver_data, season_data, race_stage_lengths, True)
 
 
 if __name__ == "__main__":

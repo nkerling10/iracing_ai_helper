@@ -30,7 +30,7 @@
         "short_name": "Homestead"
     },
     "33": {
-        "iracing_name": "",
+        "iracing_name": "martinsville",
         "long_name": "Martinsville Speedway",
         "short_name": "Martinsville"
     },
@@ -133,5 +133,10 @@
         "iracing_name": "",
         "long_name": "North Wilkesboro Speedway",
         "short_name": "North Wilkesboro"
+    },
+    "33": {
+        "iracing_name": "martinsville",
+        "long_name": "Martinsville Speedway",
+        "short_name": "Martinsville"
     }
 }

@@ -17,7 +17,8 @@ class NextRaceTabLayout:
                         ]
                     ],
                     element_justification="center",
-                    size=(85, 80),
+                    expand_x=True,
+                    expand_y=True,
                     title_location="n",
                 ),
                 sg.Frame(
@@ -33,11 +34,9 @@ class NextRaceTabLayout:
                     ],
                     element_justification="center",
                     expand_x=True,
-                    size=(None, 80),
+                    expand_y=True,
                     title_location="n",
                 ),
-            ],
-            [
                 sg.Frame(
                     title="Stage 1",
                     layout=[[sg.Text(key="_-STAGE1-_", justification="center")]],
@@ -72,14 +71,15 @@ class NextRaceTabLayout:
                 sg.Frame(
                     title="Next Race",
                     layout=cls._build_next_race_layout(),
-                    size=(None, 215),
+                    #size=(None, 75),
                     expand_x=True,
-                ),
+                )
+            ],
+            [
                 sg.Button(
                     button_text="RACE",
                     key="-STARTRACEBUTTON-",
-                    size=(None, 30),
-                    disabled=True,
+                    size=(None, 30)
                 )
             ]
         ]

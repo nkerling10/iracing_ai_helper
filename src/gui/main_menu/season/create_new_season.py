@@ -125,7 +125,7 @@ def _copy_season_file(season_series: str, season_name: str):
     try:
         logger.info(f"Copying season file {base_season_folder}/2025_{season_series}.json")
         copyfile(
-            Path(f"{base_season_folder}\\2025_{season_series}.json"),
+            Path(f"{base_season_folder}/2025_{season_series}.json"),
             Path(f"{season_path_dest}/{season_name}.json")
         )
         logger.info("File copied successfully")
