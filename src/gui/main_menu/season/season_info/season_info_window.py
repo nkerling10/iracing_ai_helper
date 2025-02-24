@@ -31,7 +31,7 @@ def _block_focus(window) -> None:
             element.block_focus()
 
 def _get_real_schedule_stages(week, season_data):
-    with open(Path.cwd() / "src" / "assets" / "references" / f"2025_{season_data.get("season_series").lower()}_schedule.json", "r") as stage_file:
+    with open(Path.cwd() / "src" / "data" / f"2025_{season_data.get("season_series").lower()}_schedule.json", "r") as stage_file:
         all_race_stages = json.loads(stage_file.read())
     race_stage_lengths = all_race_stages[str(week)].get("stages")
     if season_data.get("user_settings").get("race_distance_percent") != 100:

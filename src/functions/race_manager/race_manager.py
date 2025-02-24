@@ -45,10 +45,7 @@ def current_session_practice(race_manager, cars_to_dq):
         "ResultsOfficial"
     ] == 0 or (
         race_manager.practice_session_num is None
-        and race_manager.ir["SessionInfo"]["Sessions"][
-            race_manager.qualifying_session_num
-        ]["ResultsOfficial"]
-        == 0
+        and race_manager.ir["SessionInfo"]["Sessions"][race_manager.qualifying_session_num]["ResultsOfficial"] == 0
     ):
         PracticeService.practice(race_manager, cars_to_dq)
         race_manager.practice_done = True
@@ -159,6 +156,11 @@ def start_race_manager(
 
     PostRacePenalties.main(race_manager)
     PointsCalculator.main(race_manager)
+    race_results = {}
+    for stage in race_manager.race_weekend.stage_results:
+        race_results += stage
+    with open(Path.cwd() / "results" / "race_result.json", "w") as result_file:
+        result_file.write(json.dumps(result_file, indent=4))
 
     return
 

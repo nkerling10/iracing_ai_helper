@@ -2,5 +2,133 @@
     "1": {
         "track": "Daytona",
         "stages": [30, 60, 120]
+    },
+    "2": {
+        "track": "Atlanta",
+        "stages": [45,90,163]
+    },
+    "3": {
+        "track": "COTA",
+        "stages": [20,40,65]
+    },
+    "4": {
+        "track": "Phoenix",
+        "stages": [45,90,200]
+    },
+    "5": {
+        "track": "Las Vegas",
+        "stages": [45,90,200]
+    },
+    "6": {
+        "track": "Homestead",
+        "stages": [45,90,200]
+    },
+    "7": {
+        "track": "Martinsville",
+        "stages": [60,120,250]
+    },
+    "8": {
+        "track": "Darlington",
+        "stages": [45,90,147]
+    },
+    "9": {
+        "track": "Bristol",
+        "stages": [85,170,300]
+    },
+    "10": {
+        "track": "Rockingham",
+        "stages": [60,120,250]
+    },
+    "11": {
+        "track": "Talladega",
+        "stages": [25,50,113]
+    },
+    "12": {
+        "track": "Texas",
+        "stages": [45,90,200]
+    },
+    "13": {
+        "track": "Charlotte",
+        "stages": [45,90,200]
+    },
+    "14": {
+        "track": "Nashville",
+        "stages": [45,90,188]
+    },
+    "15": {
+        "track": "Sebring",
+        "stages": [20,40,65]
+    },
+    "16": {
+        "track": "Pocono",
+        "stages": [25,50,100]
+    },
+    "17": {
+        "track": "Atlanta",
+        "stages": [45,90,163]
+    },
+    "18": {
+        "track": "Chicago Street",
+        "stages": [15,30,50]
+    },
+    "19": {
+        "track": "Sonoma",
+        "stages": [20,45,79]
+    },
+    "20": {
+        "track": "Dover",
+        "stages": [45,90,200]
+    },
+    "21": {
+        "track": "Indianapolis",
+        "stages": [30,60,100]
+    },
+    "22": {
+        "track": "Iowa",
+        "stages": [60,120,250]
+    },
+    "23": {
+        "track": "Watkins Glen",
+        "stages": [20,40,82]
+    },
+    "24": {
+        "track": "Daytona",
+        "stages": [30,60,100]
+    },
+    "25": {
+        "track": "Laguna Seca",
+        "stages": [25,50,75]
+    },
+    "26": {
+        "track": "Worldwide Technology",
+        "stages": [35,70,160]
+    },
+    "27": {
+        "track": "Bristol",
+        "stages": [85,170,300]
+    },
+    "28": {
+        "track": "Kansas",
+        "stages": [45,90,200]
+    },
+    "29": {
+        "track": "Charlotte Roval",
+        "stages": [20,40,67]
+    },
+    "30": {
+        "track": "Las Vegas",
+        "stages": [45,90,201]
+    },
+    "31": {
+        "track": "Talladega",
+        "stages": [25,50,94]
+    },
+    "32": {
+        "track": "Martinsville",
+        "stages": [60,120,250]
+    },
+    "33": {
+        "track": "Phoenix",
+        "stages": [45,90,200]
     }
 }
