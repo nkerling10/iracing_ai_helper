@@ -40,6 +40,30 @@ def _get_real_schedule_stages(week, season_data):
 
     return race_stage_lengths
 
+def _get_custom_schedule_stages(season_data, week, track):
+    with open(season_data.get("iracing_season_file"), "r") as season_file:
+        iracing_season = json.loads(season_file.read())
+
+    race_week_entry = iracing_season.get("events")[week]
+    track_id = race_week_entry.get("trackId")
+    race_laps = race_week_entry.get("race_laps", iracing_season.get("race_laps"))
+
+    # Homestead, Vegas, Nashville, Texas, Dover, Charlotte, Kansas, Phoenix
+    if track_id in [20, 103, 400, 357, 162, 339, 214, 419]:
+        stage_1 = round(race_laps * .225)
+    # Iowa, Rockingham, Martinsville
+    elif track_id in [169, 203, 33]:
+        stage_1 = round(race_laps * .24)
+    # Daytona
+    elif track_id in [191]:
+        stage_1 = round(race_laps * .275)
+    else:
+        stage_1 = round(race_laps * .235)
+
+    race_stage_lengths = [stage_1, stage_1 * 2, race_laps]
+
+    return race_stage_lengths
+
 def _get_season_length(season_data):
     return build_season_display_info(season_data.get("iracing_season_file"))
 
@@ -101,7 +125,10 @@ def season_window(season_data: dict):
     )
     next_race = next((x for x in schedule_data if x[3] is False), None)
     race_week = schedule_data.index(next_race)+1
-    race_stage_lengths = _get_real_schedule_stages(race_week, season_data)
+    if season_data.get("season_custom"):
+        race_stage_lengths = _get_custom_schedule_stages(season_data, schedule_data.index(next_race), next_race[1])
+    else:
+        race_stage_lengths = _get_real_schedule_stages(race_week, season_data)
     window["-TRACKBOX-"].update(value=race_week,
         values=RosterTabLayout._roster_file_track_choices(len(schedule_data))
     )

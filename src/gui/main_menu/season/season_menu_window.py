@@ -18,36 +18,6 @@ logger = logging.getLogger(__name__)
 ai_seasons_file_path = Path.cwd() / "ai_seasons"
 base_files_roster_path = Path.cwd() / "base_files"
 
-CUP_SERIES = set([139, 140, 141])
-XFINITY_SERIES = set([114, 115, 116])
-TRUCK_SERIES = set([111, 123, 155])
-ARCA_SERIES = set([24])
-INDYCAR_SERIES = set([99])
-SRX_SERIES = set([179])
-LATEMODEL_SERIES = set([164])
-
-
-def _load_iracing_season(season_file: str):
-    with open(season_file, "r") as file:
-        iracing_season = json.loads(file.read())
-    cars_selected = set([car.get("car_id") for car in iracing_season.get("carSettings")])
-    if cars_selected == CUP_SERIES:
-        return "CUP"
-    elif cars_selected == XFINITY_SERIES:
-        return "XFINITY"
-    elif cars_selected == TRUCK_SERIES:
-        return "TRUCK"
-    elif cars_selected == ARCA_SERIES:
-        return "ARCA"
-    elif cars_selected == INDYCAR_SERIES:
-        return "INDYCAR"
-    elif cars_selected == SRX_SERIES:
-        return "SRX"
-    elif cars_selected == LATEMODEL_SERIES:
-        return "LATEMODEL"
-    else:
-        logger.debug(f"Car IDs for loaded season: {cars_selected}")
-        return "CUSTOM"
 
 def _block_focus(window) -> None:
     """
@@ -127,9 +97,7 @@ def _create_season_file(season_name: str, season_type: str) -> dict:
         "season_series": season_type
     }
     try:
-        with open(
-            ai_seasons_file_path / f"{season_name}.json", "w"
-        ) as new_season_file:
+        with open(ai_seasons_file_path / f"{season_name}.json", "w") as new_season_file:
             new_season_file.write(json.dumps(season_settings_data, indent=4))
     except Exception as e:
         logger.error("Unable to write file")
@@ -180,6 +148,7 @@ def main():
             else:
                 window.UnHide()
         if event == "--NEWCUSTOMSEASONBUTTON--":
+            window.Hide()
             iracing_season_file = sg.popup_get_file(
                 "Load iRacing Season",
                 initial_folder=Path.home() / "Documents" / "iRacing" / "aiseasons",
@@ -188,13 +157,9 @@ def main():
                 keep_on_top=True
             )
             if iracing_season_file:
-                season_settings_data = _create_season_file(season_name="test1",
-                                                           season_type=_load_iracing_season(iracing_season_file))
-                if season_settings_data:
-                    window.Hide()
-                    return_val = create_new_season(season_settings_data.get("season_series"))
-                    print(return_val)
-                    window.UnHide()
+                return_val = create_new_season(iracing_season_file)
+                print(return_val)
+            window.UnHide()
         if event == "--LOADSEASONBUTTON--":
             window.Hide()
             season_file = _load_season_file()

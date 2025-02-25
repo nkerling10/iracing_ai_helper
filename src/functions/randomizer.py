@@ -181,14 +181,6 @@ class Randomizer:
             roster_driver = Driver(self, car_entry)
             car_entry["driverName"] = roster_driver.name
             if "NODRIVER" not in roster_driver.name:
-                orig_attrs = [
-                    roster_driver.driver_skill,
-                    roster_driver.aggression,
-                    roster_driver.optimism,
-                    roster_driver.smoothness,
-                    roster_driver.pit_skill,
-                    roster_driver.strategy,
-                ]
                 roster_driver_updated = self._randomize_attributes(roster_driver)
                 car_entry["driverSkill"] = roster_driver_updated.driver_skill
                 car_entry["driverAggression"] = roster_driver_updated.aggression

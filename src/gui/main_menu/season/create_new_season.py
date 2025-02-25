@@ -10,8 +10,39 @@ logger = logging.getLogger(__name__)
 
 ai_seasons_file_path = Path.cwd() / "ai_seasons"
 base_files_roster_path = Path.cwd() / "base_files" / "rosters"
+season_path_dest = f"C:/Users/Nick/Documents/iRacing/aiseasons/"
 
 __version__ = "1.0"
+
+CUP_SERIES = set([139, 140, 141])
+XFINITY_SERIES = set([114, 115, 116])
+TRUCK_SERIES = set([111, 123, 155])
+ARCA_SERIES = set([24])
+INDYCAR_SERIES = set([99])
+SRX_SERIES = set([179])
+LATEMODEL_SERIES = set([164])
+
+def _load_iracing_season(season_file: str):
+    with open(season_file, "r") as file:
+        iracing_season = json.loads(file.read())
+    cars_selected = set([car.get("car_id") for car in iracing_season.get("carSettings")])
+    if cars_selected == CUP_SERIES:
+        return "CUP"
+    elif cars_selected == XFINITY_SERIES:
+        return "XFINITY"
+    elif cars_selected == TRUCK_SERIES:
+        return "TRUCK"
+    elif cars_selected == ARCA_SERIES:
+        return "ARCA"
+    elif cars_selected == INDYCAR_SERIES:
+        return "INDYCAR"
+    elif cars_selected == SRX_SERIES:
+        return "SRX"
+    elif cars_selected == LATEMODEL_SERIES:
+        return "LATEMODEL"
+    else:
+        logger.debug(f"Car IDs for loaded season: {cars_selected}")
+        return "CUSTOM"
 
 
 def _season_type(values: dict) -> str:
@@ -120,8 +151,6 @@ def _copy_roster_folder(season_series: str, season_name: str) -> None:
 
 def _copy_season_file(season_series: str, season_name: str):
     base_season_folder = Path.cwd() / "base_files" / f"2025_{season_series}"
-    season_path_dest = f"C:/Users/Nick/Documents/iRacing/aiseasons/"
-
     try:
         logger.info(f"Copying season file {base_season_folder}/2025_{season_series}.json")
         copyfile(
@@ -135,7 +164,21 @@ def _copy_season_file(season_series: str, season_name: str):
         return None
 
 
-def _create_local_season_settings_file(values: dict, tire_sets: int) -> dict:
+def _copy_custom_season_file(custom_season_file_path: str, season_name: str):
+    try:
+        logger.info(f"Copying season file {custom_season_file_path}")
+        copyfile(
+            Path(f"{custom_season_file_path}"),
+            Path(f"{season_path_dest}/{season_name}.json")
+        )
+        logger.info("File copied successfully")
+        return f"{season_path_dest}/{season_name}.json"
+    except Exception as e:
+        logger.error(f"Error copying file: {e}")
+        return None
+
+
+def _create_local_season_settings_file(values: dict, tire_sets: int, custom_season_file_path: str) -> dict:
     """
     Creates the local "season settings" file that is stored as json. This file contains references to
     user selected settings as well as the iRacing AI Season file & Roster file that will be linked when utilizing
@@ -151,12 +194,17 @@ def _create_local_season_settings_file(values: dict, tire_sets: int) -> dict:
         )
         return {}
 
+    if custom_season_file_path:
+        season_file = _copy_custom_season_file(custom_season_file_path, season_name=values["__SEASONNAME__"])
+    else:
+        season_file = _copy_season_file(season_series=_season_type(values), season_name=values["__SEASONNAME__"])
+
     season_settings = {
         "season_name": values["__SEASONNAME__"],
         "player_team_name": values["__PLAYERTEAMNAME__"],
         "season_series": _season_type(values),
         "iracing_roster_file": _copy_roster_folder(season_series=_season_type(values), season_name=values["__SEASONNAME__"]),
-        "iracing_season_file": _copy_season_file(season_series=_season_type(values), season_name=values["__SEASONNAME__"]),
+        "iracing_season_file": season_file,
         "user_settings": {
             "stages_enabled": True if values["__STAGECAUTIONSCHECKBOX__"] is True else False,
             "field_size": values["__FIELDSIZE__"],
@@ -200,9 +248,7 @@ def _create_local_season_settings_file(values: dict, tire_sets: int) -> dict:
     }
 
     try:
-        with open(
-            ai_seasons_file_path / f"{values['__SEASONNAME__']}.json", "w"
-        ) as new_season_file:
+        with open(ai_seasons_file_path / f"{values['__SEASONNAME__']}.json", "w") as new_season_file:
             new_season_file.write(json.dumps(season_settings, indent=4))
             return season_settings
     except Exception as e:
@@ -238,10 +284,13 @@ def WIP_create_new_season():
             return
 
 
-def create_new_season(season_series: str = "") -> dict:
+def create_new_season(custom_season_file_path: str = "") -> dict:
     """
     Handles the popup window for creating a new season
     """
+    if custom_season_file_path:
+        season_series = _load_iracing_season(custom_season_file_path)
+    
     layout = [
         [
             sg.Frame(
@@ -631,7 +680,7 @@ def create_new_season(season_series: str = "") -> dict:
             ):
                 sg.popup("ERROR: Missing a required entry!", no_titlebar=True)
             else:
-                season_settings = _create_local_season_settings_file(values, window["__TIRESETS__"].get())
+                season_settings = _create_local_season_settings_file(values, window["__TIRESETS__"].get(), custom_season_file_path)
                 if season_settings:
                     success = _update_season_settings(season_settings)
                     if success:
