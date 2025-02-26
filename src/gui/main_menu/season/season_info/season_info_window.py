@@ -125,7 +125,7 @@ def season_window(season_data: dict):
     )
     next_race = next((x for x in schedule_data if x[3] is False), None)
     race_week = schedule_data.index(next_race)+1
-    if season_data.get("season_custom"):
+    if season_data.get("custom_season") is True:
         race_stage_lengths = _get_custom_schedule_stages(season_data, schedule_data.index(next_race), next_race[1])
     else:
         race_stage_lengths = _get_real_schedule_stages(race_week, season_data)

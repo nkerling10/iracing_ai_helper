@@ -205,6 +205,7 @@ def _create_local_season_settings_file(values: dict, tire_sets: int, custom_seas
         "season_series": _season_type(values),
         "iracing_roster_file": _copy_roster_folder(season_series=_season_type(values), season_name=values["__SEASONNAME__"]),
         "iracing_season_file": season_file,
+        "custom_season": True if custom_season_file_path else False,
         "user_settings": {
             "stages_enabled": True if values["__STAGECAUTIONSCHECKBOX__"] is True else False,
             "field_size": values["__FIELDSIZE__"],
