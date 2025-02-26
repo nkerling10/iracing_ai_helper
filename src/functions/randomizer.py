@@ -7,6 +7,7 @@ import json
 import logging
 import os
 import random
+import sys
 from datetime import date
 from os.path import exists
 from pathlib import Path
@@ -16,7 +17,8 @@ from shutil import copyfile
 import dateutil.parser as dparser
 
 ## Local imports
-from .db_manager import DatabaseManager
+sys.path.append(f"{str(Path.cwd())}/src")
+from assets.misc.data_converter import convert_car_driver_mapping, convert_drivers
 
 ## Global vars
 logger = logging.getLogger(__name__)
@@ -28,18 +30,18 @@ today = date.today()
 class Car:
     def __init__(self, number: int, car_info: tuple):
         self.number = number
-        self.team = car_info[1]
-        self.status = car_info[2]
-        self.car_tier = car_info[3]
-        self.pit_crew_tier = car_info[4]
-        self.strategy_tier = car_info[5]
+        self.team = car_info.get("team")
+        self.status = car_info.get("car_status")
+        self.car_tier = car_info.get("car_tier")
+        self.pit_crew_tier = car_info.get("pitcrew_tier")
+        self.strategy_tier = car_info.get("strategy_tier")
 
 
 class Driver:
     def __init__(self, randomizer: object, car_entry: dict) -> None:
         self.car = Car(
             car_entry.get("carNumber"),
-            [car for car in randomizer.cars if car[0] == car_entry.get("carNumber")][0],
+            randomizer.car_assigns[car_entry.get("carNumber")],
         )
         self.name = self._assign_driver(randomizer, car_entry)
         self.driver_skill = (
@@ -80,45 +82,24 @@ class Driver:
         self.tier = (
             None
             if f"NODRIVER{self.car.number}" == self.name
-            else [
-                driver[
-                    randomizer.driver_table_columns.index(
-                        f"{randomizer.season_data.get('season_series')}_TIER"
-                    )
-                ]
-                for driver in randomizer.drivers
-                if self.name == driver[0]
-            ][0]
+            else randomizer.drivers[self.name].get(f"{randomizer.season_data.get("season_series")}_TIER")
         )
 
     def _assign_driver(self, randomizer: object, car_entry: dict) -> str:
-        try:
-            week_driver = [
-                assign
-                for assign in randomizer.car_assigns
-                if assign[0] == self.car.number
-            ][0]
-        except IndexError:
-            logger.critical(
-                f"{self.car.number} does not exist in car_driver_mapping table"
-            )
-        if week_driver[1] is None and week_driver[2] is None:
+        week_driver = randomizer.car_assigns[car_entry.get("carNumber")]
+        if week_driver.get("fulltime_driver") is None and week_driver.get("assigned_drivers").get(f"WEEK_{randomizer.week}") is None:
             return f"NODRIVER{self.car.number}"
-        elif week_driver[1] is not None:
-            return week_driver[1]
-        elif week_driver[2] is None:
+        elif week_driver.get("fulltime_driver") is not None:
+            return week_driver.get("fulltime_driver")
+        elif week_driver.get("assigned_drivers").get(f"WEEK_{randomizer.week}") is None:
             return f"NODRIVER{self.car.number}"
         else:
-            return week_driver[2]
+            return week_driver.get("assigned_drivers").get(f"WEEK_{randomizer.week}")
 
     def _calc_driver_age(self, randomizer: object) -> int:
         try:
             date_obj = dparser.parse(
-                [
-                    driver[randomizer.driver_table_columns.index("BIRTHDAY")]
-                    for driver in randomizer.drivers
-                    if self.name == driver[0]
-                ][0],
+                randomizer.drivers[self.name].get("BIRTHDAY"),
                 fuzzy=True,
             ).date()
         except IndexError:
@@ -141,40 +122,23 @@ class Randomizer:
         week: int,
         random_paints: bool = True,
     ):
-        self.db = DatabaseManager("C:/Users/Nick/Documents/iracing_ai_helper/database/iracing_ai_helper.db")
         self.season_data = season_data
         self.roster_path = Path(season_data.get("iracing_roster_file"))
         self.roster = {}
-        self.roster_prev = {}
-        self.drivers = []
-        self.driver_table_columns = []
-        self.cars = []
-        self.car_assigns = []
+        self.drivers = convert_drivers(season_data.get("season_series"))
+        self.car_assigns = convert_car_driver_mapping(season_data.get("season_series"))
         self.week = week
         self.randomize_paints = random_paints
         self._randomize()
 
     def _randomize(self) -> None:
         self._load_roster()
-        self._pull_required_data()
         self._assign_and_randomize_drivers()
         self._write_changes_to_file()
 
     def _load_roster(self) -> None:
         with open(self.roster_path / "roster.json", "r") as roster_file:
             self.roster = json.loads(roster_file.read())
-            self.roster_prev = self.roster
-
-    def _pull_required_data(self) -> None:
-        self.drivers = self.db.execute_select_columns_query("DRIVER")
-        self.driver_table_columns = self.db._get_db_table_columns("DRIVER")
-        self.cars = self.db.execute_select_columns_query(
-            f"CAR_{self.season_data.get('season_series')}"
-        )
-        self.car_assigns = self.db.execute_select_columns_query(
-            table=f"{self.season_data.get('season_series')}_DRIVER_CAR_MAPPING",
-            columns=f"CAR, FULLTIME_DRIVER, WEEK_{self.week}",
-        )
 
     def _assign_and_randomize_drivers(self) -> None:
         for car_entry in self.roster["drivers"]:
@@ -317,8 +281,6 @@ class Randomizer:
             return
 
     def _write_changes_to_file(self) -> None:
-        with open(
-            self.roster_path / "roster.json", "w", encoding="utf-8"
-        ) as roster_file:
+        with open(self.roster_path / "roster.json", "w", encoding="utf-8") as roster_file:
             logger.info("Writing changes to file")
             json.dump(self.roster, roster_file, ensure_ascii=False, indent=4)

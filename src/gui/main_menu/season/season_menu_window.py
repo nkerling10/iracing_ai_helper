@@ -165,9 +165,7 @@ def main():
             season_file = _load_season_file()
             if season_file:
                 season_window(season_file)
-                window.UnHide()
-            else:
-                window.UnHide()
+                window.close()
         if event == "--DELETESEASONBUTTON--":
             window.Hide()
             _delete_season_file()

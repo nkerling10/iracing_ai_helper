@@ -91,8 +91,7 @@ def main():
         "Race Type Selection",
         _main_menu_layout(),
         no_titlebar=False,
-        finalize=True,
-        size=(650,350)
+        finalize=True
     )
     while True:
         event, values = window.read()
