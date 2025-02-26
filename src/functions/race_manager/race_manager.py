@@ -22,7 +22,6 @@ from functions.race_manager.services.practice_service import PracticeService
 from functions.race_manager.services.qualifying_service import QualifyingService
 from functions.race_manager.services.race_service import RaceService
 from functions.race_manager.services.points_calculator import PointsCalculator
-from functions.race_manager.services.points_importer import PointsImporter
 from functions.race_manager.services.post_race_penalties import PostRacePenalties
 from assets.misc.data_converter import convert_car_driver_mapping, convert_drivers
 
@@ -158,7 +157,7 @@ def start_race_manager(
     PointsCalculator.main(race_manager)
     race_results = {}
     for stage in race_manager.race_weekend.stage_results:
-        race_results.update({race_manager.race_weekend.stage_results.index(stage)+1 : stage.__dict__})
+        race_results.update({f"stage_{race_manager.race_weekend.stage_results.index(stage)+1}" : stage.stage_results})
     with open(Path.cwd() / "results" / "race_result.json", "w") as result_file:
         result_file.write(json.dumps(race_results, indent=4))
 
