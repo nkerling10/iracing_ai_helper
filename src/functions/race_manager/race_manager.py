@@ -158,9 +158,9 @@ def start_race_manager(
     PointsCalculator.main(race_manager)
     race_results = {}
     for stage in race_manager.race_weekend.stage_results:
-        race_results += stage
+        race_results.update({race_manager.race_weekend.stage_results.index(stage)+1 : stage.__dict__})
     with open(Path.cwd() / "results" / "race_result.json", "w") as result_file:
-        result_file.write(json.dumps(result_file, indent=4))
+        result_file.write(json.dumps(race_results, indent=4))
 
     return
 

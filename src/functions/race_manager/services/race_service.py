@@ -358,10 +358,6 @@ class RaceService:
             elif race_manager.ir["SessionState"] == 6:
                 logger.debug("SessionState is now 6, dumping results data")
                 race_manager.ir.freeze_var_buffer_latest()
-                irsdk.IRSDK.parse_to(
-                    race_manager.ir,
-                    to_file="C:/Users/Nick/Documents/iracing_ai_helper/session_data/race_logic_complete.bin",
-                )
                 race_manager.race_weekend.stage_results[2].stage_results = (
                     race_manager.ir["SessionInfo"]["Sessions"][
                         race_manager.race_session_num

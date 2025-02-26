@@ -19,29 +19,49 @@ class State:
 
 class SeasonData:
     def __init__(self, season_data, car_driver_map, driver_data):
+        self.season_data = season_data
         self.drivers_list = driver_data
         self.declared_points = [k for k,_r in driver_data.items() if _r["DECLARED_POINTS"] == season_data.get("season_series")]
         self.car_driver_map = car_driver_map
-        self.past_season_winners = self._past_season_winners(season_data.get("season_series"))
+        self.past_season_winners = self._past_season_winners(self.season_data.get("season_series"))
         self.current_season_winners = None
-        self.owner_points = self._set_owner_points(points_file=None)
-        self.point_values = self._set_point_values(season_data.get("season_series"))
+        self.owner_points = self._set_owner_points()
+        self.driver_points = self._set_driver_points()
+        self.point_values = self._set_point_values(self.season_data.get("season_series"))
 
     @staticmethod
     def _past_season_winners(season_series: str):
         with open(Path.cwd() / "src" / "data" / f"2024_{season_series}_WINNERS.json", "r") as winners_file:
             return json.loads(winners_file.read())
 
-    @staticmethod
-    def _set_owner_points(points_file):
-        if points_file:
-            with open(Path.cwd() / "src" / "data" / f".json", "r") as owner_points_file:
+    def _set_owner_points(self):
+        points_file = Path.cwd() / "src" / "data" / f"{self.season_data.get("season_series")}_{self.season_data.get("season_name")}_owner_points.json"
+        try:
+            with open(points_file, "r") as owner_points_file:
                 return json.loads(owner_points_file.read())
+        except FileNotFoundError:
+            with open(points_file, "w") as new_owner_points_file:
+                new_owner_points_file.write(json.dumps({}, indent=4))
+                return {}
+
+    def _set_driver_points(self):
+        points_file = Path.cwd() / "src" / "data" / f"{self.season_data.get("season_series")}_{self.season_data.get("season_name")}_driver_points.json"
+        try:
+            with open(points_file, "r") as driver_points_file:
+                return json.loads(driver_points_file.read())
+        except FileNotFoundError:
+            with open(points_file, "w") as new_driver_points_file:
+                new_driver_points_file.write(json.dumps({}, indent=4))
+                return {}
 
     @staticmethod
     def _set_point_values(season_series: str):
+        point_index = []
         with open(Path.cwd() / "src" / "data" / f"{season_series}_POINT_VALUES.json", "r") as points_file:
-            return json.loads(points_file.read())
+            points = json.loads(points_file.read())
+        for each in points:
+            point_index.append(each.get("POINTS"))
+        return point_index
 
 
 class Track:
