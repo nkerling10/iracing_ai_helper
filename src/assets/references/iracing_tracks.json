@@ -24,11 +24,6 @@
         "long_name": "Las Vegas Motor Speedway",
         "short_name": "Las Vegas"
     },
-    "20": {
-        "iracing_name": "",
-        "long_name": "Homestead-Miami Speedway",
-        "short_name": "Homestead"
-    },
     "33": {
         "iracing_name": "martinsville",
         "long_name": "Martinsville Speedway",
@@ -134,9 +129,9 @@
         "long_name": "North Wilkesboro Speedway",
         "short_name": "North Wilkesboro"
     },
-    "33": {
-        "iracing_name": "martinsville",
-        "long_name": "Martinsville Speedway",
-        "short_name": "Martinsville"
+    "20": {
+        "iracing_name": "homestead oval",
+        "long_name": "Homestead Miami Speedway",
+        "short_name": "Homestead"
     }
 }
