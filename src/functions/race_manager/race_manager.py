@@ -36,6 +36,108 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
+def _set_testing_data(race_manager):
+    race_manager.season_data.pole_winner = "Alex Bowman"
+    race_manager.race_weekend.drivers = [
+        Driver(
+            car_idx=0,
+            name="Nick Kerling",
+            car="79",
+            team="Kerling Family Racing",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=1,
+            name="Alex Bowman",
+            car="17",
+            team="Hendrick Motorsports",
+            points_eligibile=(False),
+        ),
+        Driver(
+            car_idx=2,
+            name="Justin Allgaier",
+            car="7",
+            team="JR Motorsports",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=3,
+            name="Sheldon Creed",
+            car="00",
+            team="Haas Factory Team",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=4,
+            name="Jesse Love",
+            car="2",
+            team="Richard Childress Racing",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=5,
+            name="Austin Hill",
+            car="21",
+            team="Richard Childress Racing",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=6,
+            name="Sammy Smith",
+            car="8",
+            team="JR Motorsports",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=7,
+            name="Ryan Sieg",
+            car="39",
+            team="RSS Racing",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=8,
+            name="Carson Kvapil",
+            car="1",
+            team="JR Motorsports",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=9,
+            name="Connor Zilisch",
+            car="88",
+            team="JR Motorsports",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=10,
+            name="Taylor Gray",
+            car="54",
+            team="Joe Gibbs Racing",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=11,
+            name="Parker Retzlaff",
+            car="4",
+            team="Alpha Prime Racing",
+            points_eligibile=(True),
+        ),
+        Driver(
+            car_idx=12,
+            name="Corey Heim",
+            car="24",
+            team="Sam Hunt Racing",
+            points_eligibile=(False),
+        )
+    ]
+    race_manager.race_weekend.stage_results[0].stage_results = ["Alex Bowman", "Justin Allgaier", "Sheldon Creed", "Jesse Love", "Austin Hill",
+                                                                "Sammy Smith", "Ryan Sieg", "Carson Kvapil", "Connor Zilisch", "Taylor Gray"]
+
+    race_manager.race_weekend.stage_results[1].stage_results = ["Alex Bowman", "Corey Heim", "Nick Kerling", "Justin Allgaier", "Austin Hill",
+                                                                "Sheldon Creed", "Jesse Love", "Parker Retzlaff", "Connor Zilisch", "Sammy Smith"]
+    race_manager.race_weekend.stage_results[2].stage_results = []
+
 
 def current_session_practice(race_manager, cars_to_dq):
     ## Regardless if a weekend actually has a practice session
@@ -152,12 +254,21 @@ def start_race_manager(
     cars_to_dq = set_drivers(race_manager)
     if not race_manager.test_file_active:
         loop(race_manager, cars_to_dq)
+    else:
+        _set_testing_data(race_manager)
+
+    print(race_manager.race_weekend.stage_results[2])
 
     PostRacePenalties.main(race_manager)
     PointsCalculator.main(race_manager)
-    race_results = {}
+
+    if race_manager.test_file_active:
+        for driver in race_manager.race_weekend.drivers:
+            print(json.dumps(driver.__dict__, indent=2))
+        quit()
+    race_results = []
     for stage in race_manager.race_weekend.stage_results:
-        race_results.update({f"stage_{race_manager.race_weekend.stage_results.index(stage)+1}" : stage.stage_results})
+        race_results.append(stage.stage_results)
     with open(Path.cwd() / "results" / "race_result.json", "w") as result_file:
         result_file.write(json.dumps(race_results, indent=4))
 

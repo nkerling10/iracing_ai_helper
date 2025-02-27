@@ -359,8 +359,6 @@ class RaceService:
                 logger.debug("SessionState is now 6, dumping results data")
                 race_manager.ir.freeze_var_buffer_latest()
                 race_manager.race_weekend.stage_results[2].stage_results = (
-                    race_manager.ir["SessionInfo"]["Sessions"][
-                        race_manager.race_session_num
-                    ]["ResultsPositions"]
+                    race_manager.ir["SessionInfo"]["Sessions"][race_manager.race_session_num]
                 )
                 return

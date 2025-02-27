@@ -22,3 +22,4 @@ class Driver:
         self.driver_points = 0
         self.owner_points = 0
         self.playoff_points = 0
+        self.poles = 0

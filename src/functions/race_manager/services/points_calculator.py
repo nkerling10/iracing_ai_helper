@@ -12,6 +12,8 @@ class PointsCalculator:
                     1 if stage.stage_results.index(driver_name) == 0 else 0
                 )
                 driver_obj.stage_points += 10 - stage.stage_results.index(driver_name)
+                driver_obj.owner_points += 10 - stage.stage_results.index(driver_name)
+                driver_obj.driver_points += 10 - stage.stage_results.index(driver_name) if driver_obj.points_eligible else 0
                 driver_obj.playoff_points += (
                     1
                     if stage.stage_results.index(driver_name) == 0
