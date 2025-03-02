@@ -178,7 +178,7 @@ class Randomizer:
         # randomize aggression*** this is static set for testing
         roster_driver.aggression = 999
         # randomize optimism*** this is static set for testing
-        roster_driver.optimism = -500
+        roster_driver.optimism = random.randint(25, 75)
         # randomize smoothness
         # iracing scale of 0-100 (loose -> tight), midpoint of 50
         if roster_driver.car.car_tier == 1:

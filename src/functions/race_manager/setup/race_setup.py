@@ -99,10 +99,10 @@ class RaceData:
 
 
 class RaceSettings:
-    def __init__(self):
-        self.field_size = 0
+    def __init__(self, season_data):
+        self.field_size = season_data.get("user_settings").get("field_size")
         self.stage_cautions = True
-        self.penalty_chance = 0
+        self.penalty_chance = 8
         self.pre_race_penalties_enabled = True
         self.pre_race_penalties_chance = 2
         self.inspection_fail_chance_modifier = 2
@@ -129,10 +129,10 @@ class RaceSettings:
 
 
 class RaceWeekend:
-    def __init__(self, race_stage_lengths: list):
+    def __init__(self, season_data, race_stage_lengths: list):
         self.race_length = race_stage_lengths[-1]
         self.track = Track()
-        self.race_settings = RaceSettings()
+        self.race_settings = RaceSettings(season_data)
         self.race_data = RaceData()
         self.drivers = []
         self.stage_results = self._build_stages(race_stage_lengths)
@@ -158,7 +158,7 @@ class RaceManager:
     ):
         self.state = State()
         self.season_data = SeasonData(season_data, car_driver_map, driver_data)
-        self.race_weekend = RaceWeekend(race_stages)
+        self.race_weekend = RaceWeekend(season_data, race_stages)
         self.observe = False
         self.practice_session_num = None
         self.practice_done = False
