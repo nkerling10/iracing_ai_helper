@@ -71,7 +71,7 @@ class RaceService:
         """
         penalty = random.choice(
             race_manager.race_weekend.race_settings.penalties_player
-            if car_num == race_manager.race_weekend.player_car_num[0]
+            if car_num == race_manager.race_weekend.race_data.player_car_num
             else race_manager.race_weekend.race_settings.penalties
         )
 
